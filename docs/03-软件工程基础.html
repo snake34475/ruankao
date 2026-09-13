@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 软件工程基础</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1 id="h-1">03 软件工程基础</h1>
+<blockquote>
+<p><strong>分值地位</strong>：选择题约 6–8 题（第一梯队）+ 案例题「数据流图」一道大题（约 15 分，常是案例第一题）。内聚耦合排序、逻辑覆盖强弱、McCabe 环路复杂度几乎每年必考其一。</p>
+<p><strong>学习目标</strong>：读完讲义后，你能——① 给一段项目描述选出合适的开发模型；② 背出内聚/耦合七级排序并判断具体场景；③ 排逻辑覆盖强弱、算 McCabe 环路复杂度；④ 区分四种维护和质量特性分类；⑤ 认出 CMM 等级描述；⑥ 按套路补全数据流图（案例题）。</p>
+</blockquote>
+<h2 id="h-2">第一节 软件开发模型 ★★</h2>
+<h3 id="h-3">为什么有多种模型</h3>
+<p>不同项目的<strong>需求清晰度</strong>和<strong>风险高低</strong>差别巨大：需求写得一清二楚的项目不需要反复确认，需求说不清的项目硬按部就班走完设计才发现做错了。开发模型的区别就是&quot;<strong>怎么安排&#39;想清楚&#39;和&#39;动手做&#39;的顺序</strong>&quot;。认模型题的关键是抓题干特征词。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>核心特征</th>
+<th>适用场景</th>
+<th>题干特征词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>瀑布模型</strong></td>
+<td>线性顺序，每阶段结束有评审，<strong>文档驱动</strong></td>
+<td>需求<strong>明确且稳定</strong>的项目</td>
+<td>&quot;需求明确&quot;&quot;一次通过、阶段评审&quot;</td>
+</tr>
+<tr>
+<td><strong>原型模型</strong></td>
+<td>先快速做一个可运行的<strong>原型</strong>给用户确认，再正式开发</td>
+<td>需求<strong>不明确</strong>、用户说不清想要什么</td>
+<td>&quot;快速构建演示&quot;&quot;用户确认后再开发&quot;</td>
+</tr>
+<tr>
+<td><strong>螺旋模型</strong></td>
+<td>瀑布 + 原型 + <strong>每圈都做风险分析</strong>，多圈迭代</td>
+<td><strong>大型、复杂、高风险</strong>项目</td>
+<td>&quot;风险分析&quot;&quot;多轮迭代&quot;</td>
+</tr>
+<tr>
+<td><strong>增量模型</strong></td>
+<td>分批交付：先做核心功能，再一片片加</td>
+<td>可以分期上线的项目</td>
+<td>&quot;分批交付&quot;&quot;先核心后扩展&quot;</td>
+</tr>
+<tr>
+<td><strong>敏捷（Scrum / XP）</strong></td>
+<td>短迭代（Scrum 的 Sprint）、拥抱变化、可工作软件优先</td>
+<td>需求多变、小团队、快速上线</td>
+<td>&quot;每日站会&quot;&quot;Sprint&quot;&quot;结对编程&quot;&quot;测试驱动&quot;</td>
+</tr>
+</tbody></table>
+<p><strong>Scrum 与 XP 要能区分</strong>：Scrum 是<strong>管理框架</strong>（产品负责人、Sprint 冲刺、每日站会、回顾会）；XP 极限编程是<strong>工程实践</strong>（结对编程、测试驱动开发 TDD、持续集成、重构、小型发布）。题干问&quot;结对编程属于&quot;→ XP。</p>
+<p><strong>反例演示（易错）</strong>：</p>
+<ul>
+<li>原型不是最终产品——抛弃型原型确认完需求就扔掉；考题说&quot;原型可作为最终系统交付&quot;即错。</li>
+<li>螺旋模型不是&quot;更花哨的瀑布&quot;——它区别于一切传统模型的核心就是<strong>每圈迭代都加入风险分析</strong>；选项里没有风险分析的螺旋描述都是干扰项。</li>
+<li>瀑布模型的&quot;缺点&quot;考法：<strong>直到后期才能看到可运行软件</strong>，需求变更代价大——不是&quot;没有文档&quot;（瀑布恰恰文档最全）。</li>
+</ul>
+<p><strong>应试动作</strong>：背四个特征词对应（明确→瀑布 / 不明确→原型 / 高风险→螺旋 / 多变→敏捷），考试就是配对题。</p>
+<h2 id="h-4">第二节 需求分析 ★</h2>
+<p><strong>需求工程的四个过程</strong>（背顺序）：<strong>需求获取 → 需求分析 → 需求规格说明（定义）→ 需求验证（确认）</strong>。验证指&quot;检查需求规格说明书是否正确、一致、完整&quot;。</p>
+<p><strong>需求分类</strong>：<strong>功能需求</strong>（系统做什么：查询、统计）、<strong>非功能需求</strong>（做得怎么样：性能、安全性、可靠性）、<strong>设计约束</strong>（必须用什么平台、遵循什么标准）。考法：给一句描述判断属于哪类——&quot;响应时间不超过 2 秒&quot;→ 非功能需求。</p>
+<p><strong>结构化分析的核心工具</strong>（与案例题直接挂钩，第九节展开）：</p>
+<ul>
+<li><strong>数据流图（DFD）</strong>：描述数据在系统中的流动与加工；</li>
+<li><strong>数据字典（DD）</strong>：给 DFD 中每个数据流、文件下精确定义；</li>
+<li>两者配合：<strong>只有 DFD 没有 DD，图中的名字就没有精确含义</strong>——这是&quot;为什么需要数据字典&quot;的动机。</li>
+</ul>
+<h2 id="h-5">第三节 模块化设计：内聚与耦合 ★★★（几乎每年考）</h2>
+<h3 id="h-6">为什么要&quot;高内聚、低耦合&quot;</h3>
+<p>软件要拆成模块，拆法有好坏：一个模块内部干的事<strong>越相关</strong>（内聚越高），越容易看懂、改起来越不容易牵连别处；模块之间<strong>越独立</strong>（耦合越低），一个模块改动对别的影响越小。&quot;高内聚、低耦合&quot;就是这两条经验的一句话版。<strong>内聚看模块内部，耦合看模块之间</strong>——先分清这个方向再背排序。</p>
+<h3 id="h-7">内聚七级（从低到高，必须背顺序）</h3>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+<th>含义</th>
+<th>一句话识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>偶然内聚</strong></td>
+<td>动作之间毫无关系，凑在一起（如&quot;为了省事把几个无关函数塞一个模块&quot;）</td>
+<td>&quot;没什么关系，硬凑&quot;</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>逻辑内聚</strong></td>
+<td>逻辑上<strong>相似</strong>但功能用途无关（如一个模块按参数分别执行打印输入/打印输出）</td>
+<td>&quot;相似但无关&quot;</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>时间内聚</strong></td>
+<td>动作无关，但必须在<strong>同一时间</strong>执行（如初始化模块）</td>
+<td>&quot;同一时间&quot;</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>过程内聚</strong></td>
+<td>动作关系不大，但必须<strong>按特定次序</strong>执行</td>
+<td>&quot;按次序但无实质关系&quot;</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>通信内聚</strong></td>
+<td>各动作对<strong>同一数据</strong>进行操作（如对同一份数据先读后存再打印）</td>
+<td>&quot;围绕同一数据&quot;</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>顺序内聚</strong></td>
+<td>前一个动作的<strong>输出</strong>正好是后一个动作的<strong>输入</strong></td>
+<td>&quot;接力棒&quot;</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>功能内聚</strong></td>
+<td>所有部分合起来完成<strong>单一功能</strong>（如计算利息）</td>
+<td>&quot;就是一个功能&quot;</td>
+</tr>
+</tbody></table>
+<h3 id="h-8">耦合七级（从高到低，必须背顺序）</h3>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+<th>含义</th>
+<th>一句话识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>内容耦合</strong></td>
+<td>一个模块直接访问另一个模块的<strong>内部</strong>数据或代码</td>
+<td>&quot;掀开别人内脏&quot;</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>公共耦合</strong></td>
+<td>多个模块通过<strong>同一全局数据结构</strong>传递信息</td>
+<td>&quot;共用一个大仓库&quot;</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>外部耦合</strong></td>
+<td>多个模块访问<strong>同一全局简单变量</strong>（不是数据结构）</td>
+<td>&quot;共用一个全局变量&quot;</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>控制耦合</strong></td>
+<td>传递的信息中含<strong>控制信号</strong>（如开关标志决定对方走哪个分支）</td>
+<td>&quot;传的是命令不是数据&quot;</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>标记耦合</strong></td>
+<td>通过参数传递<strong>记录/数据结构</strong>（而非简单变量）</td>
+<td>&quot;传一整条记录&quot;</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>数据耦合</strong></td>
+<td>通过参数传递<strong>简单变量</strong></td>
+<td>&quot;传一个数&quot;</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>非直接耦合</strong></td>
+<td>两模块无直接关系，靠主模块控制和调用</td>
+<td>&quot;各干各的&quot;</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（最易混三组）</strong>：</p>
+<ol>
+<li><strong>逻辑内聚 vs 偶然内聚</strong>：动作之间&quot;有点相似&quot;（都跟打印/输入输出沾边）→ 逻辑内聚；&quot;完全没关系&quot;→ 偶然内聚。判断标准是<strong>相似性</strong>。</li>
+<li><strong>公共耦合 vs 外部耦合</strong>：共用的是<strong>数据结构</strong>（一整个记录/文件）→ 公共耦合；只是<strong>简单变量</strong>（一个全局计数器）→ 外部耦合。</li>
+<li><strong>标记耦合 vs 数据耦合</strong>：传的是<strong>一条记录/结构</strong>（学生信息整条）→ 标记耦合；只是<strong>一个简单变量</strong>（学号这一个数）→ 数据耦合。</li>
+</ol>
+<p><strong>应试动作</strong>：两个排序要能默写。记法——内聚从&quot;凑（偶然）&quot;到&quot;专（功能）&quot;，耦合从&quot;掀内脏（内容）&quot;到&quot;不认识（非直接）&quot;；做题先抓题干关键词（同一时间/同一数据/接力/命令/记录/变量）对号入座。</p>
+<h2 id="h-9">第四节 软件测试 ★★★</h2>
+<h3 id="h-10">测试的阶段（背顺序）</h3>
+<p><strong>单元测试 → 集成测试 → 确认测试 → 系统测试 → 验收测试</strong>。确认测试检验软件是否满足<strong>需求规格说明书</strong>；验收测试由<strong>用户</strong>参与（常含 α 测试——开发方场所、β 测试——用户实际环境）。</p>
+<h3 id="h-11">白盒测试与逻辑覆盖（必考排序）</h3>
+<p>白盒测试把程序看成透明的，按<strong>程序内部逻辑</strong>设计用例。逻辑覆盖从弱到强：</p>
+<p><strong>语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</strong></p>
+<table>
+<thead>
+<tr>
+<th>覆盖</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>语句覆盖</td>
+<td>每条<strong>语句</strong>至少执行一次（最弱）</td>
+</tr>
+<tr>
+<td>判定覆盖</td>
+<td>每个判定的<strong>真、假分支</strong>各至少经历一次</td>
+</tr>
+<tr>
+<td>条件覆盖</td>
+<td>每个判定中每个<strong>条件的真、假取值</strong>各至少一次</td>
+</tr>
+<tr>
+<td>判定/条件覆盖</td>
+<td>判定的真假分支 + 条件的真假取值<strong>都</strong>满足</td>
+</tr>
+<tr>
+<td>条件组合覆盖</td>
+<td>每个判定中条件的<strong>所有取值组合</strong>都出现</td>
+</tr>
+<tr>
+<td>路径覆盖</td>
+<td>覆盖程序<strong>所有可能的执行路径</strong>（最强）</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（经典陷阱）</strong>：<strong>满足条件覆盖不一定满足判定覆盖</strong>。例：判定 <code>A&gt;0 AND B&gt;0</code>，两个用例取 (A=1,B=0) 和 (A=0,B=1)——两个条件的真假都取遍了（条件覆盖满足），但判定结果<strong>都是假</strong>，真分支一次没走过（判定覆盖不满足）。这就是为什么排序里条件覆盖只保证条件、不保证分支，要两者都保必须上&quot;判定/条件覆盖&quot;。</p>
+<h3 id="h-12">McCabe 环路复杂度（必考计算）</h3>
+<p>衡量程序控制流的复杂程度，三种等价算法：</p>
+<p><strong>V(G) = 控制流图的边数 E − 节点数 N + 2 = 判定节点数 + 1 = 封闭区域数 + 1</strong></p>
+<p><strong>代入算例</strong>：某程序流程图有 9 条边、7 个节点 → V(G) = 9 − 7 + 2 = <strong>4</strong>。验算（第三种算法）：若该图恰有 3 个判定节点（如 2 个 if + 1 个 while），V(G) = 3 + 1 = 4 ✓ 两种算法一致。</p>
+<p><strong>反例演示（易错）</strong>：</p>
+<ul>
+<li>&quot;判定节点&quot;只数<strong>分支点</strong>（if、while、for、case 的分支），<code>i = i + 1</code> 这类顺序语句不是判定节点；</li>
+<li>复合条件 <code>if (A&gt;0 AND B&gt;0)</code> 在某些教材拆成多个条件的组合时算法不同——软考默认按<strong>判定节点数+1</strong>（即这个 if 算 1 个判定节点）。</li>
+</ul>
+<h3 id="h-13">黑盒测试（看功能不看代码）</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>等价类划分</td>
+<td>把输入分成若干&quot;同类&quot;等价类，每类取一个代表（有效等价类 + 无效等价类都要测）</td>
+</tr>
+<tr>
+<td>边界值分析</td>
+<td>在等价类<strong>边界</strong>处取值（如范围 [1,100] 取 0、1、100、101）——错误最爱出现在边界</td>
+</tr>
+<tr>
+<td>错误推测</td>
+<td>凭经验猜易错点</td>
+</tr>
+<tr>
+<td>因果图</td>
+<td>输入条件组合 → 判定表</td>
+</tr>
+</tbody></table>
+<p><strong>应试动作</strong>：① 覆盖强弱排序背死（语句最弱、路径最强）；② McCabe 三公式等价、任给两样算第三样；③ 测试五阶段顺序；④ &quot;条件覆盖 ⊉ 判定覆盖&quot;这个陷阱认得出。</p>
+<h2 id="h-14">第五节 软件维护 ★</h2>
+<p>维护是软件交付<strong>之后</strong>的修改，四类（必须会对号入座）：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+<th>场景识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>改正性维护</strong></td>
+<td>修<strong>已经发生</strong>的错误</td>
+<td>&quot;用户报告 bug&quot;</td>
+</tr>
+<tr>
+<td><strong>适应性维护</strong></td>
+<td>适应<strong>环境变化</strong>（新 OS、新硬件、新接口规范）</td>
+<td>&quot;系统升级到新操作系统后要改&quot;</td>
+</tr>
+<tr>
+<td><strong>完善性维护</strong></td>
+<td><strong>扩充功能、改善性能</strong>（用户的新需求）</td>
+<td>&quot;希望增加报表导出功能&quot;</td>
+</tr>
+<tr>
+<td><strong>预防性维护</strong></td>
+<td>为<strong>将来</strong>可能的修改预先重做（防患未然）</td>
+<td>&quot;提前把老代码重构以便日后维护&quot;</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（易错）</strong>：改正 vs 预防——修<strong>已发生</strong>的 bug 是改正性；改<strong>还没发生</strong>的隐患是预防性（易混淆知识点里专门强调这对）。<strong>占比</strong>：完善性维护占全部维护工作量的一半以上（约 50%–60%），选择题直接考。</p>
+<p><strong>应试动作</strong>：背四类 + &quot;完善性占大头&quot;；判断时先问&quot;错误发生了没（改正/预防）→ 没发生是预防；再问是改自己还是改环境（完善/适应）&quot;。</p>
+<h2 id="h-15">第六节 软件质量特性 ★</h2>
+<p><strong>McCall 模型</strong>把质量特性分三组（背分组归属即可）：</p>
+<table>
+<thead>
+<tr>
+<th>面向</th>
+<th>包含特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>运行（操作）</td>
+<td>正确性、可靠性、效率、完整性、可用性</td>
+</tr>
+<tr>
+<td>修正（修改）</td>
+<td>维护性、灵活性、可测试性</td>
+</tr>
+<tr>
+<td>转移（迁移）</td>
+<td>可移植性、复用性、互操作性</td>
+</tr>
+</tbody></table>
+<p><strong>ISO/IEC 9126 六大特性</strong>：<strong>功能性、可靠性、易用性、效率、维护性、可移植性</strong>（各含子特性，如可靠性含成熟性/容错性/易恢复性）。</p>
+<p><strong>应试动作</strong>：考法是&quot;XX 属于哪个特性/哪一组&quot;——背 ISO 六大特性名 + McCall 三组归属；易混点：&quot;易恢复性&quot;属于<strong>可靠性</strong>子特性，&quot;互操作性&quot;属于<strong>功能性</strong>子特性。</p>
+<h2 id="h-16">第七节 项目管理基础 ★</h2>
+<ul>
+<li><strong>甘特图（Gantt）</strong>：横轴时间、条形表示任务工期，直观；<strong>缺点：不能显式反映任务之间的依赖关系</strong>（经典考点）。</li>
+<li><strong>PERT 图 / 关键路径</strong>：任务网络图求关键路径——计算方法与第一课 3.6 AOE 网完全相同（顺推取 max、逆推取 min、余量为 0 即关键活动），不重复讲，见 <a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第 3.6 节。</li>
+<li><strong>COCOMO 估算模型</strong>：按代码规模（KLOC）估算工作量，基本模型 <strong>E = a × (KLOC)^b</strong>（E 单位人月），按项目类型（组织型 / 半独立 / 嵌入型）取不同参数 a、b。考法是<strong>题干给公式和参数</strong>，代入算即可——例：E = 2.0×(KLOC)^1.0，规模 30KLOC → E = 2.0×30 = 60 人月。</li>
+<li><strong>风险管理</strong>：过程 = 风险识别 → 风险预测（估计概率与损失）→ 风险评估 → 风险控制。<strong>风险暴露 = 风险损失 × 风险发生概率</strong>（代入算例：损失 10 万、概率 20% → 风险暴露 2 万）。风险分类：项目风险（预算进度）、技术风险（技术方案）、商业风险（市场）。</li>
+</ul>
+<h2 id="h-17">第八节 CMM / CMMI ★</h2>
+<p>CMM 把软件过程成熟度分五级（背顺序和关键词）：</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+<th>关键词识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>初始级</td>
+<td>混乱，成功靠个人英雄</td>
+</tr>
+<tr>
+<td>2</td>
+<td>可重复级</td>
+<td>基本项目管理制度，能<strong>重复</strong>以往成功</td>
+</tr>
+<tr>
+<td>3</td>
+<td>已定义级</td>
+<td>过程<strong>文档化、标准化</strong>，全组织采用标准过程</td>
+</tr>
+<tr>
+<td>4</td>
+<td>已管理级</td>
+<td>过程和产品<strong>量化</strong>测量与控制</td>
+</tr>
+<tr>
+<td>5</td>
+<td>优化级</td>
+<td>持续改进，新技术、防患未然</td>
+</tr>
+</tbody></table>
+<p>CMMI（能力成熟度模型集成）阶段式表示同样五级：初始、已管理、已定义、量化管理、优化。<strong>考法就是配对</strong>：抓&quot;文档化标准化&quot;→ 3 级，&quot;量化&quot;→ 4 级，&quot;持续改进&quot;→ 5 级，&quot;重复以往成功&quot;→ 2 级。</p>
+<h2 id="h-18">第九节 案例题专攻：数据流图（约 15 分）</h2>
+<p>案例第一题一般是&quot;文字说明 + 顶层图/0 层图（缺数据流）&quot;，三小问：补数据流（起点、终点、名字）、指出加工用到的文件、补数据字典。<strong>全部答案都藏在说明文字里，套路如下：</strong></p>
+<h3 id="h-19">套路一：分层与平衡原则（判断&quot;缺什么&quot;的依据）</h3>
+<ul>
+<li><strong>顶层图</strong>：整个系统算一个加工，只画外部实体和进出系统的数据流；</li>
+<li><strong>0 层图</strong>：把系统拆成几个主要加工；</li>
+<li><strong>父图与子图必须平衡</strong>：子图的输入/输出数据流必须与父图中对应加工的输入/输出<strong>一一对应</strong>——父子图数据流对不上 = 缺流，这是补流题的判定依据。</li>
+</ul>
+<h3 id="h-20">套路二：逐句扫描说明找缺失数据流</h3>
+<p>说明中<strong>每个动词句都对应一条数据流</strong>：&quot;顾客提交订单&quot;（订单 → 系统）、&quot;向顾客发送确认&quot;（确认 → 顾客）、&quot;通知房主&quot;（通知 → 房主）。把说明句子列成清单，逐条在图上勾掉，<strong>剩下没画的句子就是答案</strong>。数据流名要用<strong>说明中的原词</strong>（题目明确要求&quot;采用说明中的词汇&quot;）。</p>
+<h3 id="h-21">套路三：补流三要素与常见去向</h3>
+<p>答案必须写全：<strong>起点、终点、数据流名</strong>。常见易漏位置：</p>
+<ul>
+<li>加工 → <strong>外部实体</strong>的反馈类流（确认、通知类，最容易漏）；</li>
+<li>加工 ↔ <strong>文件</strong>的读写（&quot;保存订单&quot;= 写订单文件，&quot;查询余额&quot;= 读账户文件）；</li>
+<li>顶层图与 0 层图对照：顶层有而 0 层没有的流，必缺。</li>
+</ul>
+<h3 id="h-22">套路四：数据字典写法</h3>
+<p>用&quot;=&quot;（由…组成）、&quot;+&quot;（与）、&quot;{}&quot;（重复）、&quot;|&quot;（或）描述。例：</p>
+<pre><code>登录信息 = 学生 ID + 密码
+订单 = 顾客编号 + {菜品名 + 数量} + 送餐地址
+</code></pre>
+<p>（<code>{}</code> 内是可以重复出现的项。）</p>
+<hr>
+<h2 id="h-23">课后考题（请合上讲义作答）</h2>
+<p><strong>一、选择题</strong></p>
+<ol>
+<li><p>某项目用户说不清具体需求，开发方决定先快速构造一个演示系统供用户确认后再正式开发。应采用（ ）。
+A. 瀑布模型  B. 原型模型  C. 螺旋模型  D. V 模型</p>
+</li>
+<li><p>螺旋模型区别于瀑布模型等传统模型的最主要特征是（ ）。
+A. 文档驱动  B. 每轮迭代加入风险分析  C. 分批交付  D. 快速响应用户界面变化</p>
+</li>
+<li><p>下列软件开发实践中，属于 XP（极限编程）而非 Scrum 的是（ ）。
+A. 每日站会  B. Sprint 冲刺  C. 结对编程  D. 产品负责人角色</p>
+</li>
+<li><p>一个模块完成初始化系统所需的多个操作，这些操作本身功能无关、只是必须在系统启动时同时执行。该模块的内聚类型是（ ）。
+A. 偶然内聚  B. 逻辑内聚  C. 时间内聚  D. 过程内聚</p>
+</li>
+<li><p>模块 A 向模块 B 传递参数时传的是一条完整的&quot;学生记录&quot;结构。A、B 之间的耦合类型是（ ）。
+A. 数据耦合  B. 标记耦合  C. 控制耦合  D. 公共耦合</p>
+</li>
+<li><p>多个模块都直接访问同一个全局数组。这种耦合属于（ ）。
+A. 外部耦合  B. 公共耦合  C. 内容耦合  D. 数据耦合</p>
+</li>
+<li><p>下列逻辑覆盖中，覆盖程度最强的是（ ）。
+A. 条件组合覆盖  B. 判定/条件覆盖  C. 路径覆盖  D. 判定覆盖</p>
+</li>
+<li><p>满足条件覆盖却可能不满足判定覆盖，原因是（ ）。
+A. 条件覆盖只要求每个条件取到真假，不保证判定本身的真假分支都走到
+B. 条件覆盖比判定覆盖强
+C. 判定覆盖只针对循环语句
+D. 条件覆盖要求覆盖所有路径</p>
+</li>
+<li><p>某程序控制流图有 10 条边、8 个节点，其 McCabe 环路复杂度 V(G) 为（ ）。
+A. 2  B. 3  C. 4  D. 18</p>
+</li>
+<li><p>黑盒测试中，对取值范围 [1, 100] 的输入，边界值分析应重点选取（ ）。
+A. 50  B. 1 和 100  C. 0、1、100、101  D. 随机值</p>
+</li>
+<li><p>软件测试阶段顺序正确的是（ ）。
+A. 单元 → 集成 → 确认 → 系统 → 验收  B. 集成 → 单元 → 确认 → 系统 → 验收
+C. 单元 → 确认 → 集成 → 系统 → 验收  D. 确认 → 单元 → 集成 → 系统 → 验收</p>
+</li>
+<li><p>为适应操作系统从旧版本升级到新版本而修改软件，属于（ ）。
+A. 改正性维护  B. 适应性维护  C. 完善性维护  D. 预防性维护</p>
+</li>
+<li><p>软件维护工作中占比最大的是（ ）。
+A. 改正性维护  B. 适应性维护  C. 完善性维护  D. 预防性维护</p>
+</li>
+<li><p>ISO/IEC 9126 质量模型中，&quot;成熟性、容错性、易恢复性&quot;属于（ ）的子特性。
+A. 功能性  B. 可靠性  C. 易用性  D. 维护性</p>
+</li>
+<li><p>某组织已将其软件过程文档化、标准化，所有项目均采用经批准的标准过程进行开发。按 CMM 该组织处于（ ）。
+A. 可重复级  B. 已定义级  C. 已管理级  D. 优化级</p>
+</li>
+</ol>
+<p><strong>二、案例题（数据流图，模拟真题风格）</strong></p>
+<p>阅读下列说明和图，回答问题 1 至问题 3。</p>
+<p>【说明】某订餐系统接收顾客订单并跟踪配送，业务如下：</p>
+<ol>
+<li>顾客向系统提交订单（含顾客编号、菜品明细、送餐地址），系统将订单存入订单文件，并向顾客发送订单确认。</li>
+<li>系统按订单文件中的待处理订单，向相应餐厅发送订单信息；同时生成配送任务写入配送文件。</li>
+<li>餐厅备餐完成后向系统发送备餐完成通知。</li>
+<li>配送员从配送文件获取取餐通知。</li>
+<li>配送员送达后向系统发送送达确认，系统更新订单状态，并向顾客发送送达通知。</li>
+</ol>
+<p>顶层图（0 层图的外部实体与之一致）：外部实体为顾客、餐厅、配送员。</p>
+<p>0 层图中画出三个加工：①接收订单、②分派订单、③跟踪配送；两个文件：订单文件、配送文件。
+已画出的数据流有：顾客→①（订单）、①→订单文件（订单）、①→顾客（订单确认）、②→配送文件（配送任务）、③→顾客（送达通知）、配送员→③（送达确认）、餐厅→③（备餐完成通知）。</p>
+<p><strong>问题 1</strong>：对照说明，指出 0 层图中还缺少的数据流（给出起点、终点和数据流名）。</p>
+<p><strong>问题 2</strong>：加工③&quot;跟踪配送&quot;除收到外部输入外，还需要读写哪些文件？各起什么作用？</p>
+<p><strong>问题 3</strong>：补齐数据字典条目：订单 = ______；菜品明细 = ______。</p>
+<hr>
+<h2 id="h-24">精华题（历年必考风格，考前必刷）</h2>
+<ol>
+<li><p>【模型识别】为下列项目选模型：① 需求明确的银行核心系统改造；② 需求模糊的管理信息系统；③ 高风险的大型航天控制软件；④ 需求多变的互联网创业产品。</p>
+</li>
+<li><p>【内聚耦合】写出下列模块的内聚类型：① 一个模块按参数值分别执行存文件或打印操作（功能无关、逻辑相似）；② 一个模块对同一批学生成绩数据先统计平均分、再排序、再打印报表；③ 一个模块把三个互不相关的函数凑在一起，只因为写代码时顺手。</p>
+</li>
+<li><p>【内聚耦合】区分耦合类型：① 模块间传递一个开关量标志决定对方执行哪个分支；② 模块间传递一个整数；③ 模块间传递整个&quot;职工记录&quot;结构；④ 两个模块都直接修改同一全局变量 count。</p>
+</li>
+<li><p>【McCabe】某程序流程图包含 4 个判定节点，其控制流图有 12 条边、9 个节点。用两种方法求 V(G) 并互相验证。</p>
+</li>
+<li><p>【逻辑覆盖】对语句 <code>if (A&gt;0 AND B&gt;0) s=1; else s=0;</code>：用例 T1(A=1,B=0)、T2(A=0,B=1) 满足了哪种覆盖？没满足哪种覆盖？</p>
+</li>
+<li><p>【维护分类】指出维护类型：① 修改程序中一处导致统计错误的计算 bug；② 为两年后的系统改造提前重构核心模块；③ 用户要求增加微信通知功能；④ 数据库从 Oracle 迁移到 PostgreSQL。</p>
+</li>
+<li><p>【CMM】&quot;组织对软件过程和产品质量建立了定量的度量与控制&quot;→ 第几级？</p>
+</li>
+</ol>
+<hr>
+<h2 id="h-25">答案与解析</h2>
+<h3 id="h-26">课后考题答案</h3>
+<p><strong>1. B</strong>
+&quot;用户说不清需求 + 先做演示确认&quot;是原型模型的标志特征。瀑布要需求明确；螺旋面向高风险大型项目（核心是风险分析）；V 模型是测试与开发阶段对应的瀑布变体。</p>
+<p><strong>2. B</strong>
+螺旋模型 = 瀑布 + 原型 + <strong>风险分析</strong>，风险分析是它的灵魂。文档驱动是瀑布的特征（A 干扰项）。</p>
+<p><strong>3. C</strong>
+结对编程、测试驱动开发、持续集成是 XP 的工程实践；每日站会、Sprint、产品负责人是 Scrum 框架角色与仪式。</p>
+<p><strong>4. C</strong>
+&quot;功能无关 + 必须同一时间执行&quot; = 时间内聚（初始化是典型）。若按固定次序执行则属过程内聚——本题关键词是&quot;同时执行&quot;。</p>
+<p><strong>5. B</strong>
+传&quot;记录/数据结构&quot;= 标记耦合；只传简单变量才是数据耦合。控制耦合传的是控制信号；公共耦合是共用全局数据区而非参数传递。</p>
+<p><strong>6. B</strong>
+&quot;同一全局<strong>数据结构</strong>（数组）&quot;→ 公共耦合；若只是同一个全局简单变量则是外部耦合——本题是数组（数据结构），选公共耦合。</p>
+<p><strong>7. C</strong>
+排序：语句 &lt; 判定 &lt; 条件 &lt; 判定/条件 &lt; 条件组合 &lt; <strong>路径</strong>。路径覆盖要求走遍所有执行路径，最强。</p>
+<p><strong>8. A</strong>
+条件覆盖只管&quot;每个条件取到真、假&quot;，不管&quot;判定的真假分支是否都执行&quot;——用例 (A=1,B=0)、(A=0,B=1) 两个条件真假都取遍，但判定恒为假，真分支没走过。这正是排序中条件覆盖与判定覆盖互不包含、需要&quot;判定/条件覆盖&quot;合并保证的原因。</p>
+<p><strong>9. C</strong>
+V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 个判定节点，V(G) = 3+1 = 4 ✓。</p>
+<p><strong>10. C</strong>
+边界值分析在边界及其外侧邻值取数：0、1、100、101。只取 1 和 100 会漏掉&quot;边界外一点点&quot;的高发错误区。</p>
+<p><strong>11. A</strong>
+单元 → 集成 → 确认 → 系统 → 验收。确认测试对照需求规格说明书，验收测试由用户参与。</p>
+<p><strong>12. B</strong>
+适应&quot;环境变化&quot;（OS 升级）= 适应性维护。改正性修已发生错误；完善性扩功能；预防性防患未然。</p>
+<p><strong>13. C</strong>
+完善性维护占一半以上（约 50%–60%），直接背。</p>
+<p><strong>14. B</strong>
+可靠性子特性 = 成熟性、容错性、易恢复性。功能性子特性含适合性、准确性、互操作性、安全性等。</p>
+<p><strong>15. B</strong>
+&quot;文档化、标准化、全组织统一采用&quot; = 已定义级（3 级）。可重复级是&quot;能重复以往成功&quot;；已管理级的关键词是&quot;定量&quot;。</p>
+<h3 id="h-27">案例题答案</h3>
+<p><strong>问题 1（缺失数据流，共 3 条）</strong>：
+逐句扫描：句 2 中&quot;向相应餐厅发送订单信息&quot;没有画出；句 4 中&quot;配送员获取取餐通知&quot;没有画出（取餐通知由加工③读取配送文件后发给配送员）；句 5 中&quot;系统更新订单状态&quot;没有画出。</p>
+<table>
+<thead>
+<tr>
+<th>缺失数据流</th>
+<th>起点</th>
+<th>终点</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>加工② 分派订单</td>
+<td>餐厅</td>
+<td>订单信息</td>
+</tr>
+<tr>
+<td>2</td>
+<td>加工③ 跟踪配送</td>
+<td>配送员</td>
+<td>取餐通知</td>
+</tr>
+<tr>
+<td>3</td>
+<td>加工③ 跟踪配送</td>
+<td>订单文件</td>
+<td>订单状态（更新）</td>
+</tr>
+</tbody></table>
+<p>易漏点：第 3 条是&quot;加工 → 文件&quot;的写流，反馈类（确认/通知）和文件读写流最容易漏。</p>
+<p><strong>问题 2</strong>：</p>
+<ul>
+<li><strong>读配送文件</strong>：获取配送任务与当前配送进度（配送员送达确认要与配送文件中的任务对应）；</li>
+<li><strong>读写订单文件</strong>：根据送达确认更新订单状态（写），并按订单信息确定通知对象（读）。</li>
+</ul>
+<p><strong>问题 3</strong>：</p>
+<pre><code>订单 = 顾客编号 + 菜品明细 + 送餐地址
+菜品明细 = {菜品名 + 数量}
+</code></pre>
+<p>（<code>{}</code> 表示可重复出现；若考试给出字段更细的说明，按说明原词逐项列出。）</p>
+<h3 id="h-28">精华题答案</h3>
+<p><strong>1. ① 瀑布模型（需求明确、阶段评审）② 原型模型（需求模糊、先演示确认）③ 螺旋模型（高风险大型项目、每圈风险分析）④ 敏捷（Scrum/XP，短迭代拥抱变化）。</strong>
+识别口诀：明确瀑布、模糊原型、高风险螺旋、多变敏捷。</p>
+<p><strong>2. ① 逻辑内聚</strong>（逻辑相似但功能无关，按参数分支执行不同动作）；<strong>② 通信内聚</strong>（统计、排序、打印都是对<strong>同一批成绩数据</strong>的不同操作，彼此没有&quot;输出即输入&quot;的接力关系）；<strong>③ 偶然内聚</strong>（毫无关系硬凑）。
+易混点：若题干改成&quot;读数据 → 加工 → 把结果写回文件&quot;这种<strong>前一步输出是后一步输入</strong>的接力链，则是顺序内聚——判别标准是看动作之间有没有数据接力。</p>
+<p><strong>3. ① 控制耦合</strong>（传开关标志 = 控制信号）；<strong>② 数据耦合</strong>（简单变量）；<strong>③ 标记耦合</strong>（整条记录结构）；<strong>④ 公共耦合</strong>（直接修改同一全局数据——注意若是&quot;直接进入对方模块内部改&quot;则是内容耦合，本题是共享全局变量区，属公共耦合）。</p>
+<p><strong>4. V(G) = E − N + 2 = 12 − 9 + 2 = 5</strong>；判定节点数 + 1 = 4 + 1 = <strong>5</strong>。两种算法结果一致 ✓。</p>
+<p><strong>5. 满足条件覆盖</strong>（A、B 两条件的真、假取值都各出现了一次）；<strong>不满足判定覆盖</strong>（两次判定结果都是假，s=1 的真分支从未执行）。这也是&quot;条件覆盖不包含判定覆盖&quot;的实例——想同时保证要用判定/条件覆盖或更强的条件组合覆盖。</p>
+<p><strong>6. ① 改正性</strong>（修已发生的 bug）② <strong>预防性</strong>（为将来的修改提前重构，防患未然）③ <strong>完善性</strong>（扩充新功能）④ <strong>适应性</strong>（适应数据库环境更换）。易混点：② 是&quot;还没发生&quot;→ 预防，不是改正。</p>
+<p><strong>7. 第 4 级（已管理级）</strong>。关键词&quot;定量度量与控制&quot;；若描述为&quot;持续改进、采用新技术&quot;则是第 5 级优化级。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="04-面向对象与设计模式.html">04-面向对象与设计模式.html</a> 并更新进度表。</p>
+
+</main>
+<footer class="page-nav">
+    <a href="02-数据库系统.html">← 上一页</a>
+    <a href="index.html">返回目录</a>
+    <a href="04-面向对象与设计模式.html">下一页 →</a>
+</footer>
+</body>
+</html>

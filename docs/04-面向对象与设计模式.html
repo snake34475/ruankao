@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 面向对象与设计模式</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1 id="h-1">04 面向对象与设计模式</h1>
+<blockquote>
+<p><strong>分值地位</strong>：选择题约 5–7 题 + 案例题「UML 建模」一道大题（补用例/类名/关系，约 15 分）。设计模式每年稳定考 2–4 题，是&quot;背了就得分&quot;的典型考点。</p>
+<p><strong>学习目标</strong>：读完讲义后，你能——① 分清封装/继承/多态、重载/重写；② 认出 UML 各图及其要素、类图六种关系；③ 背下 23 种设计模式的分类和&quot;意图一句话&quot;，给场景选出模式；④ 按套路补全 UML 案例题。</p>
+</blockquote>
+<h2 id="h-2">第一节 面向对象基本概念 ★</h2>
+<h3 id="h-3">四大基石与&quot;为什么&quot;</h3>
+<ul>
+<li><strong>封装</strong>：把数据和对数据的操作捆在一起（类），对外只暴露接口、隐藏实现细节。<strong>动机</strong>：使用者不必知道内部怎么实现，内部改动不波及外部——和数据库三级模式的&quot;隔离变化&quot;是同一个思想。</li>
+<li><strong>继承</strong>：子类自动拥有父类的属性和方法，并可扩展。<strong>动机</strong>：共同点写一遍（放父类），差异点写在子类——消除重复。</li>
+<li><strong>多态</strong>：同一消息发给不同对象，各自做出不同响应。<strong>动机</strong>：调用方写一段代码（面向父类/接口），加新子类时调用方<strong>一行都不用改</strong>——否则就得写满 <code>if 类型==... else if ...</code>，每加一种类型都要回头改调用方。</li>
+<li><strong>消息</strong>：对象之间通过发送消息（调用操作）通信。</li>
+</ul>
+<h3 id="h-4">重载 vs 重写（必考对比）</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>重载 overload</th>
+<th>重写 override</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>位置</td>
+<td><strong>同一个类</strong>里</td>
+<td><strong>子类</strong>覆盖父类方法</td>
+</tr>
+<tr>
+<td>签名</td>
+<td>方法名相同，<strong>参数列表必须不同</strong></td>
+<td>方法名、参数列表<strong>完全相同</strong></td>
+</tr>
+<tr>
+<td>绑定时机</td>
+<td><strong>编译期</strong>根据参数选方法</td>
+<td><strong>运行期</strong>根据实际对象类型（多态的基础）</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（易错）</strong>：只改返回值类型、参数完全相同——既不是重载也不是重写，是编译错误（重载要求参数不同）；子类方法参数列表与父类不同，那就成了重载（新方法），<strong>父类版本没有被覆盖</strong>，用父类引用调用时执行的还是父类版本——这是&quot;以为重写了、其实重载了&quot;的经典陷阱。</p>
+<p><strong>应试动作</strong>：抓两个判别词——&quot;同类不同参 = 重载；子类同签名 = 重写&quot;。考题常给一段代码问&quot;输出什么&quot;：父类引用指向子类对象，调用被重写的方法 → 执行<strong>子类</strong>版本。</p>
+<h2 id="h-5">第二节 UML 图 ★★★（案例题必考）</h2>
+<h3 id="h-6">九（十）种图先分静态、动态</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>图</th>
+<th>一句话用途</th>
+<th>认图特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>静态（结构）</strong></td>
+<td>类图</td>
+<td>类的属性、操作及类间关系</td>
+<td>矩形分三格：类名/属性/操作</td>
+</tr>
+<tr>
+<td></td>
+<td>对象图</td>
+<td>某一时刻的对象快照</td>
+<td>名字带下划线</td>
+</tr>
+<tr>
+<td></td>
+<td>构件图</td>
+<td>代码构件之间的依赖</td>
+<td>构件符号（带两个小凸起）</td>
+</tr>
+<tr>
+<td></td>
+<td>部署图</td>
+<td>软件到<strong>物理节点</strong>的映射</td>
+<td>立方体（节点）</td>
+</tr>
+<tr>
+<td></td>
+<td>包图</td>
+<td>模型分组</td>
+<td>文件夹形状</td>
+</tr>
+<tr>
+<td><strong>动态（行为）</strong></td>
+<td>用例图</td>
+<td>系统功能与参与者</td>
+<td>小人（参与者）+ 椭圆（用例）</td>
+</tr>
+<tr>
+<td></td>
+<td>顺序图</td>
+<td>按<strong>时间顺序</strong>的对象交互</td>
+<td>竖直生命线 + 水平消息箭头</td>
+</tr>
+<tr>
+<td></td>
+<td>通信图</td>
+<td>同顺序图内容，强调对象间<strong>链接</strong></td>
+<td>对象间连线标消息序号</td>
+</tr>
+<tr>
+<td></td>
+<td>状态图</td>
+<td><strong>单个对象</strong>的状态随事件转换</td>
+<td>圆角矩形（状态）+ 箭头（转换）</td>
+</tr>
+<tr>
+<td></td>
+<td>活动图</td>
+<td>工作流程，类似流程图但支持<strong>并发</strong></td>
+<td>泳道、分叉/汇合粗横线</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（易错）</strong>：状态图和活动图长得像，区别在——状态图描述<strong>一个对象</strong>因事件引起的状态变迁，必须以&quot;事件&quot;为转换条件；活动图描述<strong>业务流程</strong>步骤，支持并发分支（分叉/汇合），不关心某个对象。另外顺序图 vs 通信图：<strong>内容等价、侧重不同</strong>——顺序图突出时间顺序，通信图突出对象间链接结构。</p>
+<h3 id="h-7">类图的六种关系（案例题 + 选择题双考）</h3>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>符号</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛化（继承）</td>
+<td>空心三角实线</td>
+<td>is-a</td>
+<td>猫 → 动物</td>
+</tr>
+<tr>
+<td>实现</td>
+<td>空心三角<strong>虚线</strong></td>
+<td>类实现接口</td>
+<td>类 → 接口</td>
+</tr>
+<tr>
+<td>关联</td>
+<td>实线（可带多重性 1、1..*）</td>
+<td>长期的结构关系</td>
+<td>读者—借阅记录</td>
+</tr>
+<tr>
+<td><strong>聚合</strong></td>
+<td>空心菱形实线</td>
+<td>整体—部分，部分<strong>可独立存在</strong></td>
+<td>雁群 — 雁</td>
+</tr>
+<tr>
+<td><strong>组合</strong></td>
+<td><strong>实心</strong>菱形实线</td>
+<td>整体—部分，同生共死</td>
+<td>鸟 — 翅膀</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td><strong>虚线</strong>箭头</td>
+<td>使用关系（参数、局部变量）</td>
+<td>类方法里临时用到另一个类</td>
+</tr>
+</tbody></table>
+<p><strong>记忆法</strong>：菱形在<strong>整体</strong>一端；空心菱形&quot;散了还能活&quot;（聚合），实心菱形&quot;一荣俱荣一损俱损&quot;（组合）；虚线都是&quot;弱关系&quot;（实现是弱化的继承、依赖是弱化的关联）。</p>
+<h3 id="h-8">用例图的三种关系（选择题常考）</h3>
+<ul>
+<li><strong>包含 include</strong>：基用例<strong>必须</strong>执行另一个用例（虚线箭头 + <code>&lt;&lt;include&gt;&gt;</code>）——&quot;借书前必须登录&quot;。</li>
+<li><strong>扩展 extend</strong>：可选、条件触发的行为（虚线箭头 + <code>&lt;&lt;extend&gt;&gt;</code>）——&quot;超额时弹出逾期提示&quot;（不超额就没有）。</li>
+<li><strong>泛化</strong>：用例的一般化/特殊化。</li>
+</ul>
+<p><strong>反例演示</strong>：方向别画反——include 箭头从<strong>基用例</strong>指向被包含用例；extend 箭头从<strong>扩展用例</strong>指向基用例。判断窍门：<strong>必经之路用 include，可选支线用 extend</strong>。</p>
+<p><strong>应试动作</strong>：① 背&quot;静态五图 + 动态五图&quot;归属；② 六种关系认符号（三角=继承实现、菱形=整体部分、虚线=弱）；③ include/extend 按必经/可选判断。</p>
+<h2 id="h-9">第三节 设计模式 ★★★（每年 2–4 题）</h2>
+<h3 id="h-10">23 种模式的分类框架（先背骨架）</h3>
+<p>模式按<strong>目的</strong>分三类——这本身就回答了&quot;为什么有 23 种&quot;：<strong>创建型</strong>管&quot;对象怎么造出来&quot;（5 种）、<strong>结构型</strong>管&quot;对象怎么组装起来&quot;（7 种）、<strong>行为型</strong>管&quot;对象怎么交互分工&quot;（11 种）。</p>
+<p>口诀（自编，按序号背）：</p>
+<ul>
+<li>创建型 5：<strong>单原工抽建</strong>（单例、原型、工厂方法、抽象工厂、构建器）</li>
+<li>结构型 7：<strong>适桥组外装享代</strong>（适配器、桥接、组合、外观、装饰器、享元、代理）</li>
+<li>行为型 11：<strong>责命解迭中，备观状策模访</strong>（职责链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者）</li>
+</ul>
+<h3 id="h-11">23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）</h3>
+<p><strong>创建型（管出生）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Singleton 单例</td>
+<td>保证一个类<strong>只有一个实例</strong>，提供全局访问点</td>
+<td>唯一实例</td>
+</tr>
+<tr>
+<td>Prototype 原型</td>
+<td>通过<strong>拷贝</strong>原型来创建新对象</td>
+<td>克隆</td>
+</tr>
+<tr>
+<td>Factory Method 工厂方法</td>
+<td>定义创建对象的接口，<strong>由子类决定</strong>实例化哪个类</td>
+<td>动态生产对象</td>
+</tr>
+<tr>
+<td>Abstract Factory 抽象工厂</td>
+<td>创建<strong>一系列相关对象</strong>，无需指定具体类</td>
+<td>成系列生产</td>
+</tr>
+<tr>
+<td>Builder 构建器</td>
+<td>复杂对象的<strong>构建过程与表示分离</strong>，分步构造</td>
+<td>分步组装</td>
+</tr>
+</tbody></table>
+<p><strong>结构型（管组装）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Adapter 适配器</td>
+<td><strong>转换接口</strong>，使原本不兼容的类协同工作</td>
+<td>转换接口</td>
+</tr>
+<tr>
+<td>Bridge 桥接</td>
+<td>把<strong>抽象与实现分离</strong>（两个维度），使它们独立变化</td>
+<td>继承树拆两维</td>
+</tr>
+<tr>
+<td>Composite 组合</td>
+<td>把对象组成<strong>树形结构</strong>表示&quot;整体—部分&quot;，单个和组合对象使用一致</td>
+<td>树形目录</td>
+</tr>
+<tr>
+<td>Facade 外观</td>
+<td>给复杂子系统提供一个<strong>统一的高层接口</strong></td>
+<td>统一窗口</td>
+</tr>
+<tr>
+<td>Decorator 装饰器</td>
+<td><strong>动态地给对象附加职责</strong>，比继承灵活</td>
+<td>附加职责</td>
+</tr>
+<tr>
+<td>Flyweight 享元</td>
+<td><strong>共享</strong>大量细粒度对象，节省内存</td>
+<td>共享细粒度</td>
+</tr>
+<tr>
+<td>Proxy 代理</td>
+<td>为对象提供一个<strong>替身</strong>以控制对它的访问</td>
+<td>间接访问</td>
+</tr>
+</tbody></table>
+<p><strong>行为型（管交互）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chain of Responsibility 职责链</td>
+<td>请求沿处理者<strong>链条传递</strong>，直到被处理</td>
+<td>传递职责</td>
+</tr>
+<tr>
+<td>Command 命令</td>
+<td>把请求封装成对象，支持<strong>撤销、日志、排队</strong></td>
+<td>请求变对象</td>
+</tr>
+<tr>
+<td>Interpreter 解释器</td>
+<td>给定语言文法，用解释器<strong>解释句子</strong></td>
+<td>解释语言</td>
+</tr>
+<tr>
+<td>Iterator 迭代器</td>
+<td>顺序访问聚合元素而<strong>不暴露内部表示</strong></td>
+<td>逐个访问</td>
+</tr>
+<tr>
+<td>Mediator 中介者</td>
+<td>封装对象间交互，各对象<strong>不必显式互相引用</strong></td>
+<td>中介转达</td>
+</tr>
+<tr>
+<td>Memento 备忘录</td>
+<td>保存对象状态，需要时<strong>恢复</strong></td>
+<td>存档恢复</td>
+</tr>
+<tr>
+<td>Observer 观察者</td>
+<td>一对多依赖，状态变化时<strong>通知所有依赖者</strong></td>
+<td>订阅—通知</td>
+</tr>
+<tr>
+<td>State 状态</td>
+<td>对象在<strong>状态改变时改变行为</strong></td>
+<td>状态变行为变</td>
+</tr>
+<tr>
+<td>Strategy 策略</td>
+<td>封装一系列<strong>算法</strong>，使它们可<strong>互相替换</strong></td>
+<td>算法可换</td>
+</tr>
+<tr>
+<td>Template Method 模板方法</td>
+<td>父类定<strong>算法骨架</strong>，某些步骤延迟到子类</td>
+<td>骨架在父类</td>
+</tr>
+<tr>
+<td>Visitor 访问者</td>
+<td>不改动类的前提下给类<strong>添加新操作</strong></td>
+<td>外加操作</td>
+</tr>
+</tbody></table>
+<h3 id="h-12">高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）</h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>场景联想</th>
+<th>认题特征词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单例</td>
+<td>系统配置管理器、连接池、打印管理器</td>
+<td>&quot;全局唯一&quot;&quot;只能有一个&quot;</td>
+</tr>
+<tr>
+<td>工厂方法</td>
+<td>日志工厂按配置决定生成文件日志还是数据库日志</td>
+<td>&quot;子类决定创建哪种对象&quot;</td>
+</tr>
+<tr>
+<td>观察者</td>
+<td>微信公众号更新，所有粉丝收到推送；事件监听器</td>
+<td>&quot;一对多&quot;&quot;通知&quot;&quot;订阅&quot;</td>
+</tr>
+<tr>
+<td>策略</td>
+<td>排序算法可换（快排/归并）、支付方式可换（微信/支付宝）</td>
+<td>&quot;算法可互换&quot;&quot;封装算法族&quot;</td>
+</tr>
+<tr>
+<td>适配器</td>
+<td>国标插头转美标插座；老系统接口包装成新接口</td>
+<td>&quot;接口不兼容&quot;&quot;转换&quot;</td>
+</tr>
+<tr>
+<td>装饰器</td>
+<td>给咖啡动态加奶、加糖（不加子类爆炸）；Java IO 流包装</td>
+<td>&quot;动态添加职责&quot;</td>
+</tr>
+<tr>
+<td>代理</td>
+<td>房产中介带看房（控制访问）、图片懒加载、远程调用桩</td>
+<td>&quot;控制访问&quot;&quot;延迟/远程/安全&quot;</td>
+</tr>
+<tr>
+<td>桥接</td>
+<td>形状（圆/方）× 颜色（红/蓝）两个维度独立扩展，不用 2×2 个子类</td>
+<td>&quot;两个变化维度&quot;&quot;抽象与实现分离&quot;</td>
+</tr>
+</tbody></table>
+<p><strong>反例演示（最易混三组）</strong>：</p>
+<ol>
+<li><strong>装饰器 vs 代理</strong>：都包一层对象，区别在<strong>意图</strong>——装饰器给对象<strong>加功能</strong>（层层包出不同组合），代理是<strong>控制访问</strong>（功能不变，管你能不能/何时访问）。</li>
+<li><strong>适配器 vs 外观</strong>：适配器是&quot;一个接口转成另一个接口&quot;（一对一改造）；外观是&quot;一堆子系统接口收敛成一个入口&quot;（多合一简化）。</li>
+<li><strong>桥接 vs 装饰器</strong>：桥接拆的是<strong>两个独立变化的结构维度</strong>（形状×绘制方式）；装饰器是<strong>同一维度上叠加功能</strong>。</li>
+</ol>
+<p><strong>应试动作</strong>：① 背三分类数字&quot;5/7/11&quot; + 口诀；② 速查表每个模式的&quot;速记词&quot;必须条件反射——考试 80% 是&quot;场景/意图 → 模式名&quot;的配对；③ 三组易混对按&quot;意图&quot;区分。</p>
+<h2 id="h-13">第四节 案例题专攻：UML 建模（约 15 分）</h2>
+<p>案例一般是&quot;文字说明 + 用例图/类图/顺序图挖空&quot;，三种小问固定套路：</p>
+<h3 id="h-14">套路一：补用例图——参与者、用例、include/extend</h3>
+<ol>
+<li><strong>参与者</strong>：名词且&quot;谁在使用系统/系统服务谁&quot;（读者、管理员、外部系统）；</li>
+<li><strong>用例</strong>：系统为参与者完成的一件完整的事（动词短语：借书、还书、缴费）；</li>
+<li><strong>挖空补关系</strong>：句子里&quot;必须先/一定要&quot;→ include；&quot;如果…就/可选&quot;→ extend；两种&quot;某类参与者…&quot;→ 用例泛化。</li>
+</ol>
+<h3 id="h-15">套路二：补类图——名词变类、关系按语义套</h3>
+<ol>
+<li>说明中的<strong>核心名词</strong> → 类（读者、图书、借阅记录）；<strong>数字与规则</strong> → 属性（可借数量）；</li>
+<li><strong>关联</strong>：一个读者可有多条借阅记录 → 读者 1 — 1..* 借阅记录；</li>
+<li><strong>聚合/组合</strong>：整体部分且&quot;能否独立存在&quot;判空心/实心菱形；</li>
+<li><strong>泛化</strong>：句中出现&quot;XX 分为 A、B、C&quot;或&quot;A 类读者、B 类读者都可…&quot; → 抽父类；</li>
+<li>多对多时中间挂<strong>关联类</strong>（学生—课程之间挂&quot;选课记录&quot;——与第 2 课 m:n 转关系模式同构）。</li>
+</ol>
+<h3 id="h-16">套路三：补顺序图/状态图——消息按时间排、状态按事件转</h3>
+<ol>
+<li>顺序图挖消息：按说明句子的<strong>先后顺序</strong>填消息名，注意返回消息（虚线箭头）；</li>
+<li>状态图挖状态：状态 = 名词（空闲/占线），转换线上标<strong>事件</strong>；起点实心圆、终点带圈圆；</li>
+<li>模式识别小问：说明里出现&quot;多种通知方式可切换&quot;→ 策略；&quot;状态变化通知订阅者&quot;→ 观察者；&quot;创建过程复杂分步&quot;→ 构建器——套路与第三节速记词完全一致。</li>
+</ol>
+<hr>
+<h2 id="h-17">课后考题（请合上讲义作答）</h2>
+<p><strong>一、选择题</strong></p>
+<ol>
+<li><p>面向对象方法中，将属性和操作捆绑在一起、对外隐藏实现细节的特性称为（ ）。
+A. 继承  B. 多态  C. 封装  D. 重载</p>
+</li>
+<li><p>下列关于重载与重写的说法，正确的是（ ）。
+A. 重写发生在同一个类中，参数列表必须不同
+B. 重载是方法名相同、参数列表不同的多个方法
+C. 重载绑定发生在运行期
+D. 重写要求子类方法参数列表与父类不同</p>
+</li>
+<li><p>父类引用指向子类对象，调用被子类重写的方法时执行的是（ ）。
+A. 父类版本  B. 子类版本  C. 编译时决定执行哪个版本  D. 随机版本</p>
+</li>
+<li><p>下列 UML 图中，属于静态图（结构图）的是（ ）。
+A. 状态图  B. 活动图  C. 部署图  D. 顺序图</p>
+</li>
+<li><p>类图中，鸟与翅膀的关系用（ ）表示最合适。
+A. 空心菱形  B. 实心菱形  C. 虚线箭头  D. 空心三角</p>
+</li>
+<li><p>用例&quot;借书&quot;必须先执行&quot;登录&quot;用例，两用例间的关系是（ ）。
+A. &lt;<extend>&gt;  B. &lt;<include>&gt;  C. 泛化  D. 关联</p>
+</li>
+<li><p>UML 顺序图中，同步消息通常用（ ）表示。
+A. 实线箭头（实心箭头头部）  B. 虚线箭头（返回）  C. 粗横线  D. 小人符号</p>
+</li>
+<li><p>下列设计模式中，属于结构型的是（ ）。
+A. 策略模式  B. 单例模式  C. 装饰器模式  D. 命令模式</p>
+</li>
+<li><p>&quot;将请求封装为对象，从而支持请求排队、日志记录和可撤销操作&quot;，这是（ ）模式。
+A. 备忘录  B. 命令  C. 职责链  D. 迭代器</p>
+</li>
+<li><p>&quot;把对象组成树形结构表示整体—部分层次，使单个对象和组合对象的使用具有一致性&quot;，这是（ ）模式。
+A. 组合  B. 桥接  C. 外观  D. 享元</p>
+</li>
+<li><p>&quot;定义对象间一对多的依赖，当一个对象状态改变时所有依赖者得到通知&quot;，这是（ ）模式。
+A. 中介者  B. 状态  C. 观察者  D. 访问者</p>
+</li>
+<li><p>&quot;将一个类的接口转换成客户希望的另一种接口，使原本不兼容的类可以协同工作&quot;，这是（ ）模式。
+A. 适配器  B. 代理  C. 装饰器  D. 桥接</p>
+</li>
+<li><p>&quot;动态地给一个对象添加一些额外的职责&quot;，这是（ ）模式。
+A. 代理  B. 装饰器  C. 享元  D. 抽象工厂</p>
+</li>
+<li><p>某文本编辑器需要支持多种排序算法且运行时可切换，最合适的模式是（ ）。
+A. 模板方法  B. 状态  C. 策略  D. 工厂方法</p>
+</li>
+<li><p>&quot;保证一个类仅有一个实例，并提供一个全局访问点&quot;，这是（ ）模式。
+A. 单例  B. 原型  C. 构建器  D. 外观</p>
+</li>
+</ol>
+<p><strong>二、案例题（UML 建模，模拟真题风格）</strong></p>
+<p>阅读下列说明，回答问题 1 至问题 3。</p>
+<p>【说明】某图书馆系统支持读者在线借还图书：</p>
+<ul>
+<li>读者使用系统前必须先完成身份登录；</li>
+<li>读者可查询图书并借书；若读者存在逾期未还记录，系统给出拒绝提示（没有逾期则不会有此提示）；</li>
+<li>借书成功后生成借阅记录，系统在应还日期前通过短信或邮件提醒读者（提醒方式可由系统配置切换）；</li>
+<li>一名读者可有多条借阅记录，一本图书可对应多条借阅记录；借阅记录记录所涉图书与读者。</li>
+</ul>
+<p><strong>问题 1</strong>：用例&quot;借书&quot;与&quot;登录&quot;、&quot;拒绝提示&quot;分别是什么关系？说明理由。</p>
+<p><strong>问题 2</strong>：画出（或文字描述）核心类图：读者、图书、借阅记录三类，标注关系与多重性。若系统还要求&quot;读者分为学生读者和教师读者&quot;，类图应如何扩展？</p>
+<p><strong>问题 3</strong>：提醒功能&quot;短信或邮件方式可由系统配置切换&quot;，最适合采用哪种设计模式？说明理由。</p>
+<hr>
+<h2 id="h-18">精华题（历年必考风格，考前必刷）</h2>
+<ol>
+<li><p>【模式分类】将下列模式归类：Singleton、Factory Method、Prototype、Adapter、Bridge、Composite、Observer、Strategy、Command、Memento。</p>
+</li>
+<li><p>【模式识别】给下列场景选模式：① 棋类游戏中大量棋子只按&quot;颜色+位置&quot;区分，位置外提共享以省内存；② 网页图片未滚动到视口时不真正加载，滚动到才加载；③ 报销单提交后依次经过组长、经理、财务审批，任一环节可截住处理；④ 编辑器 Ctrl+Z 撤销上一步操作。</p>
+</li>
+<li><p>【UML 关系】区分下列类图关系：① 雁群与雁；② 鸟与翅膀；③ 汽车类的方法里临时 new 了一个引擎对象；④ 电动车型类实现了&quot;可充电&quot;接口。</p>
+</li>
+<li><p>【重载重写】某类有方法 <code>f(int)</code> 和 <code>f(String)</code>，另有子类重新定义了 <code>f(int)</code>。指出哪些是重载、哪些是重写，并用&quot;哪个版本被执行&quot;说明多态。</p>
+</li>
+<li><p>【状态图 vs 活动图】两图都画&quot;圆角矩形+箭头&quot;，如何快速区分一张图是状态图还是活动图？</p>
+</li>
+<li><p>【include/extend】某系统&quot;发布文章&quot;用例必然执行&quot;保存草稿&quot;，&quot;定时发布&quot;仅当用户勾选时发生。指出关系与箭头方向。</p>
+</li>
+</ol>
+<hr>
+<h2 id="h-19">答案与解析</h2>
+<h3 id="h-20">课后考题答案</h3>
+<p><strong>1. C</strong>
+封装 = 数据 + 操作捆绑、隐藏实现。继承是获得父类特征；多态是同一消息不同响应；重载是同名不同参的方法。</p>
+<p><strong>2. B</strong>
+重载 = 同类中方法名同、<strong>参数列表不同</strong>、编译期绑定；重写 = 子类同签名覆盖父类方法、运行期绑定。A 把两者的特征说反了；D 错——参数不同就不叫重写了。</p>
+<p><strong>3. B</strong>
+运行期按<strong>实际对象类型</strong>绑定 → 执行子类版本，这正是多态。C 错在那是重载的绑定方式（编译期看参数）。</p>
+<p><strong>4. C</strong>
+静态（结构）图：类图、对象图、构件图、部署图、包图；状态图、活动图、顺序图、用例图都是动态（行为）图。部署图虽然画的是物理节点，但描述的是<strong>结构</strong>归属 → 静态。</p>
+<p><strong>5. B</strong>
+鸟与翅膀<strong>同生共死</strong>（翅膀不能离开鸟独立存在）→ 组合 = 实心菱形。雁群与雁这种&quot;散了还能活&quot;才是空心菱形（聚合）。</p>
+<p><strong>6. B</strong>
+&quot;必须先执行&quot;→ include（包含）。extend 是可选/条件触发；泛化是同类用例的一般化。</p>
+<p><strong>7. A</strong>
+同步消息实线实心箭头（发送者停下等返回）；返回用虚线箭头。粗横线是活动图的分叉/汇合，小人是参与者（用例图）。</p>
+<p><strong>8. C</strong>
+结构型 7 种：适配器、桥接、组合、外观、装饰器、享元、代理 → 装饰器在其中。策略、命令属行为型，单例属创建型。</p>
+<p><strong>9. B</strong>
+&quot;请求封装成对象 + 撤销/日志/排队&quot; = 命令模式速记词。备忘录是&quot;存档恢复状态&quot;，职责链是&quot;沿链传递直到处理&quot;。</p>
+<p><strong>10. A</strong>
+&quot;树形 + 整体部分 + 使用一致&quot; = 组合模式。桥接是抽象与实现两维分离；享元是共享细粒度对象。</p>
+<p><strong>11. C</strong>
+&quot;一对多依赖 + 状态变化通知&quot; = 观察者速记词。中介者是&quot;通过中介交互、不显式引用&quot;；状态是&quot;状态变行为变&quot;。</p>
+<p><strong>12. A</strong>
+&quot;转换接口、使不兼容类协同&quot; = 适配器。代理是控制访问不加接口转换；装饰器加职责不转接口。</p>
+<p><strong>13. B</strong>
+&quot;动态附加职责&quot; = 装饰器速记词。代理意图是控制访问。</p>
+<p><strong>14. C</strong>
+&quot;算法可运行时切换&quot; = 策略模式。模板方法是骨架在父类步骤留子类（结构固定）；状态是状态驱动的行为变化（不由客户随意切换算法）。</p>
+<p><strong>15. A</strong>
+&quot;仅一个实例 + 全局访问点&quot; = 单例速记词。</p>
+<h3 id="h-21">案例题答案</h3>
+<p><strong>问题 1</strong>：</p>
+<ul>
+<li>&quot;借书&quot; → &quot;登录&quot;：<strong>&lt;<include>&gt;（包含）</strong>——说明中&quot;使用系统前必须先完成身份登录&quot;，登录是借书的必经步骤，基用例（借书）指向被包含用例（登录）。</li>
+<li>&quot;拒绝提示&quot; → &quot;借书&quot;：<strong>&lt;<extend>&gt;（扩展）</strong>——说明中&quot;若读者存在逾期未还记录，系统给出拒绝提示（没有逾期则不会有）&quot;，是条件触发的可选行为，扩展用例（拒绝提示）指向基用例（借书）。</li>
+</ul>
+<p><strong>问题 2</strong>：</p>
+<pre><code>读者 1 ── 1..* 借阅记录          图书 1 ── 1..* 借阅记录
+</code></pre>
+<ul>
+<li>读者—借阅记录：1 : 1..* 的关联（一名读者可有多条记录，每条记录只属于一名读者）；</li>
+<li>图书—借阅记录：1 : 1..* 的关联（一本书可对应多条借阅记录，每条记录只涉及一本书）；</li>
+<li>借阅记录是关联类：它把&quot;读者&quot;和&quot;图书&quot;的多对多借还关系落到具体记录上（与第 2 课 m:n 转关系模式同构）。</li>
+<li>若增加&quot;读者分为学生读者和教师读者&quot;：增加&quot;读者&quot;的<strong>两个子类</strong>（学生读者、教师读者），与&quot;读者&quot;之间画<strong>泛化</strong>（空心三角指向读者），公共属性上移到父类。</li>
+</ul>
+<p><strong>问题 3</strong>：<strong>策略（Strategy）模式</strong>。
+理由：短信提醒、邮件提醒是<strong>一族可互换的算法</strong>，系统按配置动态选择其一——正是&quot;封装一系列算法、使它们可以互相替换&quot;的意图。实现上定义统一的提醒接口，短信/邮件各做一个具体策略，配置决定注入哪个策略；将来新增&quot;钉钉提醒&quot;只需加一个策略类，调用方不改（呼应第一节多态的动机）。</p>
+<h3 id="h-22">精华题答案</h3>
+<p><strong>1. 分类</strong>：创建型——Singleton、Factory Method、Prototype；结构型——Adapter、Bridge、Composite；行为型——Observer、Strategy、Command、Memento。按口诀核对：创建 5 / 结构 7 / 行为 11。</p>
+<p><strong>2. ① 享元（Flyweight）</strong>——&quot;共享细粒度对象省内存&quot;，棋子共享、位置外提；② <strong>代理（Proxy）</strong>——图片对象作为替身控制对真实图片的访问，&quot;延迟加载&quot;是代理的典型应用；③ <strong>职责链（Chain of Responsibility）</strong>——请求沿处理者链传递直到被处理，任一环节可截住；④ <strong>命令（Command）+ 备忘录（Memento）</strong>——若考&quot;操作封装成对象支持撤销&quot;选命令；若考&quot;恢复到先前状态选快照&quot;则是备忘录。本题&quot;撤销上一步操作&quot;最标准的答案是<strong>命令模式</strong>（撤销机制由命令对象支持）。</p>
+<p><strong>3. ① 聚合</strong>（雁离了雁群还能活，空心菱形）；<strong>② 组合</strong>（翅膀同生共死，实心菱形）；<strong>③ 依赖</strong>（方法内临时使用，虚线箭头）；<strong>④ 实现</strong>（类—接口，空心三角虚线）。</p>
+<p><strong>4. <code>f(int)</code> 与 <code>f(String)</code> 是重载</strong>（同类、同名、参数不同、编译期按参数绑定）；<strong>子类的 <code>f(int)</code> 是重写</strong>（同签名覆盖父类版本）。多态体现：<code>父类引用 p = new 子类(); p.f(5);</code> 执行的是<strong>子类</strong>的 <code>f(int)</code>（运行期按实际对象类型绑定）；而 <code>p.f(&quot;x&quot;)</code> 编译期就绑定到 <code>f(String)</code>。若子类写的是 <code>f(double)</code>，那既没重写也没参与多态——它是子类的新重载方法，父类引用 p 无法直接调到它。</p>
+<p><strong>5. 看转换线上标的是什么</strong>：状态图的箭头上标<strong>事件</strong>（事件驱动一个对象的状态迁移，有明确的起点/终点伪状态），活动图的箭头上是<strong>动作/活动</strong>且出现<strong>泳道、分叉汇合（并发）</strong>；再问&quot;这图描述的是单个对象还是一段业务流程&quot;——单对象用状态图，流程用活动图。</p>
+<p><strong>6. &quot;发布文章&quot;与&quot;保存草稿&quot;是 &lt;<include>&gt;</strong>（必经步骤，箭头从发布文章指向保存草稿）；<strong>&quot;定时发布&quot;是 &lt;<extend>&gt;</strong>（勾选才发生，箭头从定时发布指向发布文章）。口诀：必经 include、可选 extend；include 从基用例指出去，extend 从扩展用例指回来。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="05-操作系统.html">05-操作系统.html</a> 并更新进度表。</p>
+
+</main>
+<footer class="page-nav">
+    <a href="03-软件工程基础.html">← 上一页</a>
+    <a href="index.html">返回目录</a>
+    <a href="05-操作系统.html">下一页 →</a>
+</footer>
+</body>
+</html>
