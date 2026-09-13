@@ -1,0 +1,13 @@
+{
+  "name": "ruankao-software-designer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "软考中级·软件设计师自学资料库：Markdown 讲义 → 静态 HTML（docs/）构建链",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build_html.mjs"
+  },
+  "devDependencies": {
+    "marked": "^16.4.1"
+  }
+}

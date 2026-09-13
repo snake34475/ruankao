@@ -1,0 +1,186 @@
+/* 软考讲义 HTML 基础排版样式（源码：tools/style.css，构建时拷贝到 docs/）
+   采用 CSS 变量制，为未来扩展（深色模式 / 答案折叠 / 侧边栏）预留主题入口 */
+
+:root {
+  --bg: #ffffff;
+  --text: #1f2328;
+  --muted: #59636e;
+  --border: #d1d9e0;
+  --code-bg: #f6f8fa;
+  --accent: #0969da;
+  --quote-border: #d1d9e0;
+  --table-head-bg: #f6f8fa;
+  --mark-color: #cf222e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+/* ---- 标题层级：h1/h2 带下边框（GitHub 风格），拉清大节间的视觉分隔 ---- */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.35;
+  margin: 1.8em 0 0.7em;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 1.9em;
+  margin-top: 0.4em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--border);
+}
+
+h2 {
+  font-size: 1.45em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+/* ★ 星级标注在正文中以红色强调，与讲义的高频考点标记呼应 */
+h2, h3, h4 {
+  unicode-bidi: plaintext;
+}
+
+/* ---- 行内元素 ---- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 650;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+/* ---- 引用块：开头的「分值地位 / 学习目标」导航块 ---- */
+blockquote {
+  margin: 1.2em 0;
+  padding: 0.1em 1em;
+  border-left: 0.25em solid var(--quote-border);
+  color: var(--muted);
+}
+
+blockquote p {
+  margin: 0.6em 0;
+}
+
+/* ---- 代码 ---- */
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  border-radius: 6px;
+  padding: 0.15em 0.4em;
+}
+
+pre {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875em;
+}
+
+/* ---- 表格：考点对比表是主要信息载体，保证可读性 ---- */
+table {
+  border-collapse: collapse;
+  margin: 1.2em 0;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.45em 0.85em;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--table-head-bg);
+  font-weight: 600;
+}
+
+tbody tr:nth-child(2n) {
+  background: color-mix(in srgb, var(--table-head-bg) 55%, transparent);
+}
+
+/* ---- 任务列表（00-总览与进度.md）---- */
+li input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -1.2em;
+}
+
+/* ---- 页脚导航 ---- */
+.page-nav {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
+/* ---- 目录页 ---- */
+ol.toc {
+  padding-left: 1.5em;
+}
+
+ol.toc li {
+  margin: 0.5em 0;
+}
+
+@media (max-width: 40rem) {
+  body {
+    font-size: 15px;
+  }
+
+  main {
+    padding: 1.25rem 1rem 2rem;
+  }
+}

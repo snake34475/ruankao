@@ -1,4 +1,6 @@
 .DS_Store
+node_modules/
+.zcode/
 
 # 希赛辅导 PDF 原件（约 152MB 二进制 + 版权资料），仅本地参考，不提交
 pdf/*.pdf
