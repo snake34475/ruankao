@@ -1,0 +1,434 @@
+
+===== 第 1 页 =====
+软件设计师考试入学试卷（综合知识）
+1、设X为一个整数，由X 的补码[X]补得到对X 取负后的补码[-X]补的方式是（）。
+A、包括符号位在内，将[X]补的所有位变反，末位加1
+B、除了符号位，将[X]补的所有数值位变反，末位加1
+C、将[X]补的所有数值位变反，符号位不变
+D、将[X]补的符号位变反，其余各位不变
+2、如果“2X” 的补码是“90H”，那么X 的真值是（）。
+A、 72
+B、 -56
+C、 56
+D、 111
+3、下列关于流水线方式执行指令的叙述中，不正确的是（）。
+A、 流水线方式可提高单条指令的执行速度
+B、 流水线方式下可同时执行多条指令
+C、流水线方式提高了各部件的利用率
+D、流水线方式提高了系统的吞吐率
+4、 以下存储器中，（）使用电容存储信息且需要周期性地进行刷新。
+A.DRAM
+B.EPROM
+C.SRAM
+D.EEPROM
+5、计算机中，系统总线用于（）连接。
+A、 接口和外设
+B、运算器、控制器和寄存器
+C、 主存和外设部件
+D、DMA 控制器和中断控制器
+6、 以下关于采用一位奇校验方法的叙述中，正确的是（）。
+A、若所有奇数位出错，则可以检测出该错误但无法纠正错误
+B、若所有偶数位出错，则可以检测出该错误并加以纠正
+C、若有奇数个数据位出错，则可以检测出该错误但无法纠正错误
+
+===== 第 2 页 =====
+D、若有偶数个数据位出错，则可以检测出该错误并加以纠正
+7、对布尔表达式 a or((cb<c)and d)求值时，（ ）时可进行短路计算。
+A、a 为 true
+B、 b为 true
+C、C 为 true
+D、d 为 true
+8、中断向量提供的是（）。
+A、 中断源的设备地址
+B、中断服务程序的入口地址
+C、传递数据的起始地址
+D、主程序的断点地址
+9、在计算机系统中，若 P1 进程正在运行，操作系统强行撤下 P1进程所占用的 CPU，让具有更高优先级的
+进程 P2 运行，这种调度方式称为（）
+A、中断方式
+B、先进先出方式
+C、可剥夺方式
+D、不可剥夺方式
+10、在软件系统交付给用户使用后，为了使用户界面更友好，对系统的图形输出进行改进，该行为属于（．
+维护。
+A、 改正性
+B、适应性
+C、改善性
+D、预防性
+11、著作权中，！ 的保护期不受限制。
+A、发表权
+B、发行权
+C、署名权
+D、展览权
+
+===== 第 3 页 =====
+12、若模块 A通过控制参数来传递信息给模块 B，从而确定执行模块 B中的哪部分语句，则这两个模块的耦
+合类型是（）耦合。
+A、数据
+B、标记
+C、控制
+D、公共
+13、国际上为保护计算机软件知识产权不受侵犯所采用的主要方式是实施（）。
+A、合同法
+B、物权法
+C、版权法
+D、刑法
+14、某电脑无法打开任意网页，但是互联网即时聊天软件使用正常，造成该故障的原因可能是（）。
+A、 IP 地址配置错误
+B、 DNS配置错误
+C、网卡故障
+D、链路故障
+15-16、采用 Kruskal 算法求解下图的最小生成树，采用的算法设计策略是（）。该最小生成树的权值是
+）。
+5 5
+3
+E 9 F
+A、分治法 B、动态规划 C、贪心法 D、追溯法
+A、 14 B、 16 C、 20 D、 32
+17、在面向对象系统设计中，如果重用了一个包中的某个类，那么就要重用该包中所有类，这属于（）原
+则。
+A、 共同封闭
+B、共同重用
+
+===== 第 4 页 =====
+C、开放封闭
+D、接口分离
+18、以下敏捷开发方法中， 使用迭代的方法，把一段短的时间（如 30 天）的迭代称为一个冲刺，并
+按照需求优先级来实现产品。
+A、 极限编程（XP)
+B、 水晶法 (Crystal)
+C、并列争球法（Scrum)
+D、自适应软件开发 (ASD)
+19、 PV 操作是操作系统提供的具有特定功能的原语。利用 PV操作可以（）。
+A、保证系统不发生死锁
+B、实现资源的互斥使用
+C、提高资源利用率
+D、推迟进程使用共享资源的时间
+20-21、进程 P1、P2、P3 和 P4 的前趋图如下：
+若用 PV操作控制这几个进程并发执行的过程，则需要设置 4个信号量 S1、 S2、 S3 和 S4，且信号量初
+值都等于零。下图中a和b应分别填写（），c和d应分别填写（）
+P2 P3 Pi
+P1执行． P2执行＜ P3执行* P4执行.
+a V($3) V (S4)
+A、 P (S1) P (S2) 和P(S3) B、 P (S1) P(S2) 和V(S1)
+C、 V (S1) V (S2) 和P(S1) D、 V (S1) V (S2) 和V(S3)
+A、P (S1) P ($2) 和P($4) B、 P ($2) P (S3) 和P(S4)
+C、 V (S1) V (S2) 和V ($4) D、 V (S2) V (S3) 和V(S4)
+22、某文件管理系统采用位示图(bitmap）来记录磁盘的使用情况，若计算机系统的字长为64 位，磁盘容
+量为 512GB，物理块的大小为 4MB，那么位示图的大小为（）个字。
+
+===== 第 5 页 =====
+A、 1024
+B、 2048
+C、 4096
+D、 9600
+23、在 Linux 中，要更改一个文件的权限设置可使用（）命令。
+A、 attrib
+B、 modify
+C、 chmod
+D、 change
+24、在 Python3 中， v 不是合法的异常处理结构。
+A、 try...except...
+B、 try..except...finally
+C、 try...catch...
+D、 raise
+25、对高级语言源程序进行编译或解释过程中需进行语法分析，递归子程序分析属于（）的分析法。
+A、 自上而下
+B、 自下而上
+C、从左至右
+D、从右至左
+26、仅有字符串 a、b构成所有集合中，以a开头的字符串集合可用正规式表达为（）。
+A、a (alb) *
+B、a (a*b*)
+C、 a*b*
+D、 a (ab) *
+27、下列关于 PHP 语言叙述中，错误的是（）
+A、解释型脚本
+B、 面向过程和面向对象并用
+C、跨平台、不开源
+D、数据库支持
+
+===== 第 6 页 =====
+28、Python 语言的特点不包括（）。
+A、跨平台、开源
+B、编译型
+C、支持面向对象程序设计
+D、动态编程
+29、用 C/C++语言为某个应用编写的程序，经过（）后形成可执行程序。
+A、预处理、编译、汇编、链接
+B、编译、预处理、汇编、链接
+C、 汇编、预处理、链接、编译
+D、链接、预处理、编译、汇编
+30、在程序运行过程中，（）时涉及整型数据转换为浮点型数据的操作。
+A、 将浮点型变量赋值给整型变量
+B、将整型常量赋值给整型变量
+C、 将整型变量与浮点型变量相加
+D、将浮点型常量与浮点型变量相加
+31、下列排序算法中，占用辅助存储空间最多的是（）。
+A、 归并排序
+B、快速排序
+C、堆排序
+D、冒泡排序
+32、排序算法的稳定性是指将待排序列排序后，能确保排序码中的相对位置保持不变。（）是稳定的排序
+算法。
+A、冒泡排序
+B、快速排序
+C、堆排序
+D、简单选择排序
+33-34、归并排序算法在排序过程中，将待排序数组分为两个大小相同的子数组，分别对两个子数组采用归
+并排序算法进行排序，排好序的两个子数组采用时间复杂度为 O(n)的过程合并为一个大数组。根据上述描述，
+归并排序算法采用了（）算法设计策略。归并排序算法的最好和最坏情况下的时间复杂度为（）。
+A、分治 B、动态规划 C、贪心 D、回溯
+
+===== 第 7 页 =====
+A、 O(n)和© (nlgn) B、 O(n)和@ (n) C、 @ (nlgn)和© (nlgn) D、 O (nlgn)和©(n)
+35、采用循环队列的优点是（）。
+A、入队和出队可以在队列的同端点进行操作
+B、入队和出队操作都不需要移动队列中的其他元素
+C、避免出现队列满的情况
+D、避免出现队列空的情况
+36、根据渐进分析，表达式序列：n, lgn,2°， 1000n,n”.n!从低到高排序为（）。
+A、 Ign,1000n,n?0.n’.,nl,2”
+B、 n,1000n,lgn,n,n!,2"
+C、 Ign,1000n,n?/,2”,n.n!
+D、 Ign,n?,1000n,n',2",.n!
+37-38、某有向图如下所示，从顶点V1 出发对其进行深度优先遍历，可能得到的遍历序列是（ ）； 从顶点
+v1 出发对其进行广度优先遍历，可能得到的遍历序列是（）。
+V5
+V3
+①v1 v2 v3 V4 v5 ②v1 v3 v4 V5 v2 ③v1 v3 v2 v4 v5 ④v1 V2 v4 v5 V3
+A、 ①②③ B、 ①③④ C、 ①②④ D、 ②③④
+A、 ①② B、 ①③ C、 ②③ D、 ③④
+39、通过元素在存储空间中的相对位置来表示数据元素之间的逻辑关系，是（）的特点。
+A、顺序存储
+B、链表存储
+C、索引存储
+D、哈希存储
+40、采用贪心算法保证能求得最优解的问题是（
+A、 0-1 背包
+B、矩阵链乘
+C、最长公共子序列
+D、部分（分数）背包
+
+===== 第 8 页 =====
+41、以下关于好的软件设计原则的叙述中，不正确的是（）。
+A、模块化
+B、提高模块独立性
+C、集中化
+D、提高抽象层次
+42、以下关于增量模型优点的叙述中，不正确的是（）。
+A、能够在较短的时间提交一个可用的产品系统
+B、可以尽早让用户熟悉系统
+C、优先级高的功能首先交付，这些功能将接受更多的测试
+D、系统的设计更加容易
+43、文档是软件的重要因素，关于高质量文档，以下说法不正确的是（）。
+A、不论项目规模和复杂程度如何，都要用统一的标准指定相同类型和相同要素的文档
+B、应该分清读者对象
+C、应当是完整的、独立的、自成体系的
+D、行文应十分确切，不出现多义性描述
+44、以下关于软件设计原则错误的是（）。
+A、模块的作用域应该在其控制域之内
+B、遵循“高内聚，低耦合”的设计原则
+C、多扇入、少扇出
+D、模块的功能应该是不可预测的
+45、系统可维护性是指维护人员理解、改正、改动和改进软件系统的难易程度，其评价指标不包括（）。
+A、 可理解性
+B、可测试性
+C、可修改性
+D、一致性
+46、以下关于软件设计原则的叙述中，不正确的是（）。
+A、将系统划分为相对独立的模块
+B、模块之间的耦合尽可能小
+C、模块规模越小越好
+D、模块的扇入系数和扇出系数合理
+
+===== 第 9 页 =====
+47、用白盒测试技术对下面流程图进行测试，至少采用（ ）个测试用例才可以实现路径覆盖。
+Y (x=0）＆&
+（y>2)
+(x(1) && N
+（y=1)
+语句A 语句B
+A、 3
+B、 4
+C、6
+D、8
+48-49、如下所示的软件项目活动图中，顶点表示项目里程碑，连接顶点的边表示包含的活动，边上的权重
+表示活动的持续时间（天），则完成该项目的最短时间为（）天。在该活动图中，共有（）条关键路径。
+START 5 FINISH
+A、 17 B、 19 C、 20 D、 22
+A、 1 B、 2 C、 3 D、 4
+50、以下关于软件风险的叙述中，不正确的是（）
+A、风险是可能发生的事件
+B、如果发生风险，风险的本质、范围和时间可能会影响风险所产生的后果
+C、如果风险可以预测，可以避免其发生
+
+===== 第 10 页 =====
+D、可以对风险进行控制
+51、以下不属于软件项目风险的是（）。
+A、团队成员可以进行良好沟通
+B、团队成员离职
+C、团队成员缺乏某方面培训
+D、招不到符合项目技术要求的团队成员
+52、在绘制数据流图时，应遵循父图与子图平衡的原则，所谓平衡是指（）。
+A、父图和子图都不得改变数据流的性质
+B、子图不改变父图数据流的一致性
+C、父图的输入/输出数据流与子图的输入/输出数据流一致
+D、子图的输出数据流完全由父图的输入数据流确定
+53、在运行时将调用和响应调用所需执行的代码加以结合的机制是（）。
+A、强类型
+B、弱类型
+C、静态绑定
+D、动态绑定
+54、在面向对象设计活动中，强调“抽象不应该依赖于细节，细节应该依赖于抽象”，即高层模块不应该依
+赖于低层模块，二者都应该依赖于抽象，属于（）
+A、依赖倒置原则 删除[czzJ： 原则
+B、 迪米特原则
+C、里氏替换原则
+D、接口分离原则
+55、假设 Animal 类中定义接口 cal()，其中 Cat、 Dog、 Bird 分别实现自己的 call()，采用动态绑定将对
+应类与其父类进行绑定，实例化生产对应的对象，当具体对象调用该 call(）得出不同的结果，这一现象称之
+为（）。
+A、继承
+B、重写
+C、重载
+D、多态
+
+===== 第 11 页 =====
+56、在面向对象中，定义一个类 Cat，对应方法有相同的名称，但是参数列表不相同的情形，这样的同名不
+同参数的函数或者方法之间，称之为（）。
+A、继承
+B、重写
+C、重载
+D、多态
+57-60、某快餐厅主要制作并出售儿童套餐，一般包括主餐（各类比萨）、饮料和玩具，其餐品种类可能不
+同，但制作过程相同。前台服务员(Waiter）调度厨师制作套餐。欲开发一软件，实现该制作过程，设计如
+下所示类图。该设计采用（）模式将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建
+不同的表示。其中，（）构造一个使用 Builder 接口的对象。该模式属于（）模式，该模式适用于（）
+的情况。
+Waiter PizzaBuilder
++construct( +creatNewPizza()
++setPizza Builder() +build Parts()
++getPizza() +getPizza()
+HawalianPizzaBuilder Pizza SpicyPizzaBuilder
++builderParts() +build Parts()
+A、 生成器 (Builder） B、抽象工厂 (Abstract Factory)
+C、原型（Prototype） D、工厂方法(Factory Method)
+A、 PizzaBuilder B、 SpicyPizzaBuilder
+C、 Waiter D、 Pizza
+A、 创建型对象 B、结构型对象
+C、 行为型对象 D、结构型类
+A、当一个系统应该独立于它的产品创建、构成和表示时
+B、当一个类希望由它的子类来指定它所创建的对象的时候
+C、当要强调一系列相关的产品对象的设计以便进行联合使用时
+D、当构造过程必须允许被构造的对象有不同的表示时
+61、在用例图中，一个用例明显混合了多种场景，不同的情况会产生多种分支，大部分的情况下通过该用例
+实现，而对于一些特定情况可能通过其他用例进行实现，这是（） 删除[czz]：关系
+
+===== 第 12 页 =====
+A、包含关系
+B、扩展关系
+C、泛化关系
+D、依赖关系
+62、假设事务程序 A 中的表达式x/y，若y取值为 0，则计算该表达式时，会产生故障。该故障属于（）。
+A、系统故障
+B、事务故障
+C、介质故障
+D、死机
+63-64、某高校人力资源管理系统的数据库中，教师关系模式为下（教师号，姓名，部门号，岗位，联系地
+址，薪资），函数依赖集F=(教师号一（姓名，部门号，岗位，联系地址），岗位一薪资}。T关系的主键
+为（），函数依赖集F（）。
+A、教师号，「存在冗余以及插入异常和删除异常的问题
+B、教师号，下不存在冗余以及插入异常和删除异常的问题
+C、（教师号，岗位），丁存在元余以及插入异常和删除异常的问题
+D、 （教师号，岗位），T不存在冗余以及插入异常和删除异常的问题
+A、存在传递依赖，故关系模式T最高达到 1NF
+B、存在传递依赖，故关系模式T最高达到 2NF
+、不存在传递依赖，故关系模式「 最高达到 3NF
+D、不存在传递依赖，故关系模式「最高达到 4NF
+65、对于事务特性，我们用“ACID”来总结事务的四个特性，其中C指的是（）特性。
+A、一致性
+B、隔离性
+C、原子性
+D、持久性
+66-67、给定关系R(U,F)，其中 U-{A,B,C.D,E,H}，F={A+B,B-DH,A+H,C-E)。关系有（），F中（）。
+A、 1个候选码A
+B、2个候选码A、B
+C、 1个候选码 AC
+D、2个候选码A、C
+A、不存在传递依赖，但存在冗余函数依赖
+
+===== 第 13 页 =====
+B、既不存在传递依赖，也不存在冗余函数依赖
+C、存在传递依赖 A-D 和 A-H，但不存在冗余函数依赖
+D、存在传递依赖 A-D 和A+H，并且还存在冗余函数依赖
+68、某企业信,息系统采用分布式数据库系统。“当某一场地故障时，系统可以使用其他场地上的副本而不至
+于使整个系统瘫痪〞称为分布式数据库的（）。
+A、 共享性
+B、自治性
+C、可用性
+D、分布性
+69、 Telnet 协议是一种（）的远程登录协议。
+A、安全
+B、 B/S 模式
+C、基于 TCP
+D、分布式
+70、（）是构成我国保护计算机软件著作权的两个基本法律文件。
+A、 《软件法》和《计算机软件保护条例》
+B、 《中华人民共和国著作权法》和《计算机软件保护条例》
+C、 《软件法》和《中华人民共和国著作权法》
+D、《中华人民共和国版权法》和《计算机软件保护条例》
+71-75、The beauty of software is in its function, in its internal structure, and in the way in which it is
+created by a team. To a user, a program with just the right features presented through an intuitive
+and (1) interface is beautiful. To a software designer, an internal structure that is partitioned in a
+simple and intuitive manner, and that minimizes internal coupling is beautiful. To developers and
+managers, a motivated team of developers making significant progress every week, and producing
+defect-free code, is beautiful. There is beauty on all these levels.
+
+===== 第 14 页 =====
+Our world needs softwarelots of software. Fifty years ago, software was something that ran in a
+few big and expensive machines. Thirty years ago, it was something that ran in most companies
+and industrial settings. Now there is software running in our cell phones, watches, appliances,
+automobiles, toys, and tools. And need for new and better software never (2) . As our civilization
+grows and expands, as developing nations build their infrastructures, as developed nations strive
+to achieve ever greater efficiencies, the need for more and more Software (3) to increase. It would
+be a great shame if, in all that software, there was no beauty.
+We know that software can be ugly. We know that it can be hard to use, unreliable, and carelessly
+structured. We know that there are software systems whose tangled and careless internal
+structures make them expensive and difficult to change. We know that there are software systems
+that present their features through an awkward and cumbersome interface. We know that there
+are software systems that crash and misbehave. These are (4) Systems. Unfortunately, as a
+profession, software developers tend to create more ugly systems than beautiful ones.
+There is a secret that the best software developers know. Beauty is cheaper than ugliness. Beauty
+is faster than ugliness. A beautiful software system can be built and maintained in less time, and
+for less money, than an ugly one. Novice software developers don't understand this. They think
+that they have to do everything fast and quick. They think that beauty is (5) No! By doing things
+fast and quick, they make messes that make the software stiff, and hard to understand, beautiful
+systems are flexible and easy to understand. Building them and maintaining them is a joy. It is
+ugliness that is impractical. Ugliness will slow you down and make your software expensive and
+brittle. Beautiful systems cost the least build and maintain, and are delivered soonest.
+A、 Simple B、 Hard C、 Complex D、 duplicated
+A、 happens B、 exists C、 stops D、 starts
+A、 starts B、 continues C、 appears D、 stops
+A、 practical B、 useful C、 beautiful D、ugly
+A、 impractical B、 perfect C、 time-wasting D、 practical
+
+===== 第 15 页 =====
+软件设计师考试入学试卷（参考答案）
+综合知识
+2 3 5 6 8 9 10
+A B A C C A B C B
+11 12 13 14 15 16 17 18 19 20
+C C C B C A B C B C
+21 22 23 24 25 26 27 28 29 30
+B B C C A A C B A C
+31 32 33 34 35 36 37 38 39 40
+A A A C B D D B A D
+41 42 43 44 45 46 47 48 49 50
+C D A D D C A D B C
+51 52 53 54 55 56 57 58 59 60
+A C D A D C A C A D
+61 62 63 64 65 66 67 68 69 70
+B B A B A C D C C B
+71 72 73 74 75
+A C B D A
