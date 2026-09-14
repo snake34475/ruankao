@@ -3,27 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>软考软件设计师自学资料库 · 目录</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
-<body>
+<body class="is-index">
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+
 <main>
-<h1>软考软件设计师自学资料库</h1>
-<p>2026 年 10 月 24—27 日考试，两科均 ≥45 分。以本资料库为唯一学习材料。</p>
-<h2>课程目录</h2>
-<ol class="toc">
-  <li><a href="软件设计师考点大纲.html">软件设计师（软考中级）考点大纲与学习范围</a></li>
-  <li><a href="00-总览与进度.html">软考软件设计师 · 自学总览与进度</a></li>
-  <li><a href="01-数据结构与算法.html">01 数据结构与算法</a></li>
-  <li><a href="02-数据库系统.html">02 数据库系统</a></li>
-  <li><a href="03-软件工程基础.html">03 软件工程基础</a></li>
-  <li><a href="04-面向对象与设计模式.html">04 面向对象与设计模式</a></li>
-  <li><a href="05-操作系统.html">05 操作系统</a></li>
-  <li><a href="06-计算机网络.html">06 计算机网络</a></li>
-  <li><a href="07-程序设计语言基础.html">07 程序设计语言基础</a></li>
-  <li><a href="08-信息安全.html">08 信息安全</a></li>
-  <li><a href="10-标准化与知识产权.html">10 标准化与知识产权</a></li>
-</ol>
+  <div class="landing">
+    <div class="hero">
+      <p class="eyebrow"><span>2026 年下半年</span><span class="dot"></span><span>中级 · 软件设计师</span></p>
+      <h1>软考软件设计师<br>自学资料库</h1>
+      <p>不看视频，以本资料库为唯一学习材料。按梯队顺序逐考点推进，每课含讲义、课后考题、精华题与答案解析。</p>
+      <div class="chips">
+        <span class="chip">考试时间 <b>10 月 24—27 日</b>·机考</span>
+        <span class="chip">两科各 <b>75 分</b>，<b>45 分</b>合格</span>
+        <span class="chip gold">进度 <b>5/15</b> 份</span>
+      </div>
+    </div>
+  <section class="group">
+    <header>
+      <h2>总纲</h2>
+      <span class="note">先看全局，再按梯队推进</span>
+    </header>
+    <div class="cards">
+      <a class="card" href="软件设计师考点大纲.html">
+        <span class="n">大纲</span>
+        <span class="body">
+          <span class="t">软件设计师（软考中级）考点大纲与学习范围</span>
+          
+        </span>
+      </a>
+      <a class="card" href="00-总览与进度.html">
+        <span class="n">00</span>
+        <span class="body">
+          <span class="t">自学总览与进度</span>
+          
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <header>
+      <h2>第一梯队</h2>
+      <span class="note">分值大头 + 案例直接考，优先学</span>
+    </header>
+    <div class="cards">
+      <a class="card" href="01-数据结构与算法.html">
+        <span class="n">01</span>
+        <span class="body">
+          <span class="t">数据结构与算法</span>
+          <span class="h">选择题约 8–10 题 + 案例算法题</span>
+        </span>
+      </a>
+      <a class="card" href="02-数据库系统.html">
+        <span class="n">02</span>
+        <span class="body">
+          <span class="t">数据库系统</span>
+          <span class="h">选择题约 5–6 题 + 案例 SQL/E-R 题</span>
+        </span>
+      </a>
+      <a class="card" href="03-软件工程基础.html">
+        <span class="n">03</span>
+        <span class="body">
+          <span class="t">软件工程基础</span>
+          <span class="h">选择题约 6–8 题 + 案例数据流图题</span>
+        </span>
+      </a>
+      <a class="card" href="04-面向对象与设计模式.html">
+        <span class="n">04</span>
+        <span class="body">
+          <span class="t">面向对象与设计模式</span>
+          <span class="h">选择题约 5–7 题 + 案例 UML 题</span>
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <header>
+      <h2>第二梯队</h2>
+      <span class="note">选择题稳定得分点</span>
+    </header>
+    <div class="cards">
+      <a class="card" href="05-操作系统.html">
+        <span class="n">05</span>
+        <span class="body">
+          <span class="t">操作系统</span>
+          <span class="h">约 4–6 题</span>
+        </span>
+      </a>
+      <a class="card" href="06-计算机网络.html">
+        <span class="n">06</span>
+        <span class="body">
+          <span class="t">计算机网络</span>
+          <span class="h">约 4–5 题</span>
+        </span>
+      </a>
+      <a class="card" href="07-程序设计语言基础.html">
+        <span class="n">07</span>
+        <span class="body">
+          <span class="t">程序设计语言基础</span>
+          <span class="h">约 3–5 题</span>
+        </span>
+      </a>
+      <a class="card" href="08-信息安全.html">
+        <span class="n">08</span>
+        <span class="body">
+          <span class="t">信息安全</span>
+          <span class="h">约 3–4 题</span>
+        </span>
+      </a>
+      <a class="card done" href="09-计算机系统基础.html">
+        <span class="n">09</span>
+        <span class="body">
+          <span class="t">计算机系统基础</span>
+          <span class="h">约 6–8 题</span>
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <header>
+      <h2>第三梯队</h2>
+      <span class="note">背诵即可拿分</span>
+    </header>
+    <div class="cards">
+      <a class="card done" href="10-标准化与知识产权.html">
+        <span class="n">10</span>
+        <span class="body">
+          <span class="t">标准化与知识产权</span>
+          <span class="h">约 3–4 题</span>
+        </span>
+      </a>
+      <a class="card done" href="11-专业英语.html">
+        <span class="n">11</span>
+        <span class="body">
+          <span class="t">专业英语</span>
+          <span class="h">固定 5 题</span>
+        </span>
+      </a>
+      <a class="card done" href="12-数学与多媒体.html">
+        <span class="n">12</span>
+        <span class="body">
+          <span class="t">数学与多媒体</span>
+          <span class="h">约 3–4 题</span>
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <header>
+      <h2>收尾</h2>
+      <span class="note">全真模拟，整卷限时训练</span>
+    </header>
+    <div class="cards">
+      <a class="card done" href="99-考前全真模拟卷.html">
+        <span class="n">99</span>
+        <span class="body">
+          <span class="t">考前全真模拟卷</span>
+          <span class="h">75 道选择题 + 5 道案例题</span>
+        </span>
+      </a>
+    </div>
+  </section>
+  </div>
 </main>
+
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

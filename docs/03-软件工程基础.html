@@ -3,19 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>03 软件工程基础</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html" class="is-current" aria-current="page"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">03 软件工程基础</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题约 6–8 题（第一梯队）+ 案例题「数据流图」一道大题（约 15 分，常是案例第一题）。内聚耦合排序、逻辑覆盖强弱、McCabe 环路复杂度几乎每年必考其一。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 给一段项目描述选出合适的开发模型；② 背出内聚/耦合七级排序并判断具体场景；③ 排逻辑覆盖强弱、算 McCabe 环路复杂度；④ 区分四种维护和质量特性分类；⑤ 认出 CMM 等级描述；⑥ 按套路补全数据流图（案例题）。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03 软件工程基础</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题约 6–8 题（第一梯队）+ 案例题「数据流图」一道大题（约 15 分，常是案例第一题）。内聚耦合排序、逻辑覆盖强弱、McCabe 环路复杂度几乎每年必考其一。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 给一段项目描述选出合适的开发模型；② 背出内聚/耦合七级排序并判断具体场景；③ 排逻辑覆盖强弱、算 McCabe 环路复杂度；④ 区分四种维护和质量特性分类；⑤ 认出 CMM 等级描述；⑥ 按套路补全数据流图（案例题）。</p>
 </blockquote>
-<h2 id="h-2">第一节 软件开发模型 ★★</h2>
+<h2 id="h-2">第一节 软件开发模型 <span class="stars">★★</span></h2>
 <h3 id="h-3">为什么有多种模型</h3>
 <p>不同项目的<strong>需求清晰度</strong>和<strong>风险高低</strong>差别巨大：需求写得一清二楚的项目不需要反复确认，需求说不清的项目硬按部就班走完设计才发现做错了。开发模型的区别就是&quot;<strong>怎么安排&#39;想清楚&#39;和&#39;动手做&#39;的顺序</strong>&quot;。认模型题的关键是抓题干特征词。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -56,6 +128,7 @@
 <td>&quot;每日站会&quot;&quot;Sprint&quot;&quot;结对编程&quot;&quot;测试驱动&quot;</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>Scrum 与 XP 要能区分</strong>：Scrum 是<strong>管理框架</strong>（产品负责人、Sprint 冲刺、每日站会、回顾会）；XP 极限编程是<strong>工程实践</strong>（结对编程、测试驱动开发 TDD、持续集成、重构、小型发布）。题干问&quot;结对编程属于&quot;→ XP。</p>
 <p><strong>反例演示（易错）</strong>：</p>
 <ul>
@@ -64,7 +137,7 @@
 <li>瀑布模型的&quot;缺点&quot;考法：<strong>直到后期才能看到可运行软件</strong>，需求变更代价大——不是&quot;没有文档&quot;（瀑布恰恰文档最全）。</li>
 </ul>
 <p><strong>应试动作</strong>：背四个特征词对应（明确→瀑布 / 不明确→原型 / 高风险→螺旋 / 多变→敏捷），考试就是配对题。</p>
-<h2 id="h-4">第二节 需求分析 ★</h2>
+<h2 id="h-4">第二节 需求分析 <span class="stars">★</span></h2>
 <p><strong>需求工程的四个过程</strong>（背顺序）：<strong>需求获取 → 需求分析 → 需求规格说明（定义）→ 需求验证（确认）</strong>。验证指&quot;检查需求规格说明书是否正确、一致、完整&quot;。</p>
 <p><strong>需求分类</strong>：<strong>功能需求</strong>（系统做什么：查询、统计）、<strong>非功能需求</strong>（做得怎么样：性能、安全性、可靠性）、<strong>设计约束</strong>（必须用什么平台、遵循什么标准）。考法：给一句描述判断属于哪类——&quot;响应时间不超过 2 秒&quot;→ 非功能需求。</p>
 <p><strong>结构化分析的核心工具</strong>（与案例题直接挂钩，第九节展开）：</p>
@@ -73,10 +146,11 @@
 <li><strong>数据字典（DD）</strong>：给 DFD 中每个数据流、文件下精确定义；</li>
 <li>两者配合：<strong>只有 DFD 没有 DD，图中的名字就没有精确含义</strong>——这是&quot;为什么需要数据字典&quot;的动机。</li>
 </ul>
-<h2 id="h-5">第三节 模块化设计：内聚与耦合 ★★★（几乎每年考）</h2>
+<h2 id="h-5">第三节 模块化设计：内聚与耦合 <span class="stars">★★★</span>（几乎每年考）</h2>
 <h3 id="h-6">为什么要&quot;高内聚、低耦合&quot;</h3>
 <p>软件要拆成模块，拆法有好坏：一个模块内部干的事<strong>越相关</strong>（内聚越高），越容易看懂、改起来越不容易牵连别处；模块之间<strong>越独立</strong>（耦合越低），一个模块改动对别的影响越小。&quot;高内聚、低耦合&quot;就是这两条经验的一句话版。<strong>内聚看模块内部，耦合看模块之间</strong>——先分清这个方向再背排序。</p>
 <h3 id="h-7">内聚七级（从低到高，必须背顺序）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -129,7 +203,9 @@
 <td>&quot;就是一个功能&quot;</td>
 </tr>
 </tbody></table>
+</div>
 <h3 id="h-8">耦合七级（从高到低，必须背顺序）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -182,6 +258,7 @@
 <td>&quot;各干各的&quot;</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（最易混三组）</strong>：</p>
 <ol>
 <li><strong>逻辑内聚 vs 偶然内聚</strong>：动作之间&quot;有点相似&quot;（都跟打印/输入输出沾边）→ 逻辑内聚；&quot;完全没关系&quot;→ 偶然内聚。判断标准是<strong>相似性</strong>。</li>
@@ -189,12 +266,13 @@
 <li><strong>标记耦合 vs 数据耦合</strong>：传的是<strong>一条记录/结构</strong>（学生信息整条）→ 标记耦合；只是<strong>一个简单变量</strong>（学号这一个数）→ 数据耦合。</li>
 </ol>
 <p><strong>应试动作</strong>：两个排序要能默写。记法——内聚从&quot;凑（偶然）&quot;到&quot;专（功能）&quot;，耦合从&quot;掀内脏（内容）&quot;到&quot;不认识（非直接）&quot;；做题先抓题干关键词（同一时间/同一数据/接力/命令/记录/变量）对号入座。</p>
-<h2 id="h-9">第四节 软件测试 ★★★</h2>
+<h2 id="h-9">第四节 软件测试 <span class="stars">★★★</span></h2>
 <h3 id="h-10">测试的阶段（背顺序）</h3>
 <p><strong>单元测试 → 集成测试 → 确认测试 → 系统测试 → 验收测试</strong>。确认测试检验软件是否满足<strong>需求规格说明书</strong>；验收测试由<strong>用户</strong>参与（常含 α 测试——开发方场所、β 测试——用户实际环境）。</p>
 <h3 id="h-11">白盒测试与逻辑覆盖（必考排序）</h3>
 <p>白盒测试把程序看成透明的，按<strong>程序内部逻辑</strong>设计用例。逻辑覆盖从弱到强：</p>
 <p><strong>语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</strong></p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -227,6 +305,7 @@
 <td>覆盖程序<strong>所有可能的执行路径</strong>（最强）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（经典陷阱）</strong>：<strong>满足条件覆盖不一定满足判定覆盖</strong>。例：判定 <code>A&gt;0 AND B&gt;0</code>，两个用例取 (A=1,B=0) 和 (A=0,B=1)——两个条件的真假都取遍了（条件覆盖满足），但判定结果<strong>都是假</strong>，真分支一次没走过（判定覆盖不满足）。这就是为什么排序里条件覆盖只保证条件、不保证分支，要两者都保必须上&quot;判定/条件覆盖&quot;。</p>
 <h3 id="h-12">McCabe 环路复杂度（必考计算）</h3>
 <p>衡量程序控制流的复杂程度，三种等价算法：</p>
@@ -238,6 +317,7 @@
 <li>复合条件 <code>if (A&gt;0 AND B&gt;0)</code> 在某些教材拆成多个条件的组合时算法不同——软考默认按<strong>判定节点数+1</strong>（即这个 if 算 1 个判定节点）。</li>
 </ul>
 <h3 id="h-13">黑盒测试（看功能不看代码）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -262,9 +342,11 @@
 <td>输入条件组合 → 判定表</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>应试动作</strong>：① 覆盖强弱排序背死（语句最弱、路径最强）；② McCabe 三公式等价、任给两样算第三样；③ 测试五阶段顺序；④ &quot;条件覆盖 ⊉ 判定覆盖&quot;这个陷阱认得出。</p>
-<h2 id="h-14">第五节 软件维护 ★</h2>
+<h2 id="h-14">第五节 软件维护 <span class="stars">★</span></h2>
 <p>维护是软件交付<strong>之后</strong>的修改，四类（必须会对号入座）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -294,10 +376,12 @@
 <td>&quot;提前把老代码重构以便日后维护&quot;</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（易错）</strong>：改正 vs 预防——修<strong>已发生</strong>的 bug 是改正性；改<strong>还没发生</strong>的隐患是预防性（易混淆知识点里专门强调这对）。<strong>占比</strong>：完善性维护占全部维护工作量的一半以上（约 50%–60%），选择题直接考。</p>
 <p><strong>应试动作</strong>：背四类 + &quot;完善性占大头&quot;；判断时先问&quot;错误发生了没（改正/预防）→ 没发生是预防；再问是改自己还是改环境（完善/适应）&quot;。</p>
-<h2 id="h-15">第六节 软件质量特性 ★</h2>
+<h2 id="h-15">第六节 软件质量特性 <span class="stars">★</span></h2>
 <p><strong>McCall 模型</strong>把质量特性分三组（背分组归属即可）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -318,17 +402,19 @@
 <td>可移植性、复用性、互操作性</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>ISO/IEC 9126 六大特性</strong>：<strong>功能性、可靠性、易用性、效率、维护性、可移植性</strong>（各含子特性，如可靠性含成熟性/容错性/易恢复性）。</p>
 <p><strong>应试动作</strong>：考法是&quot;XX 属于哪个特性/哪一组&quot;——背 ISO 六大特性名 + McCall 三组归属；易混点：&quot;易恢复性&quot;属于<strong>可靠性</strong>子特性，&quot;互操作性&quot;属于<strong>功能性</strong>子特性。</p>
-<h2 id="h-16">第七节 项目管理基础 ★</h2>
+<h2 id="h-16">第七节 项目管理基础 <span class="stars">★</span></h2>
 <ul>
 <li><strong>甘特图（Gantt）</strong>：横轴时间、条形表示任务工期，直观；<strong>缺点：不能显式反映任务之间的依赖关系</strong>（经典考点）。</li>
 <li><strong>PERT 图 / 关键路径</strong>：任务网络图求关键路径——计算方法与第一课 3.6 AOE 网完全相同（顺推取 max、逆推取 min、余量为 0 即关键活动），不重复讲，见 <a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第 3.6 节。</li>
 <li><strong>COCOMO 估算模型</strong>：按代码规模（KLOC）估算工作量，基本模型 <strong>E = a × (KLOC)^b</strong>（E 单位人月），按项目类型（组织型 / 半独立 / 嵌入型）取不同参数 a、b。考法是<strong>题干给公式和参数</strong>，代入算即可——例：E = 2.0×(KLOC)^1.0，规模 30KLOC → E = 2.0×30 = 60 人月。</li>
 <li><strong>风险管理</strong>：过程 = 风险识别 → 风险预测（估计概率与损失）→ 风险评估 → 风险控制。<strong>风险暴露 = 风险损失 × 风险发生概率</strong>（代入算例：损失 10 万、概率 20% → 风险暴露 2 万）。风险分类：项目风险（预算进度）、技术风险（技术方案）、商业风险（市场）。</li>
 </ul>
-<h2 id="h-17">第八节 CMM / CMMI ★</h2>
+<h2 id="h-17">第八节 CMM / CMMI <span class="stars">★</span></h2>
 <p>CMM 把软件过程成熟度分五级（背顺序和关键词）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -363,6 +449,7 @@
 <td>持续改进，新技术、防患未然</td>
 </tr>
 </tbody></table>
+</div>
 <p>CMMI（能力成熟度模型集成）阶段式表示同样五级：初始、已管理、已定义、量化管理、优化。<strong>考法就是配对</strong>：抓&quot;文档化标准化&quot;→ 3 级，&quot;量化&quot;→ 4 级，&quot;持续改进&quot;→ 5 级，&quot;重复以往成功&quot;→ 2 级。</p>
 <h2 id="h-18">第九节 案例题专攻：数据流图（约 15 分）</h2>
 <p>案例第一题一般是&quot;文字说明 + 顶层图/0 层图（缺数据流）&quot;，三小问：补数据流（起点、终点、名字）、指出加工用到的文件、补数据字典。<strong>全部答案都藏在说明文字里，套路如下：</strong></p>
@@ -476,7 +563,14 @@ A. 可重复级  B. 已定义级  C. 已管理级  D. 优化级</p>
 </li>
 </ol>
 <hr>
-<h2 id="h-25">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-26">课后考题答案</h3>
 <p><strong>1. B</strong>
 &quot;用户说不清需求 + 先做演示确认&quot;是原型模型的标志特征。瀑布要需求明确；螺旋面向高风险大型项目（核心是风险分析）；V 模型是测试与开发阶段对应的瀑布变体。</p>
@@ -511,6 +605,7 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 <h3 id="h-27">案例题答案</h3>
 <p><strong>问题 1（缺失数据流，共 3 条）</strong>：
 逐句扫描：句 2 中&quot;向相应餐厅发送订单信息&quot;没有画出；句 4 中&quot;配送员获取取餐通知&quot;没有画出（取餐通知由加工③读取配送文件后发给配送员）；句 5 中&quot;系统更新订单状态&quot;没有画出。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -539,6 +634,7 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 <td>订单状态（更新）</td>
 </tr>
 </tbody></table>
+</div>
 <p>易漏点：第 3 条是&quot;加工 → 文件&quot;的写流，反馈类（确认/通知）和文件读写流最容易漏。</p>
 <p><strong>问题 2</strong>：</p>
 <ul>
@@ -560,14 +656,32 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 <p><strong>5. 满足条件覆盖</strong>（A、B 两条件的真、假取值都各出现了一次）；<strong>不满足判定覆盖</strong>（两次判定结果都是假，s=1 的真分支从未执行）。这也是&quot;条件覆盖不包含判定覆盖&quot;的实例——想同时保证要用判定/条件覆盖或更强的条件组合覆盖。</p>
 <p><strong>6. ① 改正性</strong>（修已发生的 bug）② <strong>预防性</strong>（为将来的修改提前重构，防患未然）③ <strong>完善性</strong>（扩充新功能）④ <strong>适应性</strong>（适应数据库环境更换）。易混点：② 是&quot;还没发生&quot;→ 预防，不是改正。</p>
 <p><strong>7. 第 4 级（已管理级）</strong>。关键词&quot;定量度量与控制&quot;；若描述为&quot;持续改进、采用新技术&quot;则是第 5 级优化级。</p>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="04-面向对象与设计模式.html">04-面向对象与设计模式.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-数据库系统.html">
+      <span class="k">上一课</span>
+      <span class="t">02 数据库系统</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="04-面向对象与设计模式.html">
+      <span class="k">下一课</span>
+      <span class="t">04 面向对象与设计模式</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="02-数据库系统.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="04-面向对象与设计模式.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

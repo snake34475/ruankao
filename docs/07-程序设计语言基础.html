@@ -3,19 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>07 程序设计语言基础</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html" class="is-current" aria-current="page"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">07 程序设计语言基础</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题约 3–5 题（第二梯队稳定得分点）。本课一般不对应独立案例大题，但<strong>正规式与有限自动机、传值/传址调用</strong>是选择题里的高频题，套路固定、练熟即送分；编译阶段顺序几乎每年都碰。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 背下编译六个阶段的顺序与各阶段产物；② 给正规式快速判串、给状态图写正规式；③ 逐步追踪传值/传址调用后变量的最终值；④ 秒答各语言特点分类与静态/动态错误归类。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 7 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">07 程序设计语言基础</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题约 3–5 题（第二梯队稳定得分点）。本课一般不对应独立案例大题，但<strong>正规式与有限自动机、传值/传址调用</strong>是选择题里的高频题，套路固定、练熟即送分；编译阶段顺序几乎每年都碰。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 背下编译六个阶段的顺序与各阶段产物；② 给正规式快速判串、给状态图写正规式；③ 逐步追踪传值/传址调用后变量的最终值；④ 秒答各语言特点分类与静态/动态错误归类。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 语言处理程序：编译与解释 ★★★</h2>
+<h2 id="h-2">第一节 语言处理程序：编译与解释 <span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：计算机 CPU 只认识机器码（0/1 指令），而我们写的是高级语言（C、Java、Python…）。中间必须有一个&quot;翻译程序&quot;把高级语言翻译成机器能执行的东西。按翻译方式不同，分两大流派：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -55,13 +127,15 @@
 <td>解释器<strong>参与</strong>执行</td>
 </tr>
 </tbody></table>
+</div>
 <p>共同点：两种方式<strong>都</strong>要做词法分析、语法分析、语义分析——别以为解释器就&quot;不分析&quot;，它只是不生成目标程序。</p>
 <p><strong>记忆口诀</strong>：编译&quot;先翻完再念&quot;，解释&quot;边念边翻&quot;——像拿到一本外文书：编译是请人整本翻译好再读，解释是请个翻译坐在旁边念一句你听一句。</p>
 <p><strong>Java / C# 是特殊流派（选择题爱考）</strong>：它们<strong>先编译成中间代码</strong>（Java 字节码 / .NET 中间语言），<strong>再由虚拟机（JVM / CLR）解释或即时编译执行</strong>——&quot;先编译后解释&quot;。正因为中间代码与平台无关、各平台各有虚拟机，Java 才能&quot;一次编写，到处运行&quot;。</p>
 <p><strong>反例演示</strong>：判断题「解释方式也会生成与源程序等价的目标程序」——<strong>错</strong>。这是本考点最常见的陷阱选项；解释器从头到尾不产出可独立执行的目标程序。反向陷阱「编译方式执行效率比解释方式低」——错，编译是&quot;先翻完再念&quot;，运行时零翻译开销，效率更高。</p>
 <p><strong>应试动作</strong>：背对比表的三行——①是否生成目标程序（编译生成、解释不生成）②执行效率（编译高）③可移植性（解释好）。考场上题干不会出现&quot;流派&quot;这种词，直接给&quot;某语言程序需先翻译成目标程序后执行&quot;&quot;逐句翻译执行&quot;等描述让你归类。</p>
-<h2 id="h-3">第二节 编译的六个阶段 ★★★</h2>
+<h2 id="h-3">第二节 编译的六个阶段 <span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：为什么翻译不一步到位，要分六个阶段？因为&quot;读懂一段话&quot;本身就是分层的：先认字（词法），再看句子通不通（语法），再理解意思对不对（语义），最后才落笔翻译（中间代码→优化→目标代码）。分层后每个阶段只管一件事，出错也好定位——你在第 2 阶段就发现&quot;句子结构不对&quot;，不必等到最后生成机器码才发现。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -115,6 +189,7 @@
 <td>—</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>顺序口诀</strong>：<strong>词法 → 语法 → 语义 → 中间 → 优化 → 目标</strong>（&quot;认字 → 组句 → 懂意 → 打草稿 → 改稿 → 定稿&quot;）。另外<strong>符号表</strong>贯穿编译全程，记录各符号（变量、函数）的信息，辅助语义检查和代码生成。</p>
 <p><strong>中间代码举例</strong>（四元式）：对 <code>x := y + z * 60</code>：</p>
 <pre><code>(*, z, 60, t1)   ← 先算乘法，结果放临时变量 t1
@@ -123,6 +198,7 @@
 </code></pre>
 <p>中间代码&quot;中间&quot;的意义：它站在高级语言和机器语言之间，<strong>与机器无关</strong>——前端（词法/语法/语义）只管&quot;读懂&quot;，产出到中间代码为止；后端（优化/目标代码）才管&quot;搬到具体机器上&quot;。换一种 CPU，前端原封不动，只改后端。</p>
 <p><strong>错误分类（必考表格，背熟）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -152,10 +228,12 @@
 <td>除数为零、数组下标越界、陷入死循环、无效指针引用</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（最易混的两组）</strong>：①「拼写错误 vs 缺分号」——单词拼错、用了中文标点属于<strong>词法</strong>错误；缺分号、缺括号、缺操作数属于<strong>语法</strong>错误（涉及语言结构）。②「编译时 vs 运行时」——除零、下标越界编译器查不出来（它不知道运行时下标是多少），所以叫<strong>动态</strong>错误；死循环也是运行时才暴露。</p>
 <p><strong>应试动作</strong>：① 背死六阶段顺序和三个&quot;输入→输出&quot;（字符流→记号流→语法树→中间代码→目标程序）；② 错误四分类给例子能归类——判断窍门先问&quot;编译时能发现吗&quot;，再按词法（字符级）/语法（结构级）/静态语义（类型级）定位；③ 记住自顶向下=递归下降/预测分析，自底向上=移进-归约。</p>
-<h2 id="h-4">第三节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）</h2>
+<h2 id="h-4">第三节 表达式：前缀、中缀、后缀 <span class="stars">★★</span>（与第 1 课联动）</h2>
 <p>这一节第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第一节 1.2）已详细讲过中缀转后缀的&quot;傻瓜法&quot;（按优先级加满括号，运算符搬到自己那对括号的右边）。这里给速查表和<strong>前缀</strong>补全：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -184,8 +262,10 @@
 <td>无括号，考试较少考</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>转前缀的傻瓜法</strong>：同样先加满括号，把运算符搬到自己那对括号的<strong>左边</strong>。例：<code>(a+b)*c−d</code> → <code>(((a+b)*c)−d)</code> → <code>+ab</code> 变 <code>+ab</code>，<code>(+ab)c</code> 变 <code>*+abc</code>，整体减 d → <code>−*+abcd</code>。</p>
 <p><strong>后缀求值（必考，完整步骤）</strong>：从左到右扫，<strong>操作数进栈；遇运算符弹出栈顶两个数计算——先弹出的是右操作数——结果再进栈</strong>。例：后缀 <code>8 2 3 * − 4 +</code>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -220,13 +300,15 @@
 <td>6</td>
 </tr>
 </tbody></table>
+</div>
 <p>结果 6。<strong>反向验证</strong>：该后缀对应中缀 <code>8−2*3+4</code> = 8−6+4 = <strong>6</strong> ✓。</p>
 <p><strong>为什么编译器爱用后缀做中间代码</strong>：第二节说过中间代码常用形式里就有&quot;后缀式&quot;——扫后缀式时每个运算符出现时它的操作数一定已在栈里，一遍扫完，不需要优先级表和括号。</p>
 <p><strong>反例演示</strong>：后缀求值时<strong>先弹的是右操作数</strong>，减法除法顺序不能反。<code>8 6 −</code> 是 8−6=2；若先弹的当左操作数就算成 6−8=−2，错。</p>
 <p><strong>应试动作</strong>：① 中缀转后缀用&quot;加满括号搬右边&quot;，转前缀&quot;搬左边&quot;；② 求值时先弹的当<strong>右</strong>操作数；③ 考题给后缀式求值，用栈表逐步算，算完还原成中缀验一遍。</p>
-<h2 id="h-5">第四节 文法与语法树 ★</h2>
+<h2 id="h-5">第四节 文法与语法树 <span class="stars">★</span></h2>
 <p><strong>动机</strong>：语法分析&quot;按语法规则组句&quot;，这条规则的形式化描述就是<strong>文法</strong>。</p>
 <p>一个形式文法是四元组 <strong>G = (V, T, S, P)</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -256,6 +338,7 @@
 <td>替换规则，形如 A → α（用右部替换左部）</td>
 </tr>
 </tbody></table>
+</div>
 <p>例：文法 S → aSb | ε。从 S 出发反复推导：S → aSb → aaSbb → … → aⁿbⁿ。它描述的语言是 {aⁿbⁿ | n≥0}——非终结符 S 像&quot;待填的坑&quot;，终结符 a、b 才是最终结果。</p>
 <p><strong>闭包与正则闭包（公式三件套）</strong>：</p>
 <ul>
@@ -266,10 +349,11 @@
 <p><strong>语法推导树</strong>：从起始符 S 出发按产生式展开画出的树——根是 S，内部节点是非终结符，叶子从左到右拼起来就是推导出的句子。语法分析阶段输出&quot;语法树&quot;用的就是它。</p>
 <p><strong>重要结论</strong>：常见的程序设计语言（C、Java 等）的语法规则通常是<strong>上下文无关文法</strong>——选择题直接考这个结论。</p>
 <p><strong>应试动作</strong>：① 四元组各成分一句话定义；② 背&quot;加 1 乘 0&quot;；③ 背&quot;程序语言通常用上下文无关文法&quot;这一句。</p>
-<h2 id="h-6">第五节 正规式与正规集 ★★★</h2>
+<h2 id="h-6">第五节 正规式与正规集 <span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：词法分析阶段要识别&quot;什么样的字符串算一个标识符、什么样的算一个整数&quot;——这种<strong>单词的模式</strong>就用正规式（正则表达式）描述。它是描述字符串集合的最简工具。</p>
 <h3 id="h-7">5.1 三种运算与优先级</h3>
 <p>正规式只有三种基本运算（按优先级从高到低）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -298,8 +382,10 @@
 <td>二选一（<strong>最低</strong>）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>公式三件套（以 <code>(a|b)*</code> 为例）</strong>：① 通用形式——闭包作用于括起来的整体，表示括号内串的任意次拼接；② 代入算例——<code>(a|b)*</code> = {ε, a, b, ab, ba, aab, abb, …}，即<strong>所有由 a、b 组成的串（含空串）</strong>；③ 手算口诀——先算 <code>*</code>（闭包），再算连接，最后算 <code>|</code>；想改变顺序就加括号。</p>
 <p><strong>常用正规式速查表（背熟，考题基本不出这张表）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -336,6 +422,7 @@
 <td>b)*aa(a</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（三组经典混淆，逐组看会错在哪）</strong>：</p>
 <ol>
 <li><code>ab*</code> ≠ <code>(ab)*</code>。<code>ab*</code> 中 <code>*</code> 只作用于 b（闭包优先级最高）：{a, ab, abb, abbb, …}——<strong>一个 a 后跟任意多个 b</strong>；<code>(ab)*</code> 是 {ε, ab, abab, …}。若把 <code>ab*</code> 误当成 <code>(ab)*</code>，就会得出&quot;<code>abb</code> 属于 <code>(ab)*</code>&quot;的错误结论——按 <code>(ab)*</code> 逐块切分 <code>abb</code>：第一块 ab，剩下 <code>b</code> 不够一块，切不动 → 不属于。</li>
@@ -366,10 +453,11 @@
 <p><strong>结论：只有 baab 属于 L(r)</strong>。注意第 3 步找&quot;连续 aa&quot;是看<strong>相邻</strong>两个字符，别隔位看。</p>
 <p><strong>给串选正规式</strong>（反过来问）同样用四步法：先看待匹配串的结构特征（开头/结尾/含什么），再逐个选项检查——特别警惕&quot;形似但范围不同&quot;的选项，用上面第 5.1 节的反例 1、2 的切分法排除。</p>
 <p><strong>应试动作</strong>：背熟速查表 + 三组反例。考场上题干给一个正规式四个串，30 秒流程：翻译成大白话 → 首尾筛 → 存活者分块回代 → 反向拼回验证。哪些考法套这套流程：给正规式选串、给串选正规式都是；&quot;给状态图写正规式&quot;用第六节的方法。</p>
-<h2 id="h-9">第六节 有限自动机：DFA 与 NFA ★★★</h2>
+<h2 id="h-9">第六节 有限自动机：DFA 与 NFA <span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：正规式描述了单词的&quot;模式&quot;，但程序怎么<strong>执行</strong>这个模式？有限自动机（FA）就是正规式的&quot;可执行版本&quot;——词法分析器内部就是一台有限自动机在逐字符扫描。正规式和自动机<strong>描述能力等价</strong>，可互相转换。</p>
 <h3 id="h-10">6.1 定义与五元组</h3>
 <p>自动机 M = (S, Σ, δ, s₀, Z)：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -398,9 +486,11 @@
 <td><strong>终态集</strong>（可空）</td>
 </tr>
 </tbody></table>
+</div>
 <p>状态转换图：圆圈是状态，箭头标输入字符表示转移，双圈（或打星）是终态。</p>
 <p><strong>识别规则</strong>：从初态出发，逐个读入字符串的字符沿箭头走；<strong>读完整个串恰好停在终态</strong>，则该串被自动机接受（识别）；中途走不动或读完不在终态，则不接受。</p>
 <p><strong>DFA vs NFA（必考区别）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -420,6 +510,7 @@
 <td>与 DFA 等价（NFA 可用<strong>子集法</strong>确定化成 DFA）</td>
 </tr>
 </tbody></table>
+</div>
 <p>注：DFA 是 NFA 的特例；两者识别的语言类相同（都恰好是正规式能描述的语言）。这与第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a>）里算法的&quot;确定性&quot;是同一种思想——DFA 每一步走向唯一，模拟它就是照表走。</p>
 <h3 id="h-11">6.2 专题：判定自动机接受哪些串（完整步骤）</h3>
 <p><strong>考场三步法</strong>：</p>
@@ -429,6 +520,7 @@
 <li><strong>终态核对 + 反向验证</strong>：读完整个串看是否停在终态；再用该自动机对应的<strong>语言特征</strong>（先根据几条路径归纳出&quot;以××开头/结尾&quot;等规律）反向检查一遍，两条路结论一致才落笔。</li>
 </ol>
 <p><strong>例（完整演算）</strong>：DFA 状态转移表如下（q₀ 为初态，q₂ 为唯一终态）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -453,13 +545,15 @@
 <td>q₂</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>先归纳语言</strong>：观察——只有&quot;连续读入两个 1&quot;才能从 q₀ 经 q₁ 到达 q₂；到了 q₂ 之后读 1 停在 q₂、读 0 回 q₀。所以接受的是<strong>以 11 结尾</strong>的 0、1 串（等价正规式 <code>(0|1)*11</code>）。</p>
 <p><strong>逐步走串</strong>（判 <code>1011</code>）：q₀ --1--&gt; q₁ --0--&gt; q₀ --1--&gt; q₁ --1--&gt; q₂。读完停在终态 q₂ → <strong>接受</strong> ✓。</p>
 <p><strong>反向验证</strong>：<code>1011</code> 以 &quot;11&quot; 结尾，与归纳的语言特征一致 ✓。再判 <code>1101</code>：q₀ --1--&gt; q₁ --1--&gt; q₂ --0--&gt; q₀ --1--&gt; q₁，读完停在 q₁ 非终态 → 拒绝；反向看 <code>1101</code> 以 &quot;01&quot; 结尾，不一致才对（它确实不以 11 结尾）✓。两条路结论吻合。</p>
 <p><strong>给状态图写正规式</strong>：先<strong>归纳语言</strong>（看什么路径能从初态走到终态、走终态前必须经过什么），再用速查表（第五节）把特征写成正规式——以&quot;以 11 结尾&quot;为例：前面任意 <code>(0|1)*</code> ＋ 结尾固定 <code>11</code>，得 <code>(0|1)*11</code>。写完拿一个被接受的串和一个被拒绝的串各回代验一次。</p>
 <p><strong>应试动作</strong>：① 背 DFA/NFA 区别一句话——&quot;DFA 单值、NFA 多值（可含 ε），能力等价&quot;；② 判串题老老实实逐字符查表走，别心算跳步；③ 归纳语言看&quot;到达终态前最后一段路径&quot;的形状。给图写正规式、给串判接受，都靠&quot;逐字符走 + 归纳语言&quot;两把刀。</p>
-<h2 id="h-12">第七节 函数调用：传值 vs 传址（引用）★★★</h2>
+<h2 id="h-12">第七节 函数调用：传值 vs 传址（引用）<span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：函数想用主调方的数据，有两条路——把<strong>值复印一份</strong>带过去（传值），或把<strong>地址/引用</strong>（钥匙）递过去直接操作原件（传址/引用）。复印本改坏了不影响原件；钥匙能真改房子。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -484,6 +578,7 @@
 <td>只能是<strong>变量</strong>（必须是地址；常量和表达式没有地址可取）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>记忆口诀</strong>：<strong>传值复印本，改了不还乡；传址寄钥匙，改屋真变样</strong>。另一条判断规则：传值的实参随意（常量、表达式都行），传址的实参必须是变量。</p>
 <p><strong>反例演示</strong>：① 传值调用下 <code>f(a)</code> 里把形参改成 100，函数返回后 a 纹丝不动——想通过参数&quot;带出&quot;结果却用了传值，是初学者最常见 bug；② 引用调用写 <code>f(a+1, b)</code> 直接编译报错/无意义——<code>a+1</code> 是表达式，没有地址可传。</p>
 <p><strong>关于作用域与闭包（大纲提及，考得浅，知道概念即可）</strong>：<strong>作用域</strong>决定一个名字在程序哪些位置可见。多数语言（C、Java）采用<strong>静态作用域</strong>（词法作用域）——名字属于哪一层，看程序文本的嵌套结构，<strong>编译时</strong>就能确定；动态作用域则按<strong>运行时的调用链</strong>确定（少数早期语言）。<strong>闭包</strong>指函数与其所引用的外部变量捆绑在一起（如 Python/JS 的嵌套函数把外层变量&quot;记住了&quot;），选择题了解词义即可。</p>
@@ -496,6 +591,7 @@
 <li><strong>双法验证</strong>：先按逐步追踪得出一套结果，再<strong>反向验证</strong>——传址调用整体等价于&quot;把函数体里的形参名全部替换成实参名后在主调方原地执行一遍&quot;，按这个视角重算一次，两法结果一致才定稿。</li>
 </ol>
 <p><strong>例 1（基础对比）</strong>：<code>procedure f(x, y) { x = x + 2; y = x + y; }</code>，调用 <code>f(a, b)</code>，初始 a=1, b=3。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -520,6 +616,7 @@
 <td>a=<strong>3</strong>, b=<strong>6</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p>反向验证（传址版）：形参换名后函数体即 <code>a = a+2; b = a+b</code>，原地执行 a=3、b=3+3=6 ✓ 与追踪一致。</p>
 <p><strong>例 2（顺序陷阱）</strong>：<code>procedure g(x, y) { x = x + y; y = x + y; }</code>，调用 <code>g(a, b)</code>，初始 a=2, b=5。</p>
 <ul>
@@ -528,9 +625,10 @@
 </ul>
 <p>反向验证（传址版）：换名后即 <code>a = a+b; b = a+b</code> → a=7, b=7+5=12 ✓。<strong>易错点</strong>：第二句若拿旧值算成 b=2+5=7 就错了——传址下第一句已经把 a 改成 7，后续语句必须用新值。</p>
 <p><strong>应试动作</strong>：① 背两条性质——传值单向、实参可任意；传址双向、实参必须变量；② 追踪题按四步法列表逐句算，传址参数&quot;每句用新值、同步回写实参&quot;；③ 用&quot;换名原地执行&quot;反向验证。这是纯送分题，唯一失分方式就是跳步。</p>
-<h2 id="h-14">第八节 各语言特点与分类 ★</h2>
+<h2 id="h-14">第八节 各语言特点与分类 <span class="stars">★</span></h2>
 <p><strong>动机</strong>：选择题常给一个应用场景（&quot;人工智能符号处理&quot;&quot;科学计算&quot;）问选什么语言，或给一个语言问它的分类。这纯是背诵题，一张表解决。</p>
 <p><strong>按翻译方式分类</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -551,8 +649,10 @@
 <td><strong>Java</strong>（字节码 + JVM）、<strong>C#</strong>（中间语言 + .NET）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>静态类型 vs 动态类型</strong>：静态类型语言（C、C++、Java）在<strong>编译期</strong>检查类型；动态类型语言（Python、JavaScript）变量类型在<strong>运行期</strong>才确定、随赋值变化。</p>
 <p><strong>各语言特点表（背&quot;语言 → 一句话&quot;）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -601,6 +701,7 @@
 <td>服务器端脚本语言，嵌入 HTML 的动态网页</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>应试动作</strong>：重点背两个&quot;最容易和别的搞混&quot;的——<strong>Lisp=函数式/AI</strong>、<strong>Prolog=逻辑推理/专家系统</strong>（两者都沾 AI，别互换）；再背 Java 跨平台靠&quot;字节码 + JVM&quot;这条机制描述。其余扫一眼有印象即可。</p>
 <hr>
 <h2 id="h-15">课后考题（请合上讲义作答）</h2>
@@ -661,6 +762,7 @@ B. NFA 中一个状态面对同一个输入符号，可能转移到多个不同�
 C. NFA 不能识别正规式所描述的语言
 D. DFA 可以不设置终态就能识别所有串</p>
 <p><strong>12.</strong> 某 DFA 的状态转移表如下（q₀ 为初态，q₂ 为唯一终态）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -685,6 +787,7 @@ D. DFA 可以不设置终态就能识别所有串</p>
 <td>q₂</td>
 </tr>
 </tbody></table>
+</div>
 <p>该自动机可识别的字符串是（ ）。
 A. 1101
 B. 0110
@@ -723,6 +826,7 @@ D. Java——编译为字节码，由 JVM 执行，跨平台</p>
 问题 2：若 p、q <strong>都采用传值</strong>调用，r、x、y 又是多少？
 问题 3：对比两种结果，用一句话说明传值与引用调用的本质区别。</p>
 <p><strong>案例 2</strong>　某 DFA 的状态转移表如下（q₀ 为初态，q₂ 为终态，字母表 {a, b}）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -747,6 +851,7 @@ D. Java——编译为字节码，由 JVM 执行，跨平台</p>
 <td>q₀</td>
 </tr>
 </tbody></table>
+</div>
 <p>问题 1：该自动机识别的字符串有什么共同特征？写出与之等价的正规式。
 问题 2：判断 <code>aab</code>、<code>abb</code>、<code>abab</code>、<code>baab</code> 中哪些被该自动机接受（逐步列出状态轨迹）。
 问题 3：若把 q₁ 对输入 a 的转移改为&quot;q₁ 或 q₂ 均可&quot;，该自动机变成了什么类型？说明判断依据。</p>
@@ -757,6 +862,7 @@ B. 中间代码与具体的机器无关
 C. 目标代码生成与硬件系统结构无关
 D. 词法分析依据语言的语法规则识别各类语法单位</p>
 <p><strong>2.</strong> 某 DFA（初态 p₀，终态 p₂）的转移表如下：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -781,6 +887,7 @@ D. 词法分析依据语言的语法规则识别各类语法单位</p>
 <td>p₀</td>
 </tr>
 </tbody></table>
+</div>
 <p>与该自动机等价的正规式是（ ）。
 A. <code>(a|b)*aa</code>
 B. <code>a(a|b)*a</code>
@@ -812,7 +919,14 @@ B. Java 是纯解释执行的语言，不经过任何编译
 C. Java 编译生成与平台无关的中间代码（字节码），由各平台的 JVM 执行
 D. Java 程序不需要任何翻译程序即可在机器上直接运行</p>
 <hr>
-<h2 id="h-19">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-20">课后考题答案</h3>
 <p><strong>1. C</strong>
 编译是&quot;先整本翻译成目标程序，再直接运行目标程序&quot;，执行时编译器不参与，效率高（A 反了）；解释器逐句翻译执行、<strong>不生成</strong>目标程序（B 反了）；两种方式都要做词法、语法、语义分析（D 反了）。易错点：B 是最常见陷阱——&quot;解释也要分析，但不产出目标程序&quot;。</p>
@@ -864,6 +978,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 <h3 id="h-21">案例题答案</h3>
 <p><strong>案例 1</strong></p>
 <p><strong>问题 1</strong>（p 传值 = 副本；q 引用 = y 本身）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -908,9 +1023,11 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 <td><strong>7</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p>结果：<strong>r=7，x=5，y=−2</strong>。
 反向验证：q 引用即&quot;函数体中 q 全部换成 y&quot;：<code>y = y−x</code> → y=−2；<code>p</code> 是副本不受影响，p=5−(−2)=7，返回 7；x 从未被引用绑定，保持 5 ✓。</p>
 <p><strong>问题 2</strong>（都传值，p、q 均为副本）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -955,6 +1072,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 <td><strong>7</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p>结果：<strong>r=7，x=5，y=3</strong>。反向验证：全是副本，主调方 x、y 纹丝不动 ✓。</p>
 <p><strong>问题 3</strong>：两次返回值恰好相同（返回值只依赖形参自身的算术，与传递方式无关），但<strong>引用调用把对形参的修改带回了实参（y 由 3 变 −2），传值调用完全不影响实参</strong>——本质区别：传的是&quot;复印本&quot;还是&quot;原件本身（地址）&quot;，即数据能否双向流动。</p>
 <p><strong>案例 2</strong></p>
@@ -962,6 +1080,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 等价正规式：<em><em>(a|b)<em>ab</em></em>。
 反向验证：拿 <code>aab</code>（∈L）回代正规式——(a|b)</em> 取 a、结尾 ab，拼回 aab ✓；拿 <code>abb</code>（∉L）检验——它以 bb 结尾，不满足&quot;以 ab 结尾&quot; ✓。</p>
 <p><strong>问题 2</strong>（逐字符列轨迹）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -991,6 +1110,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 <td>停在终态，<strong>接受</strong> ✓</td>
 </tr>
 </tbody></table>
+</div>
 <p>反向验证：aab、abab、baab 都以 ab 结尾，abb 以 bb 结尾——与&quot;以 ab 结尾&quot;的语言特征一致 ✓。</p>
 <p><strong>问题 3</strong>：变成了 <strong>NFA（不确定有限自动机）</strong>。依据：DFA 要求转移函数是<strong>单值对照</strong>——一个状态面对一个输入符号只有唯一后继；改成&quot;q₁ 或 q₂ 均可&quot;后，同一状态同一输入对应一个<strong>状态集合</strong>，这正是 NFA 的定义特征。（NFA 与 DFA 识别能力等价，可用子集法把这台 NFA 确定化。）</p>
 <h3 id="h-22">精华题答案</h3>
@@ -1014,6 +1134,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 </ul>
 <p><strong>5. B</strong>
 栈逐步演算（先弹出的当<strong>右</strong>操作数）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -1048,19 +1169,38 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 <td>6</td>
 </tr>
 </tbody></table>
+</div>
 <p>值 = <strong>6</strong>。反向验证：该后缀对应中缀 <code>8−2*3+4</code> = 8−6+4 = 6 ✓（C 的 14 是误算成 8+2×3；D 的 26 是误算成 (8−2)*3+4×2 之类的乱序；A 的 2 是漏加 4）。</p>
 <p><strong>6. D</strong>
 下标越界要等<strong>运行时</strong>才知道实际下标，编译阶段无法发现——动态语义错误。A 是语法错误、B 是静态语义错误、C 是词法错误，三者都在编译时被发现。判断口诀：编译时查&quot;字（词法）、形（语法）、型（静态语义）&quot;；运行时才见&quot;值&quot;（除零、越界、死循环）。</p>
 <p><strong>7. C</strong>
 Java 源程序先由编译器生成<strong>平台无关的字节码（中间代码）</strong>，再由各平台各自的 JVM 解释/JIT 执行——&quot;先编译后解释&quot;，这是跨平台的机制基础。A&quot;直接生成各平台机器码&quot;就没有跨平台意义了；B 错，Java 要先编译成字节码，并非纯解释；D 错，任何高级语言程序都无法不经翻译直接被 CPU 执行。</p>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="08-信息安全.html">08-信息安全.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="06-计算机网络.html">
+      <span class="k">上一课</span>
+      <span class="t">06 计算机网络</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="08-信息安全.html">
+      <span class="k">下一课</span>
+      <span class="t">08 信息安全</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="06-计算机网络.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="08-信息安全.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

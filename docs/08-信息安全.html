@@ -3,20 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>08 信息安全</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html" class="is-current" aria-current="page"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">08 信息安全</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题约 3–4 题（第二梯队稳定得分点）。本课不对应独立案例大题，但「数字签名流程（谁用谁的私钥/公钥）」是<strong>永恒考点</strong>，几乎隔年必考一题；对称与非对称加密的区分、主动/被动攻击分类、防火墙功能边界也是反复出现的旧题翻新，套路极固定，练熟就是纯送分。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 一眼把 DES/AES/RSA 归进对称/非对称阵营；② 分清「公钥加密（保密）」与「私钥签名（认证）」两个方向，独立写出&quot;既要保密又要签名&quot;的完整通信流程；③ 说清数字证书是干什么的、验证证书用谁的公钥；④ 给攻击场景归类（重放/SQL 注入/DDoS/钓鱼…）并背下防火墙&quot;能管什么、管不了什么&quot;。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 8 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">08 信息安全</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题约 3–4 题（第二梯队稳定得分点）。本课不对应独立案例大题，但「数字签名流程（谁用谁的私钥/公钥）」是<strong>永恒考点</strong>，几乎隔年必考一题；对称与非对称加密的区分、主动/被动攻击分类、防火墙功能边界也是反复出现的旧题翻新，套路极固定，练熟就是纯送分。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 一眼把 DES/AES/RSA 归进对称/非对称阵营；② 分清「公钥加密（保密）」与「私钥签名（认证）」两个方向，独立写出&quot;既要保密又要签名&quot;的完整通信流程；③ 说清数字证书是干什么的、验证证书用谁的公钥；④ 给攻击场景归类（重放/SQL 注入/DDoS/钓鱼…）并背下防火墙&quot;能管什么、管不了什么&quot;。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 安全的目标与攻击分类 ★★</h2>
+<h2 id="h-2">第一节 安全的目标与攻击分类 <span class="stars">★★</span></h2>
 <p><strong>动机</strong>：先想清楚&quot;安全&quot;到底要保住什么，后面每个技术（加密、签名、防火墙）才能对号入座——<strong>每个安全技术都是为了守住某一条安全属性而生的</strong>。</p>
 <h3 id="h-3">1.1 五大安全属性</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -57,9 +129,11 @@
 <td>越权传播</td>
 </tr>
 </tbody></table>
+</div>
 <p>选择题最爱的配对：<strong>截获→机密性；篡改→完整性；中断→可用性；伪造→真实性/不可否认性</strong>。记法：&quot;看（截获）改（篡改）断（中断）造（伪造）&quot;对&quot;密完可用真&quot;。</p>
-<h3 id="h-4">1.2 主动攻击 vs 被动攻击 ★★★</h3>
+<h3 id="h-4">1.2 主动攻击 vs 被动攻击 <span class="stars">★★★</span></h3>
 <p>这是历年真题反复考的二分类，判别标准只有一条：<strong>是否修改/破坏了系统中的数据和资源</strong>。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -79,12 +153,14 @@
 <td><strong>篡改</strong>、<strong>伪造</strong>、<strong>伪装</strong>（冒充他人）、<strong>重放</strong>、<strong>拒绝服务 DoS / 分布式拒绝服务 DDoS</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示</strong>（最容易错的一道）：「流量分析」听起来很&quot;主动&quot;（在主动分析嘛），但它<strong>只观察通信模式、不修改任何数据</strong>，属于<strong>被动攻击</strong>。真题就爱把它混进&quot;主动攻击&quot;选项里。反向陷阱：「拒绝服务」听起来只是&quot;让服务慢一点&quot;，但它<strong>主动发起请求洪流破坏可用性</strong>，属于主动攻击。</p>
 <p><strong>应试动作</strong>：背判断句&quot;<strong>只看不改是被动（窃听、流量分析），又改又砸是主动（篡改、伪造、伪装、重放、DoS/DDoS）</strong>&quot;。考场上题干给攻击名让你分类，或给&quot;以下不属于主动攻击的是&quot;——找&quot;窃听/流量分析&quot;。</p>
 <hr>
-<h2 id="h-5">第二节 对称加密与非对称加密 ★★★</h2>
+<h2 id="h-5">第二节 对称加密与非对称加密 <span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：想把一段话保密，最直观的办法是&quot;加密&quot;——用一把钥匙把明文搅成乱码，收到的人用钥匙再搅回来。那钥匙怎么设计？历史上只有&quot;同一把钥匙加又解&quot;，直到 1976 年才有人发明&quot;加解各用一把、成对出现&quot;的方案。这两条技术路线就是本节主角。</p>
 <h3 id="h-6">2.1 对比表（选择题直接查这张表作答）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -124,10 +200,12 @@
 <td><strong>RSA</strong>（基于大整数分解难题）、ECC（椭圆曲线）、ElGamal</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>记忆口诀</strong>：对称&quot;一把钥匙开一把锁，双方同款&quot;；非对称&quot;公锁私钥一对凑，公钥上锁私钥开&quot;。算法名归类口诀：<strong>&quot;DES、AES 是兄弟（对称），RSA 单干是公私（非对称）&quot;</strong>——考场上认名字：带 DES/AES/IDEA 的选对称，带 RSA/ECC/DSA 的选非对称。</p>
 <p><strong>密钥数公式的来历</strong>（防遗忘就地展开）：n 个人两两通信都要保密，任何两人的密钥都不能与第三者相同，所以是&quot;从 n 人里取 2 人配一把&quot;= C(n,2) = n(n−1)/2。例如 n=10：C(10,2) = (10×9)/(2×1) = <strong>45</strong> 把。非对称则每人只需自己的一对：n=10 → 10 对共 20 把。这个对比正说明了非对称在密钥管理上的优势。</p>
 <h3 id="h-7">2.2 两个方向，别拧反了（本课第一易错点）</h3>
 <p>非对称加密的两把钥匙有<strong>两种用法</strong>，方向必须刻进脑子：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -150,9 +228,10 @@
 <td>只有本人能签 → 身份真实 + 不可否认</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示</strong>：「甲用乙的公钥加密后发给乙」✓ 保密方向；若写成「甲用自己的公钥加密后发给乙」就错了——公钥人人都有，别人也能解开，毫无保密性。「甲用乙的私钥签名」更是无中生有——乙的私钥只有乙自己有，甲根本拿不到；签名必须用自己的私钥。</p>
 <p>一句话锁死：<strong>&quot;想让对方独看，用对方公钥锁；想证明是自己，用自己私钥签&quot;</strong>。</p>
-<h3 id="h-8">2.3 数字信封（混合加密）★★★</h3>
+<h3 id="h-8">2.3 数字信封（混合加密）<span class="stars">★★★</span></h3>
 <p><strong>动机</strong>：实战里&quot;鱼与熊掌要兼得&quot;——对称快但钥匙难送，非对称好送但慢。办法：<strong>用对称加密保护大数据，用对方的公钥只加密那把对称密钥</strong>。这个&quot;套了一层非对称外皮的对称密钥&quot;就叫<strong>数字信封</strong>。</p>
 <p>流程（以 A 发给 B）：</p>
 <ol>
@@ -163,7 +242,7 @@
 </ol>
 <p><strong>应试动作</strong>：背&quot;<strong>对称保正文，公钥保钥匙；封谁用谁公钥，拆封谁用谁私钥</strong>&quot;。选择题给出流程步骤让你填&quot;用谁的什么钥&quot;，按这句作答。DES/AES/RSA 名字归类题则直接查 2.1 对比表。</p>
 <hr>
-<h2 id="h-9">第三节 信息摘要（Hash 函数）★★★</h2>
+<h2 id="h-9">第三节 信息摘要（Hash 函数）<span class="stars">★★★</span></h2>
 <p><strong>动机</strong>：验证一份大文件&quot;有没有被改过一个字节&quot;，把整个文件倒来倒去比对太笨。办法：用 Hash 函数给文件算出一个短短的&quot;指纹&quot;——<strong>信息摘要</strong>。指纹变了哪怕一点点，文件必然动过。</p>
 <h3 id="h-10">3.1 Hash 函数的四大特性</h3>
 <ol>
@@ -177,7 +256,7 @@
 <p><strong>反例演示</strong>：选项「MD5 是一种加密算法」——<strong>错</strong>。摘要有两个&quot;非加密&quot;特征：① <strong>无密钥</strong>（任何人算同一个文件得到的摘要都一样）；② <strong>不可逆</strong>（加密要求能解密还原，摘要不能）。摘要的用途是<strong>完整性验证</strong>，不是保密。</p>
 <p><strong>应试动作</strong>：背&quot;MD5-128、SHA-1-160&quot;两个数字 + 一句&quot;Hash 无密钥、不可逆、管完整性&quot;。考场上问&quot;属于信息摘要算法特性的是&quot;，挑&quot;定长输出/单向/抗碰撞&quot;；问&quot;MD5 摘要长度&quot;，答 128 位。</p>
 <hr>
-<h2 id="h-12">第四节 数字签名 ★★★（永恒考点，必须能默写流程）</h2>
+<h2 id="h-12">第四节 数字签名 <span class="stars">★★★</span>（永恒考点，必须能默写流程）</h2>
 <p><strong>动机</strong>：公钥体系解决了保密，但有个新漏洞——乙收到&quot;甲&quot;发来的消息，怎么确认真是甲发的、而不是别人冒名的？而且甲事后赖账说&quot;我没发过&quot;怎么办？答案：让甲用<strong>只有自己才有的私钥</strong>处理一段消息。全世界只有甲能这么干，这就是<strong>数字签名</strong>——它一举解决<strong>真实性</strong>（确是甲发）和<strong>不可否认性</strong>（甲不能赖账），顺带用摘要比对保证<strong>完整性</strong>。</p>
 <h3 id="h-13">4.1 标准签名与验证流程（四步，背到能默写）</h3>
 <p>以甲发消息给乙为例：</p>
@@ -188,6 +267,7 @@
 <li><strong>验证</strong>：乙用<strong>同一个 Hash 函数</strong>对收到的正文重新算出新摘要；再用<strong>甲的公钥</strong>解开签名得到原摘要；两者一致 → 消息确实出自甲、且中途未被改。</li>
 </ol>
 <h3 id="h-14">4.2 方向速查表（考场填空就查这张）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -217,6 +297,7 @@
 <td>保密方向</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示</strong>：真题选项里的三大错误方向——「乙用<strong>乙的公钥</strong>验证」（错，验证必须用<strong>发方</strong>甲的公钥，乙自己的钥匙对是拆&quot;发给乙的密文&quot;用的）；「甲用<strong>甲的公钥</strong>签名」（错，公钥人人有，谁都能&quot;签&quot;，就证明不了身份）；「甲用<strong>乙的私钥</strong>签名」（错，乙的私钥甲根本拿不到）。</p>
 <h3 id="h-15">4.3 签名 + 保密，一步不乱（真题最爱组合）</h3>
 <p><strong>动机</strong>：签名流程里&quot;正文 + 签名摘要&quot;是<strong>明文</strong>发的——只解决了身份和完整性，<strong>没解决机密性</strong>。若既要保密又要签名，就在第 3 步外面再套一层数字信封（2.3 节）。完整流程（背诵模板）：</p>
@@ -227,7 +308,7 @@
 <p>记忆口诀：&quot;<strong>先签后封，私签公验；封用收方公，拆用收方私</strong>&quot;。</p>
 <p><strong>应试动作</strong>：这是本课最高频考法。把 4.2 的速查表背熟，无论题干怎么换人名（甲乙/AB/发送接收方），第一步先问自己&quot;这个动作是<strong>保密</strong>还是<strong>认证</strong>&quot;——保密走对方公钥，认证走自己私钥。案例题风格题见本课末尾第 16 题。</p>
 <hr>
-<h2 id="h-16">第五节 数字证书与 CA ★★</h2>
+<h2 id="h-16">第五节 数字证书与 CA <span class="stars">★★</span></h2>
 <p><strong>动机</strong>：非对称体系还剩最后一个窟窿——<strong>公钥怎么证明是本人的</strong>？乙手里那把&quot;甲的公钥&quot;，万一是攻击者伪造的（攻击者把自己的公钥冒充成甲的发给你），后面整个签名验证都白搭。<strong>数字证书</strong>就是给公钥办的&quot;身份证&quot;：由一个大家信任的权威机构 <strong>CA（证书授权中心）</strong>，把&quot;用户身份 + 用户公钥&quot;捆在一起并盖章。</p>
 <h3 id="h-17">5.1 证书里有什么、怎么验证</h3>
 <ul>
@@ -240,11 +321,12 @@
 <p><strong>反例演示</strong>：选项「验证数字证书要用证书持有者的公钥」——<strong>错</strong>。证书上的签名是 <strong>CA</strong> 签的，所以要用 <strong>CA 的公钥</strong>验。持有者的公钥是证书<strong>里装的东西</strong>，不是验证工具。</p>
 <p><strong>应试动作</strong>：背两句——&quot;证书 = 身份 + 公钥 + CA 签名&quot;；&quot;验证书用 CA 的公钥，验证普通签名用发送者的公钥&quot;。考场给场景问&quot;浏览器如何确认某网站公钥的真实性&quot;，答&quot;用 CA 公钥验证网站的数字证书&quot;。</p>
 <hr>
-<h2 id="h-19">第六节 防火墙与入侵检测 ★★</h2>
+<h2 id="h-19">第六节 防火墙与入侵检测 <span class="stars">★★</span></h2>
 <p><strong>动机</strong>：加密和签名保的是&quot;数据本身&quot;，而防火墙保的是&quot;网络边界&quot;——像小区门禁，控制什么人能进、什么包能过。</p>
 <h3 id="h-20">6.1 防火墙是什么</h3>
 <p>位于<strong>内部网络与外部网络（Internet）之间</strong>的屏障，按规则<strong>控制进出网络的数据包与流向</strong>，是内外网之间信息流的唯一通道。</p>
 <h3 id="h-21">6.2 两种常考类型</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -279,6 +361,7 @@
 <td>速度慢、每种协议要单独代理</td>
 </tr>
 </tbody></table>
+</div>
 <p>（另有&quot;状态检测&quot;防火墙，跟踪连接状态，介于两者之间，选择题见过即可。）</p>
 <h3 id="h-22">6.3 防火墙的&quot;能与不能&quot;（送分判断题）</h3>
 <p><strong>能</strong>：控制进出数据包与流向；提供流量日志与审计；隐藏内部 IP 与网络结构细节（NAT）。</p>
@@ -296,9 +379,10 @@
 </ul>
 <p><strong>应试动作</strong>：背&quot;包过滤=网络层看头，应用代理=应用层看内容；防火墙不防内部、不防病毒、不管绕道的；IDS 只报警不拦截&quot;。这三句覆盖本节所有真题考法。</p>
 <hr>
-<h2 id="h-24">第七节 常见攻击与恶意代码 ★★</h2>
+<h2 id="h-24">第七节 常见攻击与恶意代码 <span class="stars">★★</span></h2>
 <p><strong>动机</strong>：前面学的都是&quot;防御方&quot;，本节换到&quot;进攻方&quot;视角——考场上给一段场景描述，让你指出&quot;这是什么攻击&quot;，认得出才能答对。</p>
 <h3 id="h-25">7.1 攻击类型认领表</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -338,8 +422,10 @@
 <td>身份认证、数字签名</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>重放 vs DDoS 一句话分清</strong>：重放是&quot;把<strong>旧的</strong>合法报文再发一遍&quot;骗认证；DDoS 是&quot;发<strong>海量的</strong>垃圾报文&quot;拖垮服务。</p>
 <h3 id="h-26">7.2 恶意代码四兄弟（背区别）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -369,6 +455,7 @@
 <td><strong>条件触发</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>记忆口诀</strong>：&quot;病毒寄生、蠕虫自爬、木马开门、炸弹看日子&quot;。四者共同点：都是恶意代码；考场上抓题干关键词——&quot;寄生在正常程序中&quot;选病毒，&quot;利用漏洞自主传播&quot;选蠕虫，&quot;远程控制/后门&quot;选木马，&quot;某日触发&quot;选逻辑炸弹。</p>
 <p><strong>防毒常识</strong>（顺带背）：不打开来历不明附件、及时打补丁、升级杀毒软件<strong>特征库</strong>、重要数据备份。</p>
 <hr>
@@ -489,7 +576,14 @@ B. 篡改数据库中的记录
 C. 利用僵尸网络向服务器发送海量请求，使其无法响应合法用户
 D. 伪造他人身份发送邮件</p>
 <hr>
-<h2 id="h-31">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-32">课后考题答案</h3>
 <p><strong>1. B</strong>
 &quot;篡改首页内容&quot;改动了数据，破坏<strong>完整性</strong>。A 机密性对应&quot;偷看/泄露&quot;；C 可用性对应&quot;服务瘫痪、用不了&quot;；D 不可否认性对应&quot;发过却抵赖&quot;。配对口诀&quot;看改断造对密完用真&quot;，见第一节 1.1 表。</p>
@@ -540,14 +634,32 @@ MD5 摘要 <strong>128 位</strong>；C（160 位）是 SHA-1 的摘要长度—
 题干三个关键词&quot;<strong>不寄生（无宿主）+ 漏洞自我复制 + 网络主动传播</strong>&quot;是蠕虫的画像。A 病毒必须依附宿主程序；C 木马靠伪装驻留做远程控制、不自我复制；D 逻辑炸弹靠条件触发。口诀&quot;病毒寄生、蠕虫自爬、木马开门、炸弹看日子&quot;。</p>
 <p><strong>6. C</strong>
 海量请求把服务器&quot;砸瘫&quot;，合法用户要用时用不了——破坏<strong>可用性</strong>（对应安全攻击里的&quot;中断&quot;）。A 窃听破坏机密性；B 篡改破坏完整性；D 伪造破坏真实性/不可否认性。四类攻击&quot;截获—篡改—中断—伪造&quot;与属性的配对要形成条件反射。</p>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="09-计算机系统基础.html">09-计算机系统基础.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="07-程序设计语言基础.html">
+      <span class="k">上一课</span>
+      <span class="t">07 程序设计语言基础</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="09-计算机系统基础.html">
+      <span class="k">下一课</span>
+      <span class="t">09 计算机系统基础</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="07-程序设计语言基础.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="10-标准化与知识产权.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

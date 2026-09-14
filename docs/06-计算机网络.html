@@ -3,23 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>06 计算机网络</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html" class="is-current" aria-current="page"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">06 计算机网络</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题约 4–5 题（第二梯队稳定得分点）。<strong>子网划分计算每年必考约 1 题</strong>，协议归层、协议端口是&quot;秒答题&quot;，TCP/UDP 对比与三次握手是常客。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 给出任意协议/设备，3 秒说出它属于哪一层；② 独立完成子网划分全套计算（可用主机数、网络地址、广播地址、子网掩码）；③ 会把多个连续网段聚合成一个超网；④ 背下常用协议端口表；⑤ 说清三次握手每一步的报文与状态；⑥ 掌握 HTML/URL/常用网络命令常识。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06 计算机网络</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题约 4–5 题（第二梯队稳定得分点）。<strong>子网划分计算每年必考约 1 题</strong>，协议归层、协议端口是&quot;秒答题&quot;，TCP/UDP 对比与三次握手是常客。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 给出任意协议/设备，3 秒说出它属于哪一层；② 独立完成子网划分全套计算（可用主机数、网络地址、广播地址、子网掩码）；③ 会把多个连续网段聚合成一个超网；④ 背下常用协议端口表；⑤ 说清三次握手每一步的报文与状态；⑥ 掌握 HTML/URL/常用网络命令常识。</p>
 <p><strong>与案例题的关联</strong>：本课<strong>不对应案例大题</strong>（案例固定考数据流图/数据库/UML/算法/程序），但子网划分是选择题中最重要的计算题型，本课将其设为专题小节，给出完整解题步骤模板。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 网络分层模型：OSI 七层与 TCP/IP 四层 ★★★</h2>
+<h2 id="h-2">第一节 网络分层模型：OSI 七层与 TCP/IP 四层 <span class="stars">★★★</span></h2>
 <h3 id="h-3">为什么要分层</h3>
 <p>网络通信是一个庞大的问题：比特怎么变成电信号、相邻设备怎么传数据、跨网络的两个程序怎么可靠对话……一口气解决无从下手。于是把整个通信过程<strong>按职责切成若干层</strong>，每层只干一类事、只跟上下层打交道——这和软件工程里&quot;模块化、高内聚低耦合&quot;是同一个思想（见 <a href="03-软件工程基础.html">03-软件工程基础.html</a> 第三节）：<strong>层次 = 模块，层间接口 = 模块接口</strong>。分层的直接好处：各层独立演进、出问题可以定位到层、不同厂商设备按同一分层标准互通。</p>
 <h3 id="h-4">OSI 七层模型（必背顺序与职责）</h3>
 <p>OSI 是国际标准化组织提出的<strong>理论参考模型</strong>，从下往上共 7 层。考试最爱考：<strong>层名顺序、每层干什么、每层的协议、每层的设备</strong>。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -80,10 +152,12 @@
 <td><strong>中继器、集线器</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>层名口诀</strong>：从下往上——<strong>物数网传会表应</strong>（联想：&quot;悟数网，传会表应&quot;：先悟出数据的网络传输，再&quot;会上表应&quot;——开会、表演、回应，从下到上越来越&quot;面向应用&quot;）。</p>
 <p><strong>记层职责的抓手</strong>：物理层管&quot;信号&quot;，链路层管&quot;相邻两站&quot;（MAC），网络层管&quot;全程寻路&quot;（IP），传输层管&quot;程序到程序&quot;（端口），会话/表示/应用三层合起来管&quot;应用怎么说话&quot;。</p>
 <h3 id="h-5">TCP/IP 四层模型（实际在用的模型）</h3>
 <p>互联网实际采用 TCP/IP 四层模型，它与 OSI 的对应关系<strong>每年可能考一题</strong>，必须能画出来：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -113,8 +187,10 @@
 <td>以太网、PPP</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>判断口诀</strong>：看到 TCP/UDP → 传输层；看到 IP/ICMP/ARP → 网际层；其余有名有姓的&quot;应用协议&quot;（HTTP、FTP、SMTP、DNS、DHCP、TELNET……）→ 应用层。OSI 里的表示层功能（加密压缩）在 TCP/IP 里归入应用层实现。</p>
 <h3 id="h-6">各层设备与&quot;两个域&quot;（高频辨析）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -143,6 +219,7 @@
 <td><strong>能</strong>（广播到路由器就被拦下）</td>
 </tr>
 </tbody></table>
+</div>
 <ul>
 <li><strong>冲突域</strong>：多个设备同时发信号会&quot;撞车&quot;的范围。集线器把大家拴在一条路上，撞车照旧；交换机每个端口独享带宽，撞车只可能发生在&quot;一条线一个设备&quot;内部（即不存在）。</li>
 <li><strong>广播域</strong>：一个广播帧能扩散到的范围。交换机收到广播帧会<strong>转发给所有其他端口</strong>（广播域不变大也不变小），路由器收到广播帧<strong>不转发</strong>（广播域被切断了）。</li>
@@ -154,11 +231,12 @@
 <li>&quot;路由器根据 MAC 地址转发&quot;——<strong>错</strong>。路由器根据 <strong>IP 地址</strong>（第三层地址）查路由表转发；按 MAC 转发的是交换机。</li>
 </ol>
 <p><strong>应试动作</strong>：① 七层顺序与四层对应关系背死，考法是&quot;XX 协议/设备属于哪一层&quot;的秒答题；② 设备三件套对应（集线器—物理层、交换机—链路层、路由器—网络层）加&quot;两个域&quot;的隔离能力表；③ 判断依据记牢：按 MAC 转发=链路层，按 IP 转发=网络层，按端口交付进程=传输层。</p>
-<h2 id="h-7">第二节 IP 地址：分类、特殊地址与私网地址 ★★</h2>
+<h2 id="h-7">第二节 IP 地址：分类、特殊地址与私网地址 <span class="stars">★★</span></h2>
 <h3 id="h-8">IP 地址长什么样</h3>
 <p>IPv4 地址是 <strong>32 位二进制数</strong>，为了人能看懂，每 8 位一组转成十进制、中间用点隔开，叫<strong>点分十进制</strong>，如 <code>192.168.1.1</code>。每组取值 0~255。32 位 = 4 个字节。</p>
 <h3 id="h-9">五类地址（必须会判断类别）</h3>
 <p>按**第一个字节（前几位）**划分：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -211,8 +289,10 @@
 <td>保留（实验）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>判断口诀</strong>：看第一字节——<strong>1<del>126 是 A，128</del>191 是 B，192~223 是 C</strong>；中间没写的 127 是特例（见下）。D、E 类不用于给普通主机编址。</p>
 <h3 id="h-10">特殊地址（考试直接考结论）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -241,9 +321,11 @@
 <td>代表所有网络/未指定地址</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>这正是第三节&quot;减 2&quot;的来源</strong>：一个网段里主机位全 0（网络地址）和全 1（广播地址）两个地址被&quot;公家&quot;占用，可用主机数要减 2。</p>
 <h3 id="h-11">私网地址（三段，必背）</h3>
 <p>私网地址是只允许在单位内部使用的地址段，<strong>不会出现在公网路由上</strong>（不同公司的内网可以重用同一批私网地址）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -268,6 +350,7 @@
 <td>C 类</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（三段边界陷阱）</strong>：</p>
 <ol>
 <li><strong>172.32.1.1 不是私网</strong>——私网只到 172.31.255.255，172.32 已越界（是普通 B 类公网地址）。判断只看第二字节是否在 <strong>16~31</strong> 之间。</li>
@@ -276,7 +359,7 @@
 <li>私网判断题里若出现 169.254.x.x，它是&quot;链路本地&quot;，也不是 RFC 私网三段之一。</li>
 </ol>
 <p><strong>应试动作</strong>：① 背 A/B/C 三类的第一字节范围与默认掩码；② 私网三段背死（10 / 172.16~172.31 / 192.168），判断时逐字节比边界；③ 记住&quot;主机位全 0 是网络地址、全 1 是广播地址、127 是回环&quot;，这三条既直接出选择题，又是子网计算的理论基础。</p>
-<h2 id="h-12">第三节 子网划分与子网掩码计算专题 ★★★（每年必考计算题）</h2>
+<h2 id="h-12">第三节 子网划分与子网掩码计算专题 <span class="stars">★★★</span>（每年必考计算题）</h2>
 <h3 id="h-13">为什么要划子网</h3>
 <p>以 B 类地址 172.16.0.0 为例：默认主机位 16 位，理论可容纳 65534 台主机。问题来了——</p>
 <ol>
@@ -292,6 +375,7 @@
 <li>CIDR 斜线记法：<code>/26</code>（表示前 26 位是 1）</li>
 </ul>
 <p><strong>掩码速查表（考场上就靠这张表）</strong>——记&quot;借到第几位、掩码字节是多少&quot;：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -332,6 +416,7 @@
 <td>2</td>
 </tr>
 </tbody></table>
+</div>
 <p>若是借第三字节（/17~/23），规律相同：/17→128、/18→192、/19→224、/20→240、/21→248、/22→252、/23→254，只是作用在<strong>第三字节</strong>上。</p>
 <h3 id="h-15">公式三件套（每个公式的通用形式 + 算例 + 口诀）</h3>
 <p><strong>公式 1：可用主机数 = 2^主机位数 − 2</strong></p>
@@ -390,7 +475,7 @@
 <li><strong>可用范围两端写反</strong>：可用范围是 [网络地址+1, 广播地址−1]，网络地址和广播地址本身都不在其中。</li>
 </ol>
 <p><strong>应试动作</strong>：① 三个公式背到能默写，掩码速查表（128/192/224/240/248/252 对应 /25~/30）背熟；② 考场一律走五步法：定位数 → 算块大小 → 排边界 → 写四件套 → 算可用数；③ 给 IP 反求子网时，若时间允许用&quot;二进制 AND&quot;快速核一遍网络地址；④ 规划题（给子网数+主机数求掩码）必须把<strong>两个条件都验证</strong>，取能满足两者的最小借位数。</p>
-<h2 id="h-17">第四节 CIDR 与路由聚合（超网）★★</h2>
+<h2 id="h-17">第四节 CIDR 与路由聚合（超网）<span class="stars">★★</span></h2>
 <h3 id="h-18">为什么要聚合</h3>
 <p>路由器靠路由表决定往哪转发。互联网上的网段成千上万，如果每个小网段都占路由表一行，路由表会爆炸。<strong>路由聚合（构成超网）<strong>把</strong>多个连续的网段合并成一个更大的前缀</strong>对外通告——道理和子网划分相反：划分子网是&quot;网络位变长&quot;，聚合是&quot;网络位<strong>变短</strong>&quot;。</p>
 <h3 id="h-19">聚合方法：找共同前缀</h3>
@@ -413,9 +498,10 @@
 </ul>
 <p><strong>快速判定口诀</strong>：k 个 /24 网段能否聚成一个 /x —— ① 数量 k = 2^(24−x)（2 个 → /23，4 个 → /22，8 个 → /21）；② 起始网段的地址落在以块大小为步长的边界上。</p>
 <p><strong>应试动作</strong>：① 聚合 = 找共同前缀，考场直接把关键字节转二进制数位数（连续 2 的幂个网段才可精确聚合）；② 看到选项先查两件事：<strong>前缀长度对不对（数量够不够）</strong>、<strong>起始边界对不对（对齐没有）</strong>，两关都过才是正确答案；③ 反过来也常考：给出一个 /22，问它覆盖哪些 /24——按块大小 4 列边界即可。</p>
-<h2 id="h-20">第五节 传输层：TCP、UDP 与三次握手 ★★★</h2>
+<h2 id="h-20">第五节 传输层：TCP、UDP 与三次握手 <span class="stars">★★★</span></h2>
 <h3 id="h-21">为什么要分 TCP 和 UDP 两种</h3>
 <p>传输层负责&quot;程序到程序&quot;的交付（用<strong>端口号</strong>区分同一台主机上的不同应用）。有的应用宁可慢也要<strong>一条都不能丢</strong>（网页、文件、邮件），有的应用宁可丢也要<strong>快</strong>（直播、语音、域名查询）。于是传输层提供两种选择：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -460,6 +546,7 @@
 <td><strong>DNS、DHCP、TFTP</strong>、SNMP、音视频流</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>共同点</strong>（考过原型的知识点）：TCP 和 UDP <strong>都用端口号标识上层应用</strong>（端口寻址）；都基于 IP 之上、属于传输层。但 UDP <strong>没有</strong>连接管理、没有重传、没有流量控制。</p>
 <p><strong>反例演示</strong>：</p>
 <ol>
@@ -470,6 +557,7 @@
 <h3 id="h-22">TCP 三次握手（背报文 + 背状态）</h3>
 <p><strong>动机</strong>：TCP 要在传数据前确认&quot;双方都具备收发能力&quot;。为什么<strong>三次</strong>而不是两次？——两次握手下，服务器无法确认&quot;客户端能收到我发的数据&quot;；且历史上一个早已失效的连接请求若突然到达服务器，两次握手会让服务器白白建起一条没人用的连接。第三次握手让客户端把&quot;我收到了你的确认&quot;再告诉服务器，双方的收发能力才都被双向确认。</p>
 <p>三次握手过程（客户端 A，服务器 B）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -502,15 +590,17 @@
 <td>B：收到 ACK 后 → <strong>ESTABLISHED</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p>记忆抓手：<strong>&quot;一请、二请二应、三应&quot;</strong>——第一次只带 SYN；第二次 SYN 和 ACK 一起带（SYN+ACK 报文）；第三次只带 ACK。四个关键状态按顺序：<strong>CLOSED / LISTEN → SYN-SENT → SYN-RCVD → ESTABLISHED</strong>。</p>
 <p><strong>断开连接（四次挥手，了解过程即可）</strong>：FIN → ACK → FIN → ACK，双方各发一次、各回一次；主动方最后进入 <strong>TIME-WAIT</strong> 等待一段时间（确保最后的 ACK 送达、旧报文消亡）再 CLOSED。考点级别低于握手，记住&quot;挥手四次、比握手多一次&quot;即可。</p>
 <h3 id="h-23">滑动窗口（流量控制）</h3>
 <p><strong>动机</strong>：发送方发得再快，接收方处理不过来照样丢包。TCP 让<strong>接收方用报文里的&quot;窗口&quot;字段告诉对方：我还能再收多少</strong>。发送方维持一个发送窗口，窗口内的数据可以连续发出去，不必每发一段就停下来等确认；收到的确认使窗口向前&quot;滑动&quot;。接收方缓存吃紧时就把窗口通告调小，发送方随之放慢——这就是<strong>流量控制</strong>；另外 TCP 还有针对网络整体拥堵的<strong>拥塞控制</strong>（慢启动等，了解名字即可）。</p>
 <p><strong>应试动作</strong>：① TCP/UDP 对比表整表背下，特别是&quot;谁用 TCP、谁用 UDP&quot;的典型应用清单（DNS/DHCP/TFTP 走 UDP 是最爱考的）；② 三次握手每一步的报文标志（SYN → SYN+ACK → ACK）与四个状态名按顺序默写；③ 滑动窗口记一句&quot;接收方通告窗口大小，控制发送速率，实现流量控制&quot;。</p>
-<h2 id="h-24">第六节 应用层：常用协议端口与功能 ★★★</h2>
+<h2 id="h-24">第六节 应用层：常用协议端口与功能 <span class="stars">★★★</span></h2>
 <h3 id="h-25">端口是什么、怎么记</h3>
 <p>一台主机上同时跑着浏览器、微信、下载器……数据到了该交给谁？传输层用 <strong>16 位端口号</strong>区分进程。范围 0<del>65535；**知名端口 1</del>1023** 固定分配给常见服务。端口成对工作：服务器端用知名端口&quot;听&quot;，客户端随机开口。<strong>IP 地址找到主机，端口找到主机里的程序</strong>。</p>
 <h3 id="h-26">常用协议端口表（必背，年年考）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -587,6 +677,7 @@
 <td><strong>自动分配 IP 配置</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>记忆口诀</strong>：&quot;<strong>21 号 FTP 控制，20 传数据；23 远登、25 发信、53 域名、80 网页、110 收信、443 加密</strong>&quot;。UDP 一族只有四个：<strong>DNS、TFTP、SNMP、DHCP</strong>（口诀：&quot;域名、简单传文件、网管、拿地址，都图个快&quot;），其余常考应用协议全走 TCP。</p>
 <p><strong>DHCP 单独强调</strong>（常考功能题）：DHCP 的作用是让主机开机后<strong>自动获取 IP 地址、子网掩码、默认网关、DNS 服务器</strong>等配置，免手工设置；采用 UDP，客户端从 68 端口向服务器 67 端口申请。工作过程&quot;发现（Discover）→ 提供（Offer）→ 请求（Request）→ 确认（Ack）&quot;四步，知道名字即可。</p>
 <p><strong>反例演示</strong>：</p>
@@ -596,9 +687,10 @@
 <li>&quot;FTP 端口是 20&quot;——<strong>不完整</strong>。FTP 是<strong>双端口</strong>：21 控制、20 传数据；题目问&quot;控制连接&quot;答 21。</li>
 </ol>
 <p><strong>应试动作</strong>：① 端口表按口诀背到看到协议名 1 秒报端口（反向也要会：给端口报协议）；② 牢记 UDP 四兄弟 DNS/TFTP/SNMP/DHCP，其余默认 TCP；③ SMTP/POP3 是&quot;发/收&quot;配对，FTP 是&quot;21 控制/20 数据&quot;配对，专防调包。</p>
-<h2 id="h-27">第七节 HTML、WWW 与常用网络命令 ★</h2>
+<h2 id="h-27">第七节 HTML、WWW 与常用网络命令 <span class="stars">★</span></h2>
 <h3 id="h-28">WWW 三要素</h3>
 <p>万维网（WWW）由三样东西撑起来，三者名字要能配对：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -623,6 +715,7 @@
 <td>请求/响应，默认 80 端口</td>
 </tr>
 </tbody></table>
+</div>
 <p>例：<code>http://www.example.com:8080/exam/index.html</code>——协议 <code>http</code>，主机 <code>www.example.com</code>，端口 <code>8080</code>（省略时 HTTP 默认 80），路径 <code>/exam/index.html</code>。</p>
 <h3 id="h-29">HTML 常识（考选择题的粒度）</h3>
 <ul>
@@ -632,6 +725,7 @@
 <li>浏览器访问网页的完整链路：URL → DNS 把域名解析成 IP → 与服务器 80 端口建立 TCP 连接 → 发 HTTP 请求 → 服务器返回 HTML → 浏览器渲染。（这条链路把本课所有知识点串起来了，理解它等于复习了半节课。）</li>
 </ul>
 <h3 id="h-30">常用网络命令（偶尔考一道常识题）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -664,6 +758,7 @@
 <td>查看/维护 IP 地址与 MAC 地址的对应表</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>应试动作</strong>：① WWW 三要素配对（URL 门牌、HTML 语言、HTTP 协议）；② 超链接标签 <code>&lt;a href&gt;</code> 和&quot;URL 含协议/主机/端口/路径&quot;是两个最常考的小点；③ 命令按用途配对背：连通性 ping、路径 tracert、本机配置 ipconfig、连接状态 netstat。</p>
 <hr>
 <h2 id="h-31">课后考题（请合上讲义作答）</h2>
@@ -728,7 +823,14 @@ A. 255.255.255.192  B. 255.255.255.224  C. 255.255.255.240  D. 255.255.255.248</
 <p><strong>7.</strong> 对网段 192.168.5.0/24 进行子网划分，要求每个子网最多接入 30 台主机，最多可划分出的子网数是（）。
 A. 4  B. 8  C. 16  D. 32</p>
 <hr>
-<h2 id="h-33">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-34">课后考题答案</h3>
 <p><strong>1. B</strong>。按 IP 地址查路由表转发、连接不同网络、拦截广播帧——三条全是路由器（网络层）的职责。A/D 是物理层设备，C 二层交换机按 MAC 转发、不能隔离广播域。</p>
 <p><strong>2. A</strong>。TCP/IP 应用层 = OSI 的应用+表示+会话三层，SMTP/FTP/HTTP/DNS/DHCP 等应用协议都在此层。传输层只有 TCP/UDP，网际层是 IP/ICMP/ARP。</p>
@@ -750,6 +852,7 @@ A. 4  B. 8  C. 16  D. 32</p>
 <p><strong>(1) 求掩码。</strong> 每个子网最多 50 台主机 → 主机位 m 需满足 2^m − 2 ≥ 50 → m = 6（2^6−2 = 62 ≥ 50；m=5 时 2^5−2=30 &lt; 50 不够）。C 类主机位共 8 位，借 8 − 6 = 2 位做子网位 → 恰好 2^2 = <strong>4</strong> 个子网 ✓（与题意吻合）。掩码 = /26 → 255.255.255.<strong>192</strong>。
 验证：块大小 = 256 − 192 = 64，每个子网 64 个地址，可用 64 − 2 = 62 ≥ 50 ✓。</p>
 <p><strong>(2) 四个子网。</strong> 边界按 64 步进：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -784,6 +887,7 @@ A. 4  B. 8  C. 16  D. 32</p>
 <td>62</td>
 </tr>
 </tbody></table>
+</div>
 <p>每个子网可用主机数 = 2^6 − 2 = <strong>62</strong>。</p>
 <p><strong>(3) 第 3 个子网。</strong> 网络地址 192.168.100.128/26，主机位 6 位全置 1 得广播地址：128 = <code>10000000</code>，或上 <code>00111111</code> 得 <code>10111111</code> = 191 → 广播地址 <strong>192.168.100.191</strong>（即下一子网起点 192 减 1）。可用主机地址范围 <strong>192.168.100.129 ~ 192.168.100.190</strong>，共 190 − 129 + 1 = 62 个 ✓（与公式一致）。</p>
 <h3 id="h-36">精华题答案</h3>
@@ -795,14 +899,32 @@ A. 4  B. 8  C. 16  D. 32</p>
 <p><strong>5. B</strong>。ICMP（互联网控制报文协议，ping 的底层）与 IP、ARP 同属<strong>网际层</strong>。UDP 是传输层，FTP/SMTP 是应用层。</p>
 <p><strong>6. C</strong>。借位 s 需 2^s ≥ 12 → s = 4（2^3 = 8 &lt; 12，2^4 = 16 ≥ 12）。掩码 = /28 → 255.255.255.<strong>240</strong>。&quot;使每个子网可用主机数尽可能多&quot;= 借位尽量少，故取最小借位 s = 4；A（/26，4 个子网）、B（/27，8 个子网）不满足&quot;至少 12 个&quot;，D（/29，32 个子网）借位更多、每子网可用主机仅 2^3−2 = 6 台，均排除。C 每子网可用 2^4 − 2 = 14 台。</p>
 <p><strong>7. B</strong>。每子网最多 30 台主机 → 2^m − 2 ≥ 30 且取最小 → m = 5（2^5−2 = 30 恰好满足）。C 类 8 位主机位借出 8 − 5 = 3 位做子网位 → 子网数 2^3 = <strong>8</strong> 个，掩码 /27（255.255.255.224）。验证：块大小 256 − 224 = 32，8 个子网 × 32 地址 = 256 ✓ 恰好用满整个 C 类网段。</p>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="07-程序设计语言基础.html">07-程序设计语言基础.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-操作系统.html">
+      <span class="k">上一课</span>
+      <span class="t">05 操作系统</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="07-程序设计语言基础.html">
+      <span class="k">下一课</span>
+      <span class="t">07 程序设计语言基础</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="05-操作系统.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="07-程序设计语言基础.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

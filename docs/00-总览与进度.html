@@ -3,13 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>软考软件设计师 · 自学总览与进度</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html" class="is-current" aria-current="page"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">软考软件设计师 · 自学总览与进度</h1>
-<blockquote>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>学习总览</span>
+        <span class="dot"></span>
+        <span>进度表 · 学习方法</span>
+    </p>
+    <h1 id="h-1">软考软件设计师 · 自学总览与进度</h1>
+  </header>
+  <blockquote class="lead">
 <p>目标：2026 年 10 月 24—27 日考试通过（两科均 ≥45 分）。
 本目录是唯一学习资料，不需要看视频。依据《<a href="软件设计师考点大纲.html">软件设计师考点大纲.html</a>》逐考点展开。</p>
 </blockquote>
@@ -27,21 +98,21 @@
 <li><input disabled="" type="checkbox"> <strong>06 计算机网络</strong>（约 4–5 题）→ <a href="06-计算机网络.html">06-计算机网络.html</a></li>
 <li><input disabled="" type="checkbox"> <strong>07 程序设计语言基础</strong>（约 3–5 题）→ <a href="07-程序设计语言基础.html">07-程序设计语言基础.html</a></li>
 <li><input disabled="" type="checkbox"> <strong>08 信息安全</strong>（约 3–4 题）→ <a href="08-信息安全.html">08-信息安全.html</a></li>
-<li><input disabled="" type="checkbox"> <strong>09 计算机系统基础</strong>（约 6–8 题）</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>09 计算机系统基础</strong>（约 6–8 题）→ <a href="09-计算机系统基础.html">09-计算机系统基础.html</a></li>
 </ul>
 <h3 id="h-5">第三梯队（背诵即可拿分）</h3>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> <strong>10 标准化与知识产权</strong>（约 3–4 题）→ <a href="10-标准化与知识产权.html">10-标准化与知识产权.html</a></li>
-<li><input disabled="" type="checkbox"> <strong>11 专业英语</strong>（固定 5 题）</li>
-<li><input disabled="" type="checkbox"> <strong>12 数学与多媒体</strong>（约 3–4 题）</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>11 专业英语</strong>（固定 5 题）→ <a href="11-专业英语.html">11-专业英语.html</a></li>
+<li><input checked="" disabled="" type="checkbox"> <strong>12 数学与多媒体</strong>（约 3–4 题）→ <a href="12-数学与多媒体.html">12-数学与多媒体.html</a></li>
 </ul>
 <h3 id="h-6">收尾</h3>
 <ul>
-<li><input disabled="" type="checkbox"> <strong>考前全真模拟卷</strong>（12 课全部完成后生成）</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>考前全真模拟卷</strong>（75 道选择题 + 5 道案例题）→ <a href="99-考前全真模拟卷.html">99-考前全真模拟卷.html</a></li>
 </ul>
 <h2 id="h-7">每课怎么学（固定流程）</h2>
 <ol>
-<li><strong>读讲义</strong>：从头读到尾，高频考点（标 ★）重点消化。看不懂的地方直接在对话里问我，我换种讲法。</li>
+<li><strong>读讲义</strong>：从头读到尾，高频考点（标 <span class="stars">★</span>）重点消化。看不懂的地方直接在对话里问我，我换种讲法。</li>
 <li><strong>做课后考题</strong>：合上讲义做，约 15 道选择题 + 1~2 道案例题风格题。</li>
 <li><strong>对答案</strong>：翻到文件最末尾的「答案与解析」，错题看解析和易错点，回讲义补对应知识点。</li>
 <li><strong>做精华题</strong>：5–8 道必考真题风格题，这是考场上最可能原样出现的题型。</li>
@@ -63,11 +134,27 @@
 <li>12 课完成后生成一份全真模拟卷（75 选择 + 5 大题）收尾。</li>
 </ul>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="软件设计师考点大纲.html">
+      <span class="k">上一课</span>
+      <span class="t">软件设计师（软考中级）考点大纲与学习范围</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="01-数据结构与算法.html">
+      <span class="k">下一课</span>
+      <span class="t">01 数据结构与算法</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="软件设计师考点大纲.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="01-数据结构与算法.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

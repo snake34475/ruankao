@@ -3,22 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>05 操作系统</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html" class="is-current" aria-current="page"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">05 操作系统</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题约 4–6 题（第二梯队稳定得分点，占比约 8%）。PV 操作、页式地址换算、位示图/索引节点计算是必考计算题；死锁资源数公式、磁盘调度近年出题频率也很高。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 画出三态转换图、判断任一转换是否可能；② 给前趋图配 PV 操作、定信号量初值；③ 用公式算死锁资源数、用银行家算法判安全序列；④ 做页式逻辑地址→物理地址换算；⑤ 算 LRU/FIFO 缺页率；⑥ 算位示图字号位号与索引文件最大长度；⑦ 算 SSTF/SCAN 磁头移动道数与周转时间。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05 操作系统</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题约 4–6 题（第二梯队稳定得分点，占比约 8%）。PV 操作、页式地址换算、位示图/索引节点计算是必考计算题；死锁资源数公式、磁盘调度近年出题频率也很高。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 画出三态转换图、判断任一转换是否可能；② 给前趋图配 PV 操作、定信号量初值；③ 用公式算死锁资源数、用银行家算法判安全序列；④ 做页式逻辑地址→物理地址换算；⑤ 算 LRU/FIFO 缺页率；⑥ 算位示图字号位号与索引文件最大长度；⑦ 算 SSTF/SCAN 磁头移动道数与周转时间。</p>
 <p><strong>与案例题的关联</strong>：本仓库大纲的案例部分固定为数据流图/数据库/UML/算法/程序五类大题，<strong>不设操作系统大题</strong>（历史上有年份考过&quot;前趋图 + PV 操作&quot;大题，以官方当年题型为准）。因此本课不设&quot;案例题专攻&quot;，改为第十节「高频计算题型专攻」——把每个计算题型的解题步骤写成可直接套用的模板；PV/银行家类小问即使嵌进别的案例大题，也按这套模板做。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 进程与线程 ★</h2>
+<h2 id="h-2">第一节 进程与线程 <span class="stars">★</span></h2>
 <h3 id="h-3">为什么要有进程</h3>
 <p>程序是躺在我盘上的代码文件（静态），但系统里同时跑着浏览器、播放器、输入法——每个&quot;正在执行的程序副本&quot;就是一个<strong>进程</strong>（动态）。进程 = 程序的一次执行过程，由创建而产生、完成任务后撤销而消亡。<strong>进程是系统进行资源分配和调度的独立单位</strong>。</p>
 <p>进程由三部分组成：<strong>程序块 + 数据块 + 进程控制块 PCB</strong>。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -39,10 +111,12 @@
 <td>进程的&quot;身份证 + 档案袋&quot;：进程标识符、状态、现场保护区、队列指针等</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>PCB 是进程存在的唯一标志</strong>——系统根本&quot;看不见&quot;程序，它只认 PCB。创建进程 = 建 PCB，撤销进程 = 撤 PCB。这是选择题直接考的一句话。</p>
 <h3 id="h-4">线程：进程内部的&quot;分工&quot;</h3>
 <p>进程是资源分配单位，但切换进程开销大，于是把&quot;调度&quot;下放到更小的单位——<strong>线程</strong>。线程是处理机调度的基本单位，同一进程内的多个线程共享进程的资源。</p>
 <p><strong>共享 / 不共享（必背）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -55,9 +129,10 @@
 <td><strong>栈</strong>（每个线程有自己的栈）、寄存器组、程序计数器</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（易错）</strong>：题目爱问&quot;以下叙述错误的是&quot;——凡出现&quot;线程间共享<strong>栈 / 栈指针 / 寄存器</strong>&quot;必错；凡&quot;共享代码段 / 全局变量 / 打开的文件&quot;必对。记忆法：栈是各线程自己的&quot;私人工作台&quot;，代码和仓库（全局变量、文件）是整间办公室公用的。</p>
 <p><strong>应试动作</strong>：背两句话——&quot;PCB 是进程存在的唯一标志&quot;；&quot;线程共享代码/全局数据/文件，独有栈和寄存器现场&quot;。考场上认特征词：题干说&quot;资源分配&quot;→ 进程，说&quot;调度/处理机&quot;→ 线程。</p>
-<h2 id="h-5">第二节 进程状态转换 ★★★（几乎每年 1 题）</h2>
+<h2 id="h-5">第二节 进程状态转换 <span class="stars">★★★</span>（几乎每年 1 题）</h2>
 <h3 id="h-6">为什么要有状态</h3>
 <p>CPU 只有一个，进程几十个，必须给每个进程贴个状态标签，调度器才知道&quot;谁在跑、谁能跑、谁在干等&quot;。三态模型：</p>
 <ul>
@@ -73,6 +148,7 @@
    │ 事件发生（I/O完成）   ↓
    └──────────────────  阻塞
 </code></pre>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -117,6 +193,7 @@
 <td><strong>✗ 不可能</strong>（事件发生后先进就绪队列排队，不能插队直接上 CPU）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>公式三件套（判转换题的通用判据 + 算例 + 口诀）</strong>：</p>
 <ul>
 <li>判据：阻塞 → 运行必须经过<strong>就绪</strong>中转；就绪 → 阻塞不存在。</li>
@@ -125,7 +202,7 @@
 </ul>
 <p><strong>五态模型（了解）</strong>：三态基础上增加&quot;挂起&quot;——进程被换出到磁盘对换区（主存不足、故障调试时），活动就绪↔静止就绪、活动阻塞↔静止阻塞。记住：<strong>三态中的每一种都可能被挂起</strong>。</p>
 <p><strong>应试动作</strong>：背死两个&quot;不可能&quot;（就绪→阻塞、阻塞→运行）；场景题对号入座——&quot;时间片到&quot;→运行→就绪，&quot;等 I/O&quot;→运行→阻塞，&quot;I/O 完成&quot;→阻塞→就绪，&quot;被调度选中&quot;→就绪→运行。</p>
-<h2 id="h-8">第三节 进程调度与周转时间 ★★</h2>
+<h2 id="h-8">第三节 进程调度与周转时间 <span class="stars">★★</span></h2>
 <h3 id="h-9">为什么要算周转时间</h3>
 <p>用户交一个作业给系统，最关心的就是&quot;多久能跑完&quot;。周转时间衡量这个：从<strong>到达</strong>到<strong>完成</strong>的全部等待 + 运行时间。调度算法不同，周转时间不同——考题就是给几个作业的到达/运行时间，让你按某算法排顺序再求平均周转时间。</p>
 <h3 id="h-10">公式三件套</h3>
@@ -135,6 +212,7 @@
 <li><strong>手算口诀</strong>：先列表填&quot;开始时刻、完成时刻&quot;两列（完成 = 上一个完成时刻与本作业到达时刻中较大者 + 运行时间），再用&quot;完成减到达&quot;一列竖式扫下去。</li>
 </ul>
 <h3 id="h-11">常考调度算法</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -154,9 +232,10 @@
 <td>&quot;短作业优先&quot;&quot;平均周转时间最短&quot;</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>反例演示（易错）</strong>：SJF 非抢占时，<strong>时刻 0 只能从已到达的作业里挑短的</strong>，不是全场谁短谁先。上例改按 SJF：t=0 只有 J1 已到 → 仍先跑 J1（0–4）；t=4 时 J2(需 3)、J3(需 1) 都在等 → 挑短的 J3（4–5，周转 5−2 = 3）；再跑 J2（5–8，周转 8−1 = 7）。平均 = (4+3+7)/3 = 14/3 ≈ 4.67 &lt; 5.33 ✓（SJF 平均周转更短，这正是它的卖点）。若错把 J3 提到最前面先跑，就掉进&quot;未到达就运行&quot;的陷阱。</p>
 <p><strong>应试动作</strong>：背公式&quot;周转 = 完成 − 到达&quot;；SJF 题每一步都先检查&quot;该时刻这个作业到了没有&quot;；选项给分数（16/3、14/3）时别慌，保留分数或算到两位小数即可。</p>
-<h2 id="h-12">第四节 进程同步与互斥：PV 操作 ★★★（必考）</h2>
+<h2 id="h-12">第四节 进程同步与互斥：PV 操作 <span class="stars">★★★</span>（必考）</h2>
 <h3 id="h-13">为什么要互斥：临界资源</h3>
 <p>两个进程同时往同一台打印机上输出，纸上的内容就会交错成一团乱码。像打印机这种<strong>同一时刻只允许一个进程使用的资源</strong>叫<strong>临界资源</strong>，进程中访问临界资源的那段代码叫<strong>临界区</strong>。注意区分：临界资源必须互斥使用；普通共享资源（如可重入的代码）允许多进程同时用。</p>
 <p>临界区管理的四条准则（选择题考过名称与含义）：<strong>有空即进、无空则等、有限等待、让权等待</strong>（进不了临界区就释放 CPU，避免&quot;忙等&quot;）。</p>
@@ -168,6 +247,7 @@
 </ul>
 <p>初学者最容易问：&quot;不就是个加减法吗，为什么要绑定阻塞/唤醒？&quot;——因为判断和等待必须<strong>一步完成</strong>：如果&quot;先查 S 再决定等不等&quot;分成两步，两个进程可能同时查到&quot;还有 1 个&quot;然后都进去，互斥就破了。PV 把&quot;查账 + 排队/叫号&quot;做成了不可拆的整体。</p>
 <p><strong>初值怎么定（核心结论）</strong>：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -192,13 +272,14 @@
 <td>全为 <strong>0</strong></td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>信号量取值范围题（公式三件套）</strong>：</p>
 <ul>
 <li>通用形式：n 个进程共享 k 个同类资源，S 初值 k，则 S 的最大值 = k，最小值 = k − n（负到&quot;全部进程都在排队&quot;为止）。</li>
 <li>代入算例：10 个进程共享 3 台打印机：最大 3，最小 3 − 10 = −7，即 S ∈ [−7, 3]。</li>
 <li>手算口诀：<strong>&quot;上界是初值，下界是初值减进程数&quot;</strong>。</li>
 </ul>
-<h3 id="h-15">前趋图配 PV：套路题（★★★）</h3>
+<h3 id="h-15">前趋图配 PV：套路题（<span class="stars">★★★</span>）</h3>
 <p>前趋图刻画&quot;哪些任务必须等哪些任务做完才能开始&quot;（思想与数据结构的拓扑排序一致，见 <a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第 3.5 节；与软件工程的关键路径网络图也同源）。</p>
 <p><strong>规则（背死）</strong>：</p>
 <ol>
@@ -214,9 +295,10 @@ D: P(S3); P(S4); 执行;
 </code></pre>
 <p><strong>反例演示（易错）</strong>：把 V 写在弧的终点、P 写在起点——顺序反了：变成&quot;后继先 V 报信、前趋再 P 等待&quot;，而信号量初值是 0，前趋 P 时会永远阻塞，整张图谁都跑不起来。记住口诀：<strong>&quot;V 在前驱末，P 在后继初&quot;</strong>。另一易错点：同步信号量与互斥信号量混用初值——同步（前趋图）初值 0，互斥初值 = 资源数，二者不能抄混。</p>
 <p><strong>应试动作</strong>：① 互斥 → 初值 = 资源数；同步/前趋 → 初值 0；② 取值范围 = [初值−进程数， 初值]；③ 前趋图按&quot;弧数 = 信号量数、V 起点末、P 终点初&quot;机械填写，填完逐弧检查一遍&quot;每条弧恰好一个 V 和一个 P&quot;。这种题若以小问嵌在案例大题里（历史上考过整道大题），按同一套路做。并发互斥的思想与数据库的锁机制同源，可对照 <a href="02-数据库系统.html">02-数据库系统.html</a> 的并发控制一节。</p>
-<h2 id="h-16">第五节 死锁 ★★★</h2>
+<h2 id="h-16">第五节 死锁 <span class="stars">★★★</span></h2>
 <h3 id="h-17">死锁是什么、为什么会发生</h3>
 <p>若干进程互相要对方手里的资源，谁都拿不齐、谁都不放手，全体卡死——这就是死锁。发生死锁必须<strong>同时</strong>满足四个必要条件（背名称+含义，选择题考配对）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -246,8 +328,9 @@ D: P(S3); P(S4); 执行;
 <td><strong>资源有序分配法</strong>（全系统资源统一编号、按序申请）</td>
 </tr>
 </tbody></table>
+</div>
 <p>处理策略四层次：<strong>死锁预防</strong>（破坏四条件之一）→ <strong>死锁避免</strong>（银行家算法，动态判断分配后是否安全）→ <strong>死锁检测与解除</strong>（资源图化简）。破坏&quot;互斥&quot;做不到，破坏其余三个都能预防。</p>
-<h3 id="h-18">死锁资源数公式（★★★ 必考计算）</h3>
+<h3 id="h-18">死锁资源数公式（<span class="stars">★★★</span> 必考计算）</h3>
 <ul>
 <li><strong>通用形式</strong>：m 个进程、每个进程最多需要 w 个同类资源、系统共有 n 个资源——<ul>
 <li><strong>不可能发生死锁的最小资源数</strong>：n = <strong>m×(w−1) + 1</strong>（等价条件：n ≥ m(w−1)+1 时必不死锁）；</li>
@@ -261,7 +344,7 @@ D: P(S3); P(S4); 执行;
 <p>反向题型（给 n 求 w）：3 个进程共享 10 个资源，每个进程最多申请 i 个，问&quot;可能发生死锁的最小 i&quot;——令 3×(i−1) ≥ 10，i−1 ≥ 3.34，i ≥ 4.34，取整数 <strong>i = 5</strong>。（i = 4 时 3×3 = 9 &lt; 10，按鸽笼原理必有一个进程能拿到 4 个而完成，不死锁。）</p>
 <h3 id="h-19">进程资源图与&quot;化简&quot;（了解即可）</h3>
 <p>题目给出&quot;进程—资源&quot;请求分配图：<strong>阻塞结点</strong> = 当前申请无法满足的进程；<strong>非阻塞结点</strong> = 能满足、可执行完并释放资源的进程。判断法：反复找非阻塞结点、让它执行完并回收资源——<strong>能全部化简 → 非死锁；无法化简 → 死锁</strong>。目前软考的可化简图通常是非死锁的。</p>
-<h3 id="h-20">银行家算法（★★★）</h3>
+<h3 id="h-20">银行家算法（<span class="stars">★★★</span>）</h3>
 <p><strong>动机</strong>：预防策略太死板（一次性分配浪费资源），银行家算法更聪明——每次分配前<strong>先假装分出去，看看能不能找到一个让所有进程都跑完的顺序（安全序列）</strong>：找得到就真分，找不到就不分。银行放贷同理：放钱前先算&quot;这笔放出去后，是否还能让所有贷款人最终都还上钱&quot;。</p>
 <p><strong>判定步骤（五步模板，背下来直接套）</strong>：</p>
 <ol>
@@ -278,10 +361,10 @@ D: P(S3); P(S4); 执行;
 </ul>
 <p><strong>反例演示（易错）</strong>：① 只要<strong>找到一条</strong>安全序列就算安全，不要求唯一（但做题时若四个选项里三条都不通，剩下的那条就是答案）；② &quot;不安全&quot; ≠ &quot;已死锁&quot;，只是&quot;可能死锁&quot;，银行家算法宁可错杀不肯冒险；③ 算 Available 时忘了用&quot;总量减已分配&quot;，直接拿 Need 求和比较——必错。</p>
 <p><strong>应试动作</strong>：① 死锁资源数公式&quot;每进程先扣 1 乘完再加 1&quot;正反两个方向都要会算；② 四条件与破坏策略配对（一次性分配→破坏请求和保持；有序分配→破坏环路等待）；③ 银行家五步模板背熟，安全序列判定题在草稿上列表（Need / Available 两列）逐步推，每步检查&quot;Need ≤ Available&quot;。</p>
-<h2 id="h-21">第六节 存储管理：页式、段式、段页式 ★★★</h2>
+<h2 id="h-21">第六节 存储管理：页式、段式、段页式 <span class="stars">★★★</span></h2>
 <h3 id="h-22">为什么要&quot;分页&quot;</h3>
 <p>程序比内存大、或内存碎片零散装不下完整程序怎么办？<strong>页式存储</strong>把程序和内存都切成同样大小的块：程序的块叫<strong>页</strong>，内存的块叫<strong>页帧（物理块）</strong>，以页为单位离散装入内存——零散小空隙也能利用起来，利用率高、碎片小（缺点：查页表增加开销，页进出频繁时产生&quot;抖动&quot;）。</p>
-<h3 id="h-23">页式地址变换（★★★ 必考计算）</h3>
+<h3 id="h-23">页式地址变换（<span class="stars">★★★</span> 必考计算）</h3>
 <p>高级语言用的是<strong>逻辑地址</strong>，进内存要换成<strong>物理地址</strong>。逻辑地址结构 = <strong>页号 + 页内地址</strong>；物理地址 = <strong>页帧号 + 页内地址</strong>。</p>
 <ul>
 <li><strong>通用形式</strong>：页大小 = 2^k，则逻辑地址的<strong>低 k 位就是页内地址（变换前后不变）</strong>；高位是页号 → 查页表得页帧号 → 物理地址 = 页帧号 × 页大小 + 页内地址。</li>
@@ -290,6 +373,7 @@ D: P(S3); P(S4); 执行;
 </ul>
 <p><strong>反例演示（易错）</strong>：① 忘了查页表，直接把逻辑地址当物理地址（1F48H → 1F48H 是错的）；② 把&quot;页号 × 页大小&quot;当成物理地址（只换了页号没加页内地址）；③ 页号页内地址拆分位 Number 弄错——<strong>页大小决定页内地址位数</strong>：4KB→12 位（低 3 位十六进制），1KB→10 位，2KB→11 位。</p>
 <h3 id="h-24">段式与段页式</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -318,6 +402,7 @@ D: P(S3); P(S4); 执行;
 <td>兼两者之长；开销最大、速度下降</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>段式合法地址判定（公式三件套）</strong>：</p>
 <ul>
 <li>通用形式：逻辑地址 (段号 s, 段内偏移 d) 合法 ⇔ s 在段表内 <strong>且 d &lt; 段 s 的段长</strong>；物理地址 = 该段基址 + d。</li>
@@ -325,9 +410,10 @@ D: P(S3); P(S4); 执行;
 <li>口诀：<strong>&quot;偏移必须小于段长，物理地址 = 基址加偏移&quot;</strong>。</li>
 </ul>
 <p><strong>应试动作</strong>：① 页式计算背&quot;页内地址不变，页号查表换页帧&quot;，先把页大小化成 2 的幂定拆分位数；② 段式判断只看一条：偏移 &lt; 段长？③ 三种方式按&quot;等分/自然段/先段后页&quot;配对，段页式缺点（开销大、速度降）考过。</p>
-<h2 id="h-25">第七节 页面置换：LRU / FIFO / OPT ★★</h2>
+<h2 id="h-25">第七节 页面置换：LRU / FIFO / OPT <span class="stars">★★</span></h2>
 <h3 id="h-26">为什么需要置换</h3>
 <p>内存块比页数少，缺页时要把某页请出去腾位置——请谁走？置换算法决定。选错对象 → 刚换出的页马上又要用 → 缺页率飙升，极端情况 CPU 大部分时间忙着换页而不是干活，称<strong>抖动（颠簸）</strong>。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -352,6 +438,7 @@ D: P(S3); P(S4); 执行;
 <td>缺页率最低，但要预知未来，无法实现，只作评价基准</td>
 </tr>
 </tbody></table>
+</div>
 <p>三种算法要靠<strong>表格模拟</strong>算缺页数——这是必考计算，模板如下。</p>
 <p><strong>解题模板（三步）</strong>：</p>
 <ol>
@@ -361,6 +448,7 @@ D: P(S3); P(S4); 执行;
 </ol>
 <p><strong>代入算例</strong>：3 个物理块，引用串 <code>1,2,1,3,4,1,2,3</code>（8 次）：</p>
 <p><strong>FIFO</strong>（记进入顺序，淘汰最老的）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -420,8 +508,10 @@ D: P(S3); P(S4); 执行;
 <td>✓</td>
 </tr>
 </tbody></table>
+</div>
 <p>FIFO 缺页 7 次，缺页率 7/8 = 87.5%。</p>
 <p><strong>LRU</strong>（淘汰&quot;最近最久未使用&quot;的，比较每页<strong>最后一次</strong>被访问的时间）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -481,6 +571,7 @@ D: P(S3); P(S4); 执行;
 <td>✓</td>
 </tr>
 </tbody></table>
+</div>
 <p>关键两步的淘汰依据：位5 引用 4 时内存 {1,2,3}，最后一次访问时间是 1@位3、3@位4、2@位2 → 最久未使用的是 <strong>2</strong>，淘汰 2；位7 引用 2 时内存 {1,4,3}，最后使用 1@位6、4@位5、3@位4 → 淘汰 <strong>3</strong>；位8 引用 3 时内存 {1,4,2}，最后使用 1@位6、2@位7、4@位5 → 淘汰 <strong>4</strong>。注意位5 时 2 和 3 都是&quot;装入后没再访问&quot;，比的是&quot;刚进来&quot;（位4）比&quot;位2&quot;更近，所以淘汰更久远的 2 而不是 3。</p>
 <p>LRU 缺页 6 次，缺页率 6/8 = 75%。</p>
 <p><strong>OPT</strong>（淘汰&quot;将来最久不用&quot;的）：</p>
@@ -494,8 +585,8 @@ D: P(S3); P(S4); 执行;
 <p><strong>交叉验算（第二种方法）</strong>：缺页数 = 串长 − 命中数。FIFO 命中仅位3 → 8−1 = 7 ✓；LRU 命中位3、位6 → 8−2 = 6 ✓；OPT 命中位3、位6、位7 → 8−3 = 5 ✓。三种算法缺页数 7 ≥ 6 ≥ 5，与&quot;OPT 最优、LRU 次之、FIFO 最差&quot;的理论一致 ✓。</p>
 <p><strong>反例演示（易错）</strong>：① 命中时<strong>不淘汰、不装入</strong>，只在心里更新&quot;最近使用&quot;——把命中当缺页是最常见失分点；② LRU 比的是&quot;<strong>最后一次被访问</strong>距今多久&quot;，不是&quot;进入内存多久&quot;（那是 FIFO）；③ OPT 往<strong>后</strong>看，LRU 往<strong>前</strong>看，别弄反方向。</p>
 <p><strong>应试动作</strong>：① 考场上直接画表逐位模拟，做完用&quot;串长 − 命中数 = 缺页数&quot;验算；② 背结论&quot;缺页率 OPT &lt; LRU &lt; FIFO（一般情况）&quot;；③ 认题特征词：&quot;最近最久未使用&quot;→ LRU，&quot;先进先出/最先进入&quot;→ FIFO，&quot;最长时间不被使用（未来）&quot;→ OPT。</p>
-<h2 id="h-27">第八节 文件管理 ★★</h2>
-<h3 id="h-28">索引文件计算（★★★）</h3>
+<h2 id="h-27">第八节 文件管理 <span class="stars">★★</span></h2>
+<h3 id="h-28">索引文件计算（<span class="stars">★★★</span>）</h3>
 <p><strong>动机</strong>：文件占很多离散的磁盘块，怎么记录&quot;这个文件都放在哪些块&quot;？——给文件建一张&quot;块号清单&quot;（索引表），清单本身也占块。索引表放不下怎么办？搞<strong>多级索引</strong>：一级索引块里存的不再是数据块号，而是&quot;二级索引块的块号&quot;，二级里才存数据块号。</p>
 <ul>
 <li><strong>通用形式</strong>（UNIX 式索引节点）：设磁盘块大小 B、每个地址项占 A 字节，则一个索引块能存 <strong>B/A</strong> 个块号。若索引节点含 d 个<strong>直接地址</strong>（直接指向数据块）、1 个<strong>一级间接</strong>（指向的块里全是数据块号）、1 个<strong>二级间接</strong>（指向的块里全是&quot;一级间接块&quot;号），则文件最大长度 = (d + B/A + (B/A)²) × B。</li>
@@ -508,7 +599,7 @@ D: P(S3); P(S4); 执行;
 <li><strong>手算口诀</strong>：<strong>&quot;直接乘，一级乘一次，二级平方乘&quot;</strong>——先算每块能装几个地址项（B/A），直接地址管 d 块，一级管 B/A 块，二级管 (B/A)² 块。</li>
 </ul>
 <p><strong>反例演示（易错）</strong>：二级间接的块数是 <strong>(B/A)²</strong> 不是 2×(B/A)——&quot;二级&quot;是嵌套两层，一层 256 个指向下一层，下一层每块再 256 个，256×256 = 65536，不是 512。</p>
-<h3 id="h-29">位示图计算（★★★）</h3>
+<h3 id="h-29">位示图计算（<span class="stars">★★★</span>）</h3>
 <p><strong>动机</strong>：磁盘上哪些块空着、哪些被占？给全盘每个物理块安排 1 个比特：0 空闲、1 占用——这张比特表就是<strong>位示图（bitmap）</strong>。机器按&quot;字&quot;存取，一个字长 w 位能管 w 个块。</p>
 <ul>
 <li><strong>通用形式</strong>：物理块号 b、字长 w、<strong>均从 0 开始编号</strong>：字号 = <strong>⌊b / w⌋</strong>，位号 = <strong>b mod w</strong>；位示图总字数 = ⌈总块数 / w⌉，其中总块数 = 磁盘容量 ÷ 物理块大小。</li>
@@ -517,18 +608,19 @@ D: P(S3); P(S4); 执行;
 </ul>
 <p>容量型算例：磁盘 160GB、物理块 1MB、字长 32 位：总块数 = 160×1024 ÷ 1 = 163840 块；字数 = 163840 ÷ 32 = <strong>5120 字</strong>。验算：160GB = 163840MB，除以 1MB/块得 163840 块，除以 32 位/字得 5120 ✓。</p>
 <p><strong>反例演示（易错）</strong>：① 题干会说明块号、字号&quot;从 0&quot;还是&quot;从 1&quot;编号——从 0 换算成第几个时要 +1（从 1 计数时 1000 号块在第 32 个字）；② 忘了 GB→MB 的 1024 进制换算（160GB = 160×1024MB，不是 160×1000）。</p>
-<h3 id="h-30">目录与路径（★）</h3>
+<h3 id="h-30">目录与路径（<span class="stars">★</span>）</h3>
 <ul>
 <li>树形（多级）目录：<strong>不同目录下允许同名文件</strong>；一级目录不允许重名。</li>
 <li><strong>绝对路径</strong>：从<strong>根（盘符）<strong>开始；<strong>相对路径</strong>：从</strong>当前目录</strong>开始。考法：给目录树和当前目录，写出某文件的两种路径，或问&quot;从当前目录出发少走了哪一段&quot;。</li>
 </ul>
 <p><strong>应试动作</strong>：① 索引文件公式背&quot;每块地址数 = 块大小 ÷ 地址项大小&quot;，二级平方；② 位示图两套小题（定位、容量）套口诀；③ 注意题目给的是 KB/MB/GB 混合单位，先统一成同一单位再除。</p>
-<h2 id="h-31">第九节 设备管理：磁盘调度与虚拟设备 ★★</h2>
+<h2 id="h-31">第九节 设备管理：磁盘调度与虚拟设备 <span class="stars">★★</span></h2>
 <h3 id="h-32">磁盘的结构与存取时间</h3>
 <p>磁盘由多个盘面组成，每个盘面划分成一圈圈<strong>磁道</strong>（从外向里 0,1,2,…编号），每个磁道按角度分成<strong>扇区</strong>；多个盘面的同一号磁道构成<strong>柱面</strong>（所以磁道号也叫柱面号）。</p>
 <p><strong>存取时间 = 寻道时间 + 旋转延迟（等待时间）+ 传输时间</strong>：寻道 = 磁头移到目标磁道（<strong>最耗时，有调度算法可优化</strong>）；旋转延迟 = 等目标扇区转到磁头下（盘匀速转，无算法可言）；传输 = 读写数据。选择题直接考&quot;三段构成&quot;与&quot;寻道时间最值得优化&quot;。</p>
-<h3 id="h-33">磁盘调度算法（★★★ 计算）</h3>
+<h3 id="h-33">磁盘调度算法（<span class="stars">★★★</span> 计算）</h3>
 <p>磁头一次只在一个位置，多个磁道访问请求排队，按什么顺序服务？目标：<strong>平均寻道距离最短</strong>。</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -558,6 +650,7 @@ D: P(S3); P(S4); 执行;
 <td>各磁道等待更均匀</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>解题模板</strong>：① 列出请求磁道号和磁头起点；② 按算法规则排出服务顺序；③ 相邻两站求距离差绝对值；④ 全部加总 = 移动道数；除以请求数 = 平均寻道长度。</p>
 <p><strong>代入算例</strong>：磁头在 60 号磁道，请求队列：40、70、25、90、65、10。</p>
 <ul>
@@ -570,6 +663,7 @@ D: P(S3); P(S4); 执行;
 <p><strong>应试动作</strong>：① 存取时间三段构成背下来，&quot;寻道可优化、旋转无算法&quot;考过判断；② SSTF/SCAN 老老实实列表逐段相加，SCAN 先看题干折返规则；③ 认题：看到&quot;假脱机/输入井输出井&quot;选 Spooling，看到&quot;虚拟设备&quot;想&quot;独占→共享&quot;。</p>
 <h2 id="h-35">第十节 高频计算题型专攻（应试模板汇总）</h2>
 <p>本课所有计算题的考场流水线，考前把这张表过一遍：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -640,6 +734,7 @@ D: P(S3); P(S4); 执行;
 <td>平均值介于最短/最长周转之间</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>考场提示</strong>：这类题是&quot;送分题里最费草稿的&quot;——一定画表，不心算；算完用表里最后一列的验算法快速复核，30 秒能拦住绝大多数失分。</p>
 <hr>
 <h2 id="h-36">课后考题（请合上讲义作答）</h2>
@@ -711,6 +806,7 @@ D. 减少磁盘的寻道时间</p>
 问题 2：本题共定义了 5 个信号量。若把前趋关系改为再增加一条&quot;B→E&quot;，则需要增加几个信号量？E 的开头需要做哪几个 P 操作？</p>
 <p><strong>案例 2（银行家算法，模拟真题风格）</strong></p>
 <p>某系统只有一类资源，总量为 11 个。当前时刻三个进程的占用情况如下：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -735,6 +831,7 @@ D. 减少磁盘的寻道时间</p>
 <td>2</td>
 </tr>
 </tbody></table>
+</div>
 <p>问题 1：当前系统的剩余可用资源是多少？各进程的尚需资源（Need）分别是多少？
 问题 2：当前状态是否安全？若安全，写出安全序列（说明：若安全序列存在多条，写出题目要求的即可，并判断本题安全序列是否唯一）。
 问题 3：若此时 P3 提出再申请 2 个资源，系统能否满足？请用银行家算法判定并说明理由。</p>
@@ -757,7 +854,14 @@ D. 减少磁盘的寻道时间</p>
 </li>
 </ol>
 <hr>
-<h2 id="h-38">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-39">课后考题答案（选择题）</h3>
 <p><strong>1. B</strong>
 PCB 记录进程的标识、状态、现场等全部管理信息，系统靠它感知进程的存在——&quot;PCB 是进程存在的唯一标志&quot;。程序和数据只是进程的组成部分，进程撤销后它们仍可能存在。</p>
@@ -797,6 +901,7 @@ Spooling 用磁盘输入井/输出井做中转，把打印机这类独占设备�
 <h3 id="h-40">课后考题答案（案例题）</h3>
 <p><strong>案例 1</strong></p>
 <p>问题 1（逐弧配对：每条弧起点末 V、终点初 P）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -831,6 +936,7 @@ Spooling 用磁盘输入井/输出井做中转，把打印机这类独占设备�
 <td>D→E</td>
 </tr>
 </tbody></table>
+</div>
 <p>注：进程 D 开头的 P(S3)、P(S4) 先后顺序可互换，两次 P 都做完才能往下执行。</p>
 <p>问题 2：增加 1 个信号量（共 6 个）——每条弧一个信号量，新增弧 B→E 即新增 1 个。E 开头需做 <strong>P(S5) 和新信号量的 P</strong> 两个 P 操作（E 有两条入弧：D→E 与 B→E，几条入弧就做几个 P）。</p>
 <p><strong>案例 2</strong></p>
@@ -838,6 +944,7 @@ Spooling 用磁盘输入井/输出井做中转，把打印机这类独占设备�
 剩余可用 = 11 − (3+4+2) = <strong>2</strong>。
 Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4 = <strong>1</strong>；P3 = 9−2 = <strong>7</strong>。</p>
 <p>问题 2：<strong>安全，且安全序列唯一，为 P2 → P1 → P3</strong>。判定表：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -866,6 +973,7 @@ Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4
 <td>9 + 2 = 11（全部完成）</td>
 </tr>
 </tbody></table>
+</div>
 <p>唯一性验证：Available = 2 时 P1、P3 都无法启动，第一步只能是 P2；P2 完成后 Available = 6，P3 需 7 &gt; 6 仍无法启动，第二步只能是 P1——每一步都别无选择，故安全序列唯一 ✓。</p>
 <p>问题 3：<strong>不能满足</strong>。试探性分配：Available = 2 − 2 = 0，P3 已分配 = 4、Need = 5。此时 P1 Need 4 &gt; 0、P2 Need 1 &gt; 0、P3 Need 5 &gt; 0——没有任何进程的需求能被满足，找不到安全序列，该状态不安全（可能死锁），系统应<strong>拒绝本次申请</strong>、回滚试探分配。</p>
 <h3 id="h-41">精华题答案</h3>
@@ -905,14 +1013,32 @@ Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4
 <li>最大文件 = 12KB + 1MB + 512MB ≈ <strong>513MB + 12KB</strong>。
 验算：512×512 = 262144 ✓；262144 块 × 2KB = 524288KB ÷ 1024 = 512MB ✓；三部分相加 524288 + 1024 + 12 = 525324KB ≈ 513.01MB ✓。</li>
 </ul>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="06-计算机网络.html">06-计算机网络.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="04-面向对象与设计模式.html">
+      <span class="k">上一课</span>
+      <span class="t">04 面向对象与设计模式</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="06-计算机网络.html">
+      <span class="k">下一课</span>
+      <span class="t">06 计算机网络</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="04-面向对象与设计模式.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="06-计算机网络.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

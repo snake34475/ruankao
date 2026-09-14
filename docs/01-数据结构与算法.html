@@ -3,20 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>01 数据结构与算法</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html" class="is-current" aria-current="page"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
 <main>
-<h1 id="h-1">01 数据结构与算法</h1>
-<blockquote>
-<p><strong>分值地位</strong>：选择题 8–10 题（第一大块）+ 案例题「算法设计」一道大题（约 15 分）。这是全卷最重要的一课。</p>
-<p><strong>学习目标</strong>：读完讲义后，你能——① 前中后序遍历互推；② 手算哈夫曼树、散列表、关键路径；③ 背下八大排序的复杂度与稳定性表；④ 会做案例题算法填空。</p>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01 数据结构与算法</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">分值地位</strong>：选择题 8–10 题（第一大块）+ 案例题「算法设计」一道大题（约 15 分）。这是全卷最重要的一课。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 前中后序遍历互推；② 手算哈夫曼树、散列表、关键路径；③ 背下八大排序的复杂度与稳定性表；④ 会做案例题算法填空。</p>
 </blockquote>
 <hr>
 <h2 id="h-2">第一节 线性表、栈与队列</h2>
 <h3 id="h-3">1.1 线性表：顺序存储 vs 链式存储</h3>
 <p>线性表就是&quot;一排元素&quot;。两种存法：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -46,14 +118,15 @@
 <td>按需分配，但每个节点多一个指针开销</td>
 </tr>
 </tbody></table>
-<p><strong>★ 记忆口诀</strong>：数组「查得快、插删慢」，链表「插删快、查得慢」。选择题几乎每年考这组对比。</p>
+</div>
+<p><strong><span class="stars">★</span> 记忆口诀</strong>：数组「查得快、插删慢」，链表「插删快、查得慢」。选择题几乎每年考这组对比。</p>
 <p>链表变种（知道结构即可）：</p>
 <ul>
 <li><strong>单链表</strong>：只有 next 指针，只能从头往后找。</li>
 <li><strong>循环链表</strong>：尾节点 next 指回头节点，可&quot;绕圈&quot;遍历。</li>
 <li><strong>双向链表</strong>：每个节点有 prior 和 next，可前后两个方向找。</li>
 </ul>
-<h3 id="h-4">1.2 栈：后进先出（LIFO）★</h3>
+<h3 id="h-4">1.2 栈：后进先出（LIFO）<span class="stars">★</span></h3>
 <p>栈像一个只有一口的羽毛球筒：后放进去的先拿出来。</p>
 <p><strong>必考应用</strong>（三个都要会，表达式求值是重中之重）：</p>
 <p><strong>① 表达式求值——中缀转后缀（逆波兰式）</strong></p>
@@ -68,6 +141,7 @@
 <p><strong>为什么要转后缀？运算符会&quot;失去意义&quot;吗？</strong></p>
 <p>不会。你看到 <code>a+b*c</code> 觉得意义清楚，是因为脑中默认了两条<strong>约定</strong>：① 优先级（<code>*</code> 高于 <code>+</code>）② 运算符写在两个操作数<strong>中间</strong>。也就是说，中缀式的意义不在式子本身，而在读者脑子里的约定里。后缀式只是换了一套规则——<strong>每个运算符&quot;吃掉&quot;它前面紧挨着的两个东西</strong>——意义一点没少，只是把约定搬进了位置。</p>
 <p>按这条规则读 <code>abc*+</code>：遇到 <code>*</code> 拿前面最近的 b、c 相乘，遇到 <code>+</code> 拿 a 和刚才的乘积相加——算出来恰好就是 <code>a+(b*c)</code>，一个字都没丢。对比着看：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -92,6 +166,7 @@
 <td><code>*</code> 作用于 a+b 和 c</td>
 </tr>
 </tbody></table>
+</div>
 <p>注意后两行：中缀里<strong>必须靠括号</strong>才能区分的两个式子，后缀 <code>abc*+</code> 和 <code>ab+c*</code> 天然不同——运算顺序被运算符的位置<strong>唯一确定</strong>，连括号都省了。</p>
 <p><strong>计算机为什么偏爱后缀</strong>：扫中缀式时遇到 <code>+</code> 不能马上算（右边可能藏着优先级更高的 <code>*</code>），得回头预判；而扫后缀式时，每个运算符出现时它的两个操作数<strong>一定已经在栈里</strong>，从左到右一遍扫完，不需要优先级表、不需要括号、不需要回溯。这就是编译器用逆波兰式做中间代码的原因，也是软考爱考它的原因。</p>
 <p>例 2（带括号，考试更爱出）：<code>a*(b+c)-d</code> → 加括号 <code>((a*(b+c))-d)</code> → <code>b+c</code> 变 <code>bc+</code>；<code>a*(bc+)</code> 变 <code>abc+*</code>；整体减 d 变 <code>abc+*d-</code>。所以后缀是 <strong><code>abc+*d-</code></strong>。</p>
@@ -99,7 +174,7 @@
 <p><strong>后缀式怎么求值</strong>：从左到右扫，<strong>遇到操作数进栈，遇到运算符就弹出栈顶两个数计算（先弹出的是右操作数！），结果再进栈</strong>。例：后缀 <code>ab+c*</code>，先 a、b 进栈，遇到 <code>+</code> 弹 b、a 得 a+b 进栈，遇到 <code>*</code> 与后面的 c 相乘。</p>
 <p><strong>② 函数递归调用</strong>：系统用栈保存每层调用的参数、局部变量和返回地址，函数返回时弹栈。所以「递归太深会栈溢出」；考题问&quot;递归调用是利用什么实现的&quot;→ 答<strong>栈</strong>。</p>
 <p><strong>③ 括号匹配</strong>：从左到右扫字符串，左括号进栈；遇到右括号就弹栈顶看是否配对（<code>{</code> 对 <code>}</code>），栈空或配不上就是错；扫完栈必须为空才合法。例：<code>{[()]}</code> 合法；<code>{[}]</code>——遇到 <code>}</code> 时栈顶是 <code>[</code>，配对失败。</p>
-<p><strong>★ 卡特兰数：出栈序列有多少种</strong></p>
+<p><strong><span class="stars">★</span> 卡特兰数：出栈序列有多少种</strong></p>
 <p>问题：n 个元素按 1,2,…,n 顺序进栈（进栈和出栈可交替进行），最终出栈序列共有多少种？</p>
 <p>答案 = <strong>卡特兰数 Cₙ = C(2n, n)/(n+1) = (2n)! / ((n+1)!·n!)</strong>。</p>
 <ul>
@@ -109,6 +184,7 @@
 <p><strong>扩展（冷知识，了解即可）</strong>：卡特兰数以比利时数学家卡特兰（Catalan，1838 年研究括号匹配）得名，但最早见于清代蒙古族数学家<strong>明安图</strong>1730 年代《割圜密率捷法》中的推导（比欧洲早约 20 年），欧拉 1751 年也独立发现过——属于&quot;以研究者命名、但非最早发现者&quot;的典型例子。</p>
 </blockquote>
 <p><strong>公式怎么算（以 n=3 为例）</strong>：C(6,3)/(3+1) = 20/4 = <strong>5</strong> 种。（这和通项式 (2n)!/((n+1)!·n!) 是一回事：C(6,3)/4 = 6!/(3!·3!)÷4 = 6!/(4!·3!)，因为 4! = 4×3!，只是 4 并进阶乘的写法不同。）其中 C(6,3) 是&quot;从 6 个里选 3 个&quot;的组合数，通用公式 <strong>C(m,n) = m! / (n!·(m−n)!)</strong>，手算口诀：分子从 m 往下连乘 n 个数，分母从 n 往下连乘 n 个数——因为分母里的 (m−n)! 恰好把分子 m! 末尾多余的因子约掉了。例：C(6,3) = (6×5×4)/(3×2×1) = 120/6 = 20。这 5 种用 A、B、C 演示如下（每一步要么&quot;进栈&quot;要么&quot;出栈&quot;）：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -137,13 +213,14 @@
 <td>三个全进栈，再依次弹出</td>
 </tr>
 </tbody></table>
+</div>
 <p>注意 <strong>CAB 不可能</strong>：C 第一个出，说明 A、B 都还在栈里，且 B 压在 A 上面，只能先 B 后 A，不可能先 A。</p>
 <p><strong>判断&quot;某个出栈序列是否可能&quot;的通用方法（必须练熟）</strong>：按顺序模拟——元素 1,2,3,… 依次进栈，每进一个就检查：栈顶是不是目标序列当前要出的元素？是就弹出，重复检查；不是就继续进栈。若最后发现&quot;要出的元素被压在栈底够不着&quot;，该序列不可能。
 例：判断 312（元素 1,2,3，出栈序 3,1,2）：要出 3 → 把 1、2、3 全进栈 → 弹 3 ✓；下一个要出 1，但栈顶是 2 → <strong>不可能</strong>。</p>
 <p>卡特兰数还有一堆&quot;同源问题&quot;（答案同为卡特兰数，选择课示偶尔出现）：n 对括号的合法匹配数、n 个节点能构成的不同二叉树棵数、n+1 个数相乘的不同加括号方式。</p>
 <h3 id="h-5">1.3 队列：先进先出（FIFO）</h3>
 <p>队列像排队买票：先来的先走。应用：操作系统任务调度、打印队列、BFS（图的广度优先遍历）。</p>
-<p><strong>★ 循环队列判满判空</strong>（每年可能考一题）</p>
+<p><strong><span class="stars">★</span> 循环队列判满判空</strong>（每年可能考一题）</p>
 <p>先解释每一个名词（这些词选择题题干里直接出现，必须懂）：</p>
 <ul>
 <li><strong>front（队头指针）</strong>：指向<strong>当前第一个元素</strong>的位置。出队时它往前走。</li>
@@ -152,6 +229,7 @@
 <li><strong>取模 <code>% m</code> 的含义</strong>：实现&quot;绕圈&quot;。rear=4、m=5 时再入队，<code>(4+1)%5=0</code>，指针回到 0 号位置。这就是公式里 % m 的全部作用——<strong>把超出 m−1 的下标折回 0 开始</strong>。</li>
 <li><strong>牺牲一个格子</strong>：如果不牺牲，队满时 rear 恰好绕一圈追上 front，也有 <code>front == rear</code>，和队空的条件一模一样，<strong>无法区分空和满</strong>。于是约定<strong>牺牲一格不存元素</strong>：rear 转到 front 的下一格就算满，这样空（front==rear）和满（front==rear+1）就区分开了。代价是容量 m 的队列实际最多存 <strong>m−1 个元素</strong>（选择题考过这个坑！）。</li>
 </ul>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -186,6 +264,7 @@
 <td>加 m 是防负数，再取模防越界</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>元素个数公式的推导</strong>：正常情况 rear 在 front 前面，个数 = rear − front；但绕圈后 rear 可能&quot;反超&quot;到 front 后面（下标反而小了），出现负数。<code>+m</code> 先把负数拉成正，<code>%m</code> 把绕圈的情况折算回来。</p>
 <p><strong>例题走一遍</strong>（m=5，牺牲一格法）：初始 front=rear=0（空）。</p>
 <ul>
@@ -200,7 +279,7 @@
 <li><strong>记元素个数</strong>：另设计数器 count，入队 +1、出队 −1，count==0 为空、count==m 为满——不牺牲空间，最直观。</li>
 </ol>
 <hr>
-<h2 id="h-6">第二节 树与二叉树 ★★★</h2>
+<h2 id="h-6">第二节 树与二叉树 <span class="stars">★★★</span></h2>
 <h3 id="h-7">2.1 基本性质（选择题最爱直接考结论）</h3>
 <p>二叉树：每个节点最多两个孩子，且分左右。</p>
 <ol>
@@ -213,14 +292,15 @@
 <li>n 个节点的完全二叉树深度 = ⌈log₂(n+1)⌉。</li>
 </ol>
 <p><strong>完全二叉树 vs 满二叉树</strong>：满二叉树每层都满；完全二叉树只允许最后一层缺右边若干个节点。堆就是完全二叉树。</p>
-<p><strong>★ 完全二叉树的顺序存储下标关系（选择题直接考）</strong>：把完全二叉树按层序存进数组（下标从 1 开始），对下标为 i 的节点：</p>
+<p><strong><span class="stars">★</span> 完全二叉树的顺序存储下标关系（选择题直接考）</strong>：把完全二叉树按层序存进数组（下标从 1 开始），对下标为 i 的节点：</p>
 <ul>
 <li>左孩子 = <strong>2i</strong>，右孩子 = <strong>2i+1</strong>，父节点 = <strong>⌊i/2⌋</strong>。</li>
 <li>i &gt; ⌊n/2⌋ 的节点全是叶子。例：n=10 个节点，最后一个非叶节点是 5，建堆从它开始。</li>
 <li>这也是堆排序&quot;用数组存树&quot;的原理（第五节建堆公式 ⌊n/2⌋ 就是从这来的）。</li>
 </ul>
-<h3 id="h-8">2.2 遍历 ★★★（必考，选择题 + 案例题都会出）</h3>
+<h3 id="h-8">2.2 遍历 <span class="stars">★★★</span>（必考，选择题 + 案例题都会出）</h3>
 <p>三种遍历的&quot;序&quot;说的是<strong>根</strong>被访问的时机：</p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -245,6 +325,7 @@
 <td>根在后</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>核心解题法（必须练熟）：</strong></p>
 <ul>
 <li><strong>前序第一个是根，后序最后一个是根，中序里根把树切成左右两半。</strong></li>
@@ -266,7 +347,7 @@
 <li>考法：判断&quot;某节点在 X 序线索树中的前驱/后继指向谁&quot;——先写出该遍历序，再按定义套即可。</li>
 <li>加线索后为区分&quot;指针指向孩子还是线索&quot;，节点需多存两个标志位 ltag/rtag。</li>
 </ul>
-<h3 id="h-10">2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）</h3>
+<h3 id="h-10">2.4 哈夫曼树与哈夫曼编码 <span class="stars">★★★</span>（几乎年年考）</h3>
 <ul>
 <li><strong>概念</strong>：带权路径长度（WPL）最小的二叉树。WPL = Σ(权值 × 该节点到根的路径长度)。</li>
 <li><strong>构造方法</strong>：每次取<strong>权值最小的两棵树合并</strong>，新节点权值为两者之和，重复直到只剩一棵。</li>
@@ -295,6 +376,7 @@
 <li><strong>代入算例</strong>：N(3)=N(2)+N(1)+1=2+1+1=4，N(4)=4+2+1=7，N(5)=7+4+1=12。考法：&quot;高度为 4 的 AVL 树最少有几个节点？&quot; → 7。</li>
 </ul>
 <h3 id="h-12">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -319,14 +401,15 @@
 <td><strong>数据库索引</strong>（MySQL）</td>
 </tr>
 </tbody></table>
+</div>
 <hr>
-<h2 id="h-13">第三节 图 ★★★</h2>
+<h2 id="h-13">第三节 图 <span class="stars">★★★</span></h2>
 <h3 id="h-14">3.1 存储结构</h3>
 <ul>
 <li><strong>邻接矩阵</strong>：n 个顶点用 n×n 矩阵，<code>A[i][j]=1</code> 表示有边。无向图矩阵对称。<strong>空间 O(n²)</strong>，适合稠密图；判断任意两点是否相邻 O(1)。</li>
 <li><strong>邻接表</strong>：每个顶点挂一条链表存它的邻接点。空间 O(n+e)，适合<strong>稀疏图</strong>。</li>
 </ul>
-<p><strong>★ 无向图边数 = 度数总和 ÷ 2</strong>（每条边贡献 2 个度）。有向图：度 = 入度 + 出度，边数 = 入度总和 = 出度总和。</p>
+<p><strong><span class="stars">★</span> 无向图边数 = 度数总和 ÷ 2</strong>（每条边贡献 2 个度）。有向图：度 = 入度 + 出度，边数 = 入度总和 = 出度总和。</p>
 <h3 id="h-15">3.2 遍历</h3>
 <ul>
 <li><strong>DFS（深度优先）</strong>：一条路走到黑，走不动再回退。用<strong>栈</strong>（或递归）。类比走迷宫摸墙。</li>
@@ -334,8 +417,9 @@
 <li>复杂度：邻接矩阵 O(n²)，邻接表 O(n+e)。</li>
 <li>BFS 求出的单源路径是<strong>边数最少</strong>的路径。</li>
 </ul>
-<h3 id="h-16">3.3 最小生成树（MST）★</h3>
+<h3 id="h-16">3.3 最小生成树（MST）<span class="stars">★</span></h3>
 <p>生成树：包含全部 n 个顶点、只有 n−1 条边、无回路的子图。带权图中权值和最小的生成树叫最小生成树。<strong>同一张图的最小生成树可能不唯一，但权值和唯一。</strong></p>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -355,12 +439,13 @@
 <td><strong>稀疏图</strong>（边少）</td>
 </tr>
 </tbody></table>
+</div>
 <p><strong>手算技巧</strong>：Kruskal 就是&quot;把边从短到长排队，依次画上去，画到会形成环的跳过&quot;。</p>
-<h3 id="h-17">3.4 最短路径（Dijkstra）★</h3>
+<h3 id="h-17">3.4 最短路径（Dijkstra）<span class="stars">★</span></h3>
 <p>求一个源点到其他所有顶点的最短路径。思想：贪心，每轮把&quot;当前距离最小的未确定顶点&quot;确定为最终结果，再用它去松弛邻居。<strong>不能处理负权边</strong>（经典考点）。时间复杂度 O(n²)。</p>
 <h3 id="h-18">3.5 拓扑排序（AOV 网）</h3>
 <p>有向无环图（DAG）中把顶点排成序列，使每条边都从前面指向后面。方法：<strong>每次取入度为 0 的顶点输出并删除其出边</strong>。拓扑序列<strong>不唯一</strong>；图中有环则无法完成拓扑排序（工程上用于检测任务循环依赖）。</p>
-<h3 id="h-19">3.6 关键路径（AOE 网）★★★（计算题大户）</h3>
+<h3 id="h-19">3.6 关键路径（AOE 网）<span class="stars">★★★</span>（计算题大户）</h3>
 <p>AOE 网：边表示活动（有权=工期），点表示事件（状态）。</p>
 <ul>
 <li><strong>关键路径 = 从源点到汇点的最长路径</strong>，其长度 = 整个工程的最短工期。关键路径上的活动是<strong>关键活动</strong>，延误则整个工程延误。</li>
@@ -376,17 +461,17 @@
 </ul>
 <p>手算例：某 AOE 网有活动 A→B(3)、A→C(2)、B→D(4)、C→D(5)、D→E(1)。从源点顺推：ve(B)=3，ve(C)=2，ve(D)=max(3+4, 2+5)=max(7,7)=7，ve(E)=7+1=8，<strong>总工期 8</strong>。可见两条路径长度同为 7，都是关键路径——这正解释了上面那条结论&quot;缩短工期必须压缩所有关键路径的公共活动&quot;：只压 B→D，A→C→D 这条关键路径不受影响，工期纹丝不动。做题时列表逐点算即可，务必动手练一遍真题。</p>
 <hr>
-<h2 id="h-20">第四节 查找 ★★</h2>
+<h2 id="h-20">第四节 查找 <span class="stars">★★</span></h2>
 <h3 id="h-21">4.1 顺序查找与二分查找</h3>
 <ul>
 <li>顺序查找：O(n)，无序表也能查。</li>
 <li><strong>二分查找</strong>：仅适用于<strong>有序的顺序表</strong>。O(log₂n)。<ul>
-<li><strong>★ 最多比较次数 = ⌈log₂(n+1)⌉</strong>（即判定树深度）。n=15 时最多 4 次。</li>
+<li><strong><span class="stars">★</span> 最多比较次数 = ⌈log₂(n+1)⌉</strong>（即判定树深度）。n=15 时最多 4 次。</li>
 <li>判定树：中间元素做根，左右折半递归。<strong>n 个元素二分查找的成功平均查找长度 ≈ log₂(n+1) − 1</strong>。</li>
 </ul>
 </li>
 </ul>
-<h3 id="h-22">4.2 散列表（Hash 表）★★（计算题大户）</h3>
+<h3 id="h-22">4.2 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）</h3>
 <p>把关键字通过哈希函数直接映射到存储位置，理想查找 O(1)。</p>
 <ul>
 <li><strong>冲突</strong>：不同关键字映射到同一位置。<strong>同义词</strong>：哈希函数值相同的关键字。</li>
@@ -397,11 +482,12 @@
 </ol>
 </li>
 <li><strong>装填因子 α = 表中元素数 / 表长</strong>。α 越大越容易冲突，平均查找长度越大。</li>
-<li><strong>★ 平均查找长度（ASL）计算</strong>：成功查找的 ASL = Σ(每个元素的比较次数)/元素个数。必须动手算一遍：例如线性探测下，某元素放的位置离它的哈希地址隔了 k 格，它查找成功就要比较 k+1 次。</li>
+<li><strong><span class="stars">★</span> 平均查找长度（ASL）计算</strong>：成功查找的 ASL = Σ(每个元素的比较次数)/元素个数。必须动手算一遍：例如线性探测下，某元素放的位置离它的哈希地址隔了 k 格，它查找成功就要比较 k+1 次。</li>
 </ul>
 <hr>
-<h2 id="h-23">第五节 排序 ★★★（每年稳定 1–2 题）</h2>
+<h2 id="h-23">第五节 排序 <span class="stars">★★★</span>（每年稳定 1–2 题）</h2>
 <h3 id="h-24">5.1 八大排序总表（背下来，直接得分）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -478,8 +564,9 @@
 <td>按位分配收集，不比较</td>
 </tr>
 </tbody></table>
-<p><strong>★ 稳定排序只有 4 个</strong>：直接插入、冒泡、归并、基数。口诀：「<strong>插冒归基</strong>稳定，其余都不稳」。</p>
-<p><strong>★ 稳定性含义</strong>：相等元素排序后相对次序不变。考法：&quot;待排序列中相等元素排序前后顺序颠倒了，问可能是什么排序&quot;——答不稳定的那个。</p>
+</div>
+<p><strong><span class="stars">★</span> 稳定排序只有 4 个</strong>：直接插入、冒泡、归并、基数。口诀：「<strong>插冒归基</strong>稳定，其余都不稳」。</p>
+<p><strong><span class="stars">★</span> 稳定性含义</strong>：相等元素排序后相对次序不变。考法：&quot;待排序列中相等元素排序前后顺序颠倒了，问可能是什么排序&quot;——答不稳定的那个。</p>
 <h3 id="h-25">5.2 高频判别题：给中间过程猜算法</h3>
 <p>题目给出一趟或两趟排序后的序列，问是哪种排序。识别特征：</p>
 <ul>
@@ -498,6 +585,7 @@
 <hr>
 <h2 id="h-27">第六节 算法设计与分析基础</h2>
 <h3 id="h-28">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）</h3>
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -532,8 +620,9 @@
 <td>旅行商问题</td>
 </tr>
 </tbody></table>
-<p><strong>★ 动态规划 vs 分治</strong>：分治的子问题互相独立；动态规划的子问题重叠，所以要用表保存结果避免重复计算。
-<strong>★ 贪心 vs 动态规划</strong>：贪心只走一条路不回头，动态规划考察所有子问题。</p>
+</div>
+<p><strong><span class="stars">★</span> 动态规划 vs 分治</strong>：分治的子问题互相独立；动态规划的子问题重叠，所以要用表保存结果避免重复计算。
+<strong><span class="stars">★</span> 贪心 vs 动态规划</strong>：贪心只走一条路不回头，动态规划考察所有子问题。</p>
 <h3 id="h-29">6.2 时间复杂度（必考 1–2 题）</h3>
 <p>常见复杂度从小到大：<strong>O(1) &lt; O(log n) &lt; O(n) &lt; O(nlog n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</strong></p>
 <ul>
@@ -542,7 +631,7 @@
 <li>两层嵌套循环各 n → O(n²)</li>
 <li>汉诺塔、暴力枚举子集 → O(2ⁿ)</li>
 </ul>
-<p><strong>★ 渐近记号</strong>：O 是上界、Ω 是下界、Θ 是精确界。选择题考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。</p>
+<p><strong><span class="stars">★</span> 渐近记号</strong>：O 是上界、Ω 是下界、Θ 是精确界。选择题考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。</p>
 <hr>
 <h2 id="h-30">第七节 案例题专攻：算法填空解题套路（约 15 分）</h2>
 <p>案例第 4 题一般是「一段说明 + C 代码（或伪代码）+ 3~5 个空 + 1 小问」，常考：动态规划、贪心、回溯、字符串处理、链表/树操作。<strong>套路如下：</strong></p>
@@ -671,10 +760,17 @@ D. 一个 AOE 网可能存在多条关键路径</p>
 </li>
 </ol>
 <hr>
-<h2 id="h-37">答案与解析</h2>
+<details class="answers" id="answers" data-toc="答案与解析">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>答案与解析</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
 <h3 id="h-38">课后考题答案</h3>
 <p><strong>1. C</strong>
-n0 = n2 + 1 = 5 + 1 = 6。★ 必背结论。易错点：忘了 &quot;+1&quot;，或把度数为 1 的节点扯进来（不需要）。</p>
+n0 = n2 + 1 = 5 + 1 = 6。<span class="stars">★</span> 必背结论。易错点：忘了 &quot;+1&quot;，或把度数为 1 的节点扯进来（不需要）。</p>
 <p><strong>2. A（后序 DEBCA）</strong>
 前序第一个 A 是根；中序 DBE 在 A 左、C 在 A 右。左子树：前序 BDE + 中序 DBE → 根 B，中序中 D 在左 E 在右。后序 = 左(先D后E) → 右(C) → 根(A) = DEBCA。</p>
 <p><strong>3. C</strong>
@@ -697,7 +793,7 @@ n0 = n2 + 1 = 5 + 1 = 6。★ 必背结论。易错点：忘了 &quot;+1&quot;�
 <p><strong>11. C</strong>
 Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd（多源）是动态规划。</p>
 <p><strong>12. A</strong>
-拓扑排序标准做法：取入度 0 顶点输出并删其出边。B 说反了（那是逆拓扑的一种做法：取出度 0 并删入边，得到的序列是逆拓扑序，作为&quot;得到拓扑序列&quot;的表述在考题中通常判错）。D 深度优先遍历的逆序其实<strong>可以</strong>得到一种拓扑序——但本题 D 表述为&quot;不可行&quot;，错误，故选 A。★ 这题故意做成双干扰，记住核心方法即可。</p>
+拓扑排序标准做法：取入度 0 顶点输出并删其出边。B 说反了（那是逆拓扑的一种做法：取出度 0 并删入边，得到的序列是逆拓扑序，作为&quot;得到拓扑序列&quot;的表述在考题中通常判错）。D 深度优先遍历的逆序其实<strong>可以</strong>得到一种拓扑序——但本题 D 表述为&quot;不可行&quot;，错误，故选 A。<span class="stars">★</span> 这题故意做成双干扰，记住核心方法即可。</p>
 <p><strong>13. C</strong>
 最多比较 ⌈log₂(n+1)⌉ = ⌈log₂1001⌉ = 10 次。</p>
 <p><strong>14. B</strong>
@@ -752,14 +848,32 @@ WPL = 5×2 + 2×3 + 3×2 + 1×3 + 4×2 = 10+6+6+3+8 = <strong>33</strong>。
 外层 i*=2 执行 log₂n 次，内层 n 次，相乘得 O(nlog₂n)。易错点：外层不是 +1 而是 ×2，别答 O(n²)。</p>
 <p><strong>7. 共 2 种：ABCDE 和 ACBDE</strong>
 分析约束：A 是唯一入度为 0 的顶点 → 必须最先；E 入度来自 D → 必须最后；B→D 和 C→D 都指向 D → D 必须排在 B、C <strong>两者</strong>之后，而 B、C 之间无约束、可互换。于是 D 只能落在第 3 位（A 之后、B/C 之后），序列只有 A、{B,C 两种顺序}、D、E 一种骨架 → <strong>2 种</strong>。若答 4 种，是漏了 C→D 这条边对 D 的约束（只看到 B→D 就以为 D 可紧跟 B）。</p>
+</div>
+</details>
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="02-数据库系统.html">02-数据库系统.html</a> 并更新进度表。</p>
 
+  <footer class="page-nav">
+    <a class="nav-card prev" href="00-总览与进度.html">
+      <span class="k">上一课</span>
+      <span class="t">软考软件设计师 · 自学总览与进度</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <a class="nav-card next" href="02-数据库系统.html">
+      <span class="k">下一课</span>
+      <span class="t">02 数据库系统</span>
+    </a>
+  </footer>
 </main>
-<footer class="page-nav">
-    <a href="00-总览与进度.html">← 上一页</a>
-    <a href="index.html">返回目录</a>
-    <a href="02-数据库系统.html">下一页 →</a>
-</footer>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
 </body>
 </html>

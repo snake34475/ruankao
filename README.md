@@ -15,14 +15,51 @@
 ├── 软考学习/
 │   ├── 00-总览与进度.md          ← TODO 进度表 + 学习方法（学习入口）
 │   ├── 01-数据结构与算法.md      ← 第 1 课（讲义 + 课后题 + 精华题 + 答案解析）
-│   └── 02~12 随学习进度逐步生成
-├── package.json / tools/        ← HTML 构建链（npm run build）
+│   ├── 02-数据库系统.md          ← 第 2 课
+│   ├── 03-软件工程基础.md        ← 第 3 课
+│   ├── 04-面向对象与设计模式.md  ← 第 4 课
+│   ├── 05-操作系统.md            ← 第 5 课
+│   ├── 06-计算机网络.md          ← 第 6 课
+│   ├── 07-程序设计语言基础.md    ← 第 7 课
+│   ├── 08-信息安全.md            ← 第 8 课
+│   ├── 09-计算机系统基础.md      ← 第 9 课
+│   ├── 10-标准化与知识产权.md    ← 第 10 课
+│   ├── 11-专业英语.md            ← 第 11 课
+│   ├── 12-数学与多媒体.md        ← 第 12 课
+│   └── 99-考前全真模拟卷.md      ← 75 道选择题 + 5 道案例题
+├── package.json / tools/        ← HTML 构建链（npm run build）+ 阅读版样式与脚本源码
+├── design/styleguide.html       ← 设计组件样张（设计确认用，不参与构建）
 └── docs/                        ← 生成的网页阅读版（构建产物，可直接浏览器打开）
 ```
 
 ## 网页阅读版
 
-Markdown 源文件是唯一真源；`docs/` 下是由构建脚本生成的网页版，改完 md 后在仓库根目录跑一次 `npm run build` 即可重新生成。本地直接双击 [docs/index.html](docs/index.html) 阅读；仓库推到 GitHub 后，在 Settings → Pages 中选择发布 `docs/` 目录即可获得在线阅读地址。
+Markdown 源文件是唯一真源；`docs/` 下是由构建脚本生成的网页版，改完 md 后在仓库根目录跑一次 `npm run build` 即可重新生成。本地直接双击 [docs/index.html](docs/index.html) 阅读。
+
+阅读版特性：暖纸阅读主题（可切深色）、★ 高频考点渲染成琥珀徽标、**「答案与解析」默认折叠**（做完题再展开）、顶部阅读进度与代码复制。宽屏为三栏——**左栏是总纲梯队目录**（总纲 / 第一二三四梯队 / 收尾，标出已学进度），**右栏是本页大纲**（随滚动高亮）；窄屏自动收成单栏与抽屉。零外部依赖、零 Web 字体，离线双击即可读。
+
+## 在线部署（GitHub Pages）
+
+`docs/` 本身就是一份现成的静态站点，**不需要 Actions、不需要任何配置**，直接把它设为发布目录即可：
+
+1. 在 GitHub 新建一个仓库（建议 public），把本地仓库推上去；
+2. 打开仓库 **Settings → Pages**；
+3. *Source* 选 **Deploy from a branch**，*Branch* 选 **`main`**、目录选 **`/docs`**，保存；
+4. 等 1～2 分钟，访问 `https://<你的用户名>.github.io/<仓库名>/`。
+
+几条要注意的：
+
+- **每次改完 md 要重新构建并提交**：`npm run build` → 提交 `docs/`。GitHub 只发布你提交上去的 `docs/` 内容，它不跑构建。
+- **`docs/.nojekyll` 不要删**：它由构建脚本生成并随仓库提交，用来跳过 GitHub Pages 的 Jekyll 处理。
+- **本仓库当前的 origin 指向 Gitee**，Gitee Pages 服务现已下线，所以要在线阅读需另加一个 GitHub remote（见下方命令）。
+
+```bash
+git remote add github https://github.com/<用户名>/<仓库名>.git
+git push github main          # 已有的 origin 不受影响，两个远端可以并存
+```
+
+> 平台政策会变，以官方通知为准。
+
 
 ## 考试速览
 

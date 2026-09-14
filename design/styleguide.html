@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>设计组件样张 · 软考软件设计师</title>
+<link rel="stylesheet" href="../docs/style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+<style>
+  /* 以下仅为本样张页自身的「标注框」样式，不属于生产样式 */
+  .spec {
+    margin: 2rem 0;
+    padding: 1.1rem 1.25rem .25rem;
+    border: 1px dashed var(--line-strong);
+    border-radius: 14px;
+  }
+  .spec-label {
+    margin: 0 0 .2rem;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .spec-note {
+    margin: 1rem -.1rem 1rem;
+    padding-top: .7rem;
+    border-top: 1px dashed var(--line);
+    font-size: .82rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .spec-note b { color: var(--accent-ink); font-weight: 650; }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: .55rem;
+    margin: .5rem 0 1rem;
+  }
+  .sw {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    font-size: .78rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+  .sw i {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+  .scale { margin: .5rem 0 1rem; }
+  .scale .row {
+    display: flex;
+    align-items: baseline;
+    gap: .8rem;
+    padding: .35rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .scale .row:last-child { border-bottom: 0; }
+  .scale .row .m {
+    flex: 0 0 8.5rem;
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--faint);
+  }
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../docs/index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <ul>
+          <li><a href="../docs/软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../docs/00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">1/4</span></p>
+        <ul>
+          <li><a href="#" class="is-current" aria-current="page"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="#"><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="#"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="#"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">2/5</span></p>
+        <ul>
+          <li><a href="#"><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="#"><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="#"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="#"><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="#"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <ul>
+          <li><a href="#"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="#"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="#"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+  <main>
+    <header class="page-head">
+      <p class="eyebrow">
+        <span>设计确认</span>
+        <span class="dot"></span>
+        <span>组件样张 · 不参与构建</span>
+      </p>
+      <h1>讲义页组件样张</h1>
+    </header>
+
+    <blockquote class="lead">
+      <p><strong class="k">用途</strong>：这是设计定稿前的确认页。下面每一块都用<b>生产样式</b>渲染（引用 <code>../docs/style.css</code>），你看到的即 16 个页面最终的样子。</p>
+      <p><strong class="k">怎么看</strong>：右上角「深色」切换明暗两套主题；侧栏、进度条、代码复制都是真的能用的；觉得哪里不对，直接说第几块、哪里不对。</p>
+    </blockquote>
+
+    <h2 id="s1">1 · 色彩与字体令牌</h2>
+    <div class="spec">
+      <p class="spec-label">颜色</p>
+      <div class="swatches">
+        <span class="sw"><i style="background:#f4f2ec"></i>--bg 页面底</span>
+        <span class="sw"><i style="background:#fffefa"></i>--surface 纸面</span>
+        <span class="sw"><i style="background:#f7f5ef"></i>--surface-2 次级面</span>
+        <span class="sw"><i style="background:#23211d"></i>--ink 正文</span>
+        <span class="sw"><i style="background:#6b6459"></i>--muted 次级</span>
+        <span class="sw"><i style="background:#0f6f63"></i>--accent 深青</span>
+        <span class="sw"><i style="background:#e6f1ee"></i>--accent-soft</span>
+        <span class="sw"><i style="background:#b06a04"></i>--gold 琥珀</span>
+        <span class="sw"><i style="background:#fbf0dc"></i>--gold-soft</span>
+        <span class="sw"><i style="background:#e4e0d5"></i>--line 分隔</span>
+      </div>
+      <p class="spec-label">字号层级</p>
+      <div class="scale">
+        <div class="row"><span class="m">页标题 27–37px</span><span style="font-size:1.6rem;font-weight:750;letter-spacing:-.022em;color:var(--ink-strong)">数据结构与算法</span></div>
+        <div class="row"><span class="m">节标题 22px</span><span style="font-size:1.4rem;font-weight:700;letter-spacing:-.018em">第一节 线性表、栈与队列</span></div>
+        <div class="row"><span class="m">小节 18px</span><span style="font-size:1.12rem;font-weight:700">1.1 线性表：顺序存储 vs 链式存储</span></div>
+        <div class="row"><span class="m">正文 17px</span><span style="font-size:1rem">线性表就是"一排元素"，两种存法各有取舍。</span></div>
+        <div class="row"><span class="m">表格 15.6px</span><span style="font-size:.92rem">按位置访问第 i 个 · O(1) 直接算地址</span></div>
+        <div class="row"><span class="m">侧栏 13.6px</span><span style="font-size:.85rem">第一节 线性表、栈与队列</span></div>
+      </div>
+      <p class="spec-note"><b>字体</b>：不引入任何 Web 字体（中文包 3–8MB，与"不要重"冲突）。正文走系统栈：苹方 → 鸿蒙 Sans → 微软雅黑；数字与代码走 Cascadia Code / JetBrains Mono，保证复杂度表里的 O(1)、log₂n 上下对齐。</p>
+    </div>
+
+    <h2 id="s2">2 · 标题书脊与分隔线</h2>
+    <div class="spec">
+      <p class="spec-label">h2 / h3 / h4</p>
+      <h3>这是三级标题的形态</h3>
+      <h4>这是四级标题的形态</h4>
+      <p>正文段落。行高 1.85 是给中文留的，比英文文档更松。<strong>加粗结论</strong>用 700 字重，<em>斜体</em>被改造成青色互补色（中文斜体是伪斜体，不可读），行内代码如 <code>O(n log n)</code> 用暖灰底 + 等宽。</p>
+      <p>链接长这样：<a href="#s1">回到色彩令牌</a>，悬停时下划线加深。</p>
+      <hr>
+      <p>这行上方是 <code>---</code> 渲染出的分隔线：发丝渐变，两端淡出，比整条实线轻。</p>
+      <p class="spec-note"><b>书脊</b>：h2 左侧 3px 渐变竖条（青→琥珀），是长文里定位"第几节"的第一视觉锚点；h3 用 6px 青点，h4 用青色字。三个层级各有自己的形状，不靠字号硬拉。</p>
+    </div>
+
+    <h2 id="s3">3 · 星级徽标（本设计的记忆点）★★★</h2>
+    <div class="spec">
+      <p class="spec-label">三种形态</p>
+      <h3>二叉树遍历互推 ★★★</h3>
+      <h4>哈夫曼编码 ★★</h4>
+      <p><strong>★ 记忆口诀</strong>：数组「查得快、插删慢」，链表「插删快、查得慢」——正文里的星级保持琥珀色，但不加底，避免满屏色块。</p>
+      <p class="spec-note"><b>为什么这么做</b>：讲义里 ★/★★/★★★ 是唯一的高频信号。原来它只是正文里的一串字符，现在在标题里升级成琥珀徽标，扫一屏就知道哪节必须背。侧边大纲同步显示同样的星级。</p>
+    </div>
+
+    <h2 id="s4">4 · 导语卡与引用</h2>
+    <div class="spec">
+      <p class="spec-label">页首导语卡（自动识别）</p>
+      <blockquote class="lead">
+        <p><strong class="k">分值地位</strong>：选择题 8–10 题（第一大块）+ 案例题「算法设计」一道大题（约 15 分）。这是全卷最重要的一课。</p>
+        <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 前中后序遍历互推；② 手算哈夫曼树、散列表、关键路径；③ 背下八大排序的复杂度与稳定性表。</p>
+      </blockquote>
+      <p class="spec-label">正文中的普通引用</p>
+      <blockquote>
+        <p>教材原话式的补充说明会渲染成这种浅色卡片，不与正文混在一起。</p>
+      </blockquote>
+      <p class="spec-note"><b>识别规则</b>：页首第一个引用块自动升级为导语卡，其中的「分值地位 / 学习目标 / 用途 / 作答建议」等词自动渲染成青色标签块——不用改任何 md 源文件。</p>
+    </div>
+
+    <h2 id="s5">5 · 表格（讲义最主要的信息载体）</h2>
+    <div class="spec">
+      <p class="spec-label">常规对比表</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>对比项</th><th>顺序存储（数组）</th><th>链式存储（链表）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>按位置访问第 i 个</td><td><strong>O(1)</strong> 直接算地址</td><td><strong>O(n)</strong> 要从头数过去</td></tr>
+            <tr><td>插入/删除一个元素</td><td>O(n)（后面全要挪）</td><td><strong>O(1)</strong>（改指针即可）</td></tr>
+            <tr><td>空间</td><td>需预估容量，可能浪费</td><td>按需分配，但每节点多一个指针开销</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec-label">宽表（窄屏可横向滚动）</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>排序法</th><th>平均</th><th>最坏</th><th>空间</th><th>稳定性</th><th>课堂记忆点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>快速排序</td><td>O(n log₂n)</td><td>O(n²)</td><td>O(log₂n)</td><td>不稳定</td><td>枢轴归位后左右各自递归</td></tr>
+            <tr><td>堆排序</td><td>O(n log₂n)</td><td>O(n log₂n)</td><td>O(1)</td><td>不稳定</td><td>建堆 + 反复取堆顶</td></tr>
+            <tr><td>归并排序</td><td>O(n log₂n)</td><td>O(n log₂n)</td><td>O(n)</td><td><strong>稳定</strong></td><td>两两合并，需额外空间</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec-note"><b>处理</b>：整表包在一张圆角卡片里，表头灰底、偶数行浅底、悬停整行高亮；窄屏时整块横向滚动，边框不会散架。<b>注意</b>：单元格内的 O(1)、log₂n 现在用等宽字体，数字能列对齐。</p>
+    </div>
+
+    <h2 id="s6">6 · 代码块与行内代码</h2>
+    <div class="spec">
+      <p class="spec-label">算法填空常见代码</p>
+<pre><code>int partition(int[] a, int lo, int hi) {
+    int pivot = a[lo];
+    while (lo &lt; hi) {
+        while (lo &lt; hi &amp;&amp; a[hi] &gt;= pivot) hi--;
+        a[lo] = a[hi];
+        while (lo &lt; hi &amp;&amp; a[lo] &lt;= pivot) lo++;
+        a[hi] = a[lo];
+    }
+    a[lo] = pivot;
+    return lo;
+}</code></pre>
+      <p class="spec-note"><b>复制按钮</b>：鼠标移入代码块右上角出现「复制」，触屏设备常显（36px 触达区）。点击后变成「已复制」，1.6 秒回落。算法填空训练时要反复对照代码，这个按钮是刚需。</p>
+    </div>
+
+    <h2 id="s7">7 · 答案与解析（默认折叠）</h2>
+    <div class="spec">
+      <p class="spec-label">点击展开试试</p>
+      <details class="answers" data-toc="答案与解析样张">
+        <summary>
+          <span class="chev" aria-hidden="true"></span>
+          <span>答案与解析</span>
+          <span class="hint">做完题再展开</span>
+        </summary>
+        <div class="answers-body">
+          <h3>课后考题答案</h3>
+          <p><strong>1. B</strong>：顺序存储按位置访问是 O(1)，链式存储是 O(n)。A 把两者说反了；C、D 与题意无关。</p>
+          <p><strong>2. C</strong>：后缀式 <code>abc*+</code> 读法：遇到 <code>*</code> 取前面最近的 b、c 相乘，遇到 <code>+</code> 取 a 与乘积相加，即 a+(b*c)。</p>
+          <p class="spec-note" style="margin-bottom:0"><b>折叠规则</b>：每课「答案与解析」整段（含各级小标题）折进一个琥珀色折叠条，默认收起；折叠区之后的「下一课」提示、模拟卷的「成绩诊断」仍留在外面可见。</p>
+        </div>
+      </details>
+    </div>
+
+    <h2 id="s8">8 · 列表与进度勾选</h2>
+    <div class="spec">
+      <p class="spec-label">普通列表</p>
+      <ul>
+        <li><strong>单链表</strong>：只有 next 指针，只能从头往后找。</li>
+        <li><strong>循环链表</strong>：尾节点 next 指回头节点，可"绕圈"遍历。</li>
+      </ul>
+      <ol>
+        <li>先扫读主题，不急着填第一个空。</li>
+        <li>再判词性，最后看词义。</li>
+      </ol>
+      <p class="spec-label">进度表勾选（来自 00-总览与进度.md）</p>
+      <ul>
+        <li><input type="checkbox" disabled> <strong>05 操作系统</strong>（约 4–6 题）—— 未完成状态</li>
+        <li><input type="checkbox" disabled checked> <strong>09 计算机系统基础</strong>（约 6–8 题）—— 已完成状态</li>
+      </ul>
+      <p class="spec-note"><b>进度可视化</b>：勾选状态由 md 的 <code>- [ ]</code> / <code>- [x]</code> 驱动，已完成的整行变淡，一眼看出还剩几课。</p>
+    </div>
+
+    <h2 id="s9">9 · 翻页导航</h2>
+    <div class="spec">
+      <footer class="page-nav" style="margin:0;padding:0 0 1rem;border-top:0">
+        <a class="nav-card prev" href="../docs/00-总览与进度.html">
+          <span class="k">上一课</span>
+          <span class="t">软考软件设计师 · 自学总览与进度</span>
+        </a>
+        <a class="nav-home" href="../docs/index.html">返回目录</a>
+        <a class="nav-card next" href="../docs/02-数据库系统.html">
+          <span class="k">下一课</span>
+          <span class="t">02 数据库系统</span>
+        </a>
+      </footer>
+      <p class="spec-note"><b>改成标题而非"下一页"</b>：按顺序学习时，"下一课"卡片直接写出目标课名，不用点开确认；窄屏下三块塌缩为单列。</p>
+    </div>
+
+    <h2 id="s10">10 · 本次布局调整</h2>
+    <div class="spec">
+      <p class="spec-label">宽屏（≥1200px）三栏</p>
+      <ul>
+        <li><strong>左栏 = 总纲梯队目录</strong>：总纲 / 第一梯队 / 第二梯队 / 第三梯队 / 收尾，分组常驻展开，当前页高亮、已完成打勾、每组标注 <code>已学/总数</code>；第一梯队用琥珀标出（分值大头）。</li>
+        <li><strong>右栏 = 本页大纲</strong>：即页面右侧这一列，由正文 h2/h3 自动生成，滚动高亮当前小节，独立 sticky 且内部可滚动。</li>
+        <li><strong>中栏 = 正文</strong>：仍是 44rem 单栏，行高 1.85；页脚翻页卡随正文列对齐。</li>
+      </ul>
+      <p class="spec-label">窄屏塌缩</p>
+      <ul>
+        <li>1080–1199px：右栏隐藏，本页大纲由脚本移回左栏下方，不额外增加入口。</li>
+        <li>&lt;1080px：左栏整块变抽屉，顶栏「目录」按钮唤出（总纲 + 本页大纲在同一抽屉里）。</li>
+      </ul>
+      <p class="spec-note">同一份大纲块在宽窄之间只搬一次 DOM，所以不存在"两套大纲各写一遍"的维护成本。</p>
+    </div>
+
+    <footer class="page-nav">
+      <span class="nav-card void"></span>
+      <a class="nav-home" href="../docs/index.html">去看真实讲义</a>
+      <span class="nav-card void"></span>
+    </footer>
+  </main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../docs/app.js" defer></script>
+</body>
+</html>
