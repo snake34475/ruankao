@@ -17,6 +17,7 @@
 
 ## 部署
 
+- **推送已改走 SSH**：`origin` = `git@gitee.com:wang-tengyao/ruankao-software-designer.git`，密钥 `~/.ssh/id_ed25519`（ed25519，空密码短语）。**不要再改回 HTTPS** —— 本环境的凭据弹窗无法交互，HTTPS 会卡住。这把公钥也可复用到 GitHub。
 - `docs/` 就是发布目录，**GitHub Pages 不需要 Actions**：Settings → Pages → Deploy from a branch → `main` + `/docs`。
 - **每次改完 md 必须本地 `npm run build` 并把 `docs/` 一起提交**——Pages 只发布提交上去的内容，它不跑构建。
 - `docs/.nojekyll` 由 `tools/build_html.mjs` 生成（**不手改 docs/**），用于跳过 Jekyll；若丢失重跑构建即可恢复。
