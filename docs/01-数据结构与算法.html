@@ -438,17 +438,92 @@ int dequeue(void) {
 </ul>
 <p><strong>性质的&quot;为什么&quot;（理解了才不用死背）：</strong></p>
 <ol>
-<li><strong>第 i 层最多 2^(i-1) 个节点</strong>：每往下走一层，每个节点最多分裂成 2 个，所以每层最多是上一层的 2 倍——1、2、4、8……第 i 层即 2^(i-1)。</li>
-<li><strong>深度 k 最多 2^k − 1 个节点</strong>：把每层拉满求和 1+2+4+…+2^(k−1)。这个和有个特点：再加一项 2^k 就整体翻倍，所以和 = 2^k − 1（如 1+2+4=7=8−1）。</li>
-<li><strong>叶子数 n0 = 度为 2 的节点数 n2 + 1</strong>（考过无数次，完整推导一遍）：<ul>
+<li><p><strong>第 i 层最多 2^(i-1) 个节点</strong>：每往下走一层，每个节点最多分裂成 2 个，所以每层最多是上一层的 2 倍——1、2、4、8……第 i 层即 2^(i-1)。</p>
+</li>
+<li><p><strong>深度 k 最多 2^k − 1 个节点</strong>：把每层拉满求和 1+2+4+…+2^(k−1)。这个和有个特点：再加一项 2^k 就整体翻倍，所以和 = 2^k − 1（如 1+2+4=7=8−1）。</p>
+</li>
+<li><p><strong>叶子数 n0 = 度为 2 的节点数 n2 + 1</strong>（考过无数次，完整推导一遍）：</p>
+<p><strong>先认识符号</strong>：n0、n1、n2 是把树上所有节点<strong>按&quot;孩子个数&quot;分类</strong>后，每一类的<strong>实际个数</strong>（不是最大值）——</p>
+<ul>
+<li><strong>n0</strong> = 度为 0 的节点个数 = <strong>叶子数</strong>（没有孩子）；</li>
+<li><strong>n1</strong> = 度为 1 的节点个数（只有一个孩子）；</li>
+<li><strong>n2</strong> = 度为 2 的节点个数（两个孩子都齐）。</li>
+</ul>
+<p>例如 7 个节点的满二叉树：n0=4、n1=0、n2=3。</p>
+<p><strong>先破一个典型误解：&quot;n2 个节点每人生 2 个孩子，叶子不该是 n2×2 吗？&quot;——不对，孩子 ≠ 叶子。</strong> n2×2 算出的是&quot;孩子总数&quot;，但孩子自己一旦又生了孩子，就从叶子变成了内部节点。看反例：</p>
+<pre><code>          A            ← 度 2（分叉①）
+         / \
+        B   C          ← B 度 2（分叉②）；C 没孩子 → 叶子
+       / \
+      D   E            ← D、E 没孩子 → 叶子
+</code></pre>
+<ul>
+<li>A、B 度为 2 → n2=2；C、D、E 是叶子 → n0=3。检验：3 = 2+1 ✓，而 n2×2=4 ✗。</li>
+<li>n2×2=4 数的是<strong>孩子总数</strong>（B、C、D、E 共 4 个），其中 B 自己当了爸爸、不是叶子——&quot;出生人数&quot; ≠ &quot;绝后人数&quot;。</li>
+</ul>
+<p><strong>直觉推导（记住这个就不用背）</strong>：从根出发若人人只生一个孩子（整条 n1 链），走到底只有 <strong>1 个叶子</strong>（此时 n2=0，n0=1，公式成立）。每出现一个度为 2 的节点，就是把链上某个节点<strong>分岔成两支</strong>：一个潜在叶子变成两个，叶子<strong>净多 1 个</strong>。分叉 n2 次 → 叶子 = 1 + n2。口诀：<strong>分叉一次，叶子多一</strong>。n1 完全不参与——度为 1 的节点只把链拉长，叶子不多不少。</p>
+<p><strong>代数推导（掰&quot;边&quot;）</strong>：</p>
+<ul>
 <li>从&quot;人数&quot;数：n = n0 + n1 + n2（三类节点各数一遍）；</li>
 <li>从&quot;边&quot;数：每个节点头顶恰好一条边（根除外），所以边数 = n − 1；每条边都从父亲长出来，度为 1 的节点长 1 条、度为 2 的长 2 条，所以边数 = n1 + 2·n2；</li>
 <li>两式相等：n0 + n1 + n2 − 1 = n1 + 2·n2，两边消掉 n1 → <strong>n0 = n2 + 1</strong>（和 n1 无关）。</li>
+<li>用上面反例树验证：n=5，人数式 5 = 3+0+2 ✓；边数式 5−1 = 0+2×2 = 4 ✓。</li>
 </ul>
+<p><strong>应试动作</strong>：背结论 <code>n0 = n2 + 1</code>；题干给&quot;5 个度为 2 的节点&quot;问叶子数，直接 5+1=6——不需要知道 n1 和总节点数。</p>
 </li>
-<li>n 个节点的<strong>完全</strong>二叉树深度 = ⌈log₂(n+1)⌉。</li>
+<li><p>n 个节点的<strong>完全</strong>二叉树深度 = ⌈log₂(n+1)⌉。</p>
+</li>
 </ol>
-<p><strong>完全二叉树 vs 满二叉树</strong>：满二叉树每层都满；完全二叉树只允许最后一层缺右边若干个节点。堆就是完全二叉树。</p>
+<p><strong>满二叉树 vs 完全二叉树</strong>（选择题爱考&quot;给一棵树判断是不是完全二叉树&quot;）：</p>
+<p><strong>满二叉树 = 每一层都塞满</strong>。每层节点数 1、2、4、8……，深度 k 的满二叉树<strong>恰好</strong> 2^k − 1 个节点，一层不多不少：</p>
+<pre><code>深度 3 的满二叉树（7 个节点）
+            A
+          /   \
+         B     C        ← 第 2 层：2 个，满
+        / \   / \
+       D   E F   G      ← 第 3 层：4 个，满
+</code></pre>
+<p><strong>完全二叉树 = 只有最后一层可以缺，且只能缺最右边</strong>。从上到下、从左到右数，节点必须连续不跳号；缺可以，但缺的只能是&quot;最右边几个&quot;，<strong>左边不能空</strong>：</p>
+<pre><code>完全二叉树 ✓                      不是完全二叉树 ✗
+        A（满）                        A（满）
+      /   \                          /   \
+     B     C（满）                  B     C（满）
+    / \   /                        / \     \
+   D   E F     ← 只缺右边 G、H    E   F     G   ← B 的左孩子 D 缺了，
+                                                  左边空、右边在 → 断档
+</code></pre>
+<p>判断口诀：<strong>从左往右数，只能右边缺席，左边不许空</strong>。</p>
+<p><strong>为什么要有&quot;完全二叉树&quot;这个概念</strong>：它是长得最&quot;紧凑&quot;的形状——按层序编号塞进数组<strong>不留空洞</strong>，这正是堆能用数组存的原因：</p>
+<pre><code>完全二叉树：  数组 [A][B][C][D][E][F]   ← 编号 1~6 连续，无浪费
+非完全二叉树：数组 [A][B][C][?][F][G]   ← 位置 4（D）空洞，浪费
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>满二叉树</th>
+<th>完全二叉树</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>每层都满</td>
+<td>仅最后一层可缺<strong>最右边</strong>若干</td>
+</tr>
+<tr>
+<td>节点数</td>
+<td>恰好 2^k − 1</td>
+<td>1 ~ 2^k − 1 之间任意值</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>满是完全的<strong>特例</strong>（取到最大值）</td>
+<td>完全不一定满</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点</strong>：中文教材的&quot;满二叉树&quot;（每层全满）对应英文 <strong>Perfect</strong> Binary Tree；英文 <strong>Full</strong> Binary Tree 指&quot;每个节点有 0 或 2 个孩子&quot;，和中文&quot;满&quot;不是一回事——软考按中文教材口径考。另注意题干描述&quot;叶子只出现在最下两层&quot;&quot;最后一层从左到右连续&quot;都是在暗示完全二叉树。</p>
 <p><strong><span class="stars">★</span> 完全二叉树的顺序存储下标关系（选择题直接考）</strong>：把完全二叉树按层序（从上到下、从左到右）编号存进数组，<strong>下标从 1 开始</strong>：</p>
 <pre><code>树：        A(1)
            /   \
