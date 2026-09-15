@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html" class="is-current" aria-current="page"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,7 +89,7 @@
 <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 背下编译六个阶段的顺序与各阶段产物；② 给正规式快速判串、给状态图写正规式；③ 逐步追踪传值/传址调用后变量的最终值；④ 秒答各语言特点分类与静态/动态错误归类。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 语言处理程序：编译与解释 <span class="stars">★★★</span></h2>
+<h2 id="h-2">第一节 语言处理程序：编译与解释 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一节 语言处理程序：编译与解释 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 语言处理程序：编译与解释 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：计算机 CPU 只认识机器码（0/1 指令），而我们写的是高级语言（C、Java、Python…）。中间必须有一个&quot;翻译程序&quot;把高级语言翻译成机器能执行的东西。按翻译方式不同，分两大流派：</p>
 <div class="table-wrap">
 <table>
@@ -133,7 +137,7 @@
 <p><strong>Java / C# 是特殊流派（选择题爱考）</strong>：它们<strong>先编译成中间代码</strong>（Java 字节码 / .NET 中间语言），<strong>再由虚拟机（JVM / CLR）解释或即时编译执行</strong>——&quot;先编译后解释&quot;。正因为中间代码与平台无关、各平台各有虚拟机，Java 才能&quot;一次编写，到处运行&quot;。</p>
 <p><strong>反例演示</strong>：判断题「解释方式也会生成与源程序等价的目标程序」——<strong>错</strong>。这是本考点最常见的陷阱选项；解释器从头到尾不产出可独立执行的目标程序。反向陷阱「编译方式执行效率比解释方式低」——错，编译是&quot;先翻完再念&quot;，运行时零翻译开销，效率更高。</p>
 <p><strong>应试动作</strong>：背对比表的三行——①是否生成目标程序（编译生成、解释不生成）②执行效率（编译高）③可移植性（解释好）。考场上题干不会出现&quot;流派&quot;这种词，直接给&quot;某语言程序需先翻译成目标程序后执行&quot;&quot;逐句翻译执行&quot;等描述让你归类。</p>
-<h2 id="h-3">第二节 编译的六个阶段 <span class="stars">★★★</span></h2>
+<h2 id="h-3">第二节 编译的六个阶段 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 编译的六个阶段 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 编译的六个阶段 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：为什么翻译不一步到位，要分六个阶段？因为&quot;读懂一段话&quot;本身就是分层的：先认字（词法），再看句子通不通（语法），再理解意思对不对（语义），最后才落笔翻译（中间代码→优化→目标代码）。分层后每个阶段只管一件事，出错也好定位——你在第 2 阶段就发现&quot;句子结构不对&quot;，不必等到最后生成机器码才发现。</p>
 <div class="table-wrap">
 <table>
@@ -231,7 +235,7 @@
 </div>
 <p><strong>反例演示（最易混的两组）</strong>：①「拼写错误 vs 缺分号」——单词拼错、用了中文标点属于<strong>词法</strong>错误；缺分号、缺括号、缺操作数属于<strong>语法</strong>错误（涉及语言结构）。②「编译时 vs 运行时」——除零、下标越界编译器查不出来（它不知道运行时下标是多少），所以叫<strong>动态</strong>错误；死循环也是运行时才暴露。</p>
 <p><strong>应试动作</strong>：① 背死六阶段顺序和三个&quot;输入→输出&quot;（字符流→记号流→语法树→中间代码→目标程序）；② 错误四分类给例子能归类——判断窍门先问&quot;编译时能发现吗&quot;，再按词法（字符级）/语法（结构级）/静态语义（类型级）定位；③ 记住自顶向下=递归下降/预测分析，自底向上=移进-归约。</p>
-<h2 id="h-4">第三节 表达式：前缀、中缀、后缀 <span class="stars">★★</span>（与第 1 课联动）</h2>
+<h2 id="h-4">第三节 表达式：前缀、中缀、后缀 <span class="stars">★★</span>（与第 1 课联动）<button type="button" class="sec-status" data-status-key="第三节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）」的学习状态"></button></h2>
 <p>这一节第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第一节 1.2）已详细讲过中缀转后缀的&quot;傻瓜法&quot;（按优先级加满括号，运算符搬到自己那对括号的右边）。这里给速查表和<strong>前缀</strong>补全：</p>
 <div class="table-wrap">
 <table>
@@ -305,7 +309,7 @@
 <p><strong>为什么编译器爱用后缀做中间代码</strong>：第二节说过中间代码常用形式里就有&quot;后缀式&quot;——扫后缀式时每个运算符出现时它的操作数一定已在栈里，一遍扫完，不需要优先级表和括号。</p>
 <p><strong>反例演示</strong>：后缀求值时<strong>先弹的是右操作数</strong>，减法除法顺序不能反。<code>8 6 −</code> 是 8−6=2；若先弹的当左操作数就算成 6−8=−2，错。</p>
 <p><strong>应试动作</strong>：① 中缀转后缀用&quot;加满括号搬右边&quot;，转前缀&quot;搬左边&quot;；② 求值时先弹的当<strong>右</strong>操作数；③ 考题给后缀式求值，用栈表逐步算，算完还原成中缀验一遍。</p>
-<h2 id="h-5">第四节 文法与语法树 <span class="stars">★</span></h2>
+<h2 id="h-5">第四节 文法与语法树 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第四节 文法与语法树 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 文法与语法树 ★」的学习状态"></button></h2>
 <p><strong>动机</strong>：语法分析&quot;按语法规则组句&quot;，这条规则的形式化描述就是<strong>文法</strong>。</p>
 <p>一个形式文法是四元组 <strong>G = (V, T, S, P)</strong>：</p>
 <div class="table-wrap">
@@ -349,9 +353,9 @@
 <p><strong>语法推导树</strong>：从起始符 S 出发按产生式展开画出的树——根是 S，内部节点是非终结符，叶子从左到右拼起来就是推导出的句子。语法分析阶段输出&quot;语法树&quot;用的就是它。</p>
 <p><strong>重要结论</strong>：常见的程序设计语言（C、Java 等）的语法规则通常是<strong>上下文无关文法</strong>——选择题直接考这个结论。</p>
 <p><strong>应试动作</strong>：① 四元组各成分一句话定义；② 背&quot;加 1 乘 0&quot;；③ 背&quot;程序语言通常用上下文无关文法&quot;这一句。</p>
-<h2 id="h-6">第五节 正规式与正规集 <span class="stars">★★★</span></h2>
+<h2 id="h-6">第五节 正规式与正规集 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 正规式与正规集 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 正规式与正规集 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：词法分析阶段要识别&quot;什么样的字符串算一个标识符、什么样的算一个整数&quot;——这种<strong>单词的模式</strong>就用正规式（正则表达式）描述。它是描述字符串集合的最简工具。</p>
-<h3 id="h-7">5.1 三种运算与优先级</h3>
+<h3 id="h-7">5.1 三种运算与优先级<button type="button" class="sec-status" data-status-key="5.1 三种运算与优先级" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 三种运算与优先级」的学习状态"></button></h3>
 <p>正规式只有三种基本运算（按优先级从高到低）：</p>
 <div class="table-wrap">
 <table>
@@ -429,7 +433,7 @@
 <li><code>a|b*</code> ≠ <code>(a|b)*</code>。<code>a|b*</code> = {a} ∪ {ε, b, bb, …}——<strong>单个 a，或若干个 b</strong>；绝没有 ab、ba 这种混合串。</li>
 <li>「以 abb 结尾」≠「含有 abb」。<code>(a|b)*abb</code> 要求串<strong>最后三个字符</strong>恰好是 abb；若多写一段成 <code>(a|b)*abb(a|b)*</code>，就放宽成&quot;中间只要出现过 abb&quot;——此时 <code>abba</code>（以 a 结尾）也会被匹配。边界条件差一段闭包，集合就完全不同。</li>
 </ol>
-<h3 id="h-8">5.2 专题：给正规式判串（完整判定步骤）</h3>
+<h3 id="h-8">5.2 专题：给正规式判串（完整判定步骤）<button type="button" class="sec-status" data-status-key="5.2 专题：给正规式判串（完整判定步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 专题：给正规式判串（完整判定步骤）」的学习状态"></button></h3>
 <p><strong>考场四步法</strong>：</p>
 <ol>
 <li><strong>翻译</strong>：把正规式翻译成大白话——&quot;以什么开头 / 以什么结尾 / 中间任意 / 至少含什么&quot;。</li>
@@ -453,9 +457,9 @@
 <p><strong>结论：只有 baab 属于 L(r)</strong>。注意第 3 步找&quot;连续 aa&quot;是看<strong>相邻</strong>两个字符，别隔位看。</p>
 <p><strong>给串选正规式</strong>（反过来问）同样用四步法：先看待匹配串的结构特征（开头/结尾/含什么），再逐个选项检查——特别警惕&quot;形似但范围不同&quot;的选项，用上面第 5.1 节的反例 1、2 的切分法排除。</p>
 <p><strong>应试动作</strong>：背熟速查表 + 三组反例。考场上题干给一个正规式四个串，30 秒流程：翻译成大白话 → 首尾筛 → 存活者分块回代 → 反向拼回验证。哪些考法套这套流程：给正规式选串、给串选正规式都是；&quot;给状态图写正规式&quot;用第六节的方法。</p>
-<h2 id="h-9">第六节 有限自动机：DFA 与 NFA <span class="stars">★★★</span></h2>
+<h2 id="h-9">第六节 有限自动机：DFA 与 NFA <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 有限自动机：DFA 与 NFA ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 有限自动机：DFA 与 NFA ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：正规式描述了单词的&quot;模式&quot;，但程序怎么<strong>执行</strong>这个模式？有限自动机（FA）就是正规式的&quot;可执行版本&quot;——词法分析器内部就是一台有限自动机在逐字符扫描。正规式和自动机<strong>描述能力等价</strong>，可互相转换。</p>
-<h3 id="h-10">6.1 定义与五元组</h3>
+<h3 id="h-10">6.1 定义与五元组<button type="button" class="sec-status" data-status-key="6.1 定义与五元组" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 定义与五元组」的学习状态"></button></h3>
 <p>自动机 M = (S, Σ, δ, s₀, Z)：</p>
 <div class="table-wrap">
 <table>
@@ -512,7 +516,7 @@
 </tbody></table>
 </div>
 <p>注：DFA 是 NFA 的特例；两者识别的语言类相同（都恰好是正规式能描述的语言）。这与第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a>）里算法的&quot;确定性&quot;是同一种思想——DFA 每一步走向唯一，模拟它就是照表走。</p>
-<h3 id="h-11">6.2 专题：判定自动机接受哪些串（完整步骤）</h3>
+<h3 id="h-11">6.2 专题：判定自动机接受哪些串（完整步骤）<button type="button" class="sec-status" data-status-key="6.2 专题：判定自动机接受哪些串（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 专题：判定自动机接受哪些串（完整步骤）」的学习状态"></button></h3>
 <p><strong>考场三步法</strong>：</p>
 <ol>
 <li><strong>列转移表</strong>：把每个状态对每个输入字符的走向列成表（题干给状态图就照图抄表）。</li>
@@ -551,7 +555,7 @@
 <p><strong>反向验证</strong>：<code>1011</code> 以 &quot;11&quot; 结尾，与归纳的语言特征一致 ✓。再判 <code>1101</code>：q₀ --1--&gt; q₁ --1--&gt; q₂ --0--&gt; q₀ --1--&gt; q₁，读完停在 q₁ 非终态 → 拒绝；反向看 <code>1101</code> 以 &quot;01&quot; 结尾，不一致才对（它确实不以 11 结尾）✓。两条路结论吻合。</p>
 <p><strong>给状态图写正规式</strong>：先<strong>归纳语言</strong>（看什么路径能从初态走到终态、走终态前必须经过什么），再用速查表（第五节）把特征写成正规式——以&quot;以 11 结尾&quot;为例：前面任意 <code>(0|1)*</code> ＋ 结尾固定 <code>11</code>，得 <code>(0|1)*11</code>。写完拿一个被接受的串和一个被拒绝的串各回代验一次。</p>
 <p><strong>应试动作</strong>：① 背 DFA/NFA 区别一句话——&quot;DFA 单值、NFA 多值（可含 ε），能力等价&quot;；② 判串题老老实实逐字符查表走，别心算跳步；③ 归纳语言看&quot;到达终态前最后一段路径&quot;的形状。给图写正规式、给串判接受，都靠&quot;逐字符走 + 归纳语言&quot;两把刀。</p>
-<h2 id="h-12">第七节 函数调用：传值 vs 传址（引用）<span class="stars">★★★</span></h2>
+<h2 id="h-12">第七节 函数调用：传值 vs 传址（引用）<span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第七节 函数调用：传值 vs 传址（引用）★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 函数调用：传值 vs 传址（引用）★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：函数想用主调方的数据，有两条路——把<strong>值复印一份</strong>带过去（传值），或把<strong>地址/引用</strong>（钥匙）递过去直接操作原件（传址/引用）。复印本改坏了不影响原件；钥匙能真改房子。</p>
 <div class="table-wrap">
 <table>
@@ -582,7 +586,7 @@
 <p><strong>记忆口诀</strong>：<strong>传值复印本，改了不还乡；传址寄钥匙，改屋真变样</strong>。另一条判断规则：传值的实参随意（常量、表达式都行），传址的实参必须是变量。</p>
 <p><strong>反例演示</strong>：① 传值调用下 <code>f(a)</code> 里把形参改成 100，函数返回后 a 纹丝不动——想通过参数&quot;带出&quot;结果却用了传值，是初学者最常见 bug；② 引用调用写 <code>f(a+1, b)</code> 直接编译报错/无意义——<code>a+1</code> 是表达式，没有地址可传。</p>
 <p><strong>关于作用域与闭包（大纲提及，考得浅，知道概念即可）</strong>：<strong>作用域</strong>决定一个名字在程序哪些位置可见。多数语言（C、Java）采用<strong>静态作用域</strong>（词法作用域）——名字属于哪一层，看程序文本的嵌套结构，<strong>编译时</strong>就能确定；动态作用域则按<strong>运行时的调用链</strong>确定（少数早期语言）。<strong>闭包</strong>指函数与其所引用的外部变量捆绑在一起（如 Python/JS 的嵌套函数把外层变量&quot;记住了&quot;），选择题了解词义即可。</p>
-<h3 id="h-13">7.1 专题：传值/传址追踪（完整步骤）</h3>
+<h3 id="h-13">7.1 专题：传值/传址追踪（完整步骤）<button type="button" class="sec-status" data-status-key="7.1 专题：传值/传址追踪（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 专题：传值/传址追踪（完整步骤）」的学习状态"></button></h3>
 <p><strong>考场四步法</strong>：</p>
 <ol>
 <li><strong>标记身份</strong>：传值参数在旁边标&quot;副本&quot;，传址参数直接标&quot;= 实参&quot;（形实一体）。</li>
@@ -625,7 +629,7 @@
 </ul>
 <p>反向验证（传址版）：换名后即 <code>a = a+b; b = a+b</code> → a=7, b=7+5=12 ✓。<strong>易错点</strong>：第二句若拿旧值算成 b=2+5=7 就错了——传址下第一句已经把 a 改成 7，后续语句必须用新值。</p>
 <p><strong>应试动作</strong>：① 背两条性质——传值单向、实参可任意；传址双向、实参必须变量；② 追踪题按四步法列表逐句算，传址参数&quot;每句用新值、同步回写实参&quot;；③ 用&quot;换名原地执行&quot;反向验证。这是纯送分题，唯一失分方式就是跳步。</p>
-<h2 id="h-14">第八节 各语言特点与分类 <span class="stars">★</span></h2>
+<h2 id="h-14">第八节 各语言特点与分类 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第八节 各语言特点与分类 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 各语言特点与分类 ★」的学习状态"></button></h2>
 <p><strong>动机</strong>：选择题常给一个应用场景（&quot;人工智能符号处理&quot;&quot;科学计算&quot;）问选什么语言，或给一个语言问它的分类。这纯是背诵题，一张表解决。</p>
 <p><strong>按翻译方式分类</strong>：</p>
 <div class="table-wrap">
@@ -704,8 +708,8 @@
 </div>
 <p><strong>应试动作</strong>：重点背两个&quot;最容易和别的搞混&quot;的——<strong>Lisp=函数式/AI</strong>、<strong>Prolog=逻辑推理/专家系统</strong>（两者都沾 AI，别互换）；再背 Java 跨平台靠&quot;字节码 + JVM&quot;这条机制描述。其余扫一眼有印象即可。</p>
 <hr>
-<h2 id="h-15">课后考题（请合上讲义作答）</h2>
-<h3 id="h-16">选择题</h3>
+<h2 id="h-15">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h3 id="h-16">选择题<button type="button" class="sec-status" data-status-key="选择题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择题」的学习状态"></button></h3>
 <p><strong>1.</strong> 关于编译方式和解释方式，下列叙述正确的是（ ）。
 A. 编译方式的执行效率通常低于解释方式
 B. 解释方式会生成与源程序等价的目标程序
@@ -813,7 +817,7 @@ A. Prolog——面向对象程序设计语言
 B. Lisp——函数式语言，常用于符号处理与人工智能
 C. Fortran——科学计算，执行效率高
 D. Java——编译为字节码，由 JVM 执行，跨平台</p>
-<h3 id="h-17">案例题风格题</h3>
+<h3 id="h-17">案例题风格题<button type="button" class="sec-status" data-status-key="案例题风格题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题风格题」的学习状态"></button></h3>
 <p><strong>案例 1</strong>　某程序片段如下：</p>
 <pre><code>function calc(p, q) {
     q = q - p;
@@ -855,7 +859,7 @@ D. Java——编译为字节码，由 JVM 执行，跨平台</p>
 <p>问题 1：该自动机识别的字符串有什么共同特征？写出与之等价的正规式。
 问题 2：判断 <code>aab</code>、<code>abb</code>、<code>abab</code>、<code>baab</code> 中哪些被该自动机接受（逐步列出状态轨迹）。
 问题 3：若把 q₁ 对输入 a 的转移改为&quot;q₁ 或 q₂ 均可&quot;，该自动机变成了什么类型？说明判断依据。</p>
-<h2 id="h-18">精华题（历年必考风格，考前必刷）</h2>
+<h2 id="h-18">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <p><strong>1.</strong> 关于编译各阶段的叙述，正确的是（ ）。
 A. 语义分析阶段的输出是记号流
 B. 中间代码与具体的机器无关
@@ -927,7 +931,7 @@ D. Java 程序不需要任何翻译程序即可在机器上直接运行</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-20">课后考题答案</h3>
+<h3 id="h-20">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong>
 编译是&quot;先整本翻译成目标程序，再直接运行目标程序&quot;，执行时编译器不参与，效率高（A 反了）；解释器逐句翻译执行、<strong>不生成</strong>目标程序（B 反了）；两种方式都要做词法、语法、语义分析（D 反了）。易错点：B 是最常见陷阱——&quot;解释也要分析，但不产出目标程序&quot;。</p>
 <p><strong>2. B</strong>
@@ -975,7 +979,7 @@ A 是传值调用的结果（原件不动）；C 错在第二句没用新 x；D 
 </ul>
 <p><strong>15. A</strong>
 Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据库），不是面向对象语言——A 的对应关系错误，选它。B、C、D 均为正确对应。易错点：Lisp（函数式/AI）与 Prolog（逻辑推理）都沾&quot;人工智能&quot;，但&quot;函数式&quot;标签专属 Lisp，&quot;逻辑推理&quot;标签专属 Prolog，别互换。</p>
-<h3 id="h-21">案例题答案</h3>
+<h3 id="h-21">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>案例 1</strong></p>
 <p><strong>问题 1</strong>（p 传值 = 副本；q 引用 = y 本身）：</p>
 <div class="table-wrap">
@@ -1113,7 +1117,7 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 </div>
 <p>反向验证：aab、abab、baab 都以 ab 结尾，abb 以 bb 结尾——与&quot;以 ab 结尾&quot;的语言特征一致 ✓。</p>
 <p><strong>问题 3</strong>：变成了 <strong>NFA（不确定有限自动机）</strong>。依据：DFA 要求转移函数是<strong>单值对照</strong>——一个状态面对一个输入符号只有唯一后继；改成&quot;q₁ 或 q₂ 均可&quot;后，同一状态同一输入对应一个<strong>状态集合</strong>，这正是 NFA 的定义特征。（NFA 与 DFA 识别能力等价，可用子集法把这台 NFA 确定化。）</p>
-<h3 id="h-22">精华题答案</h3>
+<h3 id="h-22">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 中间代码的定义特征就是<strong>与具体机器无关</strong>（后缀式、三地址码、四元式都不绑定硬件）✓。A 反了——语义分析的输入是语法树，输出记号流的是词法分析；C 反了——目标代码生成恰恰要考虑硬件系统结构（寄存器分配等）；D 说的是语法分析的任务，词法分析是逐字符识别单词（依据正规式/有限自动机）。</p>
 <p><strong>2. A</strong>
@@ -1180,6 +1184,23 @@ Java 源程序先由编译器生成<strong>平台无关的字节码（中间代�
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="08-信息安全.html">08-信息安全.html</a> 并更新进度表。</p>
 
+  <footer class="status-bar" data-status-page="07-程序设计语言基础">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="06-计算机网络.html">
       <span class="k">上一课</span>

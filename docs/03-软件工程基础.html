@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html" class="is-current" aria-current="page"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -84,8 +88,8 @@
 <p><strong class="k">分值地位</strong>：选择题约 6–8 题（第一梯队）+ 案例题「数据流图」一道大题（约 15 分，常是案例第一题）。内聚耦合排序、逻辑覆盖强弱、McCabe 环路复杂度几乎每年必考其一。</p>
 <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 给一段项目描述选出合适的开发模型；② 背出内聚/耦合七级排序并判断具体场景；③ 排逻辑覆盖强弱、算 McCabe 环路复杂度；④ 区分四种维护和质量特性分类；⑤ 认出 CMM 等级描述；⑥ 按套路补全数据流图（案例题）。</p>
 </blockquote>
-<h2 id="h-2">第一节 软件开发模型 <span class="stars">★★</span></h2>
-<h3 id="h-3">为什么有多种模型</h3>
+<h2 id="h-2">第一节 软件开发模型 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第一节 软件开发模型 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 软件开发模型 ★★」的学习状态"></button></h2>
+<h3 id="h-3">为什么有多种模型<button type="button" class="sec-status" data-status-key="为什么有多种模型" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么有多种模型」的学习状态"></button></h3>
 <p>不同项目的<strong>需求清晰度</strong>和<strong>风险高低</strong>差别巨大：需求写得一清二楚的项目不需要反复确认，需求说不清的项目硬按部就班走完设计才发现做错了。开发模型的区别就是&quot;<strong>怎么安排&#39;想清楚&#39;和&#39;动手做&#39;的顺序</strong>&quot;。认模型题的关键是抓题干特征词。</p>
 <div class="table-wrap">
 <table>
@@ -137,7 +141,7 @@
 <li>瀑布模型的&quot;缺点&quot;考法：<strong>直到后期才能看到可运行软件</strong>，需求变更代价大——不是&quot;没有文档&quot;（瀑布恰恰文档最全）。</li>
 </ul>
 <p><strong>应试动作</strong>：背四个特征词对应（明确→瀑布 / 不明确→原型 / 高风险→螺旋 / 多变→敏捷），考试就是配对题。</p>
-<h2 id="h-4">第二节 需求分析 <span class="stars">★</span></h2>
+<h2 id="h-4">第二节 需求分析 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第二节 需求分析 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 需求分析 ★」的学习状态"></button></h2>
 <p><strong>需求工程的四个过程</strong>（背顺序）：<strong>需求获取 → 需求分析 → 需求规格说明（定义）→ 需求验证（确认）</strong>。验证指&quot;检查需求规格说明书是否正确、一致、完整&quot;。</p>
 <p><strong>需求分类</strong>：<strong>功能需求</strong>（系统做什么：查询、统计）、<strong>非功能需求</strong>（做得怎么样：性能、安全性、可靠性）、<strong>设计约束</strong>（必须用什么平台、遵循什么标准）。考法：给一句描述判断属于哪类——&quot;响应时间不超过 2 秒&quot;→ 非功能需求。</p>
 <p><strong>结构化分析的核心工具</strong>（与案例题直接挂钩，第九节展开）：</p>
@@ -146,10 +150,10 @@
 <li><strong>数据字典（DD）</strong>：给 DFD 中每个数据流、文件下精确定义；</li>
 <li>两者配合：<strong>只有 DFD 没有 DD，图中的名字就没有精确含义</strong>——这是&quot;为什么需要数据字典&quot;的动机。</li>
 </ul>
-<h2 id="h-5">第三节 模块化设计：内聚与耦合 <span class="stars">★★★</span>（几乎每年考）</h2>
-<h3 id="h-6">为什么要&quot;高内聚、低耦合&quot;</h3>
+<h2 id="h-5">第三节 模块化设计：内聚与耦合 <span class="stars">★★★</span>（几乎每年考）<button type="button" class="sec-status" data-status-key="第三节 模块化设计：内聚与耦合 ★★★（几乎每年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 模块化设计：内聚与耦合 ★★★（几乎每年考）」的学习状态"></button></h2>
+<h3 id="h-6">为什么要&quot;高内聚、低耦合&quot;<button type="button" class="sec-status" data-status-key="为什么要&amp;quot;高内聚、低耦合&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要&quot;高内聚、低耦合&quot;」的学习状态"></button></h3>
 <p>软件要拆成模块，拆法有好坏：一个模块内部干的事<strong>越相关</strong>（内聚越高），越容易看懂、改起来越不容易牵连别处；模块之间<strong>越独立</strong>（耦合越低），一个模块改动对别的影响越小。&quot;高内聚、低耦合&quot;就是这两条经验的一句话版。<strong>内聚看模块内部，耦合看模块之间</strong>——先分清这个方向再背排序。</p>
-<h3 id="h-7">内聚七级（从低到高，必须背顺序）</h3>
+<h3 id="h-7">内聚七级（从低到高，必须背顺序）<button type="button" class="sec-status" data-status-key="内聚七级（从低到高，必须背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「内聚七级（从低到高，必须背顺序）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -204,7 +208,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-8">耦合七级（从高到低，必须背顺序）</h3>
+<h3 id="h-8">耦合七级（从高到低，必须背顺序）<button type="button" class="sec-status" data-status-key="耦合七级（从高到低，必须背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「耦合七级（从高到低，必须背顺序）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -266,10 +270,10 @@
 <li><strong>标记耦合 vs 数据耦合</strong>：传的是<strong>一条记录/结构</strong>（学生信息整条）→ 标记耦合；只是<strong>一个简单变量</strong>（学号这一个数）→ 数据耦合。</li>
 </ol>
 <p><strong>应试动作</strong>：两个排序要能默写。记法——内聚从&quot;凑（偶然）&quot;到&quot;专（功能）&quot;，耦合从&quot;掀内脏（内容）&quot;到&quot;不认识（非直接）&quot;；做题先抓题干关键词（同一时间/同一数据/接力/命令/记录/变量）对号入座。</p>
-<h2 id="h-9">第四节 软件测试 <span class="stars">★★★</span></h2>
-<h3 id="h-10">测试的阶段（背顺序）</h3>
+<h2 id="h-9">第四节 软件测试 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第四节 软件测试 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 软件测试 ★★★」的学习状态"></button></h2>
+<h3 id="h-10">测试的阶段（背顺序）<button type="button" class="sec-status" data-status-key="测试的阶段（背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「测试的阶段（背顺序）」的学习状态"></button></h3>
 <p><strong>单元测试 → 集成测试 → 确认测试 → 系统测试 → 验收测试</strong>。确认测试检验软件是否满足<strong>需求规格说明书</strong>；验收测试由<strong>用户</strong>参与（常含 α 测试——开发方场所、β 测试——用户实际环境）。</p>
-<h3 id="h-11">白盒测试与逻辑覆盖（必考排序）</h3>
+<h3 id="h-11">白盒测试与逻辑覆盖（必考排序）<button type="button" class="sec-status" data-status-key="白盒测试与逻辑覆盖（必考排序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「白盒测试与逻辑覆盖（必考排序）」的学习状态"></button></h3>
 <p>白盒测试把程序看成透明的，按<strong>程序内部逻辑</strong>设计用例。逻辑覆盖从弱到强：</p>
 <p><strong>语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</strong></p>
 <div class="table-wrap">
@@ -307,7 +311,7 @@
 </tbody></table>
 </div>
 <p><strong>反例演示（经典陷阱）</strong>：<strong>满足条件覆盖不一定满足判定覆盖</strong>。例：判定 <code>A&gt;0 AND B&gt;0</code>，两个用例取 (A=1,B=0) 和 (A=0,B=1)——两个条件的真假都取遍了（条件覆盖满足），但判定结果<strong>都是假</strong>，真分支一次没走过（判定覆盖不满足）。这就是为什么排序里条件覆盖只保证条件、不保证分支，要两者都保必须上&quot;判定/条件覆盖&quot;。</p>
-<h3 id="h-12">McCabe 环路复杂度（必考计算）</h3>
+<h3 id="h-12">McCabe 环路复杂度（必考计算）<button type="button" class="sec-status" data-status-key="McCabe 环路复杂度（必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「McCabe 环路复杂度（必考计算）」的学习状态"></button></h3>
 <p>衡量程序控制流的复杂程度，三种等价算法：</p>
 <p><strong>V(G) = 控制流图的边数 E − 节点数 N + 2 = 判定节点数 + 1 = 封闭区域数 + 1</strong></p>
 <p><strong>代入算例</strong>：某程序流程图有 9 条边、7 个节点 → V(G) = 9 − 7 + 2 = <strong>4</strong>。验算（第三种算法）：若该图恰有 3 个判定节点（如 2 个 if + 1 个 while），V(G) = 3 + 1 = 4 ✓ 两种算法一致。</p>
@@ -316,7 +320,7 @@
 <li>&quot;判定节点&quot;只数<strong>分支点</strong>（if、while、for、case 的分支），<code>i = i + 1</code> 这类顺序语句不是判定节点；</li>
 <li>复合条件 <code>if (A&gt;0 AND B&gt;0)</code> 在某些教材拆成多个条件的组合时算法不同——软考默认按<strong>判定节点数+1</strong>（即这个 if 算 1 个判定节点）。</li>
 </ul>
-<h3 id="h-13">黑盒测试（看功能不看代码）</h3>
+<h3 id="h-13">黑盒测试（看功能不看代码）<button type="button" class="sec-status" data-status-key="黑盒测试（看功能不看代码）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「黑盒测试（看功能不看代码）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -344,7 +348,7 @@
 </tbody></table>
 </div>
 <p><strong>应试动作</strong>：① 覆盖强弱排序背死（语句最弱、路径最强）；② McCabe 三公式等价、任给两样算第三样；③ 测试五阶段顺序；④ &quot;条件覆盖 ⊉ 判定覆盖&quot;这个陷阱认得出。</p>
-<h2 id="h-14">第五节 软件维护 <span class="stars">★</span></h2>
+<h2 id="h-14">第五节 软件维护 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第五节 软件维护 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 软件维护 ★」的学习状态"></button></h2>
 <p>维护是软件交付<strong>之后</strong>的修改，四类（必须会对号入座）：</p>
 <div class="table-wrap">
 <table>
@@ -379,7 +383,7 @@
 </div>
 <p><strong>反例演示（易错）</strong>：改正 vs 预防——修<strong>已发生</strong>的 bug 是改正性；改<strong>还没发生</strong>的隐患是预防性（易混淆知识点里专门强调这对）。<strong>占比</strong>：完善性维护占全部维护工作量的一半以上（约 50%–60%），选择题直接考。</p>
 <p><strong>应试动作</strong>：背四类 + &quot;完善性占大头&quot;；判断时先问&quot;错误发生了没（改正/预防）→ 没发生是预防；再问是改自己还是改环境（完善/适应）&quot;。</p>
-<h2 id="h-15">第六节 软件质量特性 <span class="stars">★</span></h2>
+<h2 id="h-15">第六节 软件质量特性 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第六节 软件质量特性 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 软件质量特性 ★」的学习状态"></button></h2>
 <p><strong>McCall 模型</strong>把质量特性分三组（背分组归属即可）：</p>
 <div class="table-wrap">
 <table>
@@ -405,14 +409,14 @@
 </div>
 <p><strong>ISO/IEC 9126 六大特性</strong>：<strong>功能性、可靠性、易用性、效率、维护性、可移植性</strong>（各含子特性，如可靠性含成熟性/容错性/易恢复性）。</p>
 <p><strong>应试动作</strong>：考法是&quot;XX 属于哪个特性/哪一组&quot;——背 ISO 六大特性名 + McCall 三组归属；易混点：&quot;易恢复性&quot;属于<strong>可靠性</strong>子特性，&quot;互操作性&quot;属于<strong>功能性</strong>子特性。</p>
-<h2 id="h-16">第七节 项目管理基础 <span class="stars">★</span></h2>
+<h2 id="h-16">第七节 项目管理基础 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第七节 项目管理基础 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 项目管理基础 ★」的学习状态"></button></h2>
 <ul>
 <li><strong>甘特图（Gantt）</strong>：横轴时间、条形表示任务工期，直观；<strong>缺点：不能显式反映任务之间的依赖关系</strong>（经典考点）。</li>
 <li><strong>PERT 图 / 关键路径</strong>：任务网络图求关键路径——计算方法与第一课 3.6 AOE 网完全相同（顺推取 max、逆推取 min、余量为 0 即关键活动），不重复讲，见 <a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第 3.6 节。</li>
 <li><strong>COCOMO 估算模型</strong>：按代码规模（KLOC）估算工作量，基本模型 <strong>E = a × (KLOC)^b</strong>（E 单位人月），按项目类型（组织型 / 半独立 / 嵌入型）取不同参数 a、b。考法是<strong>题干给公式和参数</strong>，代入算即可——例：E = 2.0×(KLOC)^1.0，规模 30KLOC → E = 2.0×30 = 60 人月。</li>
 <li><strong>风险管理</strong>：过程 = 风险识别 → 风险预测（估计概率与损失）→ 风险评估 → 风险控制。<strong>风险暴露 = 风险损失 × 风险发生概率</strong>（代入算例：损失 10 万、概率 20% → 风险暴露 2 万）。风险分类：项目风险（预算进度）、技术风险（技术方案）、商业风险（市场）。</li>
 </ul>
-<h2 id="h-17">第八节 CMM / CMMI <span class="stars">★</span></h2>
+<h2 id="h-17">第八节 CMM / CMMI <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第八节 CMM / CMMI ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 CMM / CMMI ★」的学习状态"></button></h2>
 <p>CMM 把软件过程成熟度分五级（背顺序和关键词）：</p>
 <div class="table-wrap">
 <table>
@@ -451,31 +455,31 @@
 </tbody></table>
 </div>
 <p>CMMI（能力成熟度模型集成）阶段式表示同样五级：初始、已管理、已定义、量化管理、优化。<strong>考法就是配对</strong>：抓&quot;文档化标准化&quot;→ 3 级，&quot;量化&quot;→ 4 级，&quot;持续改进&quot;→ 5 级，&quot;重复以往成功&quot;→ 2 级。</p>
-<h2 id="h-18">第九节 案例题专攻：数据流图（约 15 分）</h2>
+<h2 id="h-18">第九节 案例题专攻：数据流图（约 15 分）<button type="button" class="sec-status" data-status-key="第九节 案例题专攻：数据流图（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 案例题专攻：数据流图（约 15 分）」的学习状态"></button></h2>
 <p>案例第一题一般是&quot;文字说明 + 顶层图/0 层图（缺数据流）&quot;，三小问：补数据流（起点、终点、名字）、指出加工用到的文件、补数据字典。<strong>全部答案都藏在说明文字里，套路如下：</strong></p>
-<h3 id="h-19">套路一：分层与平衡原则（判断&quot;缺什么&quot;的依据）</h3>
+<h3 id="h-19">套路一：分层与平衡原则（判断&quot;缺什么&quot;的依据）<button type="button" class="sec-status" data-status-key="套路一：分层与平衡原则（判断&amp;quot;缺什么&amp;quot;的依据）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：分层与平衡原则（判断&quot;缺什么&quot;的依据）」的学习状态"></button></h3>
 <ul>
 <li><strong>顶层图</strong>：整个系统算一个加工，只画外部实体和进出系统的数据流；</li>
 <li><strong>0 层图</strong>：把系统拆成几个主要加工；</li>
 <li><strong>父图与子图必须平衡</strong>：子图的输入/输出数据流必须与父图中对应加工的输入/输出<strong>一一对应</strong>——父子图数据流对不上 = 缺流，这是补流题的判定依据。</li>
 </ul>
-<h3 id="h-20">套路二：逐句扫描说明找缺失数据流</h3>
+<h3 id="h-20">套路二：逐句扫描说明找缺失数据流<button type="button" class="sec-status" data-status-key="套路二：逐句扫描说明找缺失数据流" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：逐句扫描说明找缺失数据流」的学习状态"></button></h3>
 <p>说明中<strong>每个动词句都对应一条数据流</strong>：&quot;顾客提交订单&quot;（订单 → 系统）、&quot;向顾客发送确认&quot;（确认 → 顾客）、&quot;通知房主&quot;（通知 → 房主）。把说明句子列成清单，逐条在图上勾掉，<strong>剩下没画的句子就是答案</strong>。数据流名要用<strong>说明中的原词</strong>（题目明确要求&quot;采用说明中的词汇&quot;）。</p>
-<h3 id="h-21">套路三：补流三要素与常见去向</h3>
+<h3 id="h-21">套路三：补流三要素与常见去向<button type="button" class="sec-status" data-status-key="套路三：补流三要素与常见去向" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：补流三要素与常见去向」的学习状态"></button></h3>
 <p>答案必须写全：<strong>起点、终点、数据流名</strong>。常见易漏位置：</p>
 <ul>
 <li>加工 → <strong>外部实体</strong>的反馈类流（确认、通知类，最容易漏）；</li>
 <li>加工 ↔ <strong>文件</strong>的读写（&quot;保存订单&quot;= 写订单文件，&quot;查询余额&quot;= 读账户文件）；</li>
 <li>顶层图与 0 层图对照：顶层有而 0 层没有的流，必缺。</li>
 </ul>
-<h3 id="h-22">套路四：数据字典写法</h3>
+<h3 id="h-22">套路四：数据字典写法<button type="button" class="sec-status" data-status-key="套路四：数据字典写法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路四：数据字典写法」的学习状态"></button></h3>
 <p>用&quot;=&quot;（由…组成）、&quot;+&quot;（与）、&quot;{}&quot;（重复）、&quot;|&quot;（或）描述。例：</p>
 <pre><code>登录信息 = 学生 ID + 密码
 订单 = 顾客编号 + {菜品名 + 数量} + 送餐地址
 </code></pre>
 <p>（<code>{}</code> 内是可以重复出现的项。）</p>
 <hr>
-<h2 id="h-23">课后考题（请合上讲义作答）</h2>
+<h2 id="h-23">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>某项目用户说不清具体需求，开发方决定先快速构造一个演示系统供用户确认后再正式开发。应采用（ ）。
@@ -545,7 +549,7 @@ A. 可重复级  B. 已定义级  C. 已管理级  D. 优化级</p>
 <p><strong>问题 2</strong>：加工③&quot;跟踪配送&quot;除收到外部输入外，还需要读写哪些文件？各起什么作用？</p>
 <p><strong>问题 3</strong>：补齐数据字典条目：订单 = ______；菜品明细 = ______。</p>
 <hr>
-<h2 id="h-24">精华题（历年必考风格，考前必刷）</h2>
+<h2 id="h-24">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【模型识别】为下列项目选模型：① 需求明确的银行核心系统改造；② 需求模糊的管理信息系统；③ 高风险的大型航天控制软件；④ 需求多变的互联网创业产品。</p>
 </li>
@@ -571,7 +575,7 @@ A. 可重复级  B. 已定义级  C. 已管理级  D. 优化级</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-26">课后考题答案</h3>
+<h3 id="h-26">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 &quot;用户说不清需求 + 先做演示确认&quot;是原型模型的标志特征。瀑布要需求明确；螺旋面向高风险大型项目（核心是风险分析）；V 模型是测试与开发阶段对应的瀑布变体。</p>
 <p><strong>2. B</strong>
@@ -602,7 +606,7 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 可靠性子特性 = 成熟性、容错性、易恢复性。功能性子特性含适合性、准确性、互操作性、安全性等。</p>
 <p><strong>15. B</strong>
 &quot;文档化、标准化、全组织统一采用&quot; = 已定义级（3 级）。可重复级是&quot;能重复以往成功&quot;；已管理级的关键词是&quot;定量&quot;。</p>
-<h3 id="h-27">案例题答案</h3>
+<h3 id="h-27">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>问题 1（缺失数据流，共 3 条）</strong>：
 逐句扫描：句 2 中&quot;向相应餐厅发送订单信息&quot;没有画出；句 4 中&quot;配送员获取取餐通知&quot;没有画出（取餐通知由加工③读取配送文件后发给配送员）；句 5 中&quot;系统更新订单状态&quot;没有画出。</p>
 <div class="table-wrap">
@@ -646,7 +650,7 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 菜品明细 = {菜品名 + 数量}
 </code></pre>
 <p>（<code>{}</code> 表示可重复出现；若考试给出字段更细的说明，按说明原词逐项列出。）</p>
-<h3 id="h-28">精华题答案</h3>
+<h3 id="h-28">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. ① 瀑布模型（需求明确、阶段评审）② 原型模型（需求模糊、先演示确认）③ 螺旋模型（高风险大型项目、每圈风险分析）④ 敏捷（Scrum/XP，短迭代拥抱变化）。</strong>
 识别口诀：明确瀑布、模糊原型、高风险螺旋、多变敏捷。</p>
 <p><strong>2. ① 逻辑内聚</strong>（逻辑相似但功能无关，按参数分支执行不同动作）；<strong>② 通信内聚</strong>（统计、排序、打印都是对<strong>同一批成绩数据</strong>的不同操作，彼此没有&quot;输出即输入&quot;的接力关系）；<strong>③ 偶然内聚</strong>（毫无关系硬凑）。
@@ -661,6 +665,23 @@ V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 �
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="04-面向对象与设计模式.html">04-面向对象与设计模式.html</a> 并更新进度表。</p>
 
+  <footer class="status-bar" data-status-page="03-软件工程基础">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="02-数据库系统.html">
       <span class="k">上一课</span>

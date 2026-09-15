@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html" class="is-current" aria-current="page"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,8 +89,8 @@
 <p><strong class="k">学习目标</strong>：学完本课后，你能——① 不逐字翻译也能快速判断短文主题；② 用“词性—搭配—逻辑—专业知识”四层筛选选项；③ 掌握软件工程、数据库、网络安全、云计算和 AI 的高频词；④ 避开 <code>actual</code>、<code>execute</code>、<code>library</code>、<code>argument</code> 等“看着眼熟却容易译错”的词；⑤ 在 5–7 分钟内完成一组 5 空专业英语题，并说出每个答案的文本依据。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一部分 本课导航</h2>
-<h3 id="h-3">1. 本章究竟考什么</h3>
+<h2 id="h-2">第一部分 本课导航<button type="button" class="sec-status" data-status-key="第一部分 本课导航" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一部分 本课导航」的学习状态"></button></h2>
+<h3 id="h-3">1. 本章究竟考什么<button type="button" class="sec-status" data-status-key="1. 本章究竟考什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1. 本章究竟考什么」的学习状态"></button></h3>
 <p>专业英语不是单独考语法，也不是要求翻译整篇文章。它把三种能力揉在一起：</p>
 <ol>
 <li><strong>专业知识</strong>：知道 requirement、transaction、encryption、scalability 等概念；</li>
@@ -94,7 +98,7 @@
 <li><strong>上下文推理</strong>：能根据因果、转折、同义复现判断空格含义。</li>
 </ol>
 <p>常见主题包括：软件工程与测试、面向对象与设计模式、数据结构与数据库、操作系统与网络、信息安全，以及 cloud、AI、machine learning 等新技术。</p>
-<h3 id="h-4">2. 本章与已有课程的联动</h3>
+<h3 id="h-4">2. 本章与已有课程的联动<button type="button" class="sec-status" data-status-key="2. 本章与已有课程的联动" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2. 本章与已有课程的联动」的学习状态"></button></h3>
 <p>英文题常常只是把你学过的中文结论换一种语言表达。例如：</p>
 <ul>
 <li><code>high cohesion and low coupling</code> = 高内聚、低耦合；</li>
@@ -103,7 +107,7 @@
 <li><code>a digital signature provides authentication and non-repudiation</code> = 数字签名提供身份认证和不可否认性。</li>
 </ul>
 <p>所以专业英语的本质是：<strong>用英文识别熟悉的计算机知识</strong>，不需要把自己训练成文学翻译。</p>
-<h3 id="h-5">3. 建议得分目标与时间</h3>
+<h3 id="h-5">3. 建议得分目标与时间<button type="button" class="sec-status" data-status-key="3. 建议得分目标与时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3. 建议得分目标与时间」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -132,13 +136,13 @@
 </div>
 <p>做题顺序：先读本章解题法和词汇表，再做 3 篇课后完形，最后限时做精华题。</p>
 <hr>
-<h2 id="h-6">第二部分 讲义（通俗讲解）</h2>
-<h2 id="h-7">第一节 五步解题法：不要从第一个空开始硬翻 <span class="stars">★★★</span></h2>
-<h3 id="h-8">1.1 第一步：扫读主题</h3>
+<h2 id="h-6">第二部分 讲义（通俗讲解）<button type="button" class="sec-status" data-status-key="第二部分 讲义（通俗讲解）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二部分 讲义（通俗讲解）」的学习状态"></button></h2>
+<h2 id="h-7">第一节 五步解题法：不要从第一个空开始硬翻 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一节 五步解题法：不要从第一个空开始硬翻 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 五步解题法：不要从第一个空开始硬翻 ★★★」的学习状态"></button></h2>
+<h3 id="h-8">1.1 第一步：扫读主题<button type="button" class="sec-status" data-status-key="1.1 第一步：扫读主题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 第一步：扫读主题」的学习状态"></button></h3>
 <p>先用 20–30 秒读首句、末句和重复出现的名词，回答：“这段在讲什么？”</p>
 <p>例如反复出现 <code>requirements, stakeholders, traceability, test cases</code>，主题大概率是<strong>需求工程</strong>；反复出现 <code>model, training data, prediction, overfitting</code>，主题就是<strong>机器学习</strong>。</p>
 <p>知道主题后，大脑会自动缩小词义范围。<code>model</code> 在 AI 文章中通常是“模型”，在软件工程中也可能是“开发模型”，不能一看到就只译成“模特”。</p>
-<h3 id="h-9">1.2 第二步：先判词性，再看词义</h3>
+<h3 id="h-9">1.2 第二步：先判词性，再看词义<button type="button" class="sec-status" data-status-key="1.2 第二步：先判词性，再看词义" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 第二步：先判词性，再看词义」的学习状态"></button></h3>
 <p>空格前后的结构会直接淘汰一半选项：</p>
 <div class="table-wrap">
 <table>
@@ -187,7 +191,7 @@
 </tbody></table>
 </div>
 <p><strong>反例前置</strong>：句子 <code>The system can ___ failures.</code> 中，若选项有 <code>detection</code>（名词）和 <code>detect</code>（动词），即使两个都认识，也只能选 <code>detect</code>。情态动词 <code>can</code> 后必须接动词原形。</p>
-<h3 id="h-10">1.3 第三步：检查固定搭配</h3>
+<h3 id="h-10">1.3 第三步：检查固定搭配<button type="button" class="sec-status" data-status-key="1.3 第三步：检查固定搭配" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 第三步：检查固定搭配」的学习状态"></button></h3>
 <p>专业英语里很多答案不是“意思勉强通顺”就行，而是搭配固定：</p>
 <div class="table-wrap">
 <table>
@@ -256,7 +260,7 @@
 </tbody></table>
 </div>
 <p><strong>反例</strong>：<code>The failure results ___ data loss.</code> 应填 <code>in</code>，因为后面是结果；<code>Data loss results ___ the failure.</code> 才填 <code>from</code>，因为后面是原因。口诀：<strong>result in 去结果，result from 找来源</strong>。</p>
-<h3 id="h-11">1.4 第四步：寻找逻辑信号</h3>
+<h3 id="h-11">1.4 第四步：寻找逻辑信号<button type="button" class="sec-status" data-status-key="1.4 第四步：寻找逻辑信号" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 第四步：寻找逻辑信号」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -304,7 +308,7 @@
 </tbody></table>
 </div>
 <p>例：<code>The algorithm is accurate; however, it is computationally ___.</code> <code>however</code> 表示转折，前面夸“准确”，后面通常指出缺点，故应考虑 <code>expensive</code>（计算开销大），而不是 <code>efficient</code>。</p>
-<h3 id="h-12">1.5 第五步：代回全文，做三项检查</h3>
+<h3 id="h-12">1.5 第五步：代回全文，做三项检查<button type="button" class="sec-status" data-status-key="1.5 第五步：代回全文，做三项检查" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 第五步：代回全文，做三项检查」的学习状态"></button></h3>
 <p>每空选完后，不要立刻交卷。把答案代回去检查：</p>
 <ol>
 <li>语法是否完整；</li>
@@ -314,8 +318,8 @@
 <p>如果两个词都通顺，优先选能与上下文形成<strong>复现或照应</strong>的词。例如前文说 <code>users report problems quickly</code>，后文出现 <code>shortens the feedback ___</code>，通常选 <code>cycle</code>，因为快速报告问题会缩短反馈周期。</p>
 <p><strong>应试动作</strong>：记住五步口诀：<strong>扫主题—判词性—看搭配—找逻辑—代回读</strong>。一个空超过 60 秒先标记跳过，后面的句子常会反过来提示前面的空。</p>
 <hr>
-<h2 id="h-13">第二节 软件工程高频词 <span class="stars">★★★</span></h2>
-<h3 id="h-14">2.1 开发过程与需求</h3>
+<h2 id="h-13">第二节 软件工程高频词 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 软件工程高频词 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 软件工程高频词 ★★★」的学习状态"></button></h2>
+<h3 id="h-14">2.1 开发过程与需求<button type="button" class="sec-status" data-status-key="2.1 开发过程与需求" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 开发过程与需求」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -394,7 +398,7 @@
 <li>The spiral model emphasizes <strong>risk analysis</strong>. 螺旋模型强调风险分析。</li>
 <li>Agile development welcomes changing requirements and delivers software in short <strong>iterations</strong>. 敏捷开发接纳需求变化，以短迭代交付。</li>
 </ul>
-<h3 id="h-15">2.2 设计与质量</h3>
+<h3 id="h-15">2.2 设计与质量<button type="button" class="sec-status" data-status-key="2.2 设计与质量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 设计与质量」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -458,7 +462,7 @@
 </div>
 <p>高频结论：Good design aims for <strong>high cohesion and low coupling</strong>（高内聚、低耦合）。</p>
 <p><strong>易错反例</strong>：<code>availability</code> 在系统质量中不是普通的“有没有货”，而是“系统需要时可用的概率/能力”；<code>reliability</code> 强调一段时间内无故障运行。系统可能很可靠但修复极慢，长期可用性仍受影响。</p>
-<h3 id="h-16">2.3 测试与维护</h3>
+<h3 id="h-16">2.3 测试与维护<button type="button" class="sec-status" data-status-key="2.3 测试与维护" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 测试与维护」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -528,8 +532,8 @@
 <p><strong>反例</strong>：testing 和 debugging 不是同义词。Testing 的目标是<strong>发现缺陷</strong>，debugging 的目标是<strong>定位原因并修复缺陷</strong>。</p>
 <p><strong>应试动作</strong>：软件工程词先背三组：<code>requirement–stakeholder–traceability</code>；<code>cohesion–coupling–maintainability</code>；<code>verification–validation–regression testing</code>。看到英文定义时先回忆对应中文考点，再选词。</p>
 <hr>
-<h2 id="h-17">第三节 面向对象、设计模式与程序语言词汇 <span class="stars">★★</span></h2>
-<h3 id="h-18">3.1 面向对象</h3>
+<h2 id="h-17">第三节 面向对象、设计模式与程序语言词汇 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 面向对象、设计模式与程序语言词汇 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 面向对象、设计模式与程序语言词汇 ★★」的学习状态"></button></h2>
+<h3 id="h-18">3.1 面向对象<button type="button" class="sec-status" data-status-key="3.1 面向对象" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 面向对象」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -582,7 +586,7 @@
 </tbody></table>
 </div>
 <p><code>object</code> 和 <code>instance</code> 在许多上下文中都可表示“对象/实例”，但 <code>class</code> 是蓝图，instance 是按蓝图创建的具体对象。</p>
-<h3 id="h-19">3.2 高频设计模式英文</h3>
+<h3 id="h-19">3.2 高频设计模式英文<button type="button" class="sec-status" data-status-key="3.2 高频设计模式英文" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 高频设计模式英文」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -634,7 +638,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-20">3.3 编译与算法</h3>
+<h3 id="h-20">3.3 编译与算法<button type="button" class="sec-status" data-status-key="3.3 编译与算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 编译与算法」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -695,8 +699,8 @@
 </div>
 <p><strong>应试动作</strong>：模式名不只背中文。看到 <code>notified automatically</code> 想 Observer；<code>interchangeable algorithms</code> 想 Strategy；<code>convert an interface</code> 想 Adapter；<code>only one instance</code> 想 Singleton。</p>
 <hr>
-<h2 id="h-21">第四节 数据库、操作系统与网络词汇 <span class="stars">★★★</span></h2>
-<h3 id="h-22">4.1 数据库</h3>
+<h2 id="h-21">第四节 数据库、操作系统与网络词汇 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第四节 数据库、操作系统与网络词汇 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 数据库、操作系统与网络词汇 ★★★」的学习状态"></button></h2>
+<h3 id="h-22">4.1 数据库<button type="button" class="sec-status" data-status-key="4.1 数据库" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 数据库」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -780,7 +784,7 @@
 <li><code>committed data survives a crash</code> → durability；</li>
 <li><code>constraints remain satisfied</code> → consistency。</li>
 </ul>
-<h3 id="h-23">4.2 操作系统</h3>
+<h3 id="h-23">4.2 操作系统<button type="button" class="sec-status" data-status-key="4.2 操作系统" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 操作系统」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -840,7 +844,7 @@
 </tbody></table>
 </div>
 <p><code>process</code> 在操作系统中是“进程”，但作普通动词是“处理”。要用句子位置判断：<code>a running process</code> 是名词；<code>the server processes requests</code> 是动词。</p>
-<h3 id="h-24">4.3 网络</h3>
+<h3 id="h-24">4.3 网络<button type="button" class="sec-status" data-status-key="4.3 网络" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 网络」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -910,8 +914,8 @@
 <p><strong>易错反例</strong>：bandwidth 和 throughput 不等价。Bandwidth 像公路理论车道容量，throughput 是实际每秒通过多少车；latency 是一辆车从起点到终点花多久。</p>
 <p><strong>应试动作</strong>：数据库重点背 ACID 的英文定义；操作系统重点背 process/thread、deadlock、page fault；网络重点背 bandwidth/throughput/latency 三分法。</p>
 <hr>
-<h2 id="h-25">第五节 信息安全、云计算与 AI 词汇 <span class="stars">★★★</span></h2>
-<h3 id="h-26">5.1 信息安全</h3>
+<h2 id="h-25">第五节 信息安全、云计算与 AI 词汇 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 信息安全、云计算与 AI 词汇 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 信息安全、云计算与 AI 词汇 ★★★」的学习状态"></button></h2>
+<h3 id="h-26">5.1 信息安全<button type="button" class="sec-status" data-status-key="5.1 信息安全" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 信息安全」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -989,7 +993,7 @@
 </tbody></table>
 </div>
 <p><strong>反例</strong>：authentication 回答“你是谁”，authorization 回答“你能做什么”。已经登录成功只说明通过认证，不代表有权访问所有资源。</p>
-<h3 id="h-27">5.2 云计算</h3>
+<h3 id="h-27">5.2 云计算<button type="button" class="sec-status" data-status-key="5.2 云计算" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 云计算」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1046,7 +1050,7 @@
 <li>PaaS：提供运行平台，用户重点管应用和数据；</li>
 <li>SaaS：直接使用应用，提供商管理最多。</li>
 </ul>
-<h3 id="h-28">5.3 AI 与机器学习</h3>
+<h3 id="h-28">5.3 AI 与机器学习<button type="button" class="sec-status" data-status-key="5.3 AI 与机器学习" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 AI 与机器学习」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1116,7 +1120,7 @@
 <p>必背句：A model that performs well on training data but poorly on unseen data is <strong>overfitting</strong>（训练集好、陌生数据差，就是过拟合）。</p>
 <p><strong>应试动作</strong>：安全题先分“身份 authentication / 权限 authorization / 保密 confidentiality / 防篡改 integrity”；云题抓 <code>on-demand, elasticity, service</code>；AI 题抓 <code>training, prediction, unseen data, overfitting</code>。</p>
 <hr>
-<h2 id="h-29">第六节 20 个“熟词生义”和易混词 <span class="stars">★★★</span></h2>
+<h2 id="h-29">第六节 20 个“熟词生义”和易混词 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 20 个“熟词生义”和易混词 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 20 个“熟词生义”和易混词 ★★★」的学习状态"></button></h2>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1237,7 +1241,7 @@
 </ul>
 <p><strong>应试动作</strong>：不背孤立中文，要把词放回 IT 搭配中背，例如 <code>execute an instruction</code>、<code>software library</code>、<code>address a security issue</code>、<code>database record</code>。</p>
 <hr>
-<h2 id="h-30">第七节 构词法：不认识也能猜 <span class="stars">★★</span></h2>
+<h2 id="h-30">第七节 构词法：不认识也能猜 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 构词法：不认识也能猜 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 构词法：不认识也能猜 ★★」的学习状态"></button></h2>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1308,7 +1312,7 @@
 <p><strong>反例</strong>：构词法只能帮助猜范围，不能压过上下文。<code>decomposition</code> 中 <code>de-</code> 不是简单“不”，整体是“分解”；最终仍要代回句子验证。</p>
 <p><strong>应试动作</strong>：长词先拆前缀、词根、后缀，再结合主题判断。看到 <code>-tion/-ment/-ity</code> 先按名词处理，看到 <code>-able</code> 先按形容词处理。</p>
 <hr>
-<h2 id="h-31">第八节 长句拆解：只抓主干，不被修饰成分拖走 <span class="stars">★★</span></h2>
+<h2 id="h-31">第八节 长句拆解：只抓主干，不被修饰成分拖走 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第八节 长句拆解：只抓主干，不被修饰成分拖走 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 长句拆解：只抓主干，不被修饰成分拖走 ★★」的学习状态"></button></h2>
 <p>专业短文常把条件、定语从句塞进一句话里。拆句只做三件事：找主语 S、谓语 V、宾语/表语 O/C。</p>
 <p>例句：</p>
 <blockquote>
@@ -1332,7 +1336,7 @@
 <p><strong>反例</strong>：不要遇到 <code>that</code> 就翻成“那个”。在 <code>the data that the client sends</code> 中，that 只连接定语从句，整体是“客户端发送的数据”。</p>
 <p><strong>应试动作</strong>：长句先圈谓语动词，再找谁做这个动作。括号、逗号之间的插入说明可以暂时划掉，先读主干，再逐层加回。</p>
 <hr>
-<h2 id="h-32">第九节 考前速记：必须能秒认的 30 个词 <span class="stars">★★★</span></h2>
+<h2 id="h-32">第九节 考前速记：必须能秒认的 30 个词 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第九节 考前速记：必须能秒认的 30 个词 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 考前速记：必须能秒认的 30 个词 ★★★」的学习状态"></button></h2>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1437,33 +1441,33 @@
 </div>
 <p>考场口诀再念一遍：<strong>扫主题—判词性—看搭配—找逻辑—代回读</strong>。</p>
 <hr>
-<h2 id="h-33">第三部分 课后考题</h2>
+<h2 id="h-33">第三部分 课后考题<button type="button" class="sec-status" data-status-key="第三部分 课后考题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三部分 课后考题」的学习状态"></button></h2>
 <blockquote>
 <p>三篇短文各 5 空，共 15 题。先按正式考试方式连续做完，再看答案。</p>
 </blockquote>
-<h3 id="h-34">Passage 1：Requirements Engineering（第 1–5 题）</h3>
+<h3 id="h-34">Passage 1：Requirements Engineering（第 1–5 题）<button type="button" class="sec-status" data-status-key="Passage 1：Requirements Engineering（第 1–5 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 1：Requirements Engineering（第 1–5 题）」的学习状态"></button></h3>
 <p>Requirements engineering is the process of discovering, documenting, and maintaining what a software system should do. A well-written requirement should be clear, consistent, and <strong>(1)</strong>, so that testers can determine whether the implemented system satisfies it. During elicitation, analysts communicate with stakeholders to <strong>(2)</strong> their real needs rather than merely recording an initial solution. Because business conditions may change, approved requirements should be placed under configuration <strong>(3)</strong>. A traceability matrix links each requirement to design elements and test cases, making the impact of a proposed change easier to <strong>(4)</strong>. When a prototype is built, its main purpose is often to reduce uncertainty and obtain early <strong>(5)</strong> from users.</p>
 <p><strong>1.</strong> A. testable　B. invisible　C. temporary　D. accidental<br><strong>2.</strong> A. delete　B. identify　C. encrypt　D. compile<br><strong>3.</strong> A. management　B. transmission　C. arithmetic　D. recursion<br><strong>4.</strong> A. postpone　B. assess　C. hide　D. randomize<br><strong>5.</strong> A. bandwidth　B. feedback　C. ciphertext　D. deadlock</p>
-<h3 id="h-35">Passage 2：Transactions and Data Protection（第 6–10 题）</h3>
+<h3 id="h-35">Passage 2：Transactions and Data Protection（第 6–10 题）<button type="button" class="sec-status" data-status-key="Passage 2：Transactions and Data Protection（第 6–10 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 2：Transactions and Data Protection（第 6–10 题）」的学习状态"></button></h3>
 <p>A database transaction groups several operations into a single logical unit of work. Atomicity ensures that either all operations take effect or none <strong>(6)</strong>. Isolation prevents concurrently executing transactions from observing inappropriate <strong>(7)</strong> states. Durability means that committed changes survive system <strong>(8)</strong>. When sensitive records travel across an untrusted network, encryption transforms plaintext into <strong>(9)</strong> so that unauthorized parties cannot understand it. A cryptographic hash serves a different purpose: its digest can help detect unauthorized <strong>(10)</strong> of the data, but it does not by itself keep the data secret.</p>
 <p><strong>6.</strong> A. do　B. are　C. have　D. make<br><strong>7.</strong> A. intermediate　B. permanent　C. public　D. graphical<br><strong>8.</strong> A. failures　B. queries　C. indexes　D. schemas<br><strong>9.</strong> A. metadata　B. ciphertext　C. bandwidth　D. source code<br><strong>10.</strong> A. compression　B. allocation　C. modification　D. scheduling</p>
-<h3 id="h-36">Passage 3：Cloud Computing and Machine Learning（第 11–15 题）</h3>
+<h3 id="h-36">Passage 3：Cloud Computing and Machine Learning（第 11–15 题）<button type="button" class="sec-status" data-status-key="Passage 3：Cloud Computing and Machine Learning（第 11–15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 3：Cloud Computing and Machine Learning（第 11–15 题）」的学习状态"></button></h3>
 <p>Cloud computing provides shared computing resources over a network on demand. Elasticity allows capacity to scale up or down as the workload <strong>(11)</strong>. In an Infrastructure as a Service model, the customer manages operating systems and applications, while the provider manages the physical infrastructure. In Software as a Service, complete applications are delivered to users over the <strong>(12)</strong>, and the provider manages most of the technology stack. Machine learning takes a different but increasingly related role: a model learns patterns from examples instead of being explicitly <strong>(13)</strong> for every possible case. To estimate how well it will handle unseen examples, data is commonly divided into training and test <strong>(14)</strong>. A model that memorizes noise in its training data but performs poorly on new data is said to be <strong>(15)</strong>.</p>
 <p><strong>11.</strong> A. changes　B. decrypts　C. inherits　D. commits<br><strong>12.</strong> A. compiler　B. Internet　C. register　D. semaphore<br><strong>13.</strong> A. programmed　B. routed　C. normalized　D. signed<br><strong>14.</strong> A. locks　B. keys　C. sets　D. frames<br><strong>15.</strong> A. portable　B. overfitted　C. atomic　D. serialized</p>
-<h3 id="h-37">综合阅读题（不属于下午固定案例，用于训练长文理解）</h3>
+<h3 id="h-37">综合阅读题（不属于下午固定案例，用于训练长文理解）<button type="button" class="sec-status" data-status-key="综合阅读题（不属于下午固定案例，用于训练长文理解）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合阅读题（不属于下午固定案例，用于训练长文理解）」的学习状态"></button></h3>
 <p>Read the incident report and answer the questions in Chinese.</p>
 <blockquote>
 <p>After a new version of an online ordering service was deployed, its response time increased sharply during peak hours. Monitoring data showed that CPU utilization remained moderate, but database latency rose as the number of requests increased. Engineers found that a frequently executed query scanned the entire Orders table because a useful index had been removed during migration. They restored the index and added the query to the regression test suite. Performance returned to normal. The team also updated its deployment checklist so that future schema changes would be reviewed before release.</p>
 </blockquote>
 <p><strong>16.</strong> <code>deployed</code> 在文中的含义是什么？<br><strong>17.</strong> 哪项监控证据说明 CPU 不是主要瓶颈？<br><strong>18.</strong> 响应变慢的直接技术原因是什么？<br><strong>19.</strong> <code>regression test suite</code> 的作用是什么？<br><strong>20.</strong> 更新部署检查清单属于“只修复当前问题”，还是还包含预防未来问题？请给出文本依据。</p>
 <hr>
-<h2 id="h-38">第四部分 精华题</h2>
+<h2 id="h-38">第四部分 精华题<button type="button" class="sec-status" data-status-key="第四部分 精华题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四部分 精华题」的学习状态"></button></h2>
 <blockquote>
 <p>限时 5 分钟完成。正式考试就是这种连续 5 空的形态。</p>
 </blockquote>
 <p>Continuous integration (CI) is a development practice in which programmers merge code changes into a shared repository <strong>(1)</strong>. Each change triggers an automated build and a set of tests. If a test fails, the team receives rapid <strong>(2)</strong> and can correct the problem while the change is still small. CI does not guarantee that software is defect-free; instead, it makes integration problems easier to <strong>(3)</strong> and locate. For CI to be effective, the build process should be repeatable and the test suite should run <strong>(4)</strong> without requiring manual steps. By finding defects early, a team reduces the risk that they will become more <strong>(5)</strong> to fix later.</p>
 <p><strong>1.</strong> A. rarely　B. frequently　C. secretly　D. accidentally<br><strong>2.</strong> A. feedback　B. inheritance　C. encryption　D. storage<br><strong>3.</strong> A. detect　B. manufacture　C. postpone　D. authorize<br><strong>4.</strong> A. manually　B. automatically　C. visually　D. separately<br><strong>5.</strong> A. expensive　B. portable　C. atomic　D. available</p>
-<h3 id="h-39">高频独立辨析题</h3>
+<h3 id="h-39">高频独立辨析题<button type="button" class="sec-status" data-status-key="高频独立辨析题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「高频独立辨析题」的学习状态"></button></h3>
 <p><strong>6.</strong> Authentication determines <strong>who a user is</strong>, while authorization determines（ ）。</p>
 <p>A. how data is compressed<br>B. what the user is allowed to do<br>C. when a process is scheduled<br>D. where a packet is routed</p>
 <p><strong>7.</strong> The phrase “high cohesion and low coupling” most directly describes（ ）。</p>
@@ -1477,7 +1481,7 @@
   </summary>
   <div class="answers-body">
 
-<h3 id="h-41">Passage 1 答案与解析</h3>
+<h3 id="h-41">Passage 1 答案与解析<button type="button" class="sec-status" data-status-key="Passage 1 答案与解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 1 答案与解析」的学习状态"></button></h3>
 <p><strong>1. A — testable（可测试的）</strong></p>
 <p>句子结构是 <code>clear, consistent, and ___</code>，空格与两个形容词并列，也应填形容词。后面的 <code>so that testers can determine whether...</code> 直接解释：需求要能让测试人员判断是否满足，所以是 testable。B invisible（不可见的）、C temporary（临时的）、D accidental（偶然的）都与高质量需求相反或无关。</p>
 <p><strong>2. B — identify（识别、确定）</strong></p>
@@ -1489,7 +1493,7 @@
 <p><strong>5. B — feedback（反馈）</strong></p>
 <p>原型的常见目的，是尽早让用户看到并反馈，从而降低需求不确定性。<code>obtain feedback from users</code> 是固定而自然的搭配。bandwidth、ciphertext、deadlock 分属网络、安全和操作系统语境。</p>
 <p>全文意译：需求工程负责发现、记录和维护系统应做什么。好需求应清晰、一致且可测试。分析人员通过沟通识别真实需求；已批准需求纳入配置管理。可追踪矩阵帮助评估变更影响，原型帮助尽早获得用户反馈。</p>
-<h3 id="h-42">Passage 2 答案与解析</h3>
+<h3 id="h-42">Passage 2 答案与解析<button type="button" class="sec-status" data-status-key="Passage 2 答案与解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 2 答案与解析」的学习状态"></button></h3>
 <p><strong>6. A — do</strong></p>
 <p><code>either all operations take effect or none do</code> 中，do 代替前面重复的 <code>take effect</code>。若写 <code>none are/have/make</code>，句子缺少合适的补足成分或搭配不成立。专业含义是原子性“要么全做，要么全不做”。</p>
 <p><strong>7. A — intermediate（中间的）</strong></p>
@@ -1501,7 +1505,7 @@
 <p><strong>10. C — modification（修改、篡改）</strong></p>
 <p>Hash 摘要用于检测数据是否被修改，对应完整性；后一句又明确说它本身不能保密。compression、allocation、scheduling 分别是压缩、分配、调度。</p>
 <p>全文意译：事务把多个操作组合成一个逻辑工作单元。原子性保证全做或全不做；隔离性避免事务看到不合适的中间状态；持久性保证提交结果能经受系统故障。加密把明文变密文以保密，Hash 摘要用来检测篡改，两者目的不同。</p>
-<h3 id="h-43">Passage 3 答案与解析</h3>
+<h3 id="h-43">Passage 3 答案与解析<button type="button" class="sec-status" data-status-key="Passage 3 答案与解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 3 答案与解析」的学习状态"></button></h3>
 <p><strong>11. A — changes（变化）</strong></p>
 <p>弹性是随工作负载变化而扩缩容量，<code>as the workload changes</code> 语法、语义都成立。其余选项虽是 IT 动词，但 workload 不会“解密、继承或提交”。这是典型的“专业词看似都认识，主谓搭配决定答案”。</p>
 <p><strong>12. B — Internet</strong></p>
@@ -1513,13 +1517,13 @@
 <p><strong>15. B — overfitted（过拟合的）</strong></p>
 <p>题干定义“记住训练数据噪声，但在新数据上表现差”，正是 overfitting。portable 是可移植，atomic 是原子的，serialized 是串行化的。</p>
 <p>全文意译：云计算按需提供共享资源，弹性允许容量随负载变化。IaaS 中客户管理操作系统和应用，SaaS 中提供商管理大部分技术栈。机器学习从样例中学习；训练集用于学习，测试集用于评估未知数据表现。记住噪声而无法泛化就是过拟合。</p>
-<h3 id="h-44">综合阅读题答案</h3>
+<h3 id="h-44">综合阅读题答案<button type="button" class="sec-status" data-status-key="综合阅读题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合阅读题答案」的学习状态"></button></h3>
 <p><strong>16.</strong> <code>deployed</code> 在这里是“<strong>部署、上线</strong>”，即把新版本放到实际运行环境中，不是普通的“展开”。</p>
 <p><strong>17.</strong> 证据是 <code>CPU utilization remained moderate</code>，即 CPU 利用率仍处于中等水平，没有接近饱和。</p>
 <p><strong>18.</strong> 一个高频查询因为迁移时删除了有用索引，只能<strong>全表扫描 Orders 表</strong>；请求增多时数据库时延随之上升。</p>
 <p><strong>19.</strong> 把该查询加入回归测试套件，是为了在以后修改后重新检查这个已修复场景，防止同类性能退化再次出现。Regression testing 的核心是确认变更没有破坏已有正确功能或重新引入旧缺陷。</p>
 <p><strong>20.</strong> 还包含预防未来问题。文本依据是团队更新部署检查清单，要求 <code>future schema changes would be reviewed before release</code>，即今后的数据库模式变更要在发布前审查。这不是只恢复当前索引，而是建立预防措施。</p>
-<h3 id="h-45">精华题答案与解析</h3>
+<h3 id="h-45">精华题答案与解析<button type="button" class="sec-status" data-status-key="精华题答案与解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案与解析」的学习状态"></button></h3>
 <p><strong>1. B — frequently</strong></p>
 <p>持续集成要求开发者<strong>频繁</strong>把小改动合入共享仓库。rarely 与 continuous 的思想相反；secretly、accidentally 不符合工程实践。</p>
 <p><strong>2. A — feedback</strong></p>
@@ -1540,6 +1544,23 @@
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成第 12 课《数学与多媒体》并更新进度表。</p>
 
+  <footer class="status-bar" data-status-page="11-专业英语">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="10-标准化与知识产权.html">
       <span class="k">上一课</span>

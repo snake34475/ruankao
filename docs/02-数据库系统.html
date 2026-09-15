@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html" class="is-current" aria-current="page"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -84,8 +88,8 @@
 <p><strong class="k">分值地位</strong>：选择题约 5–6 题（稳定第二大块）+ 案例题「数据库设计」一道大题（补 E-R 图/写 SQL，约 15 分）。与数据结构并列第一梯队，范式判定和 SQL 是选择题 + 案例题双考点。</p>
 <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 画出三级模式两级映像并判断&quot;独立性&quot;考题；② 给业务场景画 E-R 图、判断联系类型、转成关系模式；③ 手算候选键、判定 1NF–BCNF 并做分解；④ 独立写建表/查询/视图 SQL；⑤ 说清 ACID、三类并发错误、两段锁协议和 REDO/UNDO。</p>
 </blockquote>
-<h2 id="h-2">第一节 三级模式与两级映像 <span class="stars">★</span></h2>
-<h3 id="h-3">为什么需要&quot;三级模式&quot;</h3>
+<h2 id="h-2">第一节 三级模式与两级映像 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第一节 三级模式与两级映像 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 三级模式与两级映像 ★」的学习状态"></button></h2>
+<h3 id="h-3">为什么需要&quot;三级模式&quot;<button type="button" class="sec-status" data-status-key="为什么需要&amp;quot;三级模式&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要&quot;三级模式&quot;」的学习状态"></button></h3>
 <p>数据库是被很多应用程序<strong>共享</strong>的：财务程序、人事程序、报表工具都要读同一批数据，但它们各只关心自己那一块，而且谁都不希望&quot;存储结构一改、我的程序就得重写&quot;。为此数据库把数据组织分成三个视角、配上两层&quot;翻译层&quot;，把<strong>变化隔离</strong>在各自层内——这就是考&quot;独立性&quot;的全部动机。</p>
 <div class="table-wrap">
 <table>
@@ -144,14 +148,14 @@
 </div>
 <p><strong>反例演示（易错）</strong>：题目说&quot;数据存储结构改变，模式不变&quot;——变化发生在内模式层，靠<strong>模式/内模式映像</strong>挡住 → <strong>物理独立性</strong>；说&quot;表新增了字段，应用程序不变&quot;——变化发生在模式层，靠<strong>外模式/模式映像</strong>挡住 → <strong>逻辑独立性</strong>。判断口诀：<strong>变化发生在哪一层，挡住它的映像就连着哪一层；看应用程序&quot;感知不到什么&quot;来选词</strong>。别把&quot;逻辑独立性 = 跟逻辑有关所以是内模式&quot;想反了——逻辑独立性恰恰是指<strong>逻辑结构变化也影响不到应用</strong>。</p>
 <p><strong>应试动作</strong>：背&quot;外模式/模式映像 ↔ 逻辑独立性，模式/内模式映像 ↔ 物理独立性&quot;这一组对应，考试只考配对，认出题干描述的变化发生在哪层即可。</p>
-<h2 id="h-4">第二节 E-R 模型 <span class="stars">★★★</span>（案例题必考）</h2>
-<h3 id="h-5">实体、属性、联系</h3>
+<h2 id="h-4">第二节 E-R 模型 <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第二节 E-R 模型 ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 E-R 模型 ★★★（案例题必考）」的学习状态"></button></h2>
+<h3 id="h-5">实体、属性、联系<button type="button" class="sec-status" data-status-key="实体、属性、联系" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「实体、属性、联系」的学习状态"></button></h3>
 <ul>
 <li><strong>实体</strong>：客观存在可区分的事物（一个学生、一门课），矩形框。</li>
 <li><strong>属性</strong>：实体或联系的性质（学号、姓名），椭圆；能唯一标识实体的属性叫<strong>码</strong>。</li>
 <li><strong>联系</strong>：实体之间的关系，菱形（如学生&quot;选修&quot;课程）。</li>
 </ul>
-<h3 id="h-6">联系类型：1:1、1:n、m:n（必须会判）</h3>
+<h3 id="h-6">联系类型：1:1、1:n、m:n（必须会判）<button type="button" class="sec-status" data-status-key="联系类型：1:1、1:n、m:n（必须会判）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「联系类型：1:1、1:n、m:n（必须会判）」的学习状态"></button></h3>
 <p>拿具体业务判断&quot;一个 A 对应几个 B&quot;：</p>
 <ul>
 <li><strong>1:1</strong>：一个部门只有一个经理，一个经理只管一个部门。</li>
@@ -159,7 +163,7 @@
 <li><strong>m:n</strong>：一个学生选多门课，一门课被多个学生选 → 学生:课程 = m:n。</li>
 </ul>
 <p><strong>判断反例（易错）</strong>：别看到&quot;多个&quot;就判 m:n——<strong>只有两边都能是&quot;多个&quot;才是 m:n</strong>。&quot;一个班有多名学生&quot;但&quot;一名学生只属一个班&quot;是 1:n，不是 m:n。</p>
-<h3 id="h-7">E-R 图转关系模式（案例题必考步骤）</h3>
+<h3 id="h-7">E-R 图转关系模式（案例题必考步骤）<button type="button" class="sec-status" data-status-key="E-R 图转关系模式（案例题必考步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「E-R 图转关系模式（案例题必考步骤）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -183,15 +187,15 @@
 </tbody></table>
 </div>
 <p><strong>反例演示（易错）</strong>：学生-课程是 m:n，若把&quot;选课&quot;并入学生表（学生表加课程号、成绩列），一个学生选多门课就要占多行，学号、姓名重复存储，而且学号不再能作主键——错。<strong>口诀：多对多，单独坐一桌</strong>。</p>
-<h3 id="h-8">E-R 集成时的三类冲突（选择题考过）</h3>
+<h3 id="h-8">E-R 集成时的三类冲突（选择题考过）<button type="button" class="sec-status" data-status-key="E-R 集成时的三类冲突（选择题考过）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「E-R 集成时的三类冲突（选择题考过）」的学习状态"></button></h3>
 <p>多个分 E-R 图合并时会撞车：<strong>属性冲突</strong>（同一属性类型/单位不一致）、<strong>命名冲突</strong>（同名异义、异名同义）、<strong>结构冲突</strong>（同一对象在此图是实体、在彼图是属性）。<strong>没有&quot;实体冲突&quot;这种说法</strong>——选项里出现即排除。</p>
-<h2 id="h-9">第三节 关系代数 <span class="stars">★★</span></h2>
+<h2 id="h-9">第三节 关系代数 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 关系代数 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 关系代数 ★★」的学习状态"></button></h2>
 <p>关系代数就是&quot;对表做运算&quot;。考三种：</p>
-<h3 id="h-10">选择 σ：挑行</h3>
+<h3 id="h-10">选择 σ：挑行<button type="button" class="sec-status" data-status-key="选择 σ：挑行" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择 σ：挑行」的学习状态"></button></h3>
 <p>σ(系别=&#39;计算机&#39;)(学生) = 从学生表里<strong>抽出满足条件的行</strong>（水平方向切）。</p>
-<h3 id="h-11">投影 π：挑列</h3>
+<h3 id="h-11">投影 π：挑列<button type="button" class="sec-status" data-status-key="投影 π：挑列" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「投影 π：挑列」的学习状态"></button></h3>
 <p>π(姓名,系别)(学生) = 只保留指定<strong>列</strong>（垂直方向切）。<strong>注意：投影会自动去掉重复行</strong>（只剩两列后原本不同的行可能变得相同）。</p>
-<h3 id="h-12">连接 ⋈：两张表拼起来</h3>
+<h3 id="h-12">连接 ⋈：两张表拼起来<button type="button" class="sec-status" data-status-key="连接 ⋈：两张表拼起来" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「连接 ⋈：两张表拼起来」的学习状态"></button></h3>
 <ul>
 <li><strong>θ 连接</strong>：按&quot;某列 vs 某列&quot;的比较条件拼接。</li>
 <li><strong>自然连接</strong>：按<strong>所有同名属性</strong>相等来拼接，<strong>结果去掉重复列</strong>。</li>
@@ -204,17 +208,17 @@
 </ul>
 <p><strong>反例演示（易错）</strong>：自然连接 ≠ 笛卡尔积再挑同名相等的行之后还保留两份 C 列——重复列必须<strong>去掉一份</strong>；选项里列数算成 s+u 的是陷阱。另外投影和选择的别记反：<strong>选择管行（横向内容）、投影管列（纵向结构）</strong>，σ 的 σ 像&quot;筛子&quot;筛行，π 的两条竖线像切列的刀。</p>
 <p><strong>应试动作</strong>：背&quot;σ 行、π 列、⋈ 拼表去重列&quot;；行数列数计算用上面公式代数字。</p>
-<h2 id="h-13">第四节 关系规范化 <span class="stars">★★★</span>（选择题 + 案例题双考）</h2>
-<h3 id="h-14">为什么要规范化</h3>
+<h2 id="h-13">第四节 关系规范化 <span class="stars">★★★</span>（选择题 + 案例题双考）<button type="button" class="sec-status" data-status-key="第四节 关系规范化 ★★★（选择题 + 案例题双考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 关系规范化 ★★★（选择题 + 案例题双考）」的学习状态"></button></h2>
+<h3 id="h-14">为什么要规范化<button type="button" class="sec-status" data-status-key="为什么要规范化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要规范化」的学习状态"></button></h3>
 <p>一张大表什么都往里塞，会出现三种病：<strong>数据冗余</strong>（系主任跟着每个学生重复存）、<strong>修改麻烦</strong>（换主任要改几百行）、<strong>插入/删除异常</strong>（还没招生的系插不进来、最后一个学生毕业系主任信息也跟着没了）。规范化的目的就是<strong>拆表</strong>，把这些病一步步消掉。</p>
-<h3 id="h-15">函数依赖（判断范式的唯一工具）</h3>
+<h3 id="h-15">函数依赖（判断范式的唯一工具）<button type="button" class="sec-status" data-status-key="函数依赖（判断范式的唯一工具）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「函数依赖（判断范式的唯一工具）」的学习状态"></button></h3>
 <p>X→Y 读作&quot;X 决定 Y&quot;：知道 X 就能唯一确定 Y。三种关键形态（设 K 是候选键）：</p>
 <ul>
 <li><strong>完全依赖</strong>：Y 依赖整个 K，去掉 K 中任何一个属性都不行。例：(学号, 课程号)→成绩。</li>
 <li><strong>部分依赖</strong>：Y 依赖 K 的<strong>一部分</strong>就够了。例：(学号, 课程号)→姓名，其实学号→姓名——<strong>部分依赖是病</strong>。</li>
 <li><strong>传递依赖</strong>：X→Y、Y→Z 且 Y 不决定 X，则 Z 传递依赖 X。例：学号→系名→系主任——<strong>传递依赖是病</strong>。</li>
 </ul>
-<h3 id="h-16">范式判定：一级一级&quot;消病&quot;</h3>
+<h3 id="h-16">范式判定：一级一级&quot;消病&quot;<button type="button" class="sec-status" data-status-key="范式判定：一级一级&amp;quot;消病&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「范式判定：一级一级&quot;消病&quot;」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -254,12 +258,12 @@
 <li>再看有没有<strong>非主属性靠别的非主属性中转</strong> → 有则最高 2NF；都没有 → 3NF；若还有主属性被非主属性决定 → 不到 BCNF。</li>
 </ol>
 <p><strong>反例演示（易错）</strong>：R(学号, 姓名, 系, 系主任)，学号→姓名、学号→系、系→系主任。候选键是学号（单属性），<strong>不可能有部分依赖</strong>（键只有一个属性，&quot;一部分&quot;还是它自己），所以它<strong>直接就是 2NF</strong>；但学号→系→系主任是传递依赖，所以<strong>最高 2NF，不是 3NF</strong>。最常见的错误就是把&quot;有冗余&quot;当成&quot;不是 2NF&quot;——单属性键的表不存在部分依赖，第一步就能跳过。</p>
-<h3 id="h-17">候选键怎么求（案例题必考）</h3>
+<h3 id="h-17">候选键怎么求（案例题必考）<button type="button" class="sec-status" data-status-key="候选键怎么求（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「候选键怎么求（案例题必考）」的学习状态"></button></h3>
 <p><strong>口诀：只在依赖集右部出现过的属性，必在候选键里</strong>（它不被任何人决定，只能靠自己去决定别人）。从这些属性出发，看能否推出全部属性，不够就再拼上别的属性。</p>
 <p>例：R(A,B,C,D)，F = {A→B, B→C, D→B}。右部出现过的：B、C。从未出现在右部的：<strong>A、D</strong>。验证 AD：A→B，B→C，D→B → 可推出 A、B、C、D 全部 → <strong>候选键 = AD</strong>（ABD 虽也能决定全部，但含多余属性，是超键不是候选键）。</p>
 <p><strong>分解保持性</strong>：拆表后要求&quot;无损连接&quot;（能自然连接回原表，不丢信息也不多出假行）；3NF 分解还能保持函数依赖。案例题小问爱考&quot;分解后最高达到几范式&quot;。</p>
 <p><strong>应试动作</strong>：背四步判定法 + &quot;右部不出现的属性进候选键&quot;；考&quot;最高属于第几范式&quot;时<strong>从低往高验</strong>，卡在哪级就答前一级。</p>
-<h2 id="h-18">第五节 SQL <span class="stars">★★★</span>（案例题必考）</h2>
+<h2 id="h-18">第五节 SQL <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第五节 SQL ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 SQL ★★★（案例题必考）」的学习状态"></button></h2>
 <p>SQL 分四类语句，案例题主要考前两类：</p>
 <div class="table-wrap">
 <table>
@@ -287,7 +291,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-19">SELECT 完整骨架（背顺序）</h3>
+<h3 id="h-19">SELECT 完整骨架（背顺序）<button type="button" class="sec-status" data-status-key="SELECT 完整骨架（背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「SELECT 完整骨架（背顺序）」的学习状态"></button></h3>
 <pre><code class="language-sql">SELECT   列名或函数            -- ⑤ 挑列
 FROM     表                    -- ① 数据从哪来（可 JOIN ... ON）
 WHERE    行条件                -- ② 先筛行
@@ -296,7 +300,7 @@ HAVING   组条件                -- ④ 筛组（条件里通常带聚合函数
 ORDER BY 排序列 [ASC|DESC];    -- ⑥ 最后排序
 </code></pre>
 <p><strong>为什么 HAVING 和 WHERE 要分家</strong>：WHERE 在分组<strong>前</strong>筛原始行，此时还没有算出平均分这类聚合值；HAVING 在分组<strong>后</strong>筛&quot;每组&quot;。所以&quot;查询平均分大于 80 的课程&quot;必须写 <code>HAVING AVG(成绩)&gt;80</code>，写进 WHERE 直接报错——这是最常见的案例扣分点。</p>
-<h3 id="h-20">建表与完整性（案例题第 1 小问模板）</h3>
+<h3 id="h-20">建表与完整性（案例题第 1 小问模板）<button type="button" class="sec-status" data-status-key="建表与完整性（案例题第 1 小问模板）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「建表与完整性（案例题第 1 小问模板）」的学习状态"></button></h3>
 <pre><code class="language-sql">CREATE TABLE SC (
     Sno   CHAR(8),
     Cno   CHAR(6),
@@ -308,7 +312,7 @@ ORDER BY 排序列 [ASC|DESC];    -- ⑥ 最后排序
 );
 </code></pre>
 <p>三种完整性对应关系：主键 → 实体完整性；外键 → 参照完整性；CHECK/取值范围 → 用户定义完整性。<strong>选择题爱考对应关系，案例题爱考写外键子句</strong>。</p>
-<h3 id="h-21">视图与授权</h3>
+<h3 id="h-21">视图与授权<button type="button" class="sec-status" data-status-key="视图与授权" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「视图与授权」的学习状态"></button></h3>
 <pre><code class="language-sql">CREATE VIEW 计算机系学生 AS
     SELECT Sno, Sname FROM Student WHERE Dept = &#39;计算机&#39;;
 
@@ -316,14 +320,14 @@ GRANT SELECT, INSERT ON SC TO 用户1 WITH GRANT OPTION;  -- 授权（可转授�
 REVOKE SELECT ON SC FROM 用户1;                          -- 收回权限
 </code></pre>
 <p><strong>视图的动机</strong>：视图是一张<strong>虚表</strong>（只存定义不存数据），作用有二——① 简化常用查询；② <strong>提供逻辑独立性/安全隔离</strong>（用户只见视图字段，表结构改了只需改视图定义）。考题问&quot;视图的作用/提高了什么独立性&quot;→ 答<strong>逻辑独立性</strong>（视图是外模式级的东西，正好呼应第一节）。</p>
-<h3 id="h-22">嵌套查询（选择题常考）</h3>
+<h3 id="h-22">嵌套查询（选择题常考）<button type="button" class="sec-status" data-status-key="嵌套查询（选择题常考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「嵌套查询（选择题常考）」的学习状态"></button></h3>
 <pre><code class="language-sql">SELECT Sname FROM Student
 WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 </code></pre>
 <p>IN 后面跟子查询结果集合；EXISTS 写法是&quot;存在即保留&quot;，选择题考&quot;IN 与 EXISTS 等价改写&quot;。</p>
 <p><strong>应试动作</strong>：SELECT 骨架六个子句的<strong>执行顺序</strong>（FROM→WHERE→GROUP→HAVING→SELECT→ORDER）必须背熟，它是所有 SQL 题的做题导航。</p>
-<h2 id="h-23">第六节 事务、并发控制与故障恢复 <span class="stars">★★</span></h2>
-<h3 id="h-24">事务与 ACID</h3>
+<h2 id="h-23">第六节 事务、并发控制与故障恢复 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第六节 事务、并发控制与故障恢复 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 事务、并发控制与故障恢复 ★★」的学习状态"></button></h2>
+<h3 id="h-24">事务与 ACID<button type="button" class="sec-status" data-status-key="事务与 ACID" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「事务与 ACID」的学习状态"></button></h3>
 <p>事务是&quot;要么全做、要么全不做&quot;的一组操作。经典例子：转账 = A 扣 100 + B 加 100，两个 UPDATE 必须同生共死。</p>
 <div class="table-wrap">
 <table>
@@ -357,7 +361,7 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 </tbody></table>
 </div>
 <p>考法：&quot;转账中途断电，钱不能凭空消失&quot;体现<strong>原子性</strong>；&quot;提交后断电重启数据仍在&quot;体现<strong>持久性</strong>。</p>
-<h3 id="h-25">并发带来的三类错误（反例各背一个）</h3>
+<h3 id="h-25">并发带来的三类错误（反例各背一个）<button type="button" class="sec-status" data-status-key="并发带来的三类错误（反例各背一个）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「并发带来的三类错误（反例各背一个）」的学习状态"></button></h3>
 <p>两个事务 T1、T2 同时操作 A=100：</p>
 <ol>
 <li><strong>丢失修改</strong>：T1 和 T2 都读 A=100，T1 加 10 写回 110，T2 减 5 写回 95——T1 的修改被<strong>覆盖丢了</strong>（应是 105）。</li>
@@ -365,20 +369,20 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 <li><strong>读脏数据</strong>：T1 把 A 改成 200（还没提交），T2 读到 200；T1 随后<strong>回滚</strong>，A 恢复 100——T2 读到的 200 是&quot;脏&quot;的，根本没生效过。</li>
 </ol>
 <p>区分口诀：<strong>丢改是&quot;写丢了&quot;，不可重复读是&quot;读两次不一样&quot;，脏读是&quot;读到了没提交的&quot;</strong>。</p>
-<h3 id="h-26">封锁与两段锁协议</h3>
+<h3 id="h-26">封锁与两段锁协议<button type="button" class="sec-status" data-status-key="封锁与两段锁协议" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「封锁与两段锁协议」的学习状态"></button></h3>
 <ul>
 <li><strong>S 锁（共享锁/读锁）</strong>：加锁后别人只能读不能写。S 与 S <strong>相容</strong>（都能读）。</li>
 <li><strong>X 锁（排他锁/写锁）</strong>：加锁后别人读写都不行。X 与任何锁都<strong>不相容</strong>。</li>
 <li><strong>两段锁协议</strong>：事务分两阶段——先<strong>扩展阶段</strong>（只加锁不放锁），后<strong>收缩阶段</strong>（只放锁不加锁）。遵守两段锁协议 → 调度<strong>可串行化</strong>（并发结果等价于某个串行执行），但<strong>不能避免死锁</strong>（反例：T1 锁了 A 等 B，T2 锁了 B 等 A）。这是经典选择题：&quot;两段锁协议保证可串行化、不保证不死锁&quot;。</li>
 </ul>
-<h3 id="h-27">故障恢复：REDO 与 UNDO</h3>
+<h3 id="h-27">故障恢复：REDO 与 UNDO<button type="button" class="sec-status" data-status-key="故障恢复：REDO 与 UNDO" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「故障恢复：REDO 与 UNDO」的学习状态"></button></h3>
 <p>依靠<strong>日志</strong>（先写日志、后写数据库）+ <strong>检查点</strong>。系统重启后扫描日志：</p>
 <ul>
 <li>事务<strong>已提交</strong>（BEGIN 后有 COMMIT）→ <strong>REDO 重做</strong>（结果已该生效，重放保证落盘）；</li>
 <li>事务<strong>未提交</strong>（只有 BEGIN 没有 COMMIT）→ <strong>UNDO 撤销</strong>（做了一半的必须抹掉）。</li>
 </ul>
 <p>口诀：<strong>提交了就重做（REDO），没提交就撤销（UNDO）</strong>。检查点的作用：缩小扫描范围，检查点之前已落盘的不用管。</p>
-<h3 id="h-28">分布式数据库的透明性（选择题 0–1 题，背四个名词）</h3>
+<h3 id="h-28">分布式数据库的透明性（选择题 0–1 题，背四个名词）<button type="button" class="sec-status" data-status-key="分布式数据库的透明性（选择题 0–1 题，背四个名词）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「分布式数据库的透明性（选择题 0–1 题，背四个名词）」的学习状态"></button></h3>
 <ul>
 <li><strong>分片透明</strong>（最高层）：用户不必知道数据怎么<strong>分块</strong>；</li>
 <li><strong>复制透明</strong>：不必知道数据在各节点<strong>复制</strong>了几份；</li>
@@ -386,23 +390,23 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 <li><strong>逻辑透明</strong>（最低层）：不必知道局部场地用什么数据模型。</li>
 </ul>
 <p><strong>应试动作</strong>：ACID 四个词背全称；三类并发错误能看描述对号入座；&quot;两段锁 → 可串行化但可能死锁&quot;背成一句；REDO/UNDO 口诀背死。</p>
-<h2 id="h-29">第七节 案例题专攻：数据库设计大题（约 15 分）</h2>
+<h2 id="h-29">第七节 案例题专攻：数据库设计大题（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：数据库设计大题（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：数据库设计大题（约 15 分）」的学习状态"></button></h2>
 <p>案例第 2 题一般是&quot;业务说明 + 不完整 E-R 图 + 关系模式 + SQL 填空&quot;，三小问固定套路：</p>
-<h3 id="h-30">套路一：E-R 图补全——读句子找联系</h3>
+<h3 id="h-30">套路一：E-R 图补全——读句子找联系<button type="button" class="sec-status" data-status-key="套路一：E-R 图补全——读句子找联系" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：E-R 图补全——读句子找联系」的学习状态"></button></h3>
 <p>题干每个动词都暗示一条联系：&quot;学生<strong>选修</strong>课程&quot;&quot;教师<strong>讲授</strong>课程&quot;&quot;部门<strong>聘用</strong>员工&quot;。补空时：</p>
 <ol>
 <li>先数图中已有几实几联系，句子里的名词 = 实体、动词 = 联系；</li>
 <li>联系类型用业务常识判：&quot;一个 X 对应几个 Y&quot;，两边都可多个才是 m:n；</li>
 <li>m:n 联系上若有自己的属性（如&quot;成绩&quot;属于选课联系而非学生或课程），标在菱形上。</li>
 </ol>
-<h3 id="h-31">套路二：关系模式填空——主键外键往哪放</h3>
+<h3 id="h-31">套路二：关系模式填空——主键外键往哪放<button type="button" class="sec-status" data-status-key="套路二：关系模式填空——主键外键往哪放" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：关系模式填空——主键外键往哪放」的学习状态"></button></h3>
 <ol>
 <li>每个实体一张表，主键 = 实体的码；</li>
 <li>1:n 联系：把 1 端主键放进 <strong>n 端表</strong>作外键；</li>
 <li>m:n 联系：单独建表，主键 = <strong>两端主键组合</strong>，联系的属性（成绩）也放这张表；</li>
 <li>小问问&quot;XX 表的主键是什么&quot;：先想清它是实体表还是联系表，联系表的主键几乎总是组合键。</li>
 </ol>
-<h3 id="h-32">套路三：SQL 填空——按 SELECT 骨架对号入座</h3>
+<h3 id="h-32">套路三：SQL 填空——按 SELECT 骨架对号入座<button type="button" class="sec-status" data-status-key="套路三：SQL 填空——按 SELECT 骨架对号入座" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：SQL 填空——按 SELECT 骨架对号入座」的学习状态"></button></h3>
 <ol>
 <li>空 FROM：看 SELECT 和 WHERE 里用了哪些列，缺哪张表补哪张，多表加 <code>JOIN ... ON 连接条件</code>；</li>
 <li>空 WHERE：对应题干&quot;查询<strong>满足某条件</strong>的行&quot;，日期/字符串加引号；</li>
@@ -411,7 +415,7 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 <li>填完代入一条具体数据心里跑一遍（同第一课算法填空的自检法）。</li>
 </ol>
 <hr>
-<h2 id="h-33">课后考题（请合上讲义作答）</h2>
+<h2 id="h-33">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>数据库系统中，用户可见的那部分数据的逻辑描述属于（ ）。
@@ -481,7 +485,7 @@ A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK 只对已提交事务执行</p>
 (2) 查询每个代表团的团名及该团运动员所获成绩的总和，只保留总分 300 分（含）以上的代表团；
 (3) 建立视图 vHighScore，显示成绩在 95 分（含）以上的运动员编号、姓名和项目名称。</p>
 <hr>
-<h2 id="h-34">精华题（历年必考风格，考前必刷）</h2>
+<h2 id="h-34">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【三级模式】视图属于三级模式结构中的（ ）；在数据库中存储索引的组织方式属于（ ）。</p>
 </li>
@@ -510,7 +514,7 @@ A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK 只对已提交事务执行</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-36">课后考题答案</h3>
+<h3 id="h-36">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 外模式就是某类用户看到的局部数据逻辑（典型实现即视图）。概念模式是全体逻辑，内模式/存储模式是物理层。<span class="stars">★</span> 对应关系直接背。</p>
 <p><strong>2. B</strong>
@@ -541,7 +545,7 @@ GRANT 授予、REVOKE 收回。DROP 是删除对象（DDL），DENY 不是软考
 两段锁协议：先统一加锁、后统一放锁 → 保证可串行化；但两个事务可能互相持有对方要的锁（T1 锁 A 等 B，T2 锁 B 等 A）→ <strong>不能避免死锁</strong>。A、C、D 均为典型错误表述。</p>
 <p><strong>15. B</strong>
 故障恢复口诀：<strong>已提交 REDO（重做），未提交 UNDO（撤销）</strong>。未完成的事务做了一半，必须撤销抹掉。ROLLBACK 是事务运行期间的主动回滚操作，不是恢复策略本身。</p>
-<h3 id="h-37">案例题答案</h3>
+<h3 id="h-37">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>问题 1（E-R 图描述）</strong>：
 实体三个：代表团、运动员、比赛项目。</p>
 <ul>
@@ -585,7 +589,7 @@ JOIN 参赛 ON 运动员.运动员编号 = 参赛.运动员编号
 JOIN 比赛项目 ON 参赛.项目编号 = 比赛项目.项目编号
 WHERE 参赛.成绩 &gt;= 95;
 </code></pre>
-<h3 id="h-38">精华题答案</h3>
+<h3 id="h-38">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. 视图属于外模式；索引属于内模式</strong>
 视图是用户局部视图（外模式级，典型实现）；索引是物理存储组织（内模式级）。这题考&quot;具体事物 → 归哪一层&quot;：用户看到的逻辑 = 外模式，磁盘组织细节 = 内模式。</p>
 <p><strong>2. 列数 = 3 + 2 − 1 = 4 列</strong>（R 的 A、B、C 三列加 S 的 D 列，公共属性 B 只留一份）。
@@ -617,6 +621,23 @@ GRANT SELECT ON SC TO U1 WITH GRANT OPTION;
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="03-软件工程基础.html">03-软件工程基础.html</a> 并更新进度表。</p>
 
+  <footer class="status-bar" data-status-page="02-数据库系统">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="01-数据结构与算法.html">
       <span class="k">上一课</span>

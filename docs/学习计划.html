@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>考前学习计划（9 月 15 日 → 10 月 27 日）</title>
+<link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>学习计划</span>
+        <span class="dot"></span>
+        <span>双线并行 · 背诵轮转 · 复盘体系</span>
+    </p>
+    <h1 id="h-1">考前学习计划（9 月 15 日 → 10 月 27 日）</h1>
+  </header>
+  <blockquote class="lead">
+<p><strong class="k">学习目标</strong>：约 38 天学完剩余 10 课 + 模拟卷，10 月 24—27 日机考（以官方通知为准），两科各 ≥45 分。
+<strong>适用前提</strong>：工作日整块 1.5<del>2 小时 + 碎片 20</del>30 分钟（通勤/午休），周末可加量到 3~4 小时。
+<strong>当前起点</strong>：第 1 课学到第二节（树与二叉树），其余未开始。
+本计划只负责<strong>排期</strong>；「学到哪了」的唯一记录在 <a href="00-总览与进度.html">00-总览与进度.html</a>，每周复盘时勾选。</p>
+</blockquote>
+<h2 id="h-2">一、总原则：两条泳道，永不合流<button type="button" class="sec-status" data-status-key="一、总原则：两条泳道，永不合流" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、总原则：两条泳道，永不合流」的学习状态"></button></h2>
+<p>你的三类知识分开走——<strong>理解/理科类用整块时间顺次学，背诵类用碎片时间每天一小份</strong>。背诵从第 1 天就启动，绝不攒到某一天集中狂背（背完就忘的根源就是堆积）。</p>
+<pre><code>整块时间（工作日 1.5~2h，周末 3~4h）      碎片时间（每天 20~30min）
+┌─────────────────────────────┐     ┌─────────────────────────┐
+│ 理解线：01 → 02 → … → 09     │     │ 背诵线：10 → 11 → 12 → 08 │
+│ 10/11/12 的计算公式也在这条线  │     │ 每天 ≤15 分钟新背          │
+│ 读讲义 45&#39; → 做题 45&#39; → 复盘 10&#39;│    │ + 10 分钟回响复习旧份       │
+└─────────────────────────────┘     └─────────────────────────┘
+        讲义顺序 = 大纲梯队顺序              内容 = 讲义加粗结论 + 表格
+</code></pre>
+<ul>
+<li>两条线<strong>互不挤占</strong>：理解课滞后不影响背诵照转；背诵欠账也不许占用整块时间补。</li>
+<li>背诵线背的全是「讲义加粗结论 + 对比表格」，正文不背。每份材料 ≤15 分钟能过一遍。</li>
+<li>10 标准化与知识产权最独立（跟谁都不联动），所以最早启动；08 信息安全偏背诵，主课线和背诵线两头并进。</li>
+</ul>
+<h2 id="h-3">二、月度排期：四个阶段<button type="button" class="sec-status" data-status-key="二、月度排期：四个阶段" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、月度排期：四个阶段」的学习状态"></button></h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>日期</th>
+<th>主课线（整块时间）</th>
+<th>背诵线（碎片时间）</th>
+<th>阶段验收</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一</td>
+<td>9/15 – 9/28</td>
+<td><strong>01 收尾</strong>（图/查找/排序/算法/案例）→ <strong>02 数据库</strong> → 03 起步</td>
+<td>10 标准化与知识产权背完一轮（4 份）</td>
+<td>9/28 周日：01、02 各做 3 道精华题限时自测</td>
+</tr>
+<tr>
+<td>二</td>
+<td>9/29 – 10/12</td>
+<td><strong>04 面向对象</strong>（含 UML 案例）→ <strong>05 操作系统</strong> → <strong>06 网络</strong></td>
+<td>11 专业英语（2 份）+ 12 数学（2 份）</td>
+<td>10/12 周日：PV 操作、网络计算各默算 1 题</td>
+</tr>
+<tr>
+<td>三</td>
+<td>10/13 – 10/19</td>
+<td><strong>07 程序语言</strong> → <strong>08 信息安全</strong> → <strong>09 计算机系统</strong>（周末加量）</td>
+<td>08 背诵份（2 份）+ 12 收尾（1 份）</td>
+<td>10/19 周日：前三阶段错题抽 10 题重做 ≥7 对</td>
+</tr>
+<tr>
+<td>四</td>
+<td>10/20 – 10/23</td>
+<td><strong>99 模拟卷</strong>（20–21 两晚严格限时）→ 考前过筛（22–23）</td>
+<td>只做回响与终审，不学任何新份</td>
+<td>全卷 75 选择正确率 ≥50（约 2/3）</td>
+</tr>
+<tr>
+<td>考试</td>
+<td>10/24 – 10/27</td>
+<td>机考（以官方通知为准）</td>
+<td>—</td>
+<td>两科 ≥45</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>主课线逐课天数</strong>（整块时间的粗排，周复盘时可前后挪）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>课</th>
+<th>日期</th>
+<th>天数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01 数据结构与算法</td>
+<td>9/15 – 9/20</td>
+<td>6</td>
+<td>已学两节；排序、图是大头，案例算法填空必须过一遍</td>
+</tr>
+<tr>
+<td>02 数据库系统</td>
+<td>9/21 – 9/25</td>
+<td>5</td>
+<td>案例 SQL/E-R 是必拿分，范式与关系代数选择题常客</td>
+</tr>
+<tr>
+<td>03 软件工程基础</td>
+<td>9/26 – 9/30</td>
+<td>5</td>
+<td>数据流图案例必拿；开发模型、测试、耦合内聚背表</td>
+</tr>
+<tr>
+<td>04 面向对象与设计模式</td>
+<td>10/1 – 10/5</td>
+<td>5</td>
+<td>国庆假期，整块时间多，UML 案例在此吃透</td>
+</tr>
+<tr>
+<td>05 操作系统</td>
+<td>10/6 – 10/9</td>
+<td>4</td>
+<td>计算密集：PV、页式地址、磁盘调度、银行家</td>
+</tr>
+<tr>
+<td>06 计算机网络</td>
+<td>10/10 – 10/12</td>
+<td>3</td>
+<td>子网划分等计算动手算</td>
+</tr>
+<tr>
+<td>07 程序设计语言基础</td>
+<td>10/13 – 10/14</td>
+<td>2</td>
+<td>文法、传值传址、编译各阶段认特征</td>
+</tr>
+<tr>
+<td>08 信息安全</td>
+<td>10/15 – 10/16</td>
+<td>2</td>
+<td>主课线过一遍，背诵线同步转</td>
+</tr>
+<tr>
+<td>09 计算机系统基础</td>
+<td>10/17 – 10/19</td>
+<td>3</td>
+<td>周末加量；浮点/可靠性计算视时间取舍</td>
+</tr>
+<tr>
+<td>99 全真模拟卷</td>
+<td>10/20 – 10/21</td>
+<td>2</td>
+<td>第一晚 75 选择限时 90 分钟 + 2 道案例；第二晚剩余案例 + 对答案</td>
+</tr>
+<tr>
+<td>考前过筛</td>
+<td>10/22 – 10/23</td>
+<td>2</td>
+<td>只过错题本 + 背诵终审 + 案例模板默写，不学新内容</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="h-4">三、周模板（理解课进行期的固定节奏）<button type="button" class="sec-status" data-status-key="三、周模板（理解课进行期的固定节奏）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「三、周模板（理解课进行期的固定节奏）」的学习状态"></button></h2>
+<p><strong>工作日（周一~周五，每天）</strong></p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>时段</th>
+<th>时长</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通勤/午休碎片</td>
+<td>20–30 min</td>
+<td>照第四节背诵日历：学新 1 份（≤15&#39;）+ 回响旧份（10&#39;）</td>
+</tr>
+<tr>
+<td>晚上整块</td>
+<td>60 min</td>
+<td>读当天讲义小节（第二节这种大节就拆两天）</td>
+</tr>
+<tr>
+<td>晚上整块</td>
+<td>45 min</td>
+<td>合上讲义做该节「课后考题」对应题号</td>
+</tr>
+<tr>
+<td>晚上整块</td>
+<td>10 min</td>
+<td>标错题 → 写 3 行日复盘（见第五节）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>周六（3~4 小时）</strong>：主课推进 2.5 h（大节、案例题专攻放在周六）+ 重做本周错题 1 h。</p>
+<p><strong>周日（2 小时）</strong>：周复盘 1 h（见第五节清单）+ 主课轻量 1 h（把本周没消化的加粗结论再过一遍）。</p>
+<h2 id="h-5">四、碎片背诵日历（9/16 → 10/23）<button type="button" class="sec-status" data-status-key="四、碎片背诵日历（9/16 → 10/23）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「四、碎片背诵日历（9/16 → 10/23）」的学习状态"></button></h2>
+<p>背诵材料只有 11 份，每份 ≤15 分钟。节奏：<strong>每 3 天学新 1 份</strong>，学完后按「次日 → +3 天 → +7 天 → +14 天」回响四轮。某天没执行就整体顺延，<strong>绝不把两份并到一天补</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>份</th>
+<th>内容（去对应课找加粗结论/表格）</th>
+<th>学新日</th>
+<th>回响①次日</th>
+<th>回响②+3天</th>
+<th>回响③+7天</th>
+<th>回响④+14天</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10-①</td>
+<td>著作权：保护期、合理使用 vs 侵权</td>
+<td>9/16</td>
+<td>9/17</td>
+<td>9/19</td>
+<td>9/23</td>
+<td>9/30</td>
+</tr>
+<tr>
+<td>10-②</td>
+<td>专利与商标：期限、归属</td>
+<td>9/19</td>
+<td>9/20</td>
+<td>9/22</td>
+<td>9/26</td>
+<td>10/3</td>
+</tr>
+<tr>
+<td>10-③</td>
+<td>标准化：代号、强制/推荐、分类</td>
+<td>9/22</td>
+<td>9/23</td>
+<td>9/25</td>
+<td>9/29</td>
+<td>10/6</td>
+</tr>
+<tr>
+<td>10-④</td>
+<td>反不正当竞争 + 这课的考法套路</td>
+<td>9/25</td>
+<td>9/26</td>
+<td>9/28</td>
+<td>10/2</td>
+<td>10/9</td>
+</tr>
+<tr>
+<td>11-①</td>
+<td>专业英语高频术语表（前半）</td>
+<td>9/28</td>
+<td>9/29</td>
+<td>10/1</td>
+<td>10/5</td>
+<td>10/12</td>
+</tr>
+<tr>
+<td>11-②</td>
+<td>英语题答题套路（固定 5 题、先看选项词性）</td>
+<td>10/1</td>
+<td>10/2</td>
+<td>10/4</td>
+<td>10/8</td>
+<td>10/15</td>
+</tr>
+<tr>
+<td>12-①</td>
+<td>可靠性公式、校验码（海明/循环）</td>
+<td>10/4</td>
+<td>10/5</td>
+<td>10/7</td>
+<td>10/11</td>
+<td>10/18</td>
+</tr>
+<tr>
+<td>12-②</td>
+<td>多媒体容量计算（图像/声音采样公式）</td>
+<td>10/7</td>
+<td>10/8</td>
+<td>10/10</td>
+<td>10/14</td>
+<td>10/21</td>
+</tr>
+<tr>
+<td>12-③</td>
+<td>排列组合速算、逻辑推理</td>
+<td>10/10</td>
+<td>10/11</td>
+<td>10/13</td>
+<td>10/17</td>
+<td>考前并入终审</td>
+</tr>
+<tr>
+<td>08-①</td>
+<td>加密体系：对称/非对称/摘要/数字签名</td>
+<td>10/13</td>
+<td>10/14</td>
+<td>10/16</td>
+<td>10/20</td>
+<td>考前并入终审</td>
+</tr>
+<tr>
+<td>08-②</td>
+<td>病毒木马、攻击类型、防火墙</td>
+<td>10/16</td>
+<td>10/17</td>
+<td>10/19</td>
+<td>10/23</td>
+<td>考前并入终审</td>
+</tr>
+</tbody></table>
+</div>
+<p>执行细则：</p>
+<ul>
+<li>回响不是重读：<strong>遮住结论回忆，想不起来才看</strong>，能回忆的打勾跳过（越背越快）。</li>
+<li>某天回响攒到 ≥3 份：只过「昨天的新份 + 最久没见的两份」，其余顺延明天——永远不堆积。</li>
+<li>考前 10/22–23：把 11 份全部过最后一轮（此时大多能回忆，很快），这就是背诵的「终审」。</li>
+</ul>
+<h2 id="h-6">五、复盘体系：日 5 分钟、周 1 小时、阶段加测<button type="button" class="sec-status" data-status-key="五、复盘体系：日 5 分钟、周 1 小时、阶段加测" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「五、复盘体系：日 5 分钟、周 1 小时、阶段加测」的学习状态"></button></h2>
+<p><strong>日复盘（睡前 5 分钟，写在纸上或手机备忘录，不用进仓库）</strong>，固定 3 行：</p>
+<ol>
+<li>今天学到：第 X 课第 X 节的 XX 点；</li>
+<li>错题/卡点：第 X 题，错因是「概念不清 / 计算失误 / 没记住」（错因三选一，后面好对症）；</li>
+<li>明天第一件事：XXX（消灭「今晚从哪开始」的犹豫）。</li>
+</ol>
+<p><strong>周复盘（周日 1 小时，5 步清单）</strong>：</p>
+<ol>
+<li><strong>重做本周全部错题</strong>（合上答案重算，不是看一眼）——错题是唯一的复习真源；</li>
+<li>背诵日历完成率自查，欠的份<strong>顺延</strong>进下周日历，不许周末突击补背；</li>
+<li>计算专项：本周涉及的公式（哈夫曼/WPL、子网、PV……）闭卷默算 1 题；</li>
+<li>勾选 <a href="00-总览与进度.html">00-总览与进度.html</a>，按实际进度微调下周排期；</li>
+<li>三问自检：本周最大的坑是什么？哪个考点还虚？下周一第一件事？</li>
+</ol>
+<p><strong>阶段复盘（阶段一/二/三的最后一个周日，在周复盘上加 20 分钟）</strong>：</p>
+<ul>
+<li>本阶段各课「精华题」抽 3~5 道限时重做；</li>
+<li>案例题模板核对：算法填空（阶段一）、SQL/E-R/数据流图（阶段一二）、UML（阶段二）；</li>
+<li>后续排期是否要挪——挪就当场改本文件日期，改完不用愧疚，计划为进度服务。</li>
+</ul>
+<h2 id="h-7">六、防堆积四条铁律（贴在书桌上）<button type="button" class="sec-status" data-status-key="六、防堆积四条铁律（贴在书桌上）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「六、防堆积四条铁律（贴在书桌上）」的学习状态"></button></h2>
+<ol>
+<li><strong>任何一天新背 ≤15 分钟</strong>（考前两天除外）——背诵靠次数多，不靠单次久；</li>
+<li><strong>复习永远优先于学新</strong>：时间不够先回响旧份、再错题，新内容永远可以顺延；</li>
+<li><strong>背诵只背加粗结论和表格</strong>，发现某个结论看不懂 → 回对应讲义小节重读，不在碎片时间里硬啃；</li>
+<li><strong>落进度不熬夜补</strong>：当晚补不完就记进日复盘第 3 行，周复盘重排——熬夜学的东西第二天就还回去了。</li>
+</ol>
+<h2 id="h-8">七、吃紧时的砍单预案<button type="button" class="sec-status" data-status-key="七、吃紧时的砍单预案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「七、吃紧时的砍单预案」的学习状态"></button></h2>
+<p>阶段三开始时若明显落后，按这个顺序砍（保持案例题和背诵线不砍）：</p>
+<ol>
+<li>09 计算机系统基础：浮点数规格化、磁盘阵列计算可只记结论不推导（选择题 6–8 题里拿基础分就够）；</li>
+<li>12 数学与多媒体：12-③ 排列组合可并入考前终审只过一遍；</li>
+<li>07 程序设计语言：编译阶段细节只认「识别特征」不深究原理；</li>
+<li><strong>永远不砍</strong>：01/02/03/04 的案例题专攻节（案例 15 分/题是大头）、背诵线 11 份（碎片时间背，不占整块）。</li>
+</ol>
+<h2 id="h-9">八、本计划的边界<button type="button" class="sec-status" data-status-key="八、本计划的边界" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「八、本计划的边界」的学习状态"></button></h2>
+<ul>
+<li>完成进度<strong>只</strong>记录在 <a href="00-总览与进度.html">00-总览与进度.html</a>，本文件的日期是「预定日历」，不打勾、不记完成；</li>
+<li>排期和实际冲突时：周复盘重排 → 改本文件日期，进度表只反映事实；</li>
+<li>学习中哪个讲义看不懂，直接在对话里问（AI 会当场修订讲义），这本身就是「理解线」的一环。</li>
+</ul>
+
+  <footer class="status-bar" data-status-page="学习计划">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="99-考前全真模拟卷.html">
+      <span class="k">上一课</span>
+      <span class="t">99 考前全真模拟卷</span>
+    </a>
+    <a class="nav-home" href="index.html">返回目录</a>
+    <span class="nav-card void"></span>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="app.js" defer></script>
+</body>
+</html>

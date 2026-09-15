@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html" class="is-current" aria-current="page"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -87,7 +91,7 @@
 <p>适用：2026 年下半年软考（考试时间：2026 年 10 月 24 日—27 日，机考，报名约 8 月中旬—9 月中旬）
 大纲与教材无改版，沿用现行版考试大纲。</p>
 </blockquote>
-<h2 id="h-2">考试结构</h2>
+<h2 id="h-2">考试结构<button type="button" class="sec-status" data-status-key="考试结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「考试结构」的学习状态"></button></h2>
 <div class="table-wrap">
 <table>
 <thead>
@@ -114,8 +118,8 @@
 </div>
 <p>两科须<strong>同时 ≥ 45 分</strong>才算通过。两科连考，总时长 240 分钟。</p>
 <hr>
-<h2 id="h-3">第一部分：综合知识（选择题）考点大纲</h2>
-<h3 id="h-4">1. 计算机系统基础（约 6–8 题）</h3>
+<h2 id="h-3">第一部分：综合知识（选择题）考点大纲<button type="button" class="sec-status" data-status-key="第一部分：综合知识（选择题）考点大纲" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一部分：综合知识（选择题）考点大纲」的学习状态"></button></h2>
+<h3 id="h-4">1. 计算机系统基础（约 6–8 题）<button type="button" class="sec-status" data-status-key="1. 计算机系统基础（约 6–8 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1. 计算机系统基础（约 6–8 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>数据表示：原码/反码/补码/移码、浮点数表示与运算</li>
@@ -125,7 +129,7 @@
 <li>校验码：奇偶校验、CRC、海明码</li>
 </ul>
 <p><strong>掌握程度</strong>：Cache/磁盘/可靠性三类计算题必须会算，几乎年年考；海明码和浮点数理解原理即可。</p>
-<h3 id="h-5">2. 程序设计语言基础（约 3–5 题）</h3>
+<h3 id="h-5">2. 程序设计语言基础（约 3–5 题）<button type="button" class="sec-status" data-status-key="2. 程序设计语言基础（约 3–5 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2. 程序设计语言基础（约 3–5 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>编译与解释的区别</li>
@@ -135,7 +139,7 @@
 <li>各语言特点对比</li>
 </ul>
 <p><strong>掌握程度</strong>：正规式匹配题和传值/传址是高频题，必须熟练；编译阶段顺序背熟。</p>
-<h3 id="h-6">3. 操作系统（约 4–6 题）</h3>
+<h3 id="h-6">3. 操作系统（约 4–6 题）<button type="button" class="sec-status" data-status-key="3. 操作系统（约 4–6 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3. 操作系统（约 4–6 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>进程状态转换、进程同步与互斥（PV 操作）</li>
@@ -145,7 +149,7 @@
 <li>设备管理：磁盘调度算法、虚设备、Spooling</li>
 </ul>
 <p><strong>掌握程度</strong>：PV 操作、页式地址换算、位示图/索引节点计算是必考计算题。</p>
-<h3 id="h-7">4. 数据结构与算法（约 8–10 题，选择题第一大块）</h3>
+<h3 id="h-7">4. 数据结构与算法（约 8–10 题，选择题第一大块）<button type="button" class="sec-status" data-status-key="4. 数据结构与算法（约 8–10 题，选择题第一大块）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4. 数据结构与算法（约 8–10 题，选择题第一大块）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>线性表：顺序表/链表操作复杂度；栈和队列的应用（表达式求值、循环队列判满判空）</li>
@@ -155,7 +159,7 @@
 <li>排序：八大排序的时间复杂度、稳定性、排序过程判别</li>
 </ul>
 <p><strong>掌握程度</strong>：重中之重。遍历互推、哈夫曼、关键路径、散列表计算、排序过程判别都是高频题，且直接服务案例题的算法题。</p>
-<h3 id="h-8">5. 软件工程基础（约 6–8 题）</h3>
+<h3 id="h-8">5. 软件工程基础（约 6–8 题）<button type="button" class="sec-status" data-status-key="5. 软件工程基础（约 6–8 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5. 软件工程基础（约 6–8 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>软件开发模型：瀑布、原型、螺旋、敏捷（Scrum/XP）</li>
@@ -168,7 +172,7 @@
 <li>CMM/CMMI 等级</li>
 </ul>
 <p><strong>掌握程度</strong>：测试用例设计（判定/条件覆盖）、McCabe 计算、内聚耦合排序几乎每年考。</p>
-<h3 id="h-9">6. 面向对象（约 5–7 题）</h3>
+<h3 id="h-9">6. 面向对象（约 5–7 题）<button type="button" class="sec-status" data-status-key="6. 面向对象（约 5–7 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6. 面向对象（约 5–7 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>基本概念：封装、继承、多态、重载/重写区别</li>
@@ -177,7 +181,7 @@
 <li>面向对象分析与设计过程</li>
 </ul>
 <p><strong>掌握程度</strong>：设计模式必须把 23 种的&quot;意图一句话&quot;背下来（高频：单例、工厂、观察者、策略、适配器、装饰器、代理、桥接）；UML 图要素判断要熟。</p>
-<h3 id="h-10">7. 数据库系统（约 5–6 题）</h3>
+<h3 id="h-10">7. 数据库系统（约 5–6 题）<button type="button" class="sec-status" data-status-key="7. 数据库系统（约 5–6 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7. 数据库系统（约 5–6 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>三级模式/两级映像与数据独立性</li>
@@ -188,7 +192,7 @@
 <li>事务 ACID、并发控制（锁、两段锁协议、可串行化）、故障恢复</li>
 </ul>
 <p><strong>掌握程度</strong>：范式判定、SQL 语句书写是选择题 + 案例题双考点，必须重点练。</p>
-<h3 id="h-11">8. 计算机网络（约 4–5 题）</h3>
+<h3 id="h-11">8. 计算机网络（约 4–5 题）<button type="button" class="sec-status" data-status-key="8. 计算机网络（约 4–5 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8. 计算机网络（约 4–5 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>OSI 七层与 TCP/IP 四层对应、各层设备与协议</li>
@@ -198,7 +202,7 @@
 <li>HTML/浏览器相关常识</li>
 </ul>
 <p><strong>掌握程度</strong>：子网划分计算题每年必考一题左右，协议归层要能秒答。</p>
-<h3 id="h-12">9. 信息安全（约 3–4 题）</h3>
+<h3 id="h-12">9. 信息安全（约 3–4 题）<button type="button" class="sec-status" data-status-key="9. 信息安全（约 3–4 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9. 信息安全（约 3–4 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>对称加密（DES/AES）与非对称加密（RSA）的区别与用途</li>
@@ -207,7 +211,7 @@
 <li>常见攻击类型：DDoS、SQL 注入、钓鱼；恶意代码</li>
 </ul>
 <p><strong>掌握程度</strong>：数字签名流程（谁用谁的私钥/公钥）是永恒考点，务必理清。</p>
-<h3 id="h-13">10. 标准化与知识产权（约 3–4 题，纯背诵送分题）</h3>
+<h3 id="h-13">10. 标准化与知识产权（约 3–4 题，纯背诵送分题）<button type="button" class="sec-status" data-status-key="10. 标准化与知识产权（约 3–4 题，纯背诵送分题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10. 标准化与知识产权（约 3–4 题，纯背诵送分题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>著作权：职务作品、委托作品的归属</li>
@@ -217,10 +221,10 @@
 <li>标准的分类与代号：国标 GB/行标/地标/企标，强制性 vs 推荐性</li>
 </ul>
 <p><strong>掌握程度</strong>：背结论即可，&quot;侵权行为判定&quot;（如反编译、备份、随机器赠软件）每年考。</p>
-<h3 id="h-14">11. 专业英语（5 题，固定）</h3>
+<h3 id="h-14">11. 专业英语（5 题，固定）<button type="button" class="sec-status" data-status-key="11. 专业英语（5 题，固定）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11. 专业英语（5 题，固定）」的学习状态"></button></h3>
 <p><strong>学习范围</strong>：一段 IT 主题短文（软件工程、新技术方向如 AI/云/安全），5 个完形填空。</p>
 <p><strong>掌握程度</strong>：靠真题练语感，优先掌握软件工程和新技术领域词汇。</p>
-<h3 id="h-15">12. 数学与离散基础、多媒体（约 3–4 题）</h3>
+<h3 id="h-15">12. 数学与离散基础、多媒体（约 3–4 题）<button type="button" class="sec-status" data-status-key="12. 数学与离散基础、多媒体（约 3–4 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「12. 数学与离散基础、多媒体（约 3–4 题）」的学习状态"></button></h3>
 <p><strong>学习范围</strong></p>
 <ul>
 <li>排列组合、逻辑推理、图论基础应用、误差/数值计算常识</li>
@@ -228,7 +232,7 @@
 </ul>
 <p><strong>掌握程度</strong>：图像/音频容量计算公式要记牢，逻辑题凭基本推理即可。</p>
 <hr>
-<h2 id="h-16">第二部分：应用技术（案例题）大纲</h2>
+<h2 id="h-16">第二部分：应用技术（案例题）大纲<button type="button" class="sec-status" data-status-key="第二部分：应用技术（案例题）大纲" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二部分：应用技术（案例题）大纲」的学习状态"></button></h2>
 <p>固定套路，4~5 道大题，各 15 分左右：</p>
 <div class="table-wrap">
 <table>
@@ -267,7 +271,7 @@
 </tbody></table>
 </div>
 <hr>
-<h2 id="h-17">第三部分：学习优先级与备考节奏</h2>
+<h2 id="h-17">第三部分：学习优先级与备考节奏<button type="button" class="sec-status" data-status-key="第三部分：学习优先级与备考节奏" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三部分：学习优先级与备考节奏」的学习状态"></button></h2>
 <p><strong>优先级</strong></p>
 <ol>
 <li>第一梯队（分值大头 + 案例直接考）：数据结构与算法、数据库、软件工程、面向对象/设计模式</li>
@@ -282,7 +286,7 @@
 <li>考前两周全真模拟机考</li>
 </ol>
 <hr>
-<h2 id="h-18">参考资料</h2>
+<h2 id="h-18">参考资料<button type="button" class="sec-status" data-status-key="参考资料" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「参考资料」的学习状态"></button></h2>
 <ul>
 <li><a href="https://www.educity.cn/rk/5356465.html">希赛网·软件设计师考试大纲</a></li>
 <li><a href="https://github.com/xiaomabenten/software_designer">GitHub: xiaomabenten/software_designer（官方大纲 PDF 及分章资料）</a></li>
@@ -293,6 +297,23 @@
 <li><a href="https://hrss.sz.gov.cn/szksy/zwgk/bmxx/content/post_12693795.html">深圳考试院·2026 年度软考报考指引</a></li>
 </ul>
 
+  <footer class="status-bar" data-status-page="软件设计师考点大纲">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <span class="nav-card void"></span>
     <a class="nav-home" href="index.html">返回目录</a>

@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html" class="is-current" aria-current="page"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,10 +89,10 @@
 <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 给出著作权各权利的保护期（哪些永久、哪些终生+50 年）；② 判定职务作品/委托作品的著作权归属；③ 背出三种专利的保护年限与&quot;先申请原则&quot;；④ 用&quot;是否侵权&quot;秒判备份、出租、反编译、教学复制等场景；⑤ 看到标准代号（GB、GB/T、DB、Q/、ISO）就能归类。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 著作权：谁享有、保护多久 <span class="stars">★★★</span></h2>
+<h2 id="h-2">第一节 著作权：谁享有、保护多久 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一节 著作权：谁享有、保护多久 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 著作权：谁享有、保护多久 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：软件是一行行代码写出来的&quot;无形作品&quot;——它能被无限复制、传播成本几乎为零，一旦被他人拿走署上自己的名字或拿去卖钱，作者的血汗就白费了。著作权就是法律给创作成果上的&quot;默认锁&quot;：<strong>作品一完成，锁就自动上好</strong>，不需要登记、不需要发表、也不需要向任何机构申请。</p>
 <p><strong>取得方式（高频陷阱）</strong>：我国著作权实行<strong>自动保护原则</strong>——作品<strong>自创作（开发）完成之日起</strong>自动产生著作权。作品登记证书只是<strong>证明手段</strong>（打官司时的初步证据），<strong>不是取得著作权的前提</strong>。反例：选择题把&quot;软件著作权自登记之日起取得&quot;写成正确项——错，登记不是取得条件，没登记的作品照样有著作权。</p>
-<h3 id="h-3">著作权里装了哪些权利</h3>
+<h3 id="h-3">著作权里装了哪些权利<button type="button" class="sec-status" data-status-key="著作权里装了哪些权利" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「著作权里装了哪些权利」的学习状态"></button></h3>
 <p>著作权分两大类：</p>
 <div class="table-wrap">
 <table>
@@ -118,7 +122,7 @@
 </div>
 <p><strong>记忆口诀</strong>：「<strong>署改完，管到死之后还管 50 年</strong>」——署名权、修改权、保护作品完整权这三样<strong>永久</strong>；剩下的一切权利（含发表权这个&quot;半人身权&quot;）都是<strong>终生 + 50 年</strong>。反例演示：把&quot;发表权&quot;当成永久保护来选——错，发表权决定作品何时公之于众，人死了总得有个头，所以是死后 50 年截止；只有&quot;署名、修改、保护完整&quot;三样跟人格走、永久保护。</p>
 <p><strong>为什么法人作品的保护期算法不同</strong>：法人（公司）没有&quot;终生&quot;，所以不按&quot;作者生死&quot;算，统一按<strong>首次发表后 50 年</strong>算；并且作品<strong>自创作完成后 50 年内未发表的，法律不再保护</strong>（防止作品永远捂着不发表、保护期无限顺延）。</p>
-<h3 id="h-4">职务作品与委托作品：谁写的不一定是谁的 <span class="stars">★★★</span></h3>
+<h3 id="h-4">职务作品与委托作品：谁写的不一定是谁的 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="职务作品与委托作品：谁写的不一定是谁的 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「职务作品与委托作品：谁写的不一定是谁的 ★★★」的学习状态"></button></h3>
 <p>这是每年必考的归属题。判断规则一张表搞定：</p>
 <div class="table-wrap">
 <table>
@@ -155,9 +159,9 @@
 <p><strong>反例前置</strong>：最容易记反的就是委托作品——很多初学者以为&quot;我出钱委托你开发的，当然是归我（委托方）&quot;。按这个错误理解做题，&quot;合同未约定归属&quot;类题目必错。记住判别句：<strong>题干出现&quot;委托&quot;&quot;合同未约定&quot;六个字，答案指向受托方（实际开发方）</strong>。</p>
 <p><strong>应试动作</strong>：背三句话——①署名权、修改权、保护作品完整权<strong>永久</strong>；②公民权利保护期 = 终生 + 死后 50 年，法人 = 首次发表后 50 年；③委托未约定归<strong>受托方</strong>。考场认题特征：题干给一段&quot;某人/某公司完成了某作品&quot;的场景 + &quot;著作权归谁&quot;或&quot;保护期到何时&quot;，直接套表。此考点无计算，纯套结论。</p>
 <hr>
-<h2 id="h-5">第二节 软件保护条例与侵权判定 <span class="stars">★★★</span></h2>
+<h2 id="h-5">第二节 软件保护条例与侵权判定 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 软件保护条例与侵权判定 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 软件保护条例与侵权判定 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：《著作权法》保护的是&quot;作品&quot;这个大概念，软件有自己的特殊性（要运行、要备份、要升级），所以国家在《著作权法》之下专门制定了《计算机软件保护条例》来细化规则。<strong>《中华人民共和国著作权法》和《计算机软件保护条例》这两部法律文件，共同构成我国保护计算机软件著作权的基本法律框架</strong>（选择题原样考过这个说法）。</p>
-<h3 id="h-6">软件著作权保护期（与一般作品略有差异，必考）</h3>
+<h3 id="h-6">软件著作权保护期（与一般作品略有差异，必考）<button type="button" class="sec-status" data-status-key="软件著作权保护期（与一般作品略有差异，必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「软件著作权保护期（与一般作品略有差异，必考）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -176,7 +180,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-7">合法复制品所有人能干什么（高频场景题）</h3>
+<h3 id="h-7">合法复制品所有人能干什么（高频场景题）<button type="button" class="sec-status" data-status-key="合法复制品所有人能干什么（高频场景题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「合法复制品所有人能干什么（高频场景题）」的学习状态"></button></h3>
 <p>你<strong>合法购买</strong>了一份软件，条例给你三项权利：</p>
 <ol>
 <li><strong>装入</strong>：根据使用需要，把软件装入计算机等具有信息处理能力的装置内；</li>
@@ -184,7 +188,7 @@
 <li><strong>必要修改</strong>：为适配实际应用环境或改进功能性能进行必要的修改（除合同约定外，不得把修改后的软件提供给第三方）。</li>
 </ol>
 <p><strong>反例演示</strong>：把备份件借给同事装到自己电脑上用——侵权。备份是&quot;给防损坏买的保险&quot;，不是&quot;送人的人情&quot;；它只能留在你自己手里，一旦原件所有权没了，备份也得跟着销毁。</p>
-<h3 id="h-8">侵权 vs 不侵权：三类&quot;免死金牌&quot; <span class="stars">★★★</span></h3>
+<h3 id="h-8">侵权 vs 不侵权：三类&quot;免死金牌&quot; <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="侵权 vs 不侵权：三类&amp;quot;免死金牌&amp;quot; ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「侵权 vs 不侵权：三类&quot;免死金牌&quot; ★★★」的学习状态"></button></h3>
 <p><strong>以下行为侵权</strong>（每年选其中一两个做选项）：</p>
 <ul>
 <li>未经许可<strong>发表</strong>或<strong>登记</strong>他人的软件（把别人的软件署自己的名）；</li>
@@ -218,9 +222,9 @@
 <p><strong>反编译例外为什么存在</strong>：如果法律禁止一切反编译，那老系统升级后，做兼容对接的厂商永远拿不到接口文档，就只能&quot;要么侵犯著作权、要么让整个行业互相不兼容&quot;。法律权衡后允许：<strong>为兼容而反编译，且拿不到正规文档时，可以破译</strong>——这是知识产权&quot;保护创作&quot;与&quot;促进技术进步&quot;之间的折中。</p>
 <p><strong>应试动作</strong>：判场景题记三问——①目的（商业 vs 非商业）②手段（少量复制/备份/反编译）③去向（自留 vs 提供给他人）。<strong>凡是&quot;提供给他人用&quot;的动作基本都侵权</strong>（备份外借、出租、网络传播、随机赠送）；<strong>纯自用 + 非商业 + 少量</strong>才可能免责。背三个场景模板：教学少量复制→不侵权；备份借人→侵权；为兼容反编译且无正规文档→不侵权。</p>
 <hr>
-<h2 id="h-9">第三节 专利权 <span class="stars">★★</span></h2>
+<h2 id="h-9">第三节 专利权 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 专利权 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 专利权 ★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：著作权保护&quot;表达&quot;（代码写法、文档），不保护&quot;思想&quot;（算法思路、技术方案）。一项新技术方案（比如新的压缩算法实现、新的电路结构）想保护&quot;点子本身&quot;，就要走<strong>专利</strong>这条路——用&quot;公开换保护&quot;：把技术方案公开给社会，国家给你一段时期的独占实施权。</p>
-<h3 id="h-10">三种专利与保护期（数字必背）</h3>
+<h3 id="h-10">三种专利与保护期（数字必背）<button type="button" class="sec-status" data-status-key="三种专利与保护期（数字必背）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「三种专利与保护期（数字必背）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -248,7 +252,7 @@
 </tbody></table>
 </div>
 <p><strong>口诀</strong>：「发 20、实 10、外 15」——发明最值钱管 20 年，实用新型是&quot;小改良&quot;管 10 年，外观设计修法后加码到 15 年。<strong>起算点统一是申请日</strong>（不是授权日、不是公告日），反例：把外观设计保护期选成&quot;自授权日起 10 年&quot;——两处都错（起算点错、年限错）。</p>
-<h3 id="h-11">授权原则与归属</h3>
+<h3 id="h-11">授权原则与归属<button type="button" class="sec-status" data-status-key="授权原则与归属" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「授权原则与归属」的学习状态"></button></h3>
 <ul>
 <li><strong>先申请原则</strong>：两个以上申请人分别就<strong>同样的发明创造</strong>申请专利的，专利权授予<strong>最先申请</strong>的人。专利不像著作权&quot;自动产生&quot;，它<strong>先到先得、只授一家</strong>——哪怕你确实独立想出来的，只要晚了一步就拿不到。同一天申请的，由申请人<strong>协商解决</strong>。</li>
 <li><strong>授权三条件</strong>：<strong>新颖性、创造性、实用性</strong>（缺一不可）。</li>
@@ -257,9 +261,9 @@
 </ul>
 <p><strong>应试动作</strong>：背四个数——20/10/15/先申请。认题特征：题干出现&quot;两公司先后申请同一发明&quot;→ 先申请者得；&quot;某人利用公司设备/承担公司课题做出发明&quot;→ 归公司；选项里出现&quot;疾病诊疗方法、智力活动规则&quot;→ 不授予专利。年份类选项注意现行法口径：外观设计 <strong>15 年</strong>。</p>
 <hr>
-<h2 id="h-12">第四节 商标权与商业秘密 <span class="stars">★</span></h2>
+<h2 id="h-12">第四节 商标权与商业秘密 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第四节 商标权与商业秘密 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 商标权与商业秘密 ★」的学习状态"></button></h2>
 <p><strong>动机</strong>：著作权管作品、专利管技术，商标管的是<strong>牌子</strong>——消费者认牌子买东西，法律就要保护牌子上凝聚的商誉，防止别人搭便车、以次充好。</p>
-<h3 id="h-13">商标权要点</h3>
+<h3 id="h-13">商标权要点<button type="button" class="sec-status" data-status-key="商标权要点" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「商标权要点」的学习状态"></button></h3>
 <ul>
 <li><strong>注册取得</strong>：商标权通过<strong>注册</strong>取得（与著作权的&quot;自动产生&quot;不同！）。经核准注册的商标为注册商标，注册人享有商标专用权。</li>
 <li><strong>有效期 10 年，自核准注册之日起算</strong>；期满需要继续使用的，<strong>期满前 12 个月内</strong>办理续展；来不及的还有 <strong>6 个月宽展期</strong>；<strong>每次续展 10 年，续展次数不限</strong>——牌子经营得好可以无限续命。</li>
@@ -267,7 +271,7 @@
 <li>商标注册申请同样适用<strong>先申请原则</strong>（相同或近似的商标，先申请者优先）。</li>
 </ul>
 <p><strong>记忆口诀</strong>：「商标 10 年核准起，前 12 后 6 可续展，续满 10 年无限次，烟草强制要注册」。反例演示：把商标有效期起算点写成&quot;使用之日&quot;或&quot;申请之日&quot;——错，商标是<strong>核准注册之日</strong>；对比专利的&quot;申请日&quot;起算，两者不同，对比着背。</p>
-<h3 id="h-14">商业秘密</h3>
+<h3 id="h-14">商业秘密<button type="button" class="sec-status" data-status-key="商业秘密" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「商业秘密」的学习状态"></button></h3>
 <p>不为公众所知悉、具有商业价值并经权利人<strong>采取相应保密措施</strong>的技术信息、经营信息等商业信息。特点：</p>
 <ul>
 <li><strong>不需要登记、不需要申请</strong>，靠保密措施维持；</li>
@@ -276,9 +280,9 @@
 </ul>
 <p><strong>应试动作</strong>：背两组对比——①著作权自动产生 vs 商标注册取得 vs 商业秘密靠保密措施；②专利&quot;独立想到也侵权&quot; vs 商业秘密&quot;独立想到不侵权&quot;。认题特征：题干说&quot;某企业技术配方一直保密、未申请专利&quot;→ 商业秘密，保护期不定、他人独立研发不侵权。</p>
 <hr>
-<h2 id="h-15">第五节 标准化：分级、代号与强制/推荐 <span class="stars">★★</span></h2>
+<h2 id="h-15">第五节 标准化：分级、代号与强制/推荐 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第五节 标准化：分级、代号与强制/推荐 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 标准化：分级、代号与强制/推荐 ★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：软件要互联互通，就得有统一的标准（协议格式、编码规范、质量体系）。考试考的不是标准内容本身，而是<strong>看到代号能归类、听到说法能判断强制还是推荐</strong>。</p>
-<h3 id="h-16">我国标准的层级与代号</h3>
+<h3 id="h-16">我国标准的层级与代号<button type="button" class="sec-status" data-status-key="我国标准的层级与代号" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「我国标准的层级与代号」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -326,7 +330,7 @@
 <p><strong>与已学内容的联系</strong>：<a href="03-软件工程基础.html">03-软件工程基础.html</a> 讲的软件质量模型（ISO 9126）就是以&quot;ISO 国际标准&quot;形式发布的，两者代号判别口径一致。</p>
 <p><strong>应试动作</strong>：背代号表的两列——代号 → 层级、带不带 T → 强制/推荐。认题特征：题干直接给一个标准号（GB 18030、SJ/T 10796、DB11/T、Q/ABC、ISO 9001）问归类，或给&quot;标准复审周期是几年&quot;（5 年）。纯识别题，看到 T 就选推荐。</p>
 <hr>
-<h2 id="h-17">课后考题（15 道选择题 + 1 道场景判定题）</h2>
+<h2 id="h-17">课后考题（15 道选择题 + 1 道场景判定题）<button type="button" class="sec-status" data-status-key="课后考题（15 道选择题 + 1 道场景判定题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（15 道选择题 + 1 道场景判定题）」的学习状态"></button></h2>
 <p><strong>1.</strong> 关于计算机软件著作权的取得，下列说法正确的是（ ）。
 A. 软件著作权自开发完成之日起自动产生
 B. 软件著作权自登记之日起产生
@@ -405,7 +409,7 @@ D. 为防止复制品损坏而制作一份备份复制品供自己使用</p>
 <p><strong>16.（场景判定题）</strong> 甲公司程序员小吴在职期间，按公司指派使用公司设备和资料完成了&quot;清风&quot;库存管理软件。此后：小吴离职时将源代码备份带走，以个人名义对该软件进行著作权登记，并授权乙公司有偿使用；丙大学为课堂教学将该软件少量复制安装在机房教学机上；丁公司未经许可在其官方网站提供该软件的下载。
 请判定：(1) 该软件的著作权归谁？(2) 小吴、乙公司的行为是否侵权？(3) 丙大学、丁公司的行为是否侵权？</p>
 <hr>
-<h2 id="h-18">精华题（必考真题风格 8 道）</h2>
+<h2 id="h-18">精华题（必考真题风格 8 道）<button type="button" class="sec-status" data-status-key="精华题（必考真题风格 8 道）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（必考真题风格 8 道）」的学习状态"></button></h2>
 <p><strong>1.</strong> 构成我国保护计算机软件著作权的两个基本法律文件是（ ）。
 A. 《著作权法》和《计算机软件保护条例》
 B. 《著作权法》和《专利法》
@@ -455,7 +459,7 @@ D. SJ/T 11234</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-20">课后考题答案</h3>
+<h3 id="h-20">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. A</strong>
 著作权（含软件著作权）实行<strong>自动保护原则</strong>，自<strong>开发（创作）完成之日</strong>起自动产生。登记（B）、发表（C）都不是取得前提，软件著作权也无需审批（D）。易错点：登记证书只是<strong>证据</strong>，不是权利来源。</p>
 <p><strong>2. C</strong>
@@ -490,7 +494,7 @@ ISO 是国际标准化组织，ISO 9001 属<strong>国际标准</strong>。A 的
 (1) 著作权归<strong>甲公司</strong>。小吴是&quot;在职期间、按公司指派、使用公司设备和资料、完成公司指派任务&quot;的职务开发，按《计算机软件保护条例》职务开发规则，著作权归单位，小吴只保留署名权。
 (2) <strong>均侵权</strong>。著作权归甲公司，小吴以个人名义登记他人的软件，属于&quot;将他人的软件作为自己的软件登记/发表&quot;，构成侵权；其授权乙公司有偿使用属于未经著作权人许可的发行/许可行为，乙公司未获甲公司许可，同样构成侵权。
 (3) <strong>丙大学不侵权，丁公司侵权</strong>。丙大学为课堂教学目的、少量复制、未提供他人、非商业目的，属于合理使用的免责情形；丁公司未经许可在网站上向公众提供软件下载，侵犯信息网络传播权（发布），无任何免责事由。</p>
-<h3 id="h-21">精华题答案</h3>
+<h3 id="h-21">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. A</strong>
 《中华人民共和国著作权法》和《计算机软件保护条例》共同构成我国保护计算机软件著作权的基本法律框架。注意干扰项：我国<strong>没有</strong>单独的&quot;《软件法》&quot;，B 的《专利法》保护的是技术方案而非代码作品。</p>
 <p><strong>2. C</strong>
@@ -512,6 +516,23 @@ ISO 是国际标准化组织，ISO 9001 属<strong>国际标准</strong>。A 的
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="09-计算机系统基础.html">09-计算机系统基础.html</a> 并更新进度表（若你已先学了 09，也可以直接指定要 11 专业英语）。</p>
 
+  <footer class="status-bar" data-status-page="10-标准化与知识产权">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="09-计算机系统基础.html">
       <span class="k">上一课</span>

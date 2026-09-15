@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html" class="is-current" aria-current="page"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,7 +89,7 @@
 <p><strong class="k">学习目标</strong>：学完本课后，你能——① 判断一道计数题该用加法、乘法、排列还是组合；② 写出命题蕴含、德摩根律与量词否定；③ 用握手定理、完全图和树的边数公式解基础图论题；④ 区分绝对误差和相对误差；⑤ 独立计算图像、音频和未压缩视频容量；⑥ 解释 RGB、CMYK、YUV 的用途；⑦ 区分 JPEG、PNG、GIF、MPEG、MP3 及有损/无损压缩。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一部分 本课导航</h2>
+<h2 id="h-2">第一部分 本课导航<button type="button" class="sec-status" data-status-key="第一部分 本课导航" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一部分 本课导航」的学习状态"></button></h2>
 <div class="table-wrap">
 <table>
 <thead>
@@ -139,9 +143,9 @@
 </div>
 <p>本章不对应独立的下午案例大题，但容量计算会以综合题形式训练。建议把所有公式都写在草稿纸上代一次单位；只在脑中“看懂”，最容易漏掉声道数、帧率或 bit→Byte 的除以 8。</p>
 <hr>
-<h2 id="h-3">第二部分 讲义（通俗讲解）</h2>
-<h2 id="h-4">第一节 计数原理：先问“分步”还是“分类” <span class="stars">★★★</span></h2>
-<h3 id="h-5">1.1 加法原理与乘法原理</h3>
+<h2 id="h-3">第二部分 讲义（通俗讲解）<button type="button" class="sec-status" data-status-key="第二部分 讲义（通俗讲解）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二部分 讲义（通俗讲解）」的学习状态"></button></h2>
+<h2 id="h-4">第一节 计数原理：先问“分步”还是“分类” <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一节 计数原理：先问“分步”还是“分类” ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 计数原理：先问“分步”还是“分类” ★★★」的学习状态"></button></h2>
+<h3 id="h-5">1.1 加法原理与乘法原理<button type="button" class="sec-status" data-status-key="1.1 加法原理与乘法原理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 加法原理与乘法原理」的学习状态"></button></h3>
 <p>计数题最先判断的不是排列还是组合，而是事情怎样完成。</p>
 <ul>
 <li><strong>分类完成，用加法</strong>：完成任务有若干条互斥路线，任选一条即可，总数相加；</li>
@@ -151,14 +155,14 @@
 <p>例 2：先从 4 件上衣中选 1 件，再从 3 条裤子中选 1 条，共 <code>4×3=12</code> 种。这是分步。</p>
 <p><strong>反例前置</strong>：把“先选用户名，再选密码”算成用户名数+密码数是错的，因为一次完整登录凭据必须两步都完成，应使用乘法。</p>
 <p><strong>应试动作</strong>：看到“或、任选一种路线”先想加法；看到“先……再……、同时具备”先想乘法。</p>
-<h3 id="h-6">1.2 排列：选出来以后还要排顺序</h3>
+<h3 id="h-6">1.2 排列：选出来以后还要排顺序<button type="button" class="sec-status" data-status-key="1.2 排列：选出来以后还要排顺序" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 排列：选出来以后还要排顺序」的学习状态"></button></h3>
 <p>从 n 个不同元素中取 m 个并按顺序排列：</p>
 <p><strong>A(n,m) = n×(n−1)×…×(n−m+1) = n!/(n−m)!</strong></p>
 <p>其中 <code>n! = n×(n−1)×…×2×1</code>，并约定 <code>0!=1</code>。</p>
 <p>例：从 6 人中选班长、学习委员、生活委员，职位不同，谁担任哪个职位会改变结果：</p>
 <p><code>A(6,3)=6×5×4=120</code>。</p>
 <p>手算口诀：<strong>有位置就排，依次递减乘</strong>。</p>
-<h3 id="h-7">1.3 组合：只选一组，不管组内顺序</h3>
+<h3 id="h-7">1.3 组合：只选一组，不管组内顺序<button type="button" class="sec-status" data-status-key="1.3 组合：只选一组，不管组内顺序" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 组合：只选一组，不管组内顺序」的学习状态"></button></h3>
 <p>从 n 个不同元素中取 m 个组成一组：</p>
 <p><strong>C(n,m) = n!/[m!(n−m)!] = A(n,m)/m!</strong></p>
 <p>为何要除以 m!？同一组选出后，内部的 m! 种排列在组合里都算同一种。</p>
@@ -168,7 +172,7 @@
 <p>组合的对称性：<strong>C(n,m)=C(n,n−m)</strong>。从 10 人中选 8 人留下，等价于选 2 人不参加，因此 <code>C(10,8)=C(10,2)=45</code>。</p>
 <p><strong>反例</strong>：“从 6 人中选 3 人参加会议”若算 <code>A(6,3)=120</code> 就错了。甲乙丙和丙乙甲是同一组，顺序不产生新结果。</p>
 <p><strong>应试动作</strong>：给每个被选者假想贴职位标签——交换两人后算不算新结果？算新结果用排列，不算用组合。</p>
-<h3 id="h-8">1.4 可重复选择、重复元素排列与圆排列</h3>
+<h3 id="h-8">1.4 可重复选择、重复元素排列与圆排列<button type="button" class="sec-status" data-status-key="1.4 可重复选择、重复元素排列与圆排列" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 可重复选择、重复元素排列与圆排列」的学习状态"></button></h3>
 <p><strong>每个位置可重复选择</strong>：若有 n 种字符，填 m 个位置，每个位置都可重复，共 <strong>n^m</strong> 种。</p>
 <p>例：4 位数字验证码允许重复，每位 0–9 均可选，共 <code>10^4=10000</code> 种。若首位不能为 0，则第一位 9 种，其余各 10 种，共 <code>9×10^3=9000</code> 种。</p>
 <p><strong>有重复元素的全排列</strong>：n 个元素中分别有 n1、n2…个相同元素：</p>
@@ -177,7 +181,7 @@
 <p><code>5!/(2!×2!)=120/4=30</code>。</p>
 <p><strong>圆排列</strong>：n 个不同的人围成一圈，只把整体旋转视为相同，共 <strong>(n−1)!</strong> 种。固定一个人作为参照，其余 n−1 人线性排列即可。</p>
 <p><strong>应试动作</strong>：允许重复填位置用 n^m；相同元素被重复计算就除以各自阶乘；“围成一圈且旋转算同一种”用 <code>(n−1)!</code>。</p>
-<h3 id="h-9">1.5 容斥与抽屉原理</h3>
+<h3 id="h-9">1.5 容斥与抽屉原理<button type="button" class="sec-status" data-status-key="1.5 容斥与抽屉原理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 容斥与抽屉原理」的学习状态"></button></h3>
 <p>两个集合的容斥：</p>
 <p><strong>|A∪B| = |A|+|B|−|A∩B|</strong></p>
 <p>例：40 人中 25 人会 Java，18 人会 Python，10 人两者都会。至少会一种的有：</p>
@@ -186,7 +190,7 @@
 <p>例：13 个人按出生月份分到 12 个“月份抽屉”，至少 2 人同月出生。</p>
 <p><strong>应试动作</strong>：看到“至少多少个相同类别”想抽屉原理；看到“两类至少一个”先加后减交集。</p>
 <hr>
-<h2 id="h-10">第二节 概率基础：有利情况除以全部情况 <span class="stars">★★</span></h2>
+<h2 id="h-10">第二节 概率基础：有利情况除以全部情况 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 概率基础：有利情况除以全部情况 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 概率基础：有利情况除以全部情况 ★★」的学习状态"></button></h2>
 <p>在所有基本结果等可能时：</p>
 <p><strong>P(A)=事件 A 的有利结果数 / 全部结果数</strong></p>
 <p>例：从 5 个合格模块、3 个不合格模块中随机抽 2 个，恰好抽到 1 个不合格模块：</p>
@@ -207,8 +211,8 @@
 <p><strong>反例</strong>：只有相互独立时才能直接把概率相乘。连续两次不放回抽球，第二次的概率会受第一次影响，不能机械写成同一个概率的平方。</p>
 <p><strong>应试动作</strong>：题目有“等可能”才用有利/全部；遇到“至少一个”优先算“一个都没有”。</p>
 <hr>
-<h2 id="h-11">第三节 命题逻辑：把自然语言变成真假规则 <span class="stars">★★★</span></h2>
-<h3 id="h-12">3.1 基本联结词</h3>
+<h2 id="h-11">第三节 命题逻辑：把自然语言变成真假规则 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第三节 命题逻辑：把自然语言变成真假规则 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 命题逻辑：把自然语言变成真假规则 ★★★」的学习状态"></button></h2>
+<h3 id="h-12">3.1 基本联结词<button type="button" class="sec-status" data-status-key="3.1 基本联结词" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 基本联结词」的学习状态"></button></h3>
 <p>设 P、Q 为命题：</p>
 <div class="table-wrap">
 <table>
@@ -280,12 +284,12 @@
 </div>
 <p><code>P→Q</code> 的等价式：<strong>¬P∨Q</strong>；逆否命题：<strong>¬Q→¬P</strong>，与原命题等价。</p>
 <p><strong>反例前置</strong>：原命题“若通过认证，则允许进入”不能推出“若允许进入，则通过认证”，后者是逆命题，未必成立；也不能只否定其中一边。与原命题等价的逆否命题是“若没有被允许进入，则没有通过认证”。</p>
-<h3 id="h-13">3.2 德摩根律</h3>
+<h3 id="h-13">3.2 德摩根律<button type="button" class="sec-status" data-status-key="3.2 德摩根律" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 德摩根律」的学习状态"></button></h3>
 <p><strong>¬(P∧Q) = ¬P∨¬Q</strong><br><strong>¬(P∨Q) = ¬P∧¬Q</strong></p>
 <p>口诀：<strong>括号外取反，里面每项取反，且与或互换</strong>。</p>
 <p>例：“并非（系统安全且高效）”等价于“系统不安全或不高效”。</p>
 <p><strong>反例</strong>：<code>¬(P∧Q)</code> 不能写成 <code>¬P∧¬Q</code>。只要两者中有一个不成立，“P 且 Q”就已被否定，所以中间应是“或”。</p>
-<h3 id="h-14">3.3 充分条件、必要条件与量词否定</h3>
+<h3 id="h-14">3.3 充分条件、必要条件与量词否定<button type="button" class="sec-status" data-status-key="3.3 充分条件、必要条件与量词否定" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 充分条件、必要条件与量词否定」的学习状态"></button></h3>
 <p><code>P→Q</code> 中：P 是 Q 的<strong>充分条件</strong>，Q 是 P 的<strong>必要条件</strong>。</p>
 <p>例：“是正方形 → 四边相等”。正方形足以保证四边相等，所以“是正方形”是充分条件；一个图形若是正方形，四边相等是必不可少的，所以“四边相等”是必要条件。</p>
 <p>量词否定：</p>
@@ -296,21 +300,21 @@
 <p><strong>反例</strong>：“所有测试都通过”的否定不是“所有测试都没通过”，而是“至少一个测试没通过”。</p>
 <p><strong>应试动作</strong>：蕴含只背一个假情况“前真后假”；否定复合命题时用德摩根律；否定“所有”变“至少一个不”。</p>
 <hr>
-<h2 id="h-15">第四节 图论基础：点与边的三个送分公式 <span class="stars">★★</span></h2>
-<h3 id="h-16">4.1 度数和公式（握手定理）</h3>
+<h2 id="h-15">第四节 图论基础：点与边的三个送分公式 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第四节 图论基础：点与边的三个送分公式 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 图论基础：点与边的三个送分公式 ★★」的学习状态"></button></h2>
+<h3 id="h-16">4.1 度数和公式（握手定理）<button type="button" class="sec-status" data-status-key="4.1 度数和公式（握手定理）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 度数和公式（握手定理）」的学习状态"></button></h3>
 <p>无向图中，每条边连接两个端点，因此每条边给总度数贡献 2：</p>
 <p><strong>所有顶点度数之和 = 2|E|</strong></p>
 <p>例：某无向图各顶点度数之和为 30，则边数 <code>|E|=30/2=15</code>。</p>
 <p>推论：无向图中奇数度顶点的个数一定是偶数。</p>
 <p>有向图中：</p>
 <p><strong>所有顶点入度之和 = 所有顶点出度之和 = |E|</strong>。</p>
-<h3 id="h-17">4.2 完全图边数</h3>
+<h3 id="h-17">4.2 完全图边数<button type="button" class="sec-status" data-status-key="4.2 完全图边数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 完全图边数」的学习状态"></button></h3>
 <p>n 个顶点的无向完全图，每两个顶点之间都有一条边：</p>
 <p><strong>|E|=C(n,2)=n(n−1)/2</strong></p>
 <p>例：6 个结点两两直连，边数：</p>
 <p><code>C(6,2)=(6×5)/(2×1)=15</code>。</p>
 <p>n 个顶点的有向完全图若任意两个不同顶点之间两个方向的弧都存在，则弧数为 <strong>n(n−1)</strong>。</p>
-<h3 id="h-18">4.3 树的边数</h3>
+<h3 id="h-18">4.3 树的边数<button type="button" class="sec-status" data-status-key="4.3 树的边数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 树的边数」的学习状态"></button></h3>
 <p>含 n 个顶点的无向树恰有：</p>
 <p><strong>|E|=n−1</strong></p>
 <p>树连通且无环。若一个连通无向图有 n 个顶点、n−1 条边，它就是树；树再加 1 条边必形成环，删掉任意一条已有边会不连通。</p>
@@ -331,7 +335,7 @@
 <li>百分相对误差=<code>0.01×100%=1%</code>。</li>
 </ul>
 <p>反向检查：19.8 比 20 少 0.2，而 0.2 是 20 的百分之一，确为 1%。</p>
-<h3 id="h-20">5.1 截断与舍入</h3>
+<h3 id="h-20">5.1 截断与舍入<button type="button" class="sec-status" data-status-key="5.1 截断与舍入" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 截断与舍入」的学习状态"></button></h3>
 <ul>
 <li>截断：超过保留位数的部分直接丢弃；</li>
 <li>四舍五入：看下一位决定末位是否加 1。</li>
@@ -342,11 +346,11 @@
 <li>四舍五入绝对误差 0.004。</li>
 </ul>
 <p>本例中舍入误差更小，但不要背“任何计算中舍入都必然更准确”；连续运算还会传播和累积误差。</p>
-<h3 id="h-21">5.2 避免灾难性抵消</h3>
+<h3 id="h-21">5.2 避免灾难性抵消<button type="button" class="sec-status" data-status-key="5.2 避免灾难性抵消" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 避免灾难性抵消」的学习状态"></button></h3>
 <p>两个非常接近的数相减，会把前面相同的有效数字消掉，使相对误差被放大，称为<strong>有效数字损失/灾难性抵消</strong>。数值计算题若给出等价公式，通常优先选避免“大数减大数”的形式。</p>
 <p><strong>应试动作</strong>：绝对误差有原量纲，相对误差无量纲；百分数别忘乘 100%。看到“保留若干位”先分清截断还是四舍五入。</p>
 <hr>
-<h2 id="h-22">第六节 多媒体数据的共同框架 <span class="stars">★★</span></h2>
+<h2 id="h-22">第六节 多媒体数据的共同框架 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第六节 多媒体数据的共同框架 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 多媒体数据的共同框架 ★★」的学习状态"></button></h2>
 <p>现实中的声音和图像多是连续信号，计算机要经过三步：</p>
 <ol>
 <li><strong>采样</strong>：在时间或空间上取点；</li>
@@ -366,8 +370,8 @@
 </ul>
 <p><strong>应试动作</strong>：计算式最后写出单位。先得到 bit，再除以 8 变 Byte；只有题目要求 KiB/MiB 时才继续除以 1024。</p>
 <hr>
-<h2 id="h-23">第七节 图像容量与分辨率 <span class="stars">★★★</span></h2>
-<h3 id="h-24">7.1 位图容量公式</h3>
+<h2 id="h-23">第七节 图像容量与分辨率 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第七节 图像容量与分辨率 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 图像容量与分辨率 ★★★」的学习状态"></button></h2>
+<h3 id="h-24">7.1 位图容量公式<button type="button" class="sec-status" data-status-key="7.1 位图容量公式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 位图容量公式」的学习状态"></button></h3>
 <p>未压缩位图容量：</p>
 <p><strong>容量(bit)=水平像素×垂直像素×每像素位数</strong></p>
 <p><strong>容量(Byte)=水平像素×垂直像素×位深÷8</strong></p>
@@ -380,7 +384,7 @@
 </ol>
 <p>第二种方法：24 bit=3 B/像素，直接算 <code>1024×768×3=2359296 B=2.25 MiB</code>，一致。</p>
 <p><strong>反例前置</strong>：24 bit 不是 24 Byte。位深以 bit 表示，每像素 24 bit=3 Byte，漏除以 8 会把容量放大 8 倍。</p>
-<h3 id="h-25">7.2 颜色数与位深</h3>
+<h3 id="h-25">7.2 颜色数与位深<button type="button" class="sec-status" data-status-key="7.2 颜色数与位深" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 颜色数与位深」的学习状态"></button></h3>
 <p>b bit 最多表示：</p>
 <p><strong>颜色数 = 2^b</strong></p>
 <p>反过来，要表示 N 种颜色，至少需要：</p>
@@ -417,7 +421,7 @@
 </tbody></table>
 </div>
 <p>例：至少表示 300 种颜色。8 bit 只能表示 256 种，不够；9 bit 可表示 512 种，因此至少 9 bit。</p>
-<h3 id="h-26">7.3 像素分辨率与 DPI</h3>
+<h3 id="h-26">7.3 像素分辨率与 DPI<button type="button" class="sec-status" data-status-key="7.3 像素分辨率与 DPI" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 像素分辨率与 DPI」的学习状态"></button></h3>
 <ul>
 <li><code>1920×1080</code>：数字图像的像素尺寸；</li>
 <li>DPI/PPI：每英寸点数/像素数，常用于打印或显示密度；</li>
@@ -425,7 +429,7 @@
 </ul>
 <p>例：一幅 3000×2400 像素的图片按 300 PPI 打印，尺寸为 <code>3000/300=10</code> 英寸 × <code>2400/300=8</code> 英寸。</p>
 <p><strong>反例</strong>：只改图片元数据中的 DPI、不改变像素数，通常不会改变未压缩像素数据量；容量公式仍看像素总数和位深。</p>
-<h3 id="h-27">7.4 位图与矢量图</h3>
+<h3 id="h-27">7.4 位图与矢量图<button type="button" class="sec-status" data-status-key="7.4 位图与矢量图" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.4 位图与矢量图」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -459,8 +463,8 @@
 </div>
 <p><strong>应试动作</strong>：图像容量先写“宽×高×位深÷8”；颜色数用 2^b；打印题用像素÷PPI。</p>
 <hr>
-<h2 id="h-28">第八节 音频与视频容量 <span class="stars">★★★</span></h2>
-<h3 id="h-29">8.1 音频容量</h3>
+<h2 id="h-28">第八节 音频与视频容量 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第八节 音频与视频容量 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 音频与视频容量 ★★★」的学习状态"></button></h2>
+<h3 id="h-29">8.1 音频容量<button type="button" class="sec-status" data-status-key="8.1 音频容量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 音频容量」的学习状态"></button></h3>
 <p>未压缩 PCM 音频：</p>
 <p><strong>容量(bit)=采样频率(次/秒)×量化位数(bit/次)×声道数×时间(秒)</strong></p>
 <p><strong>容量(Byte)=上述结果÷8</strong></p>
@@ -468,25 +472,25 @@
 <p><code>44100×16×2×10/8=1764000 B≈1.682 MiB</code>。</p>
 <p>第二种方法：每次每声道 16 bit=2 B；每秒双声道 <code>44100×2×2=176400 B</code>；10 秒 <code>176400×10=1764000 B</code>，一致。</p>
 <p><strong>反例</strong>：双声道不是把采样率翻倍，而是在同一时刻记录两个声道；计算容量时仍要额外乘 2。<code>44.1 kHz=44100 Hz</code>，不能直接把 44.1 当每秒采样次数。</p>
-<h3 id="h-30">8.2 采样定理</h3>
+<h3 id="h-30">8.2 采样定理<button type="button" class="sec-status" data-status-key="8.2 采样定理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 采样定理」的学习状态"></button></h3>
 <p>为从采样值中恢复最高频率为 fmax 的带限信号，理想情况下采样频率应满足：</p>
 <p><strong>fs ≥ 2fmax</strong></p>
 <p>例：语音最高频率 8 kHz，采样频率至少应为 <code>2×8=16 kHz</code>。</p>
 <p>口诀：<strong>最高频率乘二，才不发生混叠</strong>。实际系统通常留出滤波余量，不会只卡理论等号。</p>
-<h3 id="h-31">8.3 MIDI 与数字音频</h3>
+<h3 id="h-31">8.3 MIDI 与数字音频<button type="button" class="sec-status" data-status-key="8.3 MIDI 与数字音频" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.3 MIDI 与数字音频」的学习状态"></button></h3>
 <ul>
 <li>PCM/WAV 类采样音频保存波形样本，能记录人声和任意声音，容量较大；</li>
 <li>MIDI 保存音符、音高、时长、乐器等演奏指令，不保存真实声音波形，容量小，但播放效果依赖音源，不能直接真实记录一段人声。</li>
 </ul>
-<h3 id="h-32">8.4 未压缩视频容量</h3>
+<h3 id="h-32">8.4 未压缩视频容量<button type="button" class="sec-status" data-status-key="8.4 未压缩视频容量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.4 未压缩视频容量」的学习状态"></button></h3>
 <p><strong>视频容量(Byte)=宽×高×每像素位数×帧率×时长÷8</strong></p>
 <p>例：<code>1280×720</code>、24 bit、25 fps、10 秒的未压缩视频：</p>
 <p><code>1280×720×24×25×10/8=691200000 B≈659.18 MiB</code>。</p>
 <p>反向分层验证：每帧 <code>1280×720×3=2764800 B</code>；10 秒共 <code>25×10=250</code> 帧；<code>2764800×250=691200000 B</code>。</p>
 <p><strong>应试动作</strong>：音频写“采样率×位数×声道×秒÷8”；视频在图像公式后再乘“帧/秒×秒”。看到最高频率则乘 2 求最低采样率。</p>
 <hr>
-<h2 id="h-33">第九节 颜色空间：显示、印刷与视频各有一套语言 <span class="stars">★★</span></h2>
-<h3 id="h-34">9.1 RGB：发光设备做加法</h3>
+<h2 id="h-33">第九节 颜色空间：显示、印刷与视频各有一套语言 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 颜色空间：显示、印刷与视频各有一套语言 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 颜色空间：显示、印刷与视频各有一套语言 ★★」的学习状态"></button></h2>
+<h3 id="h-34">9.1 RGB：发光设备做加法<button type="button" class="sec-status" data-status-key="9.1 RGB：发光设备做加法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.1 RGB：发光设备做加法」的学习状态"></button></h3>
 <p>RGB 用红（Red）、绿（Green）、蓝（Blue）三种光叠加：</p>
 <ul>
 <li>三者全 0 → 黑；</li>
@@ -494,21 +498,21 @@
 <li>适合显示器、摄像头等发光/采集设备。</li>
 </ul>
 <p>称为<strong>加色模型</strong>，因为加光越多越亮。</p>
-<h3 id="h-35">9.2 CMY/CMYK：印刷颜料做减法</h3>
+<h3 id="h-35">9.2 CMY/CMYK：印刷颜料做减法<button type="button" class="sec-status" data-status-key="9.2 CMY/CMYK：印刷颜料做减法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.2 CMY/CMYK：印刷颜料做减法」的学习状态"></button></h3>
 <p>CMY 为青（Cyan）、品红（Magenta）、黄（Yellow），颜料通过吸收一部分光形成颜色，属于<strong>减色模型</strong>。印刷常增加 K（Black，黑）形成 CMYK，以得到更纯的黑色并节省彩色墨水。</p>
 <p><strong>反例</strong>：打印机不是把 RGB 三束光打到纸上。屏幕自身发光用 RGB；纸张反射环境光、油墨吸光，用 CMYK。</p>
-<h3 id="h-36">9.3 YUV/YCbCr：把亮度与色度分开</h3>
+<h3 id="h-36">9.3 YUV/YCbCr：把亮度与色度分开<button type="button" class="sec-status" data-status-key="9.3 YUV/YCbCr：把亮度与色度分开" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.3 YUV/YCbCr：把亮度与色度分开」的学习状态"></button></h3>
 <ul>
 <li>Y：亮度（luminance/luma）；</li>
 <li>U、V 或 Cb、Cr：色度/色差信息。</li>
 </ul>
 <p>人眼对亮度细节比色度细节更敏感，因此视频和 JPEG 可对色度做更强压缩，减少数据而尽量保持主观质量。Y 分量还带来与黑白显示的兼容思路。</p>
-<h3 id="h-37">9.4 HSV/HSL：按人的颜色直觉描述</h3>
+<h3 id="h-37">9.4 HSV/HSL：按人的颜色直觉描述<button type="button" class="sec-status" data-status-key="9.4 HSV/HSL：按人的颜色直觉描述" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.4 HSV/HSL：按人的颜色直觉描述」的学习状态"></button></h3>
 <p>HSV 常用 Hue（色相）、Saturation（饱和度）、Value（明度）描述颜色，便于选色与图像处理。它不是显示器物理发光的基本模型。</p>
 <p><strong>应试动作</strong>：显示器选 RGB（加色）；印刷选 CMYK（减色）；电视/视频与亮色分离选 YUV/YCbCr；按色相、饱和度调色选 HSV/HSL。</p>
 <hr>
-<h2 id="h-38">第十节 压缩：删掉冗余，必要时舍掉不敏感信息 <span class="stars">★★★</span></h2>
-<h3 id="h-39">10.1 为什么能压缩</h3>
+<h2 id="h-38">第十节 压缩：删掉冗余，必要时舍掉不敏感信息 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十节 压缩：删掉冗余，必要时舍掉不敏感信息 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 压缩：删掉冗余，必要时舍掉不敏感信息 ★★★」的学习状态"></button></h2>
+<h3 id="h-39">10.1 为什么能压缩<button type="button" class="sec-status" data-status-key="10.1 为什么能压缩" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.1 为什么能压缩」的学习状态"></button></h3>
 <p>多媒体中存在多种冗余：</p>
 <ul>
 <li>空间冗余：相邻像素常相似；</li>
@@ -520,7 +524,7 @@
 <p><strong>压缩比 = 压缩前容量 / 压缩后容量</strong></p>
 <p>例：100 MiB 压成 5 MiB，压缩比为 <code>100/5=20:1</code>。若说“压缩后是原来的 5%”，则压缩后容量=<code>100×5%=5 MiB</code>。</p>
 <p><strong>反例</strong>：“压缩率 20%”在不同资料中可能指压缩后占 20%，也可能指减少了 20%。题面含糊时优先看它给出的定义；讲义和严谨题目应直接说“压缩比”或“压缩后占原大小百分比”。</p>
-<h3 id="h-40">10.2 无损与有损</h3>
+<h3 id="h-40">10.2 无损与有损<button type="button" class="sec-status" data-status-key="10.2 无损与有损" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.2 无损与有损」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -546,7 +550,7 @@
 </tbody></table>
 </div>
 <p>有损不等于“文件损坏”，而是有控制地舍弃人类不敏感的信息，用质量换更高压缩比。</p>
-<h3 id="h-41">10.3 常见图像格式</h3>
+<h3 id="h-41">10.3 常见图像格式<button type="button" class="sec-status" data-status-key="10.3 常见图像格式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.3 常见图像格式」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -578,7 +582,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-42">10.4 JPEG 的核心过程</h3>
+<h3 id="h-42">10.4 JPEG 的核心过程<button type="button" class="sec-status" data-status-key="10.4 JPEG 的核心过程" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.4 JPEG 的核心过程」的学习状态"></button></h3>
 <p>典型 JPEG 思路：颜色变换与色度抽样 → 分块 → <strong>DCT（离散余弦变换）</strong> → <strong>量化</strong> → 熵编码。</p>
 <ul>
 <li>DCT 把空间像素转换为频率系数，本身可逆；</li>
@@ -586,7 +590,7 @@
 <li>熵编码利用统计冗余，属于无损编码步骤。</li>
 </ul>
 <p><strong>反例</strong>：不能笼统说“JPEG 每一步都有损”。导致信息不可精确恢复的核心通常是量化和可能的色度抽样，Huffman 等熵编码本身可逆。</p>
-<h3 id="h-43">10.5 MPEG 与帧间压缩</h3>
+<h3 id="h-43">10.5 MPEG 与帧间压缩<button type="button" class="sec-status" data-status-key="10.5 MPEG 与帧间压缩" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.5 MPEG 与帧间压缩」的学习状态"></button></h3>
 <p>MPEG 面向运动图像及相关音频，既利用单帧内的<strong>空间冗余</strong>，也利用帧与帧之间的<strong>时间冗余</strong>。</p>
 <div class="table-wrap">
 <table>
@@ -617,7 +621,7 @@
 <p>常见标准印象：JPEG 主要针对静止图像；MPEG 系列主要针对运动图像/音视频；MP3 是有损音频压缩。</p>
 <p><strong>应试动作</strong>：要求完全恢复选无损；照片优先 JPEG；透明界面图优先 PNG；简单动画常见 GIF；视频想到 MPEG 与时间冗余。问 JPEG 哪一步主要有损，选量化。</p>
 <hr>
-<h2 id="h-44">第十一节 容量题统一解题模板 <span class="stars">★★★</span></h2>
+<h2 id="h-44">第十一节 容量题统一解题模板 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十一节 容量题统一解题模板 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十一节 容量题统一解题模板 ★★★」的学习状态"></button></h2>
 <p>考试时在草稿纸固定写四行：</p>
 <ol>
 <li>写原始公式，列出所有维度；</li>
@@ -655,11 +659,11 @@
 <li>未压缩高清视频每秒往往几十到上百 MB，所以算出“10 秒只有几 KB”一定漏乘了某项。</li>
 </ul>
 <hr>
-<h2 id="h-45">第三部分 课后考题</h2>
+<h2 id="h-45">第三部分 课后考题<button type="button" class="sec-status" data-status-key="第三部分 课后考题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三部分 课后考题」的学习状态"></button></h2>
 <blockquote>
 <p>先独立完成，再翻到文件末尾核对。计算题必须写单位。</p>
 </blockquote>
-<h3 id="h-46">一、选择题（15 题）</h3>
+<h3 id="h-46">一、选择题（15 题）<button type="button" class="sec-status" data-status-key="一、选择题（15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、选择题（15 题）」的学习状态"></button></h3>
 <p><strong>1.</strong> 从 8 名候选人中选 3 人组成不区分职务的评审组，共有（ ）种选法。</p>
 <p>A. 24<br>B. 56<br>C. 336<br>D. 512</p>
 <p><strong>2.</strong> 用数字 0–9 组成允许重复的 4 位验证码（可以以 0 开头），共有（ ）种。</p>
@@ -690,7 +694,7 @@
 <p>A. PNG<br>B. JPEG<br>C. MP3<br>D. MPEG</p>
 <p><strong>15.</strong> MPEG 视频压缩能够取得较高压缩比，一个重要原因是它利用了相邻帧之间的（ ）。</p>
 <p>A. 语法冗余<br>B. 时间冗余<br>C. 权限继承<br>D. 数据库冗余</p>
-<h3 id="h-47">二、综合计算题（2 题）</h3>
+<h3 id="h-47">二、综合计算题（2 题）<button type="button" class="sec-status" data-status-key="二、综合计算题（2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、综合计算题（2 题）」的学习状态"></button></h3>
 <p><strong>16. 图像与视频容量</strong></p>
 <p>某素材库包含 10 幅 <code>800×600</code>、24 bit 的未压缩彩色图片。</p>
 <p>（1）求 10 幅图片的原始总容量（B 和 MiB）。<br>（2）若采用某有损编码后压缩比为 20:1，求压缩后的总容量（B 和 MiB）。<br>（3）若将同样规格的图像以 25 fps 连续播放 8 秒，不考虑音频，求未压缩视频容量（B 和 MiB）。</p>
@@ -698,7 +702,7 @@
 <p>一个测试组有 5 名开发人员和 3 名测试人员。</p>
 <p>（1）从 8 人中任选 3 人组成应急小组，共有多少种选法？<br>（2）若要求小组恰有 1 名测试人员，共有多少种选法？随机任选 3 人时，恰有 1 名测试人员的概率是多少？<br>（3）会议录音采用 48 kHz、24 bit、双声道 PCM，时长 60 秒，求未压缩容量（B 和 MiB）。</p>
 <hr>
-<h2 id="h-48">第四部分 精华题</h2>
+<h2 id="h-48">第四部分 精华题<button type="button" class="sec-status" data-status-key="第四部分 精华题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四部分 精华题」的学习状态"></button></h2>
 <p><strong>1.</strong> 单词 <code>LEVEL</code> 的 5 个字母进行全排列，不同字符串共有（ ）个。</p>
 <p>A. 20<br>B. 30<br>C. 60<br>D. 120</p>
 <p><strong>2.</strong> “所有测试用例都通过”的否定是（ ）。</p>
@@ -722,7 +726,7 @@
   </summary>
   <div class="answers-body">
 
-<h3 id="h-50">课后选择题答案</h3>
+<h3 id="h-50">课后选择题答案<button type="button" class="sec-status" data-status-key="课后选择题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后选择题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong></p>
 <p>只选 3 人、不区分职位，交换顺序不产生新结果，用组合：</p>
 <p><code>C(8,3)=(8×7×6)/(3×2×1)=56</code>。</p>
@@ -755,7 +759,7 @@
 <p>PNG 是无损位图格式并支持 Alpha 透明，适合界面图标和截图。JPEG 有损且通常不支持 Alpha；MP3 是音频，MPEG 主要用于运动图像/音视频。</p>
 <p><strong>15. B</strong></p>
 <p>相邻视频帧往往高度相似，MPEG 用预测编码利用帧间时间冗余；同一帧内部还可利用空间冗余。其余选项不是视频压缩的对应概念。</p>
-<h3 id="h-51">综合计算题答案</h3>
+<h3 id="h-51">综合计算题答案<button type="button" class="sec-status" data-status-key="综合计算题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合计算题答案」的学习状态"></button></h3>
 <p><strong>16. 图像与视频容量</strong></p>
 <p>（1）每幅图片：</p>
 <p><code>800×600×24/8=1440000 B</code>。</p>
@@ -781,7 +785,7 @@
 <p><code>48000×24×2×60/8=17280000 B</code>；</p>
 <p><code>17280000/1048576≈16.479 MiB</code>。</p>
 <p>第二种方法：24 bit=3 B，每秒双声道容量=<code>48000×3×2=288000 B</code>；60 秒=<code>288000×60=17280000 B</code>，一致。</p>
-<h3 id="h-52">精华题答案</h3>
+<h3 id="h-52">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong></p>
 <p><code>LEVEL</code> 共 5 个位置，L 重复 2 次、E 重复 2 次：</p>
 <p><code>5!/(2!×2!)=120/(2×2)=30</code>。</p>
@@ -808,6 +812,23 @@
 </details>
 
 
+  <footer class="status-bar" data-status-page="12-数学与多媒体">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="11-专业英语.html">
       <span class="k">上一课</span>

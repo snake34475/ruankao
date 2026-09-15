@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -37,7 +40,7 @@
       <div class="chips">
         <span class="chip">考试时间 <b>10 月 24—27 日</b>·机考</span>
         <span class="chip">两科各 <b>75 分</b>，<b>45 分</b>合格</span>
-        <span class="chip gold">进度 <b>5/15</b> 份</span>
+        <span class="chip gold">进度 <b>0/16</b> 份</span>
       </div>
     </div>
   <section class="group">
@@ -47,6 +50,7 @@
     </header>
     <div class="cards">
       <a class="card" href="软件设计师考点大纲.html">
+        <i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i>
         <span class="n">大纲</span>
         <span class="body">
           <span class="t">软件设计师（软考中级）考点大纲与学习范围</span>
@@ -54,9 +58,18 @@
         </span>
       </a>
       <a class="card" href="00-总览与进度.html">
+        <i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i>
         <span class="n">00</span>
         <span class="body">
           <span class="t">自学总览与进度</span>
+          
+        </span>
+      </a>
+      <a class="card" href="学习计划.html">
+        <i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i>
+        <span class="n">计划</span>
+        <span class="body">
+          <span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span>
           
         </span>
       </a>
@@ -69,6 +82,7 @@
     </header>
     <div class="cards">
       <a class="card" href="01-数据结构与算法.html">
+        <i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i>
         <span class="n">01</span>
         <span class="body">
           <span class="t">数据结构与算法</span>
@@ -76,6 +90,7 @@
         </span>
       </a>
       <a class="card" href="02-数据库系统.html">
+        <i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i>
         <span class="n">02</span>
         <span class="body">
           <span class="t">数据库系统</span>
@@ -83,6 +98,7 @@
         </span>
       </a>
       <a class="card" href="03-软件工程基础.html">
+        <i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i>
         <span class="n">03</span>
         <span class="body">
           <span class="t">软件工程基础</span>
@@ -90,6 +106,7 @@
         </span>
       </a>
       <a class="card" href="04-面向对象与设计模式.html">
+        <i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i>
         <span class="n">04</span>
         <span class="body">
           <span class="t">面向对象与设计模式</span>
@@ -105,6 +122,7 @@
     </header>
     <div class="cards">
       <a class="card" href="05-操作系统.html">
+        <i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i>
         <span class="n">05</span>
         <span class="body">
           <span class="t">操作系统</span>
@@ -112,6 +130,7 @@
         </span>
       </a>
       <a class="card" href="06-计算机网络.html">
+        <i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i>
         <span class="n">06</span>
         <span class="body">
           <span class="t">计算机网络</span>
@@ -119,6 +138,7 @@
         </span>
       </a>
       <a class="card" href="07-程序设计语言基础.html">
+        <i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i>
         <span class="n">07</span>
         <span class="body">
           <span class="t">程序设计语言基础</span>
@@ -126,13 +146,15 @@
         </span>
       </a>
       <a class="card" href="08-信息安全.html">
+        <i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i>
         <span class="n">08</span>
         <span class="body">
           <span class="t">信息安全</span>
           <span class="h">约 3–4 题</span>
         </span>
       </a>
-      <a class="card done" href="09-计算机系统基础.html">
+      <a class="card" href="09-计算机系统基础.html">
+        <i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i>
         <span class="n">09</span>
         <span class="body">
           <span class="t">计算机系统基础</span>
@@ -147,21 +169,24 @@
       <span class="note">背诵即可拿分</span>
     </header>
     <div class="cards">
-      <a class="card done" href="10-标准化与知识产权.html">
+      <a class="card" href="10-标准化与知识产权.html">
+        <i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i>
         <span class="n">10</span>
         <span class="body">
           <span class="t">标准化与知识产权</span>
           <span class="h">约 3–4 题</span>
         </span>
       </a>
-      <a class="card done" href="11-专业英语.html">
+      <a class="card" href="11-专业英语.html">
+        <i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i>
         <span class="n">11</span>
         <span class="body">
           <span class="t">专业英语</span>
           <span class="h">固定 5 题</span>
         </span>
       </a>
-      <a class="card done" href="12-数学与多媒体.html">
+      <a class="card" href="12-数学与多媒体.html">
+        <i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i>
         <span class="n">12</span>
         <span class="body">
           <span class="t">数学与多媒体</span>
@@ -176,7 +201,8 @@
       <span class="note">全真模拟，整卷限时训练</span>
     </header>
     <div class="cards">
-      <a class="card done" href="99-考前全真模拟卷.html">
+      <a class="card" href="99-考前全真模拟卷.html">
+        <i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i>
         <span class="n">99</span>
         <span class="body">
           <span class="t">考前全真模拟卷</span>

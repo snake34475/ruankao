@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html" class="is-current" aria-current="page"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,8 +89,8 @@
 <p><strong class="k">学习目标</strong>：读完讲义后，你能——① 前中后序遍历互推；② 手算哈夫曼树、散列表、关键路径；③ 背下八大排序的复杂度与稳定性表；④ 会做案例题算法填空。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">第一节 线性表、栈与队列</h2>
-<h3 id="h-3">1.1 线性表：顺序存储 vs 链式存储</h3>
+<h2 id="h-2">第一节 线性表、栈与队列<button type="button" class="sec-status" data-status-key="第一节 线性表、栈与队列" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 线性表、栈与队列」的学习状态"></button></h2>
+<h3 id="h-3">1.1 线性表：顺序存储 vs 链式存储<button type="button" class="sec-status" data-status-key="1.1 线性表：顺序存储 vs 链式存储" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 线性表：顺序存储 vs 链式存储」的学习状态"></button></h3>
 <p>线性表就是&quot;一排元素&quot;。两种存法：</p>
 <div class="table-wrap">
 <table>
@@ -126,7 +130,7 @@
 <li><strong>循环链表</strong>：尾节点 next 指回头节点，可&quot;绕圈&quot;遍历。</li>
 <li><strong>双向链表</strong>：每个节点有 prior 和 next，可前后两个方向找。</li>
 </ul>
-<h3 id="h-4">1.2 栈：后进先出（LIFO）<span class="stars">★</span></h3>
+<h3 id="h-4">1.2 栈：后进先出（LIFO）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="1.2 栈：后进先出（LIFO）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 栈：后进先出（LIFO）★」的学习状态"></button></h3>
 <p>栈像一个只有一口的羽毛球筒：后放进去的先拿出来。</p>
 <p><strong>必考应用</strong>（三个都要会，表达式求值是重中之重）：</p>
 <p><strong>① 表达式求值——中缀转后缀（逆波兰式）</strong></p>
@@ -218,7 +222,7 @@
 <p><strong>判断&quot;某个出栈序列是否可能&quot;的通用方法（必须练熟）</strong>：按顺序模拟——元素 1,2,3,… 依次进栈，每进一个就检查：栈顶是不是目标序列当前要出的元素？是就弹出，重复检查；不是就继续进栈。若最后发现&quot;要出的元素被压在栈底够不着&quot;，该序列不可能。
 例：判断 312（元素 1,2,3，出栈序 3,1,2）：要出 3 → 把 1、2、3 全进栈 → 弹 3 ✓；下一个要出 1，但栈顶是 2 → <strong>不可能</strong>。</p>
 <p>卡特兰数还有一堆&quot;同源问题&quot;（答案同为卡特兰数，选择课示偶尔出现）：n 对括号的合法匹配数、n 个节点能构成的不同二叉树棵数、n+1 个数相乘的不同加括号方式。</p>
-<h3 id="h-5">1.3 队列：先进先出（FIFO）</h3>
+<h3 id="h-5">1.3 队列：先进先出（FIFO）<button type="button" class="sec-status" data-status-key="1.3 队列：先进先出（FIFO）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 队列：先进先出（FIFO）」的学习状态"></button></h3>
 <p>队列像排队买票：先来的先走。应用：操作系统任务调度、打印队列、BFS（图的广度优先遍历）。</p>
 <p><strong><span class="stars">★</span> 循环队列判满判空</strong>（每年可能考一题）</p>
 <p>题干会直接出现 front、rear、循环、取模、牺牲一个单元这些词。下面用容量 m=5 的队列把它们逐个画出来看懂。</p>
@@ -342,7 +346,7 @@
 <li>再想入队 g：判满 (1+1)%5=2 == front(2) → <strong>满</strong>！格 1 空着也不能放——牺牲的隔离带（见第 4 步的图）。此时 c,d,e,f 共 4 = m−1 个，已是上限。</li>
 </ol>
 <p><strong>补充：区分空满还有另外两种办法</strong>（选择题考过&quot;哪种方法可以/不需要牺牲空间&quot;）：</p>
-<h3 id="h-6">补充 1：设标志位法（不牺牲空间）</h3>
+<h3 id="h-6">补充 1：设标志位法（不牺牲空间）<button type="button" class="sec-status" data-status-key="补充 1：设标志位法（不牺牲空间）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充 1：设标志位法（不牺牲空间）」的学习状态"></button></h3>
 <p>先想清楚 <code>front == rear</code> 为什么分不清空满：中间状态（有 1~m 个元素）两针必然错开，<strong>只有两个瞬间会追平</strong>——</p>
 <ul>
 <li>rear 绕一整圈<strong>追上</strong> front → 刚好<strong>塞满</strong>（最后一步是入队）；</li>
@@ -388,7 +392,7 @@ int dequeue(void) {
 // 队满：front == rear &amp;&amp; lastOp == ENQUEUE
 </code></pre>
 <p>口诀：<strong>逢满必入，逢空必出</strong>——追平那一刻，最后一步是入队就是满，是出队就是空。</p>
-<h3 id="h-7">补充 2：记元素个数法（最直观）</h3>
+<h3 id="h-7">补充 2：记元素个数法（最直观）<button type="button" class="sec-status" data-status-key="补充 2：记元素个数法（最直观）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充 2：记元素个数法（最直观）」的学习状态"></button></h3>
 <p>另设计数器 count：入队 +1、出队 −1，<code>count==0</code> 为空、<code>count==m</code> 为满。同样不牺牲空间，代价也是多一个变量，且比标志位好懂——判断时根本不用看 front/rear 是否重叠。</p>
 <div class="table-wrap">
 <table>
@@ -421,8 +425,8 @@ int dequeue(void) {
 </tbody></table>
 </div>
 <hr>
-<h2 id="h-8">第二节 树与二叉树 <span class="stars">★★★</span></h2>
-<h3 id="h-9">2.1 基本性质（选择题最爱直接考结论）</h3>
+<h2 id="h-8">第二节 树与二叉树 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 树与二叉树 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 树与二叉树 ★★★」的学习状态"></button></h2>
+<h3 id="h-9">2.1 基本性质（选择题最爱直接考结论）<button type="button" class="sec-status" data-status-key="2.1 基本性质（选择题最爱直接考结论）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 基本性质（选择题最爱直接考结论）」的学习状态"></button></h3>
 <p>二叉树：每个节点最多两个孩子，且分左右。先在一棵具体的树上把术语认全（这棵树后面反复用）：</p>
 <pre><code>            A          ← 根节点（没有父节点）
            / \
@@ -538,7 +542,7 @@ int dequeue(void) {
 <li>这也是堆排序&quot;用数组存树&quot;的原理（第五节建堆公式 ⌊n/2⌋ 就是从这来的）。</li>
 </ul>
 <p><strong>延伸阅读</strong>：术语与结构的更多配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_tree/">hello-algo · 二叉树</a>（在线打开可看插图；离线阅读时忽略本行即可，不影响本讲义自足）。</p>
-<h3 id="h-10">2.2 遍历 <span class="stars">★★★</span>（必考，选择题 + 案例题都会出）</h3>
+<h3 id="h-10">2.2 遍历 <span class="stars">★★★</span>（必考，选择题 + 案例题都会出）<button type="button" class="sec-status" data-status-key="2.2 遍历 ★★★（必考，选择题 + 案例题都会出）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 遍历 ★★★（必考，选择题 + 案例题都会出）」的学习状态"></button></h3>
 <p>三种遍历的&quot;序&quot;说的是<strong>根</strong>被访问的时机：</p>
 <div class="table-wrap">
 <table>
@@ -727,7 +731,7 @@ int dequeue(void) {
 <p>检验：对还原出的树走一圈——前序 A B D E C ✓，中序 D B E A C ✓，与题目一致。</p>
 <p><strong>层序遍历</strong>：从上到下从左到右逐层访问，用<strong>队列</strong>实现（注意：前中后序递归用<strong>栈</strong>）。可以想成&quot;水波扩散&quot;：根先入队，处理 A 时把 B、C 排进队，处理 B 时把 D、E 排进队……队列的&quot;先进先出&quot;恰好保证了同一层先访问完才轮到下一层。</p>
 <p><strong>延伸阅读</strong>：遍历的动态过程配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_tree_traversal/">hello-algo · 二叉树遍历</a>（在线打开可看；离线不影响本讲义自足）。</p>
-<h3 id="h-11">2.3 线索二叉树</h3>
+<h3 id="h-11">2.3 线索二叉树<button type="button" class="sec-status" data-status-key="2.3 线索二叉树" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 线索二叉树」的学习状态"></button></h3>
 <p>利用二叉链表中的<strong>空指针</strong>（n 个节点有 n+1 个空指针，想想为什么：2n 个指针域、用了 n−1 条边）：</p>
 <ul>
 <li><strong>左孩子为空 → 左指针改为指向该节点在遍历序中的前驱</strong>；</li>
@@ -760,7 +764,7 @@ int dequeue(void) {
 <li><p>加线索后为区分&quot;指针指向孩子还是线索&quot;，节点需多存两个标志位 ltag/rtag。</p>
 </li>
 </ul>
-<h3 id="h-12">2.4 哈夫曼树与哈夫曼编码 <span class="stars">★★★</span>（几乎年年考）</h3>
+<h3 id="h-12">2.4 哈夫曼树与哈夫曼编码 <span class="stars">★★★</span>（几乎年年考）<button type="button" class="sec-status" data-status-key="2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）」的学习状态"></button></h3>
 <ul>
 <li><strong>概念</strong>：带权路径长度（WPL）最小的二叉树。WPL = Σ(权值 × 该节点到根的路径长度)。</li>
 <li><strong>构造方法</strong>：每次取<strong>权值最小的两棵树合并</strong>，新节点权值为两者之和，重复直到只剩一棵。</li>
@@ -775,7 +779,7 @@ int dequeue(void) {
 </li>
 </ul>
 <p>例：权 {1, 2, 3, 4}，合并 1+2=3 → {3,3,4} → 合并 3+3=6 → {4,6} → 合并 4+6=10。WPL = 1×3+2×3+3×2+4×1 = 19。</p>
-<h3 id="h-13">2.5 平衡二叉树（AVL 树）</h3>
+<h3 id="h-13">2.5 平衡二叉树（AVL 树）<button type="button" class="sec-status" data-status-key="2.5 平衡二叉树（AVL 树）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 平衡二叉树（AVL 树）」的学习状态"></button></h3>
 <p>任意节点左右子树<strong>高度差 ≤ 1</strong> 的二叉排序树。插入后失衡时通过<strong>旋转</strong>恢复平衡。</p>
 <p><strong>四种旋转怎么记</strong>：LL、RR、LR、RL 的字母，第一个字母是<strong>插入点相对失衡节点的位置</strong>（L=左子树侧，R=右子树侧），第二个字母是再往里的方向。口诀：</p>
 <ul>
@@ -788,7 +792,7 @@ int dequeue(void) {
 <li><strong>公式怎么来的</strong>：要&quot;节点最少&quot;，根占 1 个；一棵子树塞满（高度 h−1），另一棵只求合法（高度只能是 h−2，差 1 是 AVL 的底线，再矮就失衡了）。所以 N(h) = 1 + N(h−1) + N(h−2)。</li>
 <li><strong>代入算例</strong>：N(3)=N(2)+N(1)+1=2+1+1=4，N(4)=4+2+1=7，N(5)=7+4+1=12。考法：&quot;高度为 4 的 AVL 树最少有几个节点？&quot; → 7。</li>
 </ul>
-<h3 id="h-14">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）</h3>
+<h3 id="h-14">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）<button type="button" class="sec-status" data-status-key="2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -816,21 +820,21 @@ int dequeue(void) {
 </tbody></table>
 </div>
 <hr>
-<h2 id="h-15">第三节 图 <span class="stars">★★★</span></h2>
-<h3 id="h-16">3.1 存储结构</h3>
+<h2 id="h-15">第三节 图 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第三节 图 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 图 ★★★」的学习状态"></button></h2>
+<h3 id="h-16">3.1 存储结构<button type="button" class="sec-status" data-status-key="3.1 存储结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 存储结构」的学习状态"></button></h3>
 <ul>
 <li><strong>邻接矩阵</strong>：n 个顶点用 n×n 矩阵，<code>A[i][j]=1</code> 表示有边。无向图矩阵对称。<strong>空间 O(n²)</strong>，适合稠密图；判断任意两点是否相邻 O(1)。</li>
 <li><strong>邻接表</strong>：每个顶点挂一条链表存它的邻接点。空间 O(n+e)，适合<strong>稀疏图</strong>。</li>
 </ul>
 <p><strong><span class="stars">★</span> 无向图边数 = 度数总和 ÷ 2</strong>（每条边贡献 2 个度）。有向图：度 = 入度 + 出度，边数 = 入度总和 = 出度总和。</p>
-<h3 id="h-17">3.2 遍历</h3>
+<h3 id="h-17">3.2 遍历<button type="button" class="sec-status" data-status-key="3.2 遍历" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 遍历」的学习状态"></button></h3>
 <ul>
 <li><strong>DFS（深度优先）</strong>：一条路走到黑，走不动再回退。用<strong>栈</strong>（或递归）。类比走迷宫摸墙。</li>
 <li><strong>BFS（广度优先）</strong>：一圈一圈向外扩。用<strong>队列</strong>。类比水波扩散。</li>
 <li>复杂度：邻接矩阵 O(n²)，邻接表 O(n+e)。</li>
 <li>BFS 求出的单源路径是<strong>边数最少</strong>的路径。</li>
 </ul>
-<h3 id="h-18">3.3 最小生成树（MST）<span class="stars">★</span></h3>
+<h3 id="h-18">3.3 最小生成树（MST）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="3.3 最小生成树（MST）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 最小生成树（MST）★」的学习状态"></button></h3>
 <p>生成树：包含全部 n 个顶点、只有 n−1 条边、无回路的子图。带权图中权值和最小的生成树叫最小生成树。<strong>同一张图的最小生成树可能不唯一，但权值和唯一。</strong></p>
 <div class="table-wrap">
 <table>
@@ -854,11 +858,11 @@ int dequeue(void) {
 </tbody></table>
 </div>
 <p><strong>手算技巧</strong>：Kruskal 就是&quot;把边从短到长排队，依次画上去，画到会形成环的跳过&quot;。</p>
-<h3 id="h-19">3.4 最短路径（Dijkstra）<span class="stars">★</span></h3>
+<h3 id="h-19">3.4 最短路径（Dijkstra）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="3.4 最短路径（Dijkstra）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.4 最短路径（Dijkstra）★」的学习状态"></button></h3>
 <p>求一个源点到其他所有顶点的最短路径。思想：贪心，每轮把&quot;当前距离最小的未确定顶点&quot;确定为最终结果，再用它去松弛邻居。<strong>不能处理负权边</strong>（经典考点）。时间复杂度 O(n²)。</p>
-<h3 id="h-20">3.5 拓扑排序（AOV 网）</h3>
+<h3 id="h-20">3.5 拓扑排序（AOV 网）<button type="button" class="sec-status" data-status-key="3.5 拓扑排序（AOV 网）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.5 拓扑排序（AOV 网）」的学习状态"></button></h3>
 <p>有向无环图（DAG）中把顶点排成序列，使每条边都从前面指向后面。方法：<strong>每次取入度为 0 的顶点输出并删除其出边</strong>。拓扑序列<strong>不唯一</strong>；图中有环则无法完成拓扑排序（工程上用于检测任务循环依赖）。</p>
-<h3 id="h-21">3.6 关键路径（AOE 网）<span class="stars">★★★</span>（计算题大户）</h3>
+<h3 id="h-21">3.6 关键路径（AOE 网）<span class="stars">★★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="3.6 关键路径（AOE 网）★★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.6 关键路径（AOE 网）★★★（计算题大户）」的学习状态"></button></h3>
 <p>AOE 网：边表示活动（有权=工期），点表示事件（状态）。</p>
 <ul>
 <li><strong>关键路径 = 从源点到汇点的最长路径</strong>，其长度 = 整个工程的最短工期。关键路径上的活动是<strong>关键活动</strong>，延误则整个工程延误。</li>
@@ -874,8 +878,8 @@ int dequeue(void) {
 </ul>
 <p>手算例：某 AOE 网有活动 A→B(3)、A→C(2)、B→D(4)、C→D(5)、D→E(1)。从源点顺推：ve(B)=3，ve(C)=2，ve(D)=max(3+4, 2+5)=max(7,7)=7，ve(E)=7+1=8，<strong>总工期 8</strong>。可见两条路径长度同为 7，都是关键路径——这正解释了上面那条结论&quot;缩短工期必须压缩所有关键路径的公共活动&quot;：只压 B→D，A→C→D 这条关键路径不受影响，工期纹丝不动。做题时列表逐点算即可，务必动手练一遍真题。</p>
 <hr>
-<h2 id="h-22">第四节 查找 <span class="stars">★★</span></h2>
-<h3 id="h-23">4.1 顺序查找与二分查找</h3>
+<h2 id="h-22">第四节 查找 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第四节 查找 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 查找 ★★」的学习状态"></button></h2>
+<h3 id="h-23">4.1 顺序查找与二分查找<button type="button" class="sec-status" data-status-key="4.1 顺序查找与二分查找" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 顺序查找与二分查找」的学习状态"></button></h3>
 <ul>
 <li>顺序查找：O(n)，无序表也能查。</li>
 <li><strong>二分查找</strong>：仅适用于<strong>有序的顺序表</strong>。O(log₂n)。<ul>
@@ -884,7 +888,7 @@ int dequeue(void) {
 </ul>
 </li>
 </ul>
-<h3 id="h-24">4.2 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）</h3>
+<h3 id="h-24">4.2 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="4.2 散列表（Hash 表）★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 散列表（Hash 表）★★（计算题大户）」的学习状态"></button></h3>
 <p>把关键字通过哈希函数直接映射到存储位置，理想查找 O(1)。</p>
 <ul>
 <li><strong>冲突</strong>：不同关键字映射到同一位置。<strong>同义词</strong>：哈希函数值相同的关键字。</li>
@@ -898,8 +902,8 @@ int dequeue(void) {
 <li><strong><span class="stars">★</span> 平均查找长度（ASL）计算</strong>：成功查找的 ASL = Σ(每个元素的比较次数)/元素个数。必须动手算一遍：例如线性探测下，某元素放的位置离它的哈希地址隔了 k 格，它查找成功就要比较 k+1 次。</li>
 </ul>
 <hr>
-<h2 id="h-25">第五节 排序 <span class="stars">★★★</span>（每年稳定 1–2 题）</h2>
-<h3 id="h-26">5.1 八大排序总表（背下来，直接得分）</h3>
+<h2 id="h-25">第五节 排序 <span class="stars">★★★</span>（每年稳定 1–2 题）<button type="button" class="sec-status" data-status-key="第五节 排序 ★★★（每年稳定 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 排序 ★★★（每年稳定 1–2 题）」的学习状态"></button></h2>
+<h3 id="h-26">5.1 八大排序总表（背下来，直接得分）<button type="button" class="sec-status" data-status-key="5.1 八大排序总表（背下来，直接得分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 八大排序总表（背下来，直接得分）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -980,7 +984,7 @@ int dequeue(void) {
 </div>
 <p><strong><span class="stars">★</span> 稳定排序只有 4 个</strong>：直接插入、冒泡、归并、基数。口诀：「<strong>插冒归基</strong>稳定，其余都不稳」。</p>
 <p><strong><span class="stars">★</span> 稳定性含义</strong>：相等元素排序后相对次序不变。考法：&quot;待排序列中相等元素排序前后顺序颠倒了，问可能是什么排序&quot;——答不稳定的那个。</p>
-<h3 id="h-27">5.2 高频判别题：给中间过程猜算法</h3>
+<h3 id="h-27">5.2 高频判别题：给中间过程猜算法<button type="button" class="sec-status" data-status-key="5.2 高频判别题：给中间过程猜算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 高频判别题：给中间过程猜算法」的学习状态"></button></h3>
 <p>题目给出一趟或两趟排序后的序列，问是哪种排序。识别特征：</p>
 <ul>
 <li><strong>冒泡一趟</strong>：从头两两比较，一趟结束后<strong>最大（小）元素沉到末尾</strong>。</li>
@@ -989,15 +993,15 @@ int dequeue(void) {
 <li><strong>快排一趟</strong>：<strong>某个元素到了最终位置</strong>，它左边全比它小、右边全比它大。</li>
 <li><strong>堆排一趟</strong>：最大元素到了末尾。</li>
 </ul>
-<h3 id="h-28">5.3 各排序补充要点</h3>
+<h3 id="h-28">5.3 各排序补充要点<button type="button" class="sec-status" data-status-key="5.3 各排序补充要点" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 各排序补充要点」的学习状态"></button></h3>
 <ul>
 <li><strong>快排</strong>：每趟以枢轴为界划分。<strong>序列已有序（正序/逆序）时退化到 O(n²)</strong>，这是最常考的&quot;最坏情况&quot;。</li>
 <li><strong>堆</strong>：大顶堆（父 ≥ 子）用于升序排序。建堆从最后一个非叶节点 ⌊n/2⌋ 开始向前调整。</li>
 <li><strong>外部排序</strong>：数据太大放外存时用<strong>多路归并</strong>，败者树/最佳归并树（哈夫曼思想）减少 I/O，选择题考过概念。</li>
 </ul>
 <hr>
-<h2 id="h-29">第六节 算法设计与分析基础</h2>
-<h3 id="h-30">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）</h3>
+<h2 id="h-29">第六节 算法设计与分析基础<button type="button" class="sec-status" data-status-key="第六节 算法设计与分析基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 算法设计与分析基础」的学习状态"></button></h2>
+<h3 id="h-30">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）<button type="button" class="sec-status" data-status-key="6.1 五大算法策略（选择题常考&amp;quot;这是哪种策略&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1036,7 +1040,7 @@ int dequeue(void) {
 </div>
 <p><strong><span class="stars">★</span> 动态规划 vs 分治</strong>：分治的子问题互相独立；动态规划的子问题重叠，所以要用表保存结果避免重复计算。
 <strong><span class="stars">★</span> 贪心 vs 动态规划</strong>：贪心只走一条路不回头，动态规划考察所有子问题。</p>
-<h3 id="h-31">6.2 时间复杂度（必考 1–2 题）</h3>
+<h3 id="h-31">6.2 时间复杂度（必考 1–2 题）<button type="button" class="sec-status" data-status-key="6.2 时间复杂度（必考 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 时间复杂度（必考 1–2 题）」的学习状态"></button></h3>
 <p>常见复杂度从小到大：<strong>O(1) &lt; O(log n) &lt; O(n) &lt; O(nlog n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</strong></p>
 <ul>
 <li>二分查找、平衡树操作 → O(log n)</li>
@@ -1046,11 +1050,11 @@ int dequeue(void) {
 </ul>
 <p><strong><span class="stars">★</span> 渐近记号</strong>：O 是上界、Ω 是下界、Θ 是精确界。选择题考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。</p>
 <hr>
-<h2 id="h-32">第七节 案例题专攻：算法填空解题套路（约 15 分）</h2>
+<h2 id="h-32">第七节 案例题专攻：算法填空解题套路（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：算法填空解题套路（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：算法填空解题套路（约 15 分）」的学习状态"></button></h2>
 <p>案例第 4 题一般是「一段说明 + C 代码（或伪代码）+ 3~5 个空 + 1 小问」，常考：动态规划、贪心、回溯、字符串处理、链表/树操作。<strong>套路如下：</strong></p>
-<h3 id="h-33">套路一：先读说明再读代码，说明就是答案说明书</h3>
+<h3 id="h-33">套路一：先读说明再读代码，说明就是答案说明书<button type="button" class="sec-status" data-status-key="套路一：先读说明再读代码，说明就是答案说明书" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：先读说明再读代码，说明就是答案说明书」的学习状态"></button></h3>
 <p>题干「说明」部分会用文字描述算法步骤，例如&quot;第 3 步：若 a[i] 大于当前最大值，则更新最大值&quot;。<strong>空基本就藏在文字步骤对应的代码行上，照着文字填代码。</strong></p>
-<h3 id="h-34">套路二：看空的位置判断要填什么</h3>
+<h3 id="h-34">套路二：看空的位置判断要填什么<button type="button" class="sec-status" data-status-key="套路二：看空的位置判断要填什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：看空的位置判断要填什么」的学习状态"></button></h3>
 <ol>
 <li><strong>空在初始化处</strong>：常填 <code>0</code>、<code>1</code>、<code>-1</code>、<code>INT_MAX</code> 或数组首元素 <code>a[0]</code>。</li>
 <li><strong>空在循环条件</strong>：看循环变量和边界，<code>i &lt; n</code>、<code>j &gt; 0</code>，或动态规划的 <code>i &lt;= n</code>。</li>
@@ -1058,9 +1062,9 @@ int dequeue(void) {
 <li><strong>空在递归调用</strong>：填递归式，参数看函数定义对应着填，注意返回值 <code>return f(...)</code>。</li>
 <li><strong>空在 return</strong>：动态规划常填 <code>dp[n]</code> 或 <code>dp[m][n]</code>。</li>
 </ol>
-<h3 id="h-35">套路三：代入一个具体例子验证</h3>
+<h3 id="h-35">套路三：代入一个具体例子验证<button type="button" class="sec-status" data-status-key="套路三：代入一个具体例子验证" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：代入一个具体例子验证」的学习状态"></button></h3>
 <p>填完后，用一个 n=2 或 n=3 的小例子手动模拟整段代码，能跑通且结果符合说明，基本就对了。</p>
-<h3 id="h-36">常见考题模板速记</h3>
+<h3 id="h-36">常见考题模板速记<button type="button" class="sec-status" data-status-key="常见考题模板速记" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「常见考题模板速记」的学习状态"></button></h3>
 <ul>
 <li><strong>0-1 背包</strong>：<code>dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]] + v[i])</code>，j 从大到小滚动数组。</li>
 <li><strong>最长公共子序列</strong>：字符相等 <code>dp[i][j]=dp[i-1][j-1]+1</code>，否则 <code>max(dp[i-1][j], dp[i][j-1])</code>。</li>
@@ -1070,7 +1074,7 @@ int dequeue(void) {
 <li><strong>二叉树递归遍历</strong>：<code>visit(root); f(root-&gt;left); f(root-&gt;right);</code> 按序对应前中后序。</li>
 </ul>
 <hr>
-<h2 id="h-37">课后考题（请合上讲义作答）</h2>
+<h2 id="h-37">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>某二叉树有 5 个度为 2 的节点，则该二叉树的叶子节点数为（ ）。
@@ -1151,7 +1155,7 @@ D. 一个 AOE 网可能存在多条关键路径</p>
 <p>问题 1：给出 (1)(2)(3) 处的代码。
 问题 2：该算法的时间复杂度为（ ），当输入序列为 {3, 1, 2, 4} 时，最长递增子序列长度为（ ）。</p>
 <hr>
-<h2 id="h-38">精华题（历年必考风格，考前必刷）</h2>
+<h2 id="h-38">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【遍历还原】某二叉树的中序序列为 BDCEAFHG，后序序列为 DECBHGFA，画出/写出该二叉树的前序序列。</p>
 </li>
@@ -1181,7 +1185,7 @@ D. 一个 AOE 网可能存在多条关键路径</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-40">课后考题答案</h3>
+<h3 id="h-40">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong>
 n0 = n2 + 1 = 5 + 1 = 6。<span class="stars">★</span> 必背结论。易错点：忘了 &quot;+1&quot;，或把度数为 1 的节点扯进来（不需要）。</p>
 <p><strong>2. A（后序 DEBCA）</strong>
@@ -1213,7 +1217,7 @@ Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd
 ⌈log₂65⌉ = 7。易错点：别用 log₂64=6 就填 6，公式里要 n+1。（部分教材按判定树深度的定义对 n=2^k−1 型给出 k 次，64 个元素判定树深度为 7。）</p>
 <p><strong>15. C</strong>
 必须缩短<strong>所有</strong>关键路径共同经过的关键活动才能缩短工期；只压缩一条关键路径上的活动无效。A、B、D 均正确。</p>
-<h3 id="h-41">案例题答案</h3>
+<h3 id="h-41">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>问题 1：</strong></p>
 <ul>
 <li>(1) <code>dp[i] = 1</code>（每个元素自己构成长度为 1 的子序列，初始化）</li>
@@ -1226,7 +1230,7 @@ Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd
 <li>输入 {3, 1, 2, 4}：LIS 为 {1,2,4} 或 {3,4}，最长长度 <strong>3</strong>。</li>
 </ul>
 <p><strong>填空套路复盘</strong>：空 (1) 在初始化处填常数；空 (2) 在 if 条件处对应&quot;递增&quot;这一文字描述；空 (3) 在更新处填状态转移。与第七节套路一一对应。</p>
-<h3 id="h-42">精华题答案</h3>
+<h3 id="h-42">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. 前序 = ABCDEFGH，推导过程</strong>：
 后序最后一个是 A → 根 A；中序 BDCE | AFHG → 左子树 {BDCE}，右子树 {FHG}。
 左子树后序 DECB → 根 B；中序 BDCE 中 B 居首 → B <strong>无左孩子</strong>，右子树 {DCE}；{D,C,E} 的后序（取原后序中对应段 D、E、C）→ 根 C；中序 D|C|E → D 是 C 的左孩子、E 是右孩子。
@@ -1266,6 +1270,23 @@ WPL = 5×2 + 2×3 + 3×2 + 1×3 + 4×2 = 10+6+6+3+8 = <strong>33</strong>。
 <hr>
 <p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="02-数据库系统.html">02-数据库系统.html</a> 并更新进度表。</p>
 
+  <footer class="status-bar" data-status-page="01-数据结构与算法">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="00-总览与进度.html">
       <span class="k">上一课</span>

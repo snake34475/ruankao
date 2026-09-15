@@ -141,6 +141,38 @@ ${epilogue}`;
   return { body, folded: true };
 }
 
+/* ------------------------------------------------------- 学习状态（TODO） */
+// 章节级状态按钮：给每个 h2/h3 尾部注入圆点按钮，key = 标题纯文本。
+// 必须放在 foldTail 之后跑：含「答案」的 h2 要跳过（答案区已折叠成
+// <details>，summary 里不能再塞按钮，且答案区本身不需要标状态）。
+const STATUS_BAR = base => `
+  <footer class="status-bar" data-status-page="${base}">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>`;
+
+function injectStatusDots(html) {
+  return html.replace(/<h([23]) id="(h-\d+)">([\s\S]*?)<\/h\1>/g, (m, lvl, id, inner) => {
+    const text = inner.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    if (lvl === '2' && text.includes('答案')) return m;
+    const key = escapeHtml(text);
+    return `<h${lvl} id="${id}">${inner}<button type="button" class="sec-status" data-status-key="${key}" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「${text}」的学习状态"></button></h${lvl}>`;
+  });
+}
+
 /* ------------------------------------------- 读取进度表（勾选状态 + 分值注解） */
 function readProgress() {
   const map = new Map();
@@ -175,10 +207,12 @@ const pages = pageSources.map(({ rel, src }) => {
 
   const { head, content } = splitTitle(html);
   const { body, folded } = foldTail(content);
+  // 学习状态按钮最后注入：跳过答案 h2，避免干扰上面的折叠逻辑
+  const contentWithStatus = injectStatusDots(body);
 
   const num = base.match(/^(\d{2})/)?.[1] ?? '';
   const isOutline = rel === OUTLINE;
-  const kind = isOutline ? 'outline' : num === '00' ? 'overview' : num === '99' ? 'mock' : 'lesson';
+  const kind = isOutline ? 'outline' : base === '学习计划' ? 'plan' : num === '00' ? 'overview' : num === '99' ? 'mock' : 'lesson';
   // 只有带编号的课程在进度表里有条目，大纲页不参与勾选统计
   const info = num ? progress.get(num) ?? {} : {};
 
@@ -190,7 +224,7 @@ const pages = pageSources.map(({ rel, src }) => {
     num,
     kind,
     headHtml: head,
-    content: body,
+    content: contentWithStatus,
     hasAnswers: folded,
     hint: info.hint ?? '',
     done: !!info.done,
@@ -203,6 +237,7 @@ function eyebrowOf(page) {
   const map = {
     outline: ['总纲', '考点范围 · 分值分布 · 优先级'],
     overview: ['学习总览', '进度表 · 学习方法'],
+    plan: ['学习计划', '双线并行 · 背诵轮转 · 复盘体系'],
     mock: ['收尾', '全真模拟卷'],
   };
   const parts = map[page.kind] ?? [`第 ${Number(page.num)} 课`, `共 ${lessonCount} 课`];
@@ -211,7 +246,7 @@ function eyebrowOf(page) {
 
 // 梯队分组：索引页分组卡片与左侧总纲导航共用同一份定义
 const TIERS = [
-  { title: '总纲', note: '先看全局，再按梯队推进', kinds: ['outline', 'overview'] },
+  { title: '总纲', note: '先看全局，再按梯队推进', kinds: ['outline', 'overview', 'plan'] },
   { title: '第一梯队', note: '分值大头 + 案例直接考，优先学', nums: ['01', '02', '03', '04'] },
   { title: '第二梯队', note: '选择题稳定得分点', nums: ['05', '06', '07', '08', '09'] },
   { title: '第三梯队', note: '背诵即可拿分', nums: ['10', '11', '12'] },
@@ -229,11 +264,11 @@ function outlineNavHtml(current) {
     const list = items
       .map(p => {
         const isOutline = p.kind === 'outline';
-        const label = isOutline ? '大纲' : p.num;
+        const label = isOutline ? '大纲' : p.kind === 'plan' ? '计划' : p.num;
         // 大纲页标题过长会在窄栏里折三行，导航里换用短名（索引页仍用全称）
         const text = isOutline ? '考点大纲与优先级' : p.short;
         const isCurrent = p.rel === current.rel;
-        return `          <li><a href="${p.out}"${isCurrent ? ' class="is-current" aria-current="page"' : ''}><span class="n">${label}</span><span class="t">${escapeHtml(text)}</span>${p.done ? '<span class="ok" aria-label="已完成">✓</span>' : ''}</a></li>`;
+        return `          <li><a href="${p.out}"${isCurrent ? ' class="is-current" aria-current="page"' : ''}><i class="sb-dot" data-status-page-dot="${p.out.replace(/\.html$/, '')}" aria-hidden="true"></i><span class="n">${label}</span><span class="t">${escapeHtml(text)}</span>${p.done ? '<span class="ok" aria-label="已完成">✓</span>' : ''}</a></li>`;
       })
       .join('\n');
     return `      <section class="tier tier-${ti}" title="${escapeHtml(t.note)}">
@@ -263,6 +298,9 @@ const THEME_BOOT = `<script>
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -331,7 +369,7 @@ ${TOC_BLOCK}
     ${page.headHtml}
   </header>
   ${page.content}
-
+${STATUS_BAR(page.out.replace(/\.html$/, ''))}
   <footer class="page-nav">
     ${navCard(pages[i - 1], 'prev')}
     <a class="nav-home" href="index.html">返回目录</a>
@@ -347,8 +385,9 @@ ${TOC_BLOCK}
 
 /* --------------------------------------------------------------- 索引页 */
 function cardHtml(page) {
-  const label = page.kind === 'outline' ? '大纲' : page.num;
+  const label = page.kind === 'outline' ? '大纲' : page.kind === 'plan' ? '计划' : page.num;
   return `      <a class="card${page.done ? ' done' : ''}" href="${page.out}">
+        <i class="sb-dot" data-status-page-dot="${page.out.replace(/\.html$/, '')}" aria-hidden="true"></i>
         <span class="n">${label}</span>
         <span class="body">
           <span class="t">${escapeHtml(page.short)}</span>

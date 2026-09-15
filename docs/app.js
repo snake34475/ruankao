@@ -2,12 +2,14 @@
    软考讲义阅读版交互
    源码：tools/app.js —— 构建时原样拷贝为 docs/app.js，请勿手改 docs/
    --------------------------------------------------------------------------
-   零依赖、无网络请求、约 5KB。负责五件事：
+   零依赖、无网络请求、约 6KB。负责六件事：
      1. 深浅色主题切换（记忆到 localStorage，跟随系统首选项）
      2. 由正文标题自动生成本页大纲 + 滚动高亮当前小节
      3. 本页大纲的归位（宽屏挂右栏 / 窄屏回到左侧抽屉）+ 窄屏左侧抽屉目录
      4. 顶部阅读进度条 + 回到顶部
      5. 代码块一键复制
+     6. 学习状态标记（页面/章节两级：未开始/进行中/已理解/稍后学习，
+        存 localStorage 单一 JSON 文档，支持导出/导入，便于后期接 WebDAV 同步）
    所有模块都先检测目标元素是否存在，目录页等无侧栏页面可安全复用。
    ========================================================================== */
 (() => {
@@ -70,6 +72,13 @@
       if (el.tagName === 'H3') a.className = 'lv3';
       a.append(label);
       if (/[★☆]/.test(raw)) a.insertAdjacentHTML('beforeend', `<span class="s">${stars || '★'}</span>`);
+      // 大纲条目也带学习状态点：有 data-status-key 的标题同步显示，点击可切换
+      if (el.dataset.statusKey) {
+        const dot = document.createElement('i');
+        dot.className = 'sb-dot';
+        dot.dataset.statusKeyDot = el.dataset.statusKey;
+        a.prepend(dot);
+      }
 
       if (el.tagName === 'DETAILS') {
         a.addEventListener('click', () => { el.open = true; });
@@ -201,4 +210,158 @@
       pre.append(btn);
     });
   }
+
+  /* ------------------------------------------------------------ 学习状态 */
+  // 单一 JSON 文档存 localStorage（对后期 WebDAV 同步友好：整个 items 可直接上传/合并）。
+  // key 约定：页面级 = 文件名（如 "01-数据结构与算法"）；
+  //          章节级 = "文件名#标题文本"（由构建脚本注入 data-status-key）。
+  // 状态值：none 未开始 / doing 进行中 / done 已理解 / later 稍后学习。
+  const STATUS_KEY = 'ruankao-study-status';
+  const STATUSES = [
+    { v: 'none', t: '未开始' },
+    { v: 'doing', t: '进行中' },
+    { v: 'done', t: '已理解' },
+    { v: 'later', t: '稍后学习' },
+  ];
+  const emptyStore = () => ({ version: 1, updatedAt: '', items: {} });
+
+  let statusStore = (() => {
+    try {
+      const s = JSON.parse(localStorage.getItem(STATUS_KEY));
+      if (s && s.items && typeof s.items === 'object') return s;
+    } catch { /* 存储损坏或隐私模式，当空处理 */ }
+    return emptyStore();
+  })();
+
+  function saveStore() {
+    statusStore.updatedAt = new Date().toISOString();
+    try { localStorage.setItem(STATUS_KEY, JSON.stringify(statusStore, null, 2)); } catch { /* 忽略 */ }
+  }
+
+  const statusOf = key => STATUSES.some(s => s.v === statusStore.items[key]) ? statusStore.items[key] : 'none';
+  const statusText = v => (STATUSES.find(s => s.v === v) || STATUSES[0]).t;
+  const nextStatus = v => STATUSES[(STATUSES.findIndex(s => s.v === v) + 1) % STATUSES.length].v;
+
+  // 把存储刷到所有挂点上：data-status 属性驱动 CSS 变量着色
+  function applyStatus() {
+    document.querySelectorAll('[data-status-page]').forEach(el => {
+      const v = statusOf(el.dataset.statusPage);
+      const cur = el.querySelector('.sb-current');
+      if (cur) {
+        cur.dataset.status = v;
+        const t = cur.querySelector('.sb-text');
+        if (t) t.textContent = statusText(v);
+      }
+      el.querySelectorAll('.sb-menu button[data-set]').forEach(b => {
+        b.classList.toggle('is-current', b.dataset.set === v);
+      });
+    });
+    document.querySelectorAll('[data-status-page-dot]').forEach(el => {
+      el.dataset.status = statusOf(el.dataset.statusPageDot);
+    });
+    document.querySelectorAll('[data-status-key]').forEach(el => {
+      el.dataset.status = statusOf(el.dataset.statusKey);
+    });
+    document.querySelectorAll('[data-status-key-dot]').forEach(el => {
+      el.dataset.status = statusOf(el.dataset.statusKeyDot);
+    });
+  }
+
+  function setStatus(key, v) {
+    if (!key) return;
+    statusStore.items[key] = v;
+    saveStore();
+    applyStatus();
+  }
+
+  // 章节圆点（正文标题旁 + 大纲条目里）：点击循环 未开始→进行中→已理解→稍后学习
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-status-key], [data-status-key-dot]');
+    if (!el) return;
+    const key = el.dataset.statusKey || el.dataset.statusKeyDot;
+    setStatus(key, nextStatus(statusOf(key)));
+  });
+
+  // 底部状态条：弹出四选项菜单
+  document.querySelectorAll('[data-status-page]').forEach(bar => {
+    const key = bar.dataset.statusPage;
+    const cur = bar.querySelector('.sb-current');
+    const menu = bar.querySelector('.sb-menu');
+    if (!cur || !menu) return;
+    const close = () => { menu.hidden = true; cur.setAttribute('aria-expanded', 'false'); };
+    cur.addEventListener('click', () => {
+      const open = menu.hidden;
+      document.querySelectorAll('.sb-menu:not([hidden])').forEach(m => { m.hidden = true; });
+      document.querySelectorAll('.sb-current[aria-expanded="true"]').forEach(c => c.setAttribute('aria-expanded', 'false'));
+      menu.hidden = !open;
+      cur.setAttribute('aria-expanded', String(open));
+    });
+    menu.addEventListener('click', e => {
+      const opt = e.target.closest('[data-set]');
+      if (!opt) return;
+      setStatus(key, opt.dataset.set);
+      close();
+    });
+  });
+
+  // 点空白处 / Esc 收起所有状态菜单
+  document.addEventListener('click', e => {
+    if (e.target.closest('.sb-picker')) return;
+    document.querySelectorAll('.sb-menu:not([hidden])').forEach(m => { m.hidden = true; });
+    document.querySelectorAll('.sb-current[aria-expanded="true"]').forEach(c => c.setAttribute('aria-expanded', 'false'));
+  });
+  addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.sb-menu:not([hidden])').forEach(m => { m.hidden = true; });
+    document.querySelectorAll('.sb-current[aria-expanded="true"]').forEach(c => c.setAttribute('aria-expanded', 'false'));
+  });
+
+  // 导出 / 导入：WebDAV 同步落地前的过渡方案
+  document.querySelectorAll('[data-action="status-export"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      saveStore();
+      const blob = new Blob([JSON.stringify(statusStore, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `study-status-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      const old = btn.textContent;
+      btn.textContent = '已导出';
+      setTimeout(() => { btn.textContent = old; }, 1600);
+    });
+  });
+
+  document.querySelectorAll('[data-action="status-import"]').forEach(btn => {
+    const input = btn.parentElement.querySelector('[data-status-file]');
+    if (!input) return;
+    input.addEventListener('change', () => {
+      const file = input.files && input.files[0];
+      input.value = '';
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        let ok = false;
+        try {
+          const s = JSON.parse(reader.result);
+          if (s && s.items && typeof s.items === 'object') {
+            const clean = {};
+            for (const [k, v] of Object.entries(s.items)) {
+              if (typeof k === 'string' && STATUSES.some(x => x.v === v)) clean[k] = v;
+            }
+            statusStore = { version: s.version || 1, updatedAt: s.updatedAt || '', items: clean };
+            saveStore();
+            applyStatus();
+            ok = true;
+          }
+        } catch { /* 非法 JSON，按导入失败处理 */ }
+        const old = btn.textContent;
+        btn.textContent = ok ? '导入成功' : '导入失败';
+        setTimeout(() => { btn.textContent = old; }, 1600);
+      };
+      reader.readAsText(file);
+    });
+  });
+
+  applyStatus();
 })();

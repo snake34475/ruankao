@@ -11,6 +11,9 @@
     try {
       var t = localStorage.getItem('ruankao-theme');
       if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
       document.documentElement.dataset.theme = t;
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -30,43 +33,44 @@
   <aside class="sidebar" id="sidebar">
     <nav class="outline-nav" aria-label="全部课程">
       <section class="tier tier-0" title="先看全局，再按梯队推进">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/2</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="软件设计师考点大纲.html"><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
-          <li><a href="00-总览与进度.html"><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
         </ul>
       </section>
       <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
         <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
         <ul>
-          <li><a href="01-数据结构与算法.html"><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
-          <li><a href="02-数据库系统.html"><span class="n">02</span><span class="t">数据库系统</span></a></li>
-          <li><a href="03-软件工程基础.html"><span class="n">03</span><span class="t">软件工程基础</span></a></li>
-          <li><a href="04-面向对象与设计模式.html"><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+          <li><a href="01-数据结构与算法.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="02-数据库系统.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="03-软件工程基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="04-面向对象与设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
         </ul>
       </section>
       <section class="tier tier-2" title="选择题稳定得分点">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">1/5</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
         <ul>
-          <li><a href="05-操作系统.html"><span class="n">05</span><span class="t">操作系统</span></a></li>
-          <li><a href="06-计算机网络.html"><span class="n">06</span><span class="t">计算机网络</span></a></li>
-          <li><a href="07-程序设计语言基础.html"><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
-          <li><a href="08-信息安全.html"><span class="n">08</span><span class="t">信息安全</span></a></li>
-          <li><a href="09-计算机系统基础.html"><span class="n">09</span><span class="t">计算机系统基础</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="05-操作系统.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="06-计算机网络.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="07-程序设计语言基础.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="08-信息安全.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="09-计算机系统基础.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
         </ul>
       </section>
       <section class="tier tier-3" title="背诵即可拿分">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">3/3</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
         <ul>
-          <li><a href="10-标准化与知识产权.html"><span class="n">10</span><span class="t">标准化与知识产权</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="11-专业英语.html"><span class="n">11</span><span class="t">专业英语</span><span class="ok" aria-label="已完成">✓</span></a></li>
-          <li><a href="12-数学与多媒体.html"><span class="n">12</span><span class="t">数学与多媒体</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="10-标准化与知识产权.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="11-专业英语.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="12-数学与多媒体.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
         </ul>
       </section>
       <section class="tier tier-4" title="全真模拟，整卷限时训练">
-        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">1/1</span></p>
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
         <ul>
-          <li><a href="99-考前全真模拟卷.html" class="is-current" aria-current="page"><span class="n">99</span><span class="t">考前全真模拟卷</span><span class="ok" aria-label="已完成">✓</span></a></li>
+          <li><a href="99-考前全真模拟卷.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
         </ul>
       </section>
     </nav>
@@ -85,7 +89,7 @@
 <p><strong class="k">作答建议</strong>：严格模拟连考。先完成上午卷，再完成下午卷；不要边做边翻讲义。计算题保留草稿，案例题尽量使用题干原词作答。考试日期、合格标准及机考安排以官方通知为准。</p>
 </blockquote>
 <hr>
-<h2 id="h-2">使用方法</h2>
+<h2 id="h-2">使用方法<button type="button" class="sec-status" data-status-key="使用方法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「使用方法」的学习状态"></button></h2>
 <ol>
 <li>上午卷限时不超过 120 分钟，建议 70–90 分钟完成并检查；</li>
 <li>下午卷按剩余时间训练，先做数据流图、数据库和 UML，再做算法与程序题；</li>
@@ -95,7 +99,7 @@
 </ol>
 <hr>
 <h1 id="h-3">第一科 基础知识（75 分）</h1>
-<h2 id="h-4">一、计算机系统基础（第 1–10 题）</h2>
+<h2 id="h-4">一、计算机系统基础（第 1–10 题）<button type="button" class="sec-status" data-status-key="一、计算机系统基础（第 1–10 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、计算机系统基础（第 1–10 题）」的学习状态"></button></h2>
 <p><strong>1.</strong> 8 位补码 <code>10010110</code> 表示的十进制整数是（ ）。</p>
 <p>A. −106<br>B. −105<br>C. 22<br>D. 150</p>
 <p><strong>2.</strong> 对总位数相同的两种浮点格式，甲的阶码比乙长、尾数比乙短。其他规定相同时，甲与乙相比（ ）。</p>
@@ -116,7 +120,7 @@
 <p>A. 指令多且常为变长格式<br>B. 寻址方式复杂，常用微程序控制<br>C. 只有 Load/Store 类指令访问内存，利于流水线<br>D. 单条指令完成尽可能多的复杂操作</p>
 <p><strong>10.</strong> 一条指令分为 2 ns、3 ns、4 ns 三段。按理论流水线公式执行 20 条指令，需要（ ）。</p>
 <p>A. 80 ns<br>B. 85 ns<br>C. 89 ns<br>D. 180 ns</p>
-<h2 id="h-5">二、程序设计语言基础（第 11–15 题）</h2>
+<h2 id="h-5">二、程序设计语言基础（第 11–15 题）<button type="button" class="sec-status" data-status-key="二、程序设计语言基础（第 11–15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、程序设计语言基础（第 11–15 题）」的学习状态"></button></h2>
 <p><strong>11.</strong> 编译过程中，把字符序列识别成关键字、标识符、常量等 token 的阶段是（ ）。</p>
 <p>A. 词法分析<br>B. 语法分析<br>C. 语义分析<br>D. 目标代码生成</p>
 <p><strong>12.</strong> 检查括号是否匹配、表达式结构是否符合文法，主要由（ ）完成。</p>
@@ -127,7 +131,7 @@
 <p>A. 一定修改调用者对应实参变量<br>B. 一般不改变调用者对应实参变量本身<br>C. 实参与形参必须共享同一地址<br>D. 只能传递数组，不能传递整数</p>
 <p><strong>15.</strong> 关于编译与解释，正确的是（ ）。</p>
 <p>A. 解释程序通常先生成完整目标程序再执行<br>B. 编译程序只能发现运行期错误<br>C. 解释执行通常逐句翻译并执行，不必先生成完整目标程序<br>D. 同一源程序经编译后每次运行都必须重新逐句翻译</p>
-<h2 id="h-6">三、操作系统（第 16–21 题）</h2>
+<h2 id="h-6">三、操作系统（第 16–21 题）<button type="button" class="sec-status" data-status-key="三、操作系统（第 16–21 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「三、操作系统（第 16–21 题）」的学习状态"></button></h2>
 <p><strong>16.</strong> 进程等待的 I/O 操作完成后，该进程通常从阻塞态进入（ ）。</p>
 <p>A. 运行态<br>B. 就绪态<br>C. 新建态<br>D. 终止态</p>
 <p><strong>17.</strong> 用信号量 mutex 实现互斥，mutex 初值为 1。正确的临界区结构是（ ）。</p>
@@ -140,7 +144,7 @@
 <p>A. <code>5ABCH</code><br>B. <code>9ABCH</code><br>C. <code>9005H</code><br>D. <code>EABCH</code></p>
 <p><strong>21.</strong> 采用 3 个物理块和 FIFO 页面置换算法，初始为空，访问序列为 <code>1,2,3,1,4</code>。访问结束后内存中的页面集合是（ ）。</p>
 <p>A. <code>{1,2,3}</code><br>B. <code>{1,3,4}</code><br>C. <code>{2,3,4}</code><br>D. <code>{1,2,4}</code></p>
-<h2 id="h-7">四、数据结构与算法（第 22–32 题）</h2>
+<h2 id="h-7">四、数据结构与算法（第 22–32 题）<button type="button" class="sec-status" data-status-key="四、数据结构与算法（第 22–32 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「四、数据结构与算法（第 22–32 题）」的学习状态"></button></h2>
 <p><strong>22.</strong> 后缀表达式 <code>6 2 / 3 +</code> 的值是（ ）。</p>
 <p>A. 3<br>B. 5<br>C. 6<br>D. 9</p>
 <p><strong>23.</strong> 长度为 10 的循环队列采用 <code>(rear-front+10)%10</code> 计算队列元素数。若 front=2、rear=7，则元素数为（ ）。</p>
@@ -163,7 +167,7 @@
 <p>A. 快速排序<br>B. 堆排序<br>C. 希尔排序<br>D. 归并排序</p>
 <p><strong>32.</strong> 快速排序在最坏情况下的时间复杂度是（ ）。</p>
 <p>A. <code>O(1)</code><br>B. <code>O(log n)</code><br>C. <code>O(n log n)</code><br>D. <code>O(n^2)</code></p>
-<h2 id="h-8">五、软件工程基础（第 33–40 题）</h2>
+<h2 id="h-8">五、软件工程基础（第 33–40 题）<button type="button" class="sec-status" data-status-key="五、软件工程基础（第 33–40 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「五、软件工程基础（第 33–40 题）」的学习状态"></button></h2>
 <p><strong>33.</strong> 用户需求不明确，希望先看到可运行模型并通过反馈逐步澄清需求，最适合采用（ ）。</p>
 <p>A. 瀑布模型<br>B. 原型模型<br>C. V 模型<br>D. 形式化模型</p>
 <p><strong>34.</strong> 螺旋模型最突出的特点是（ ）。</p>
@@ -180,7 +184,7 @@
 <p>A. 改正性维护<br>B. 适应性维护<br>C. 完善性维护<br>D. 预防性维护</p>
 <p><strong>40.</strong> CMMI 阶段式模型中，以定量度量和控制过程为关键词的是（ ）。</p>
 <p>A. 第 2 级已管理级<br>B. 第 3 级已定义级<br>C. 第 4 级定量管理级<br>D. 第 5 级优化级</p>
-<h2 id="h-9">六、面向对象与设计模式（第 41–47 题）</h2>
+<h2 id="h-9">六、面向对象与设计模式（第 41–47 题）<button type="button" class="sec-status" data-status-key="六、面向对象与设计模式（第 41–47 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「六、面向对象与设计模式（第 41–47 题）」的学习状态"></button></h2>
 <p><strong>41.</strong> 将数据与操作封装在对象内部，并隐藏实现细节，体现了面向对象的（ ）。</p>
 <p>A. 封装<br>B. 继承<br>C. 多态<br>D. 泛化</p>
 <p><strong>42.</strong> 同一个类中存在 <code>f(int)</code> 与 <code>f(String)</code>，这称为（ ）。</p>
@@ -195,7 +199,7 @@
 <p>A. 观察者模式<br>B. 策略模式<br>C. 适配器模式<br>D. 单例模式</p>
 <p><strong>47.</strong> 把一个已有类的接口转换成客户期望的另一种接口，应采用（ ）。</p>
 <p>A. 装饰器模式<br>B. 代理模式<br>C. 适配器模式<br>D. 备忘录模式</p>
-<h2 id="h-10">七、数据库系统（第 48–54 题）</h2>
+<h2 id="h-10">七、数据库系统（第 48–54 题）<button type="button" class="sec-status" data-status-key="七、数据库系统（第 48–54 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「七、数据库系统（第 48–54 题）」的学习状态"></button></h2>
 <p><strong>48.</strong> 修改数据库的物理存储结构而不影响概念模式和应用程序，体现了（ ）。</p>
 <p>A. 逻辑数据独立性<br>B. 物理数据独立性<br>C. 事务隔离性<br>D. 数据冗余性</p>
 <p><strong>49.</strong> 关系代数中，用于选取指定列的运算是（ ）。</p>
@@ -210,7 +214,7 @@
 <p>A. 能保证冲突可串行化，但仍可能发生死锁<br>B. 能彻底避免死锁<br>C. 要求事务先释放全部锁再申请锁<br>D. 只适用于单用户数据库</p>
 <p><strong>54.</strong> 系统故障恢复时，对故障前已提交事务和未提交事务通常分别执行（ ）。</p>
 <p>A. UNDO、UNDO<br>B. REDO、REDO<br>C. REDO、UNDO<br>D. UNDO、REDO</p>
-<h2 id="h-11">八、计算机网络（第 55–59 题）</h2>
+<h2 id="h-11">八、计算机网络（第 55–59 题）<button type="button" class="sec-status" data-status-key="八、计算机网络（第 55–59 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「八、计算机网络（第 55–59 题）」的学习状态"></button></h2>
 <p><strong>55.</strong> 传统以太网交换机主要工作在 OSI 的（ ）。</p>
 <p>A. 物理层<br>B. 数据链路层<br>C. 网络层<br>D. 传输层</p>
 <p><strong>56.</strong> IPv4 子网采用 <code>/27</code> 前缀，每个子网通常可分配给主机的地址数为（ ）。</p>
@@ -221,7 +225,7 @@
 <p>A. 21<br>B. 25<br>C. 53<br>D. 80</p>
 <p><strong>59.</strong> 与 UDP 相比，TCP 的主要特点是（ ）。</p>
 <p>A. 无连接且不确认<br>B. 面向连接并提供可靠字节流<br>C. 只支持广播通信<br>D. 不进行流量控制</p>
-<h2 id="h-12">九、信息安全（第 60–63 题）</h2>
+<h2 id="h-12">九、信息安全（第 60–63 题）<button type="button" class="sec-status" data-status-key="九、信息安全（第 60–63 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「九、信息安全（第 60–63 题）」的学习状态"></button></h2>
 <p><strong>60.</strong> 甲对消息摘要进行数字签名，应使用（ ）。</p>
 <p>A. 甲的私钥<br>B. 甲的公钥<br>C. 接收者的私钥<br>D. CA 的私钥</p>
 <p><strong>61.</strong> 数字信封通常采用（ ）。</p>
@@ -230,14 +234,14 @@
 <p>A. 机密性<br>B. 完整性<br>C. 可用性<br>D. 压缩率</p>
 <p><strong>63.</strong> 防御 SQL 注入最有效的常见措施之一是（ ）。</p>
 <p>A. 把数据库端口改成任意数字<br>B. 使用参数化查询并校验输入<br>C. 关闭所有日志<br>D. 延长用户密码但仍拼接 SQL 字符串</p>
-<h2 id="h-13">十、标准化与知识产权（第 64–66 题）</h2>
+<h2 id="h-13">十、标准化与知识产权（第 64–66 题）<button type="button" class="sec-status" data-status-key="十、标准化与知识产权（第 64–66 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十、标准化与知识产权（第 64–66 题）」的学习状态"></button></h2>
 <p><strong>64.</strong> 标准代号 <code>GB/T</code> 表示（ ）。</p>
 <p>A. 强制性国家标准<br>B. 推荐性国家标准<br>C. 行业标准<br>D. 企业标准</p>
 <p><strong>65.</strong> 合法软件持有人为防止原件损坏而制作一份备份，在符合法律规定且不对外传播的前提下，该行为通常（ ）。</p>
 <p>A. 属于允许的合理使用<br>B. 必然构成商标侵权<br>C. 必须公开备份源代码<br>D. 会自动丧失软件使用权</p>
 <p><strong>66.</strong> 计算机软件著作权主要保护（ ）。</p>
 <p>A. 解决问题的抽象思想本身<br>B. 算法背后的数学规律本身<br>C. 程序及其有关文档的表达<br>D. 任何人独立创作的相同功能</p>
-<h2 id="h-14">十一、数学与多媒体（第 67–70 题）</h2>
+<h2 id="h-14">十一、数学与多媒体（第 67–70 题）<button type="button" class="sec-status" data-status-key="十一、数学与多媒体（第 67–70 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十一、数学与多媒体（第 67–70 题）」的学习状态"></button></h2>
 <p><strong>67.</strong> 从 8 人中任选 2 人组成不区分职务的小组，共有（ ）种选法。</p>
 <p>A. 16<br>B. 28<br>C. 56<br>D. 64</p>
 <p><strong>68.</strong> “所有模块都通过测试”的否定是（ ）。</p>
@@ -246,7 +250,7 @@
 <p>A. 480000 B<br>B. 1440000 B<br>C. 11520000 B<br>D. 34560000 B</p>
 <p><strong>70.</strong> 8 kHz、8 bit、单声道 PCM 音频录制 10 秒，未压缩容量为（ ）。</p>
 <p>A. 8000 B<br>B. 80000 B<br>C. 640000 B<br>D. 800000 B</p>
-<h2 id="h-15">十二、专业英语（第 71–75 题）</h2>
+<h2 id="h-15">十二、专业英语（第 71–75 题）<button type="button" class="sec-status" data-status-key="十二、专业英语（第 71–75 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十二、专业英语（第 71–75 题）」的学习状态"></button></h2>
 <p>Software architecture describes the major components of a system and the relationships among them. A good architecture makes important design decisions explicit and helps developers reason about quality attributes. For example, dividing a system into modules with high cohesion and low <strong>(71)</strong> can improve maintainability. When traffic grows, a scalable system can add resources to handle the increased <strong>(72)</strong>. Reliability is also important: redundant components may allow a service to continue operating when one component <strong>(73)</strong>. Security must be considered throughout development rather than added only at the end. Authentication verifies a user&#39;s identity, while authorization determines which resources the user is <strong>(74)</strong> to access. Finally, automated tests provide rapid <strong>(75)</strong> when a change breaks existing behavior.</p>
 <p><strong>71.</strong><br>A. coupling<br>B. recursion<br>C. bandwidth<br>D. inheritance</p>
 <p><strong>72.</strong><br>A. syntax<br>B. workload<br>C. ciphertext<br>D. compilation</p>
@@ -255,7 +259,7 @@
 <p><strong>75.</strong><br>A. feedback<br>B. deadlock<br>C. topology<br>D. redundancy</p>
 <hr>
 <h1 id="h-16">第二科 应用技术（75 分）</h1>
-<h2 id="h-17">案例一 数据流图（15 分）</h2>
+<h2 id="h-17">案例一 数据流图（15 分）<button type="button" class="sec-status" data-status-key="案例一 数据流图（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例一 数据流图（15 分）」的学习状态"></button></h2>
 <p>某社区维修平台的业务如下：</p>
 <ol>
 <li>居民提交报修请求，内容包括居民编号、设备类型、故障描述和上门地址。系统读取居民文件核验居民状态，生成维修订单并写入订单文件，同时向居民返回受理结果。</li>
@@ -278,7 +282,7 @@
 <p><code>维修订单 = 订单编号 + 居民编号 + （1） + （2） + 上门地址 + 订单状态 + [维修人员编号]</code></p>
 <p>其中 <code>[ ]</code> 表示可选项。</p>
 <p><strong>问题 4（2 分）</strong>：若分层图额外出现“加工 2→居民：广告信息”，但顶层图没有任何对应数据流，这违反了什么原则？应如何处理？</p>
-<h2 id="h-18">案例二 数据库设计与 SQL（15 分）</h2>
+<h2 id="h-18">案例二 数据库设计与 SQL（15 分）<button type="button" class="sec-status" data-status-key="案例二 数据库设计与 SQL（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例二 数据库设计与 SQL（15 分）」的学习状态"></button></h2>
 <p>某在线培训系统保存以下信息：</p>
 <ul>
 <li>学员：学员号、姓名、所属部门；</li>
@@ -296,7 +300,7 @@
 </ul>
 <p><strong>问题 3（3 分）</strong>：写出创建“选课”表的 SQL，要求定义组合主键，并定义两个外键。</p>
 <p><strong>问题 4（4 分）</strong>：查询“至少选修 3 门课程且平均成绩不低于 80 分”的学员号、姓名和平均成绩，写出 SQL。</p>
-<h2 id="h-19">案例三 UML 与设计模式（15 分）</h2>
+<h2 id="h-19">案例三 UML 与设计模式（15 分）<button type="button" class="sec-status" data-status-key="案例三 UML 与设计模式（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例三 UML 与设计模式（15 分）」的学习状态"></button></h2>
 <p>某在线学习系统有如下需求：</p>
 <ol>
 <li>学员使用“查看课程”和“提交作业”前都必须先“身份登录”；</li>
@@ -309,7 +313,7 @@
 <p><strong>问题 2（5 分）</strong>：给出课程与课时的 UML 关系、菱形位置及多重度；再说明学员与课程的多对多关系如何通过“选课记录”表示。</p>
 <p><strong>问题 3（4 分）</strong>：第 5 条需求最适合采用什么设计模式？说明 Context、抽象角色和具体角色分别对应什么。</p>
 <p><strong>问题 4（2 分）</strong>：若要描述一次“学员提交作业→系统校验→保存作业→返回结果”的对象消息时序，应使用哪种 UML 图？</p>
-<h2 id="h-20">案例四 算法设计（15 分）</h2>
+<h2 id="h-20">案例四 算法设计（15 分）<button type="button" class="sec-status" data-status-key="案例四 算法设计（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例四 算法设计（15 分）」的学习状态"></button></h2>
 <p>给定整数序列 <code>a[0..n−1]</code>，求一个最长严格递增子序列（LIS）。<code>dp[i]</code> 表示以 <code>a[i]</code> 结尾的 LIS 长度，<code>prev[i]</code> 保存该子序列中 <code>a[i]</code> 的前驱下标。请补全伪代码：</p>
 <pre><code class="language-c">for (int i = 0; i &lt; n; i++) {
     dp[i] = /* (1) */;
@@ -337,7 +341,7 @@ while (k != -1) {
 <p><strong>问题 2（3 分）</strong>：说明为什么状态转移只检查 <code>j&lt;i</code> 且 <code>a[j]&lt;a[i]</code>。</p>
 <p><strong>问题 3（2 分）</strong>：给出算法的时间复杂度和额外空间复杂度。</p>
 <p><strong>问题 4（2 分）</strong>：对序列 <code>[3,1,2,5,4,7]</code>，按上述“只有长度严格变大才更新前驱”的代码，给出 LIS 长度和反向输出后得到的一条正向 LIS。</p>
-<h2 id="h-21">案例五 Java 程序设计与设计模式（15 分）</h2>
+<h2 id="h-21">案例五 Java 程序设计与设计模式（15 分）<button type="button" class="sec-status" data-status-key="案例五 Java 程序设计与设计模式（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例五 Java 程序设计与设计模式（15 分）」的学习状态"></button></h2>
 <p>库存系统希望在库存变化时自动通知多个订阅者。补全下面的 Java 代码：</p>
 <pre><code class="language-java">import java.util.ArrayList;
 import java.util.List;
@@ -634,8 +638,8 @@ class EmailAlert /* (5) */ {
 </tr>
 </tbody></table>
 </div>
-<h2 id="h-24">第一科逐题解析</h2>
-<h3 id="h-25">计算机系统基础</h3>
+<h2 id="h-24">第一科逐题解析<button type="button" class="sec-status" data-status-key="第一科逐题解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一科逐题解析」的学习状态"></button></h2>
+<h3 id="h-25">计算机系统基础<button type="button" class="sec-status" data-status-key="计算机系统基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「计算机系统基础」的学习状态"></button></h3>
 <p><strong>1. A</strong>　负数补码求绝对值：<code>10010110</code> 按位取反为 <code>01101001</code>，加 1 得 <code>01101010</code>=106，所以原数为 −106。反向验证：+106=<code>01101010</code>，取反加 1 正好回到 <code>10010110</code>。D 是误按无符号数解释。</p>
 <p><strong>2. A</strong>　阶码位数决定可表示指数范围，尾数位数决定有效精度。甲阶码长、尾数短，因此范围更大、精度更低。口诀“阶范尾精”。</p>
 <p><strong>3. B</strong>　IR 保存当前指令；PC 保存下一条指令地址；MAR 保存要访问的主存地址；PSW 保存状态标志。“当前指令”是 IR 的识别词。</p>
@@ -646,20 +650,20 @@ class EmailAlert /* (5) */ {
 <p><strong>8. B</strong>　r=3 时 <code>2^3=8&lt;8+3+1=12</code>，不够；r=4 时 <code>16≥8+4+1=13</code>，所以至少 4 位。等号或大于均满足。</p>
 <p><strong>9. C</strong>　RISC 的典型特征是指令少而规整、寻址方式少、多寄存器、Load/Store 访存、常用硬布线并利于流水线。A、B、D 都更符合 CISC。</p>
 <p><strong>10. B</strong>　流水线周期为最长段 4 ns，第一条建立时间=<code>2+3+4=9 ns</code>，20 条总时间=<code>9+(20−1)×4=85 ns</code>。非流水时间为 <code>20×9=180 ns</code>，85 ns 小于它，合理。</p>
-<h3 id="h-26">程序设计语言基础</h3>
+<h3 id="h-26">程序设计语言基础<button type="button" class="sec-status" data-status-key="程序设计语言基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「程序设计语言基础」的学习状态"></button></h3>
 <p><strong>11. A</strong>　词法分析把字符流切分并识别为 token；语法分析再检查 token 序列能否按文法组成表达式和语句。</p>
 <p><strong>12. B</strong>　括号匹配和表达式结构属于语法结构检查，由语法分析完成。词法分析只识别单词级记号。</p>
 <p><strong>13. B</strong>　正规式要求字符串由 a、b 构成并以 <code>abb</code> 结尾。<code>baabb</code> 满足；A 以 <code>bba</code> 结尾，C 以 <code>bab</code> 结尾，D 长度虽可但以 <code>bbb</code> 结尾。</p>
 <p><strong>14. B</strong>　传值时形参得到实参值的副本，修改形参一般不改变调用者变量本身。若值本身是对象引用，可能通过引用修改对象内容，但“把形参重新赋值”仍不等于改变调用者的引用变量；应服从题面语言语义。</p>
 <p><strong>15. C</strong>　解释执行通常边翻译边执行，不要求先生成完整目标程序；编译通常先把源程序整体转换为目标代码，再运行目标程序。A、D 把两者说反，B 把编译期和运行期错误混为一谈。</p>
-<h3 id="h-27">操作系统</h3>
+<h3 id="h-27">操作系统<button type="button" class="sec-status" data-status-key="操作系统" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「操作系统」的学习状态"></button></h3>
 <p><strong>16. B</strong>　I/O 完成只表示等待条件消失，进程进入就绪队列；是否立即运行还取决于调度器，不能直接写运行态。</p>
 <p><strong>17. B</strong>　进入临界区前执行 P 申请互斥资源，退出后执行 V 释放资源。若顺序倒置，就不能阻止多个进程同时进入。</p>
 <p><strong>18. C</strong>　死锁四个必要条件是互斥、请求并保持、不可剥夺、循环等待。选项 C“可剥夺”恰好是否定了必要条件。</p>
 <p><strong>19. B</strong>　最不利时每个进程都占有 <code>4−1=3</code> 个资源，再多 1 个即可让某进程完成：<code>3×(4−1)+1=10</code>。用 9 个时可能三个进程各占 3 个并互等第 4 个；10 个时至少有一个能取得第 4 个，完成并释放。</p>
 <p><strong>20. B</strong>　4 KiB=<code>2^12</code> B，低 12 位即后三个十六进制数 <code>ABCH</code> 为页内偏移；页号 5 换为物理块号 9，拼成 <code>9ABCH</code>。页内偏移在转换中不变。</p>
 <p><strong>21. C</strong>　前三次装入 1、2、3；再次访问 1 命中，但 FIFO 不改变进入先后；访问 4 时淘汰最早进入的 1，最终集合为 <code>{2,3,4}</code>。若是 LRU，命中 1 会更新近期性并淘汰 2。</p>
-<h3 id="h-28">数据结构与算法</h3>
+<h3 id="h-28">数据结构与算法<button type="button" class="sec-status" data-status-key="数据结构与算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数据结构与算法」的学习状态"></button></h3>
 <p><strong>22. C</strong>　按栈计算：读到 6、2 后弹出二者做 <code>6/2=3</code>，再压入 3；读到下一个 3 后执行加法，得到 <code>3+3=6</code>。后缀表达式必须按“先弹出的是右操作数”计算。</p>
 <p><strong>23. B</strong>　元素数=<code>(rear−front+10)%10=(7−2+10)%10=5</code>。</p>
 <p><strong>24. C</strong>　二叉树边数既可写为 <code>n−1</code>，又可写为 <code>n1+2n2</code>；代入 <code>n=n0+n1+n2</code> 得 <code>n0=n2+1</code>。即叶子比双分支结点多 1。</p>
@@ -671,7 +675,7 @@ class EmailAlert /* (5) */ {
 <p><strong>30. B</strong>　100 个元素最坏比较次数为 <code>⌈log2(100+1)⌉=7</code>。也可按判定树容量反查：6 次最多区分 <code>2^6−1=63</code> 个元素，不够；7 次最多 127 个，足够。</p>
 <p><strong>31. D</strong>　归并排序在相等关键字时先取左序列元素即可保持原相对次序，属于稳定排序。快速、堆、希尔通常不稳定。</p>
 <p><strong>32. D</strong>　当每次枢轴都造成极不平衡划分时，比较量为 <code>(n−1)+(n−2)+…+1=n(n−1)/2</code>，故最坏为 <code>O(n^2)</code>；平均通常为 <code>O(n log n)</code>。</p>
-<h3 id="h-29">软件工程基础</h3>
+<h3 id="h-29">软件工程基础<button type="button" class="sec-status" data-status-key="软件工程基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「软件工程基础」的学习状态"></button></h3>
 <p><strong>33. B</strong>　原型模型用可运行原型帮助用户看到系统并反馈，适合需求不清。需求明确、变更少才更适合瀑布。</p>
 <p><strong>34. B</strong>　螺旋模型每一圈包含计划、风险分析、实施和客户评估，最突出的识别词是“风险分析”。</p>
 <p><strong>35. D</strong>　模块内所有成分为一个明确功能服务且不可或缺，是最强的功能内聚。顺序内聚要求前一步输出成为后一步输入，题干没有这种接力链。</p>
@@ -680,7 +684,7 @@ class EmailAlert /* (5) */ {
 <p><strong>38. B</strong>　边界值分析关注合法边界及紧邻边界外的值，0、1、100、101 正好覆盖两个端点内外。A 缺少边界外值。</p>
 <p><strong>39. B</strong>　因外部运行环境（操作系统）变化而修改是适应性维护。修复已发生错误是改正性；扩功能是完善性；为防未来隐患是预防性。</p>
 <p><strong>40. C</strong>　第 4 级定量管理级以度量、统计和定量控制为关键词；第 5 级优化级强调持续过程改进与新技术反馈。</p>
-<h3 id="h-30">面向对象与设计模式</h3>
+<h3 id="h-30">面向对象与设计模式<button type="button" class="sec-status" data-status-key="面向对象与设计模式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「面向对象与设计模式」的学习状态"></button></h3>
 <p><strong>41. A</strong>　封装把数据与操作组合并隐藏内部实现，通过公开接口使用。继承是复用父类特征，多态是同一消息产生不同响应。</p>
 <p><strong>42. B</strong>　同类中方法名相同、参数列表不同是重载，编译期按参数匹配；子类用相同签名替换父类实现才是重写。</p>
 <p><strong>43. B</strong>　顺序图以生命线和消息箭头表现对象交互，纵向体现时间先后。类图看静态结构，部署图看物理结点。</p>
@@ -688,7 +692,7 @@ class EmailAlert /* (5) */ {
 <p><strong>45. A</strong>　身份校验是每次提交订单都执行的必经行为，使用 <code>&lt;&lt;include&gt;&gt;</code>；箭头从基用例“提交订单”指向被包含用例“身份校验”。</p>
 <p><strong>46. B</strong>　“一族可互换算法、运行时选择”是策略模式。观察者处理一对多通知；适配器转换接口；单例保证唯一实例。</p>
 <p><strong>47. C</strong>　适配器把不兼容接口转换为客户期望接口。装饰器增加职责，代理控制访问，备忘录保存和恢复状态。</p>
-<h3 id="h-31">数据库系统</h3>
+<h3 id="h-31">数据库系统<button type="button" class="sec-status" data-status-key="数据库系统" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数据库系统」的学习状态"></button></h3>
 <p><strong>48. B</strong>　内模式/物理存储变化不影响概念模式和应用，称为物理数据独立性；概念模式变化不影响外模式和应用才是逻辑数据独立性。</p>
 <p><strong>49. B</strong>　投影 π 选列，选择 σ 选行。口诀“σ 像筛子筛行，π 两条竖线切列”。</p>
 <p><strong>50. B</strong>　候选键 A 为单属性，不可能存在对键的部分依赖，所以满足 2NF；但 <code>A→B→C</code> 形成非主属性 C 对键 A 的传递依赖，不满足 3NF，最高为 2NF。逐级判断不能因看到冗余就退回 1NF。</p>
@@ -696,27 +700,27 @@ class EmailAlert /* (5) */ {
 <p><strong>52. D</strong>　持久性要求已提交结果经受系统故障仍保留。原子性是全做或全不做，隔离性处理并发影响。</p>
 <p><strong>53. A</strong>　两段锁要求先处于加锁增长阶段，再处于解锁收缩阶段，可保证冲突可串行化；事务仍可能互持对方需要的锁而死锁。</p>
 <p><strong>54. C</strong>　故障恢复口诀：已提交事务 REDO，保证持久性；未提交事务 UNDO，保证原子性。</p>
-<h3 id="h-32">计算机网络</h3>
+<h3 id="h-32">计算机网络<button type="button" class="sec-status" data-status-key="计算机网络" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「计算机网络」的学习状态"></button></h3>
 <p><strong>55. B</strong>　传统交换机依据 MAC 地址转发帧，工作在数据链路层。路由器依据 IP 地址工作在网络层。</p>
 <p><strong>56. B</strong>　<code>/27</code> 留 5 位主机位，共 <code>2^5=32</code> 个地址；传统 IPv4 子网扣除网络地址和广播地址，可分配 <code>32−2=30</code> 个。</p>
 <p><strong>57. C</strong>　<code>/26</code> 每块 64 个地址，末字节网段起点为 0、64、128、192。130 落在 128～191，网络地址为 <code>192.168.1.128</code>。按位与掩码 <code>255.255.255.192</code> 也得 128。</p>
 <p><strong>58. C</strong>　DNS 默认端口 53；FTP 控制 21，SMTP 25，HTTP 80。DNS 常用 UDP，区域传送或较大响应等场景可用 TCP。</p>
 <p><strong>59. B</strong>　TCP 面向连接，提供可靠、有序、无重复的字节流，并具有确认、重传、流量与拥塞控制；UDP 无连接、尽力而为。</p>
-<h3 id="h-33">信息安全</h3>
+<h3 id="h-33">信息安全<button type="button" class="sec-status" data-status-key="信息安全" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「信息安全」的学习状态"></button></h3>
 <p><strong>60. A</strong>　签名用发送者自己的私钥，验证用发送者公钥。口诀“私签公验”；接收者的密钥用于保密方向，不用于代表甲签名。</p>
 <p><strong>61. A</strong>　数字信封取长补短：用快速的对称密钥加密大数据，再用接收者公钥加密那把对称密钥，接收者用自己的私钥取出密钥。</p>
 <p><strong>62. B</strong>　Hash 摘要对修改敏感，主要用于完整性校验；它通常无密钥且不隐藏原文，不能单独提供机密性。</p>
 <p><strong>63. B</strong>　参数化查询把 SQL 结构与数据参数分离，配合输入校验可阻止恶意输入被解释成 SQL 代码。单纯改端口、加长密码不能修复字符串拼接漏洞。</p>
-<h3 id="h-34">标准化与知识产权</h3>
+<h3 id="h-34">标准化与知识产权<button type="button" class="sec-status" data-status-key="标准化与知识产权" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「标准化与知识产权」的学习状态"></button></h3>
 <p><strong>64. B</strong>　GB 是国家标准代号，<code>/T</code> 表示推荐性，因此 GB/T 为推荐性国家标准。具体标准是否适用仍以现行正式文本为准。</p>
 <p><strong>65. A</strong>　合法持有人为防止原件损坏制作必要备份，并按法定范围使用、在失去合法持有资格时妥善处理，通常属于允许情形；不得借备份之名复制传播。具体争议以现行法律和授权协议为准。</p>
 <p><strong>66. C</strong>　软件著作权保护程序及有关文档的具体表达，不垄断思想、处理过程、操作方法或数学概念本身。独立创作相同功能也不当然侵权。</p>
-<h3 id="h-35">数学与多媒体</h3>
+<h3 id="h-35">数学与多媒体<button type="button" class="sec-status" data-status-key="数学与多媒体" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数学与多媒体」的学习状态"></button></h3>
 <p><strong>67. B</strong>　不区分职位，用组合：<code>C(8,2)=8×7/(2×1)=28</code>。若两个职位不同才用 <code>A(8,2)=56</code>。</p>
 <p><strong>68. B</strong>　全称命题“所有都通过”的否定是“至少一个不通过”。不需要所有都失败，只要存在一个反例即可推翻全称命题。</p>
 <p><strong>69. B</strong>　容量=<code>800×600×24/8=1440000 B</code>。第二种算法：24 bit=3 B/像素，像素数 480000，乘 3 仍为 1440000 B。C 是漏除以 8 的 bit 数。</p>
 <p><strong>70. B</strong>　容量=<code>8000×8×1×10/8=80000 B</code>。按每次采样 8 bit=1 B 复核：每秒 8000 B，10 秒 80000 B。</p>
-<h3 id="h-36">专业英语</h3>
+<h3 id="h-36">专业英语<button type="button" class="sec-status" data-status-key="专业英语" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「专业英语」的学习状态"></button></h3>
 <p><strong>71. A — coupling</strong>　良好模块设计是 high cohesion and low coupling（高内聚、低耦合）。其他词分别是递归、带宽、继承。</p>
 <p><strong>72. B — workload</strong>　系统扩展资源是为了处理增长的工作负载，固定语义为 <code>increased workload</code>。</p>
 <p><strong>73. A — fails</strong>　冗余部件的目的，是一个部件失效时服务仍能继续；<code>when one component fails</code> 语法和语义都唯一成立。</p>
@@ -725,7 +729,7 @@ class EmailAlert /* (5) */ {
 <p>全文意译：软件体系结构描述系统主要构件及其关系。高内聚低耦合有助于维护；可伸缩系统通过增加资源应对负载；冗余提高可靠性；认证确认身份，授权决定访问权限；自动测试为破坏既有行为的变更提供快速反馈。</p>
 <h2 id="h-37">第二科参考答案与评分点</h2>
 <h2 id="h-38">案例一答案：数据流图（15 分）</h2>
-<h3 id="h-39">问题 1（6 分）</h3>
+<h3 id="h-39">问题 1（6 分）<button type="button" class="sec-status" data-status-key="问题 1（6 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 1（6 分）」的学习状态"></button></h3>
 <p>缺失的 3 条数据流如下：</p>
 <div class="table-wrap">
 <table>
@@ -758,7 +762,7 @@ class EmailAlert /* (5) */ {
 </tbody></table>
 </div>
 <p>每条必须同时写对起点、终点和名称。名称可使用含义相同且来自题意的表述，如“订单更新信息”。</p>
-<h3 id="h-40">问题 2（4 分）</h3>
+<h3 id="h-40">问题 2（4 分）<button type="button" class="sec-status" data-status-key="问题 2（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（4 分）」的学习状态"></button></h3>
 <ul>
 <li>读取 D2：取得待分派订单的设备类型、地址和当前状态；</li>
 <li>读取 D3：取得维修人员的技能、可用状态等信息；</li>
@@ -766,21 +770,21 @@ class EmailAlert /* (5) */ {
 <li>分派完成后修改 <strong>D2 订单文件</strong>，写入维修人员编号和“已分派”等订单状态。</li>
 </ul>
 <p>易错点：D3 提供人员候选信息，但业务说明没有说加工 2 改变人员档案，所以不能凭空添加“加工 2→D3”。</p>
-<h3 id="h-41">问题 3（3 分）</h3>
+<h3 id="h-41">问题 3（3 分）<button type="button" class="sec-status" data-status-key="问题 3（3 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 3（3 分）」的学习状态"></button></h3>
 <p>（1）<strong>设备类型</strong>；（2）<strong>故障描述</strong>。二者顺序互换不扣分。</p>
 <p>完整定义可写为：</p>
 <p><code>维修订单 = 订单编号 + 居民编号 + 设备类型 + 故障描述 + 上门地址 + 订单状态 + [维修人员编号]</code></p>
 <p>维修人员编号在订单刚受理、尚未派单时可能不存在，因此用 <code>[ ]</code> 表示可选。</p>
-<h3 id="h-42">问题 4（2 分）</h3>
+<h3 id="h-42">问题 4（2 分）<button type="button" class="sec-status" data-status-key="问题 4（2 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 4（2 分）」的学习状态"></button></h3>
 <p>违反<strong>父图与子图的数据流平衡原则</strong>：分层图边界上新增了顶层图不存在的“系统→居民：广告信息”。处理方式有两种：若广告确属需求，则在顶层图补上对应数据流并同步需求说明；若不属需求，则从分层图删除该数据流。不能只改一层而保持不平衡。</p>
 <h2 id="h-43">案例二答案：数据库设计与 SQL（15 分）</h2>
-<h3 id="h-44">问题 1（4 分）</h3>
+<h3 id="h-44">问题 1（4 分）<button type="button" class="sec-status" data-status-key="问题 1（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 1（4 分）」的学习状态"></button></h3>
 <ul>
 <li>教师—课程：<strong>1:n</strong>。一名教师可负责多门课程，每门课程恰由一名教师负责；</li>
 <li>学员—课程：<strong>m:n</strong>。一个学员可选多门课程，一门课程可被多名学员选；</li>
 <li>m:n 的“选课”联系应单独转换为关系“选课”，<strong>选课时间、成绩是该联系的属性</strong>，放在选课表中。</li>
 </ul>
-<h3 id="h-45">问题 2（4 分）</h3>
+<h3 id="h-45">问题 2（4 分）<button type="button" class="sec-status" data-status-key="问题 2（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（4 分）」的学习状态"></button></h3>
 <ul>
 <li>学员（<strong>学员号</strong>，姓名，所属部门），主键：学员号；</li>
 <li>教师（<strong>教师号</strong>，姓名），主键：教师号；</li>
@@ -788,7 +792,7 @@ class EmailAlert /* (5) */ {
 <li>选课（<strong>学员号，课程号</strong>，选课时间，成绩），组合主键：（学员号，课程号）；两个外键分别引用学员和课程。</li>
 </ul>
 <p>组合主键的原因：同一学员可选多门课，同一课程有多个学员，任何单独一列都不能唯一标识一条选课记录；题面说明同一学员对同一课程最多一条有效记录，因此二者组合恰好唯一。</p>
-<h3 id="h-46">问题 3（3 分）</h3>
+<h3 id="h-46">问题 3（3 分）<button type="button" class="sec-status" data-status-key="问题 3（3 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 3（3 分）」的学习状态"></button></h3>
 <pre><code class="language-sql">CREATE TABLE 选课 (
     学员号    CHAR(10) NOT NULL,
     课程号    CHAR(10) NOT NULL,
@@ -800,7 +804,7 @@ class EmailAlert /* (5) */ {
 );
 </code></pre>
 <p>字段类型允许合理变化；得分点是组合主键与两个正确的外键方向。</p>
-<h3 id="h-47">问题 4（4 分）</h3>
+<h3 id="h-47">问题 4（4 分）<button type="button" class="sec-status" data-status-key="问题 4（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 4（4 分）」的学习状态"></button></h3>
 <pre><code class="language-sql">SELECT s.学员号, s.姓名, AVG(e.成绩) AS 平均成绩
 FROM 学员 AS s
 JOIN 选课 AS e ON s.学员号 = e.学员号
@@ -810,14 +814,14 @@ HAVING COUNT(*) &gt;= 3
 </code></pre>
 <p>解析：先连接学员与选课，再按学员分组；“至少 3 门”和“平均成绩不低于 80”都是聚合后的组条件，必须放在 HAVING。把 <code>AVG(e.成绩)&gt;=80</code> 放进 WHERE 是典型错误。</p>
 <h2 id="h-48">案例三答案：UML 与设计模式（15 分）</h2>
-<h3 id="h-49">问题 1（4 分）</h3>
+<h3 id="h-49">问题 1（4 分）<button type="button" class="sec-status" data-status-key="问题 1（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 1（4 分）」的学习状态"></button></h3>
 <ul>
 <li>“查看课程” <strong><code>&lt;&lt;include&gt;&gt;</code></strong> “身份登录”，箭头从“查看课程”指向“身份登录”；</li>
 <li>“提交作业” <strong><code>&lt;&lt;include&gt;&gt;</code></strong> “身份登录”，箭头从“提交作业”指向“身份登录”；</li>
 <li>“申请结业证书” <strong><code>&lt;&lt;extend&gt;&gt;</code></strong> “完成课程”，箭头从扩展用例“申请结业证书”指向基用例“完成课程”。</li>
 </ul>
 <p>识别依据：必经行为用 include；满足条件且主动申请才发生的可选行为用 extend。口诀“include 从基用例指出去，extend 从扩展用例指回来”。</p>
-<h3 id="h-50">问题 2（5 分）</h3>
+<h3 id="h-50">问题 2（5 分）<button type="button" class="sec-status" data-status-key="问题 2（5 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（5 分）」的学习状态"></button></h3>
 <ul>
 <li>课程—课时是**组合（composition）**关系；</li>
 <li>实心菱形画在整体“课程”一端；</li>
@@ -826,7 +830,7 @@ HAVING COUNT(*) &gt;= 3
 <li>每条选课记录恰好关联 1 名学员和 1 门课程，并保存选课时间、学习进度。</li>
 </ul>
 <p>课时不能脱离课程独立存在是组合而非聚合的直接判据。</p>
-<h3 id="h-51">问题 3（4 分）</h3>
+<h3 id="h-51">问题 3（4 分）<button type="button" class="sec-status" data-status-key="问题 3（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 3（4 分）」的学习状态"></button></h3>
 <p>采用<strong>策略（Strategy）模式</strong>。</p>
 <ul>
 <li>Context：课程内容播放器/展示上下文；它持有一个展示策略并委托其展示；</li>
@@ -834,10 +838,10 @@ HAVING COUNT(*) &gt;= 3
 <li>ConcreteStrategy：视频展示、图文展示、直播展示三种具体实现。</li>
 </ul>
 <p>原因：三种方式是一族可互换算法/行为，运行时按配置选择。新增一种展示方式只需增加具体策略，调用方不必增加大段条件分支，符合开闭原则。</p>
-<h3 id="h-52">问题 4（2 分）</h3>
+<h3 id="h-52">问题 4（2 分）<button type="button" class="sec-status" data-status-key="问题 4（2 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 4（2 分）」的学习状态"></button></h3>
 <p>使用 <strong>UML 顺序图（sequence diagram）</strong>。它沿时间轴展示学员、系统、校验服务、存储等对象之间的消息先后。</p>
 <h2 id="h-53">案例四答案：算法设计（15 分）</h2>
-<h3 id="h-54">问题 1（8 分）</h3>
+<h3 id="h-54">问题 1（8 分）<button type="button" class="sec-status" data-status-key="问题 1（8 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 1（8 分）」的学习状态"></button></h3>
 <p>（1）<code>1</code><br>（2）<code>a[j] &lt; a[i]</code><br>（3）<code>dp[j] + 1</code><br>（4）<code>dp[i] &gt; dp[best]</code><br>（5）<code>prev[k]</code></p>
 <p>补全后的核心代码：</p>
 <pre><code class="language-c">for (int i = 0; i &lt; n; i++) {
@@ -862,14 +866,14 @@ while (k != -1) {
     k = prev[k];
 }
 </code></pre>
-<h3 id="h-55">问题 2（3 分）</h3>
+<h3 id="h-55">问题 2（3 分）<button type="button" class="sec-status" data-status-key="问题 2（3 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（3 分）」的学习状态"></button></h3>
 <p><code>j&lt;i</code> 保证只从 <code>a[i]</code> 前面已经计算完的状态转移；<code>a[j]&lt;a[i]</code> 保证把 <code>a[i]</code> 接到以 <code>a[j]</code> 结尾的子序列后仍然<strong>严格递增</strong>。满足两项后，候选长度为 <code>dp[j]+1</code>，只有它严格大于当前 <code>dp[i]</code> 才更新长度和前驱。</p>
-<h3 id="h-56">问题 3（2 分）</h3>
+<h3 id="h-56">问题 3（2 分）<button type="button" class="sec-status" data-status-key="问题 3（2 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 3（2 分）」的学习状态"></button></h3>
 <ul>
 <li>时间复杂度：两层循环检查所有 <code>j&lt;i</code>，比较次数为 <code>0+1+…+(n−1)=n(n−1)/2</code>，故为 <strong>O(n²)</strong>；</li>
 <li>额外空间复杂度：<code>dp</code>、<code>prev</code> 及输出链共线性规模，故为 <strong>O(n)</strong>。</li>
 </ul>
-<h3 id="h-57">问题 4（2 分）</h3>
+<h3 id="h-57">问题 4（2 分）<button type="button" class="sec-status" data-status-key="问题 4（2 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 4（2 分）」的学习状态"></button></h3>
 <p>对 <code>[3,1,2,5,4,7]</code>，计算结果如下：</p>
 <div class="table-wrap">
 <table>
@@ -922,7 +926,7 @@ while (k != -1) {
 <p>LIS 长度为 <strong>4</strong>。从 best=5 沿前驱得到反向下标 <code>5→3→2→1</code>，反向输出值为 <code>7,5,2,1</code>；再逆序得到一条正向 LIS：<strong><code>[1,2,5,7]</code></strong>。</p>
 <p>交叉验证：<code>[1,2,4,7]</code> 也是长度 4 的 LIS，但题目规定同长度不更新前驱，因此代码保留较早遇到的 <code>a[3]=5</code>，输出 <code>[1,2,5,7]</code>。枚举所有可接关系后不存在长度 5 的严格递增序列。</p>
 <h2 id="h-58">案例五答案：Java 程序设计与设计模式（15 分）</h2>
-<h3 id="h-59">问题 1（8 分）</h3>
+<h3 id="h-59">问题 1（8 分）<button type="button" class="sec-status" data-status-key="问题 1（8 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 1（8 分）」的学习状态"></button></h3>
 <p>（1）<code>observers.add(observer)</code><br>（2）<code>this.stock = stock</code><br>（3）<code>notifyObservers()</code><br>（4）<code>observer.update(stock)</code><br>（5）<code>implements StockObserver</code></p>
 <p>完整关键实现：</p>
 <pre><code class="language-java">public void attach(StockObserver observer) {
@@ -949,14 +953,14 @@ class EmailAlert implements StockObserver {
     }
 }
 </code></pre>
-<h3 id="h-60">问题 2（4 分）</h3>
+<h3 id="h-60">问题 2（4 分）<button type="button" class="sec-status" data-status-key="问题 2（4 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（4 分）」的学习状态"></button></h3>
 <p>使用<strong>观察者（Observer）模式</strong>：</p>
 <ul>
 <li>Inventory：Subject/ConcreteSubject（被观察者/具体主题），保存观察者集合并在状态变化时通知；</li>
 <li>StockObserver：Observer（抽象观察者）接口，定义统一更新方法；</li>
 <li>EmailAlert：ConcreteObserver（具体观察者），收到库存变化后执行邮件告警相关行为。</li>
 </ul>
-<h3 id="h-61">问题 3（3 分）</h3>
+<h3 id="h-61">问题 3（3 分）<button type="button" class="sec-status" data-status-key="问题 3（3 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 3（3 分）」的学习状态"></button></h3>
 <p>主要优点：</p>
 <ol>
 <li>Inventory 只负责库存状态和发布通知，不依赖具体邮件实现，降低耦合；</li>
@@ -965,15 +969,15 @@ class EmailAlert implements StockObserver {
 </ol>
 <p>反例：若把邮件、短信、日志全部硬编码进 <code>setStock</code>，每增加一种通知都要修改核心库存类，条件分支不断膨胀，也难以独立测试。</p>
 <hr>
-<h2 id="h-62">成绩诊断</h2>
-<h3 id="h-63">上午卷</h3>
+<h2 id="h-62">成绩诊断<button type="button" class="sec-status" data-status-key="成绩诊断" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「成绩诊断」的学习状态"></button></h2>
+<h3 id="h-63">上午卷<button type="button" class="sec-status" data-status-key="上午卷" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「上午卷」的学习状态"></button></h3>
 <ul>
 <li>60–75：基础较稳，重点复盘错题和做题速度；</li>
 <li>45–59：达到训练线，但薄弱章节必须回炉；</li>
 <li>35–44：离合格线很近，优先补公式题、设计模式、SQL 和专业英语；</li>
 <li>0–34：先按进度表重新学习第一、第二梯队，再做本卷。</li>
 </ul>
-<h3 id="h-64">下午卷</h3>
+<h3 id="h-64">下午卷<button type="button" class="sec-status" data-status-key="下午卷" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「下午卷」的学习状态"></button></h3>
 <ul>
 <li>数据流图：低于 10 分，重练父子图平衡、加工有入有出、文件读写流；</li>
 <li>数据库：低于 10 分，重练 m:n 转表、主外键、GROUP BY/HAVING；</li>
@@ -985,13 +989,33 @@ class EmailAlert implements StockObserver {
 </details>
 
 
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
   <footer class="page-nav">
     <a class="nav-card prev" href="12-数学与多媒体.html">
       <span class="k">上一课</span>
       <span class="t">12 数学与多媒体</span>
     </a>
     <a class="nav-home" href="index.html">返回目录</a>
-    <span class="nav-card void"></span>
+    <a class="nav-card next" href="学习计划.html">
+      <span class="k">下一课</span>
+      <span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span>
+    </a>
   </footer>
 </main>
   <aside class="rail" id="rail">
