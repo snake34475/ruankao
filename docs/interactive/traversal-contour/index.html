@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>绕轮廓遍历 · 交互动画</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#">软件设计师<span>·</span>交互演示</a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" id="themeBtn" type="button">◐ 切换深/浅色</button>
+</header>
+
+<main class="shell">
+  <section class="page-head">
+    <p class="eyebrow"><span class="dot"></span> 数据结构与算法 · 2.2 遍历</p>
+    <h1>绕轮廓遍历动画</h1>
+    <p class="lede">把整棵树的外围「绕一圈」：手指贴着每个节点自身的左缘下去、从底下绕过来、再从右缘上来。
+      这三个触碰点正好对应 <b>前序 / 中序 / 后序</b> 三次记录时机。点表格某行可跳到该步；点任意节点可反查它的三次分别在第几步。</p>
+  </section>
+
+  <div class="stage">
+    <!-- 左：树 + 轮廓 -->
+    <div class="card">
+      <div class="card-h">树 · 沿二叉树边高亮行走（节点圆边 = 前/中/后三次触碰）</div>
+      <div class="card-b">
+        <svg id="tree" class="tree-svg" viewBox="0 0 600 400" role="img" aria-label="二叉树绕轮廓遍历示意">
+          <!-- 二叉树结构边：行走到某条边时该边高亮（颜色随前/中/后阶段） -->
+          <line class="edge" data-edge="A-B" x1="340" y1="80" x2="200" y2="200"/>
+          <line class="edge" data-edge="A-C" x1="340" y1="80" x2="480" y2="200"/>
+          <line class="edge" data-edge="B-D" x1="200" y1="200" x2="110" y2="320"/>
+          <line class="edge" data-edge="B-E" x1="200" y1="200" x2="270" y2="320"/>
+          <line class="edge" data-edge="C-F" x1="480" y1="200" x2="480" y2="320"/>
+
+          <!-- 节点圆边三段高亮弧 + walker 由 app.js 动态生成（位于底图之上、节点之下） -->
+
+          <!-- 节点：圆 + 标签；g 可点击反查 -->
+          <g class="node" data-node="A"><circle class="node-c" cx="340" cy="80" r="32"/><text class="node-t" x="340" y="80">A</text></g>
+          <g class="node" data-node="B"><circle class="node-c" cx="200" cy="200" r="32"/><text class="node-t" x="200" y="200">B</text></g>
+          <g class="node" data-node="C"><circle class="node-c" cx="480" cy="200" r="32"/><text class="node-t" x="480" y="200">C</text></g>
+          <g class="node" data-node="D"><circle class="node-c" cx="110" cy="320" r="28"/><text class="node-t" x="110" y="320">D</text></g>
+          <g class="node" data-node="E"><circle class="node-c" cx="270" cy="320" r="28"/><text class="node-t" x="270" y="320">E</text></g>
+          <g class="node" data-node="F"><circle class="node-c" cx="480" cy="320" r="28"/><text class="node-t" x="480" y="320">F</text></g>
+
+          <!-- walker（默认藏起，由 app.js 平移定位） -->
+          <g id="walkerG" class="walker-g" style="opacity:0">
+            <circle class="walker-halo" r="13"/>
+            <circle class="walker" r="6.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 右：步骤表 -->
+    <div class="card">
+      <div class="card-h">绕树动作 · 与讲义 §2.2 的 16 行表联动</div>
+      <div class="card-b" style="padding:0">
+        <div class="table-wrap">
+          <table id="stepTable">
+            <thead><tr><th>#</th><th>绕树动作</th><th class="seq">前</th><th class="seq">中</th><th class="seq">后</th></tr></thead>
+            <tbody><!-- 由 app.js 生成 --></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 节点状态灯网格（每个节点三盏：前/中/后） -->
+  <div class="lamps">
+    <p class="lamps-title">节点状态灯 · 三态对应「左下去 / 底下 / 右上」<span class="hint">（点节点卡可反查它的三次在第几步）</span></p>
+    <div class="lamp-grid">
+      <div class="lamp-card" data-node="A"><div class="lamp-name">A</div><div class="lamp-row">
+        <span class="lamp pre" title="前序·左下去"></span><span class="lamp in" title="中序·底下"></span><span class="lamp post" title="后序·右上"></span></div></div>
+      <div class="lamp-card" data-node="B"><div class="lamp-name">B</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card" data-node="D"><div class="lamp-name">D</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card" data-node="E"><div class="lamp-name">E</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card" data-node="C"><div class="lamp-name">C</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card" data-node="F"><div class="lamp-name">F</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+    </div>
+  </div>
+
+  <!-- 控制条 -->
+  <div class="controls">
+    <button class="btn primary" id="playBtn" type="button">▶ 播放</button>
+    <button class="btn" id="pauseBtn" type="button">⏸ 暂停</button>
+    <button class="btn" id="resetBtn" type="button">⟲ 重置</button>
+    <span class="spd">速度
+      <select id="speedSel">
+        <option value="1100">慢</option>
+        <option value="750" selected>中</option>
+        <option value="430">快</option>
+      </select>
+    </span>
+    <span class="step-badge"><b id="stepNow">0</b> / 16</span>
+  </div>
+
+  <div class="legend">
+    <span><i class="lg-pre"></i>① 左下去 = 前序（金）</span>
+    <span><i class="lg-in"></i>② 底下 = 中序（青）</span>
+    <span><i class="lg-post"></i>③ 右上 = 后序（红）</span>
+  </div>
+
+  <details class="notes">
+    <summary>▸ 这套动画在讲什么（看之前先读这段）</summary>
+    <div class="notes-body">
+      <p>把「前/中/后序」想成<strong>同一个绕圈动作、只因记录时机不同</strong>就得到三种序：</p>
+      <ul>
+        <li><b>第 1 次路过（从上方来，贴左缘下去）</b>记下 → <b>前序</b>；</li>
+        <li><b>第 2 次路过（走完左子树，从底下绕回来）</b>记下 → <b>中序</b>；</li>
+        <li><b>第 3 次路过（走完右子树，从右缘离开）</b>记下 → <b>后序</b>。</li>
+      </ul>
+      <p>所以每个节点被路过三次，但<b>只有叶子</b>（没子树）这三次才紧挨成连续三步；根 / 内部节点的三次被左右子树撑开，分散在整圈里。
+      对照右边的表：第 3/4/5 行是 D 的三次，但 A 的三次在第 1、11、16 行——这正是「绕一圈」模型的全部秘密。</p>
+      <p>当前页面是独立交互演示，从讲义 §2.2 跳转而来；数据与讲义那张 16 行表逐字一致。</p>
+    </div>
+  </details>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

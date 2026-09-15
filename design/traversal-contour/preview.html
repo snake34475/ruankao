@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>绕轮廓遍历 · 设计预览</title>
+<style>
+/* ============ 复用讲义设计令牌（tools/style.css 同源） ============ */
+:root{
+  --bg:#f4f2ec; --surface:#fffefa; --surface-2:#f7f5ef; --surface-3:#efece3;
+  --ink:#23211d; --ink-strong:#14130f; --muted:#6b6459; --faint:#948c7f;
+  --line:#e4e0d5; --line-strong:#d5cfc0;
+  --accent:#0f6f63; --accent-ink:#0a554c; --accent-soft:#e6f1ee;
+  --gold:#b06a04; --gold-soft:#fbf0dc;
+  --red:#a83327;
+  --shadow-sm:0 1px 2px rgba(41,34,22,.05),0 1px 1px rgba(41,34,22,.04);
+  --shadow-md:0 10px 30px -18px rgba(41,34,22,.35),0 2px 8px -4px rgba(41,34,22,.12);
+  --font-sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei UI","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"Cascadia Code","JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;
+  --radius:12px;
+}
+:root[data-theme="dark"]{
+  --bg:#131518; --surface:#1a1d21; --surface-2:#21252a; --surface-3:#272c33;
+  --ink:#d9d9d4; --ink-strong:#f4f3ee; --muted:#9aa1a8; --faint:#7b838c;
+  --line:#2b3037; --line-strong:#3b424b;
+  --accent:#5ec8b4; --accent-ink:#8fdecb; --accent-soft:#17302c;
+  --gold:#e0a53c; --gold-soft:#302610; --red:#e88a80;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 12px 34px -20px rgba(0,0,0,.8),0 2px 8px -4px rgba(0,0,0,.5);
+}
+/* 三态语义色：前序=金 / 中序=青 / 后序=红 */
+:root{ --c-pre:var(--gold); --c-in:var(--accent); --c-post:var(--red); }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink)}
+
+/* ============ 顶栏 ============ */
+.topbar{position:sticky;top:0;z-index:40;height:54px;display:flex;align-items:center;
+  gap:1rem;padding:0 1.1rem;background:color-mix(in srgb,var(--bg) 84%,transparent);
+  backdrop-filter:blur(12px) saturate(1.3);border-bottom:1px solid var(--line)}
+.brand{font-weight:700;color:var(--ink-strong);text-decoration:none}
+.brand span{color:var(--accent)}
+.topbar-spacer{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:36px;
+  padding:0 .8rem;font:inherit;font-size:.85rem;color:var(--muted);background:transparent;
+  border:1px solid var(--line);border-radius:999px;cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s}
+.btn:hover{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--accent-soft)}
+.btn.primary{color:var(--surface);background:var(--accent);border-color:var(--accent)}
+.btn.primary:hover{color:var(--surface);filter:brightness(1.08)}
+
+.shell{max-width:1180px;margin:0 auto;padding:0 1.25rem 3rem}
+.page-head{padding:2.25rem 0 .75rem}
+.eyebrow{display:flex;gap:.55rem;align-items:center;margin:0;font-size:.74rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.page-head h1{margin:.4rem 0 0;font-size:clamp(1.7rem,1.15rem+2.2vw,2.3rem);line-height:1.22;
+  letter-spacing:-.022em;font-weight:750;color:var(--ink-strong)}
+.page-head h1::after{content:"";display:block;width:3.25rem;height:4px;margin-top:1rem;border-radius:99px;
+  background:linear-gradient(90deg,var(--accent),var(--gold))}
+
+/* ============ 主舞台：树 + 表 ============ */
+.stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:1.1rem;margin-top:1.5rem}
+@media (max-width:880px){.stage{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);overflow:hidden}
+.card-h{display:flex;align-items:center;gap:.5rem;padding:.7rem .95rem;border-bottom:1px solid var(--line);
+  font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.card-b{padding:1rem}
+
+/* ---- 树 SVG ---- */
+.tree-svg{display:block;width:100%;height:auto}
+.edge{stroke:var(--line-strong);stroke-width:2}
+.node-c{fill:var(--surface);stroke:var(--line-strong);stroke-width:2}
+.node-c.cur{stroke:var(--gold);stroke-width:3}
+.node-t{fill:var(--ink-strong);font:700 14px var(--font-sans);text-anchor:middle;dominant-baseline:central}
+.contour-base{fill:none;stroke:var(--line-strong);stroke-width:1.5;opacity:.45}
+.contour-prog{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:100;stroke-dashoffset:100;animation:draw 3s ease forwards}
+@keyframes draw{to{stroke-dashoffset:38}}
+.walker{fill:var(--gold)}
+.walker-halo{fill:var(--gold);opacity:.25;animation:halo 1.6s ease-in-out infinite}
+@keyframes halo{0%,100%{r:9;opacity:.28}50%{r:14;opacity:.05}}
+.note-tag{fill:var(--faint);font:600 10px var(--font-mono);text-anchor:middle}
+
+/* ---- 节点状态灯网格 ---- */
+.lamps{margin-top:1.1rem}
+.lamps-title{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 .6rem}
+.lamp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem}
+@media (max-width:640px){.lamp-grid{grid-template-columns:repeat(3,1fr)}}
+.lamp-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem .4rem;text-align:center}
+.lamp-card.cur{border-color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 22%,transparent)}
+.lamp-name{font-weight:700;color:var(--ink-strong);font-size:.95rem}
+.lamp-row{display:flex;justify-content:center;gap:.4rem;margin-top:.4rem}
+.lamp{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line-strong);background:transparent}
+.lamp.pre.on{background:var(--c-pre);border-color:var(--c-pre);box-shadow:0 0 0 3px color-mix(in srgb,var(--c-pre) 25%,transparent);animation:lit 1.4s ease-in-out infinite}
+.lamp.in.on{background:var(--c-in);border-color:var(--c-in);box-shadow:0 0 0 3px color-mix(in srgb,var(--c-in) 25%,transparent);animation:lit 1.4s ease-in-out infinite}
+.lamp.post.on{background:var(--c-post);border-color:var(--c-post);box-shadow:0 0 0 3px color-mix(in srgb,var(--c-post) 25%,transparent);animation:lit 1.4s ease-in-out infinite}
+@keyframes lit{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+
+/* ---- 步骤表 ---- */
+.table-wrap{margin:0;border:0;border-radius:0}
+table{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.5}
+th,td{padding:.5rem .7rem;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line)}
+th{background:var(--surface-2);font-size:.78rem;font-weight:700;letter-spacing:.03em;color:var(--muted);position:sticky;top:0}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:var(--accent-soft)}
+tbody tr.is-active{background:color-mix(in srgb,var(--gold) 12%,var(--surface));box-shadow:inset 3px 0 0 var(--gold)}
+.seq{text-align:center;width:2.4em}
+.seq.on-pre{background:color-mix(in srgb,var(--c-pre) 22%,transparent);color:var(--gold);font-weight:700}
+.seq.on-in{background:color-mix(in srgb,var(--c-in) 22%,transparent);color:var(--accent-ink);font-weight:700}
+.seq.on-post{background:color-mix(in srgb,var(--c-post) 22%,transparent);color:var(--red);font-weight:700}
+
+/* ---- 控制条 + 图例 ---- */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:1.4rem;
+  padding:.8rem 1rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.step-badge{font-family:var(--font-mono);font-weight:700;color:var(--ink-strong);margin-left:auto}
+.spd{display:flex;align-items:center;gap:.3rem;color:var(--muted);font-size:.82rem}
+.spd select{font:inherit;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:.25rem .4rem}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;margin-top:1rem;font-size:.86rem;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:.4rem;vertical-align:-1px}
+.lg-pre{background:var(--c-pre)} .lg-in{background:var(--c-in)} .lg-post{background:var(--c-post)}
+
+/* ---- 设计说明 ---- */
+details.notes{margin-top:1.6rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm)}
+details.notes>summary{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem;cursor:pointer;font-weight:700;color:var(--ink-strong);list-style:none}
+details.notes>summary::-webkit-details-marker{display:none}
+.notes-body{padding:.3rem 1.2rem 1.3rem;color:var(--muted);font-size:.88rem;line-height:1.7}
+.notes-body code{font-family:var(--font-mono);font-size:.85em;padding:.08em .35em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;color:var(--ink)}
+.notes-body h4{color:var(--ink-strong);margin:1.1rem 0 .4rem;font-size:.95rem}
+.notes-body ul{margin:.3rem 0;padding-left:1.2rem}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#">软件设计师<span>·</span>交互演示</a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" id="themeBtn">◐ 切换深/浅色</button>
+</header>
+
+<main class="shell">
+  <section class="page-head">
+    <p class="eyebrow"><span class="dot"></span> 数据结构与算法 · 2.2 遍历</p>
+    <h1>绕轮廓遍历动画 · 设计预览</h1>
+  </section>
+
+  <div class="stage">
+    <!-- 左：树 + 轮廓 -->
+    <div class="card">
+      <div class="card-h">树 · 轮廓描边（快照：第 7 步 · E 进入）</div>
+      <div class="card-b">
+        <svg class="tree-svg" viewBox="0 0 360 220" role="img" aria-label="完全二叉树轮廓遍历示意">
+          <!-- 边 -->
+          <line class="edge" x1="180" y1="36" x2="108" y2="104"/>
+          <line class="edge" x1="180" y1="36" x2="252" y2="104"/>
+          <line class="edge" x1="108" y1="104" x2="66" y2="184"/>
+          <line class="edge" x1="108" y1="104" x2="150" y2="184"/>
+          <line class="edge" x1="252" y1="104" x2="234" y2="184"/>
+          <!-- 轮廓：底图(浅) + 进度(青，描边动画) -->
+          <path class="contour-base" pathLength="100"
+            d="M166,24 L94,92 L52,172 L66,204 L80,172 L108,124 L136,172 L150,204 L164,172 L122,92 L180,56 L238,92 L252,124 L266,92 L220,172 L234,204 L248,172 L194,24 Z"/>
+          <path class="contour-prog" pathLength="100"
+            d="M166,24 L94,92 L52,172 L66,204 L80,172 L108,124 L136,172 L150,204 L164,172 L122,92 L180,56 L238,92 L252,124 L266,92 L220,172 L234,204 L248,172 L194,24 Z"/>
+          <!-- walker（当前在 E 的进入点 ①E = 136,172） -->
+          <circle class="walker-halo" cx="136" cy="172" r="9"/>
+          <circle class="walker" cx="136" cy="172" r="5.5"/>
+          <!-- 节点 -->
+          <circle class="node-c" cx="180" cy="36" r="15"/>
+          <circle class="node-c" cx="108" cy="104" r="15"/>
+          <circle class="node-c" cx="252" cy="104" r="15"/>
+          <circle class="node-c" cx="66" cy="184" r="15"/>
+          <circle class="node-c cur" cx="150" cy="184" r="15"/>
+          <circle class="node-c" cx="234" cy="184" r="15"/>
+          <text class="node-t" x="180" y="36">A</text>
+          <text class="node-t" x="108" y="104">B</text>
+          <text class="node-t" x="252" y="104">C</text>
+          <text class="node-t" x="66" y="184">D</text>
+          <text class="node-t" x="150" y="184">E</text>
+          <text class="node-t" x="234" y="184">F</text>
+          <text class="note-tag" x="136" y="158">①E</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 右：步骤表 -->
+    <div class="card">
+      <div class="card-h">绕树动作 · 与讲义 16 行表联动</div>
+      <div class="card-b" style="padding:0">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>绕树动作</th><th class="seq">前</th><th class="seq">中</th><th class="seq">后</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>从 A 出发往左下</td><td class="seq">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>2</td><td>到 B，往左下</td><td class="seq">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>3</td><td>到 D，左下没有孩子</td><td class="seq">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>4</td><td>绕过 D 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr><td>5</td><td>从 D 右侧离开 D，回到 B</td><td class="seq"></td><td class="seq"></td><td class="seq">●</td></tr>
+              <tr><td>6</td><td>绕过 B 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr class="is-active"><td>7</td><td>到 E，左下没有孩子</td><td class="seq on-pre">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>8</td><td>绕过 E 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr><td>9</td><td>从 E 右侧离开 E</td><td class="seq"></td><td class="seq"></td><td class="seq">●</td></tr>
+              <tr><td>10</td><td>从 B 右侧离开 B，回到 A</td><td class="seq"></td><td class="seq"></td><td class="seq">●</td></tr>
+              <tr><td>11</td><td>绕过 A 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr><td>12</td><td>到 C，左下没有孩子</td><td class="seq">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>13</td><td>绕过 C 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr><td>14</td><td>到 F，左下没有孩子</td><td class="seq">●</td><td class="seq"></td><td class="seq"></td></tr>
+              <tr><td>15</td><td>绕过 F 的下方</td><td class="seq"></td><td class="seq">●</td><td class="seq"></td></tr>
+              <tr><td>16</td><td>离开 F、C、A，回到根，结束</td><td class="seq"></td><td class="seq"></td><td class="seq">●</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 节点状态灯网格（每个节点三盏：前/中/后） -->
+  <div class="lamps">
+    <p class="lamps-title">节点状态灯 · 三态对应「左下去 / 底下 / 右上」</p>
+    <div class="lamp-grid">
+      <div class="lamp-card"><div class="lamp-name">A</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card"><div class="lamp-name">B</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card"><div class="lamp-name">D</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card cur"><div class="lamp-name">E</div><div class="lamp-row">
+        <span class="lamp pre on"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card"><div class="lamp-name">C</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+      <div class="lamp-card"><div class="lamp-name">F</div><div class="lamp-row">
+        <span class="lamp pre"></span><span class="lamp in"></span><span class="lamp post"></span></div></div>
+    </div>
+  </div>
+
+  <!-- 控制条（设计态：仅主题切换可用；播放逻辑属编码阶段） -->
+  <div class="controls">
+    <button class="btn primary">▶ 播放</button>
+    <button class="btn">⏸ 暂停</button>
+    <button class="btn">⟲ 重置</button>
+    <span class="spd">速度
+      <select><option>慢</option><option selected>中</option><option>快</option></select>
+    </span>
+    <span class="step-badge">7 / 16</span>
+  </div>
+
+  <div class="legend">
+    <span><i class="lg-pre"></i>① 左下去 = 前序（金）</span>
+    <span><i class="lg-in"></i>② 底下 = 中序（青）</span>
+    <span><i class="lg-post"></i>③ 右上 = 后序（红）</span>
+  </div>
+
+  <details class="notes">
+    <summary>▸ 设计说明（交付编码阶段的规格）</summary>
+    <div class="notes-body">
+      <h4>1. 颜色映射（沿用讲义令牌，保证整体一致）</h4>
+      <ul>
+        <li>前序 ① → <code>--gold</code>（金），语义：进入/起始，最醒目</li>
+        <li>中序 ② → <code>--accent</code>（青），语义：主过程，与讲义主色统一</li>
+        <li>后序 ③ → <code>--red</code>（红），语义：收尾/离开</li>
+      </ul>
+      <h4>2. 组件清单</h4>
+      <ul>
+        <li><b>树区</b>：边（<code>.edge</code>）+ 节点圆（<code>.node-c</code>，当前节点 <code>.cur</code> 描金边）+ 轮廓双路径（底图浅 + 进度青，<code>stroke-dashoffset</code> 描边动画）+ walker（金点 + 脉冲光晕）。</li>
+        <li><b>节点状态灯网格</b>：6 张卡，每张 3 盏灯（前/中/后），点亮态 <code>.on</code> + 脉冲动画；当前节点卡 <code>.cur</code> 描金边。</li>
+        <li><b>步骤表</b>：复用讲义表格样式；当前行 <code>.is-active</code>（左侧金条 + 淡金底）；前/中/后单元格命中态 <code>.on-pre/.on-in/.on-post</code> 着色。</li>
+        <li><b>控制条</b>：播放/暂停/重置/速度/步数徽标。</li>
+      </ul>
+      <h4>3. 动效规格（编码阶段由 app.js 驱动）</h4>
+      <ul>
+        <li>轮廓描边：<code>stroke-dasharray=pathLength</code>，按步推进 <code>stroke-dashoffset</code>，实现"沿轮廓一笔画出"。</li>
+        <li>walker：用 <code>path.getPointAtLength()</code> 跟随进度定位，落到当前触碰点。</li>
+        <li>状态灯/表格：随步号切换 <code>.on</code> 与 <code>.is-active</code>，命中单元格着色。</li>
+        <li>步号 → (节点,状态) 映射见讲义 16 行表（本预览快照为第 7 步：E·前序）。</li>
+      </ul>
+      <h4>4. 联动（双向）</h4>
+      <ul>
+        <li>自动播放：步 1→16 推进，同步 轮廓描边 + walker + 节点灯 + 表格高亮。</li>
+        <li>表 → 动画：点击表格行 k，动画跳到步 k。</li>
+        <li>动画 → 表：悬停/点节点，反查并高亮它的三行（如点 B → 高亮 2/6/10）。</li>
+      </ul>
+      <h4>5. 响应式 / 主题</h4>
+      <ul>
+        <li>窄屏（≤880px）树区与表区上下堆叠；灯网格 ≤640px 变 3 列。</li>
+        <li>深/浅双主题沿用讲义令牌，顶部按钮切换 <code>data-theme</code>。</li>
+        <li>遵循 <code>prefers-reduced-motion</code>：关闭脉冲与描边动画。</li>
+      </ul>
+      <p style="margin-top:1rem;color:var(--faint)">本文件为<strong>设计预览</strong>（静态快照 + CSS 动效示意），最终由 <code>interactive/traversal-contour/index.html</code> + <code>style.css</code> + <code>app.js</code> 实现，并从讲义 2.2 节以相对链接跳转。</p>
+    </div>
+  </details>
+</main>
+
+<script>
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const h=document.documentElement;
+  h.setAttribute('data-theme', h.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+</script>
+</body>
+</html>

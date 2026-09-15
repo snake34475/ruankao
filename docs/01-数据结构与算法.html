@@ -536,7 +536,8 @@ int dequeue(void) {
         D(4) E(5)F(6)
 </code></pre>
 <ul>
-<li>左孩子 = <strong>2i</strong>，右孩子 = <strong>2i+1</strong>，父节点 = <strong>⌊i/2⌋</strong>。看图验证：B 是 2 号，左孩子 D 恰是 2×2=4 号、右孩子 E 是 5 号；C 是 3 号，左孩子 F 是 6 号。</li>
+<li><strong>公式里的 i 是什么</strong>：i 指「当前节点在数组里的编号」，也就是它按层序排到了第几号（编号从 1 开始，根 A = 1）。<strong>算谁的孩子，就把谁的编号代入 i</strong>。比如算 B 的孩子们时，令 i = 2（B 是 2 号），于是左孩子 = 2×2 = 4（D）、右孩子 = 2×2+1 = 5（E）；算 C 时令 i = 3，左孩子 F = 2×3 = 6。</li>
+<li><strong>通用公式</strong>：左孩子 = <strong>2i</strong>，右孩子 = <strong>2i+1</strong>，父节点 = <strong>⌊i/2⌋</strong>。用上面的例子验证：B 是 2 号，左孩子 D 恰是 2×2=4 号、右孩子 E 是 5 号；C 是 3 号，左孩子 F 是 6 号。</li>
 <li>为什么恰好是倍数：按层序编号，每层排满时总数是 2^层 − 1，下一层从头接着编——父与长子之间正好隔开&quot;一整层的名额&quot;，编号差了一倍，所以左孩子 = 2i。</li>
 <li>i &gt; ⌊n/2⌋ 的节点全是叶子。例：n=10 个节点，最后一个非叶节点是 5，建堆从它开始。</li>
 <li>这也是堆排序&quot;用数组存树&quot;的原理（第五节建堆公式 ⌊n/2⌋ 就是从这来的）。</li>
@@ -578,6 +579,9 @@ int dequeue(void) {
 <li><strong>第 3 次（离开）路过时记</strong> → <strong>后序</strong></li>
 </ul>
 <p>用 2.1 的那棵树实际走一圈（每步都记录，三个&quot;记录本&quot;分别得到三种序）：</p>
+<blockquote>
+<p>⚠️ <strong>别把下表读成&quot;每个节点占 3 行&quot;</strong>：它是**按时间先后顺序逐行记录&quot;下一步走到哪&quot;**的流水账。每个节点确实都被路过三次（进入 / 下方 / 离开），但这三次分散在整个绕圈过程里——<strong>只有叶子</strong>因为没子树、三次才会紧挨成连续三行。所以第 3/4/5 行是 D 的三次，但 A 的三次在第 1、11、16 行，并不在第 1/2/3 行。</p>
+</blockquote>
 <div class="table-wrap">
 <table>
 <thead>
@@ -703,6 +707,9 @@ int dequeue(void) {
 </tr>
 </tbody></table>
 </div>
+<blockquote>
+<p>💡 想直接看「贴着节点轮廓一圈圈走」的动画？<a href="interactive/traversal-contour/index.html">打开绕轮廓遍历交互动画</a>（独立页面：可单步 / 自动播放 / 点节点反查它的三次分别在第几步）。</p>
+</blockquote>
 <p>三本记录：<strong>前序 ABDEC</strong>、<strong>中序 DBEAC</strong>、<strong>后序 DEBFCA</strong>。同一个&quot;绕圈&quot;动作，只因记录时机不同，就得到三种序——这就是三个定义的全部秘密。</p>
 <p><strong>为什么&quot;下方&quot;那一次恰好是中序</strong>：中序 = 左 → 根 → 右。走完左子树绕回节点，正是&quot;左&quot;结束的时刻，此刻记它，结果自然是&quot;左在前、根居中&quot;。前序（一到达就记，根跑在左右前面）、后序（离开才记，根落在最后）同理。</p>
 <p>用递归的话说也相通：第 1 次到达 = <strong>递</strong>进去，第 3 次离开 = <strong>归</strong>出来；&quot;递&quot;时记是前序、&quot;归&quot;时记是后序、递归完左边回头时记是中序。</p>
@@ -765,34 +772,339 @@ int dequeue(void) {
 </li>
 </ul>
 <h3 id="h-12">2.4 哈夫曼树与哈夫曼编码 <span class="stars">★★★</span>（几乎年年考）<button type="button" class="sec-status" data-status-key="2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）」的学习状态"></button></h3>
+<p><strong>它解决什么问题</strong>：压缩。给文件里的字符分配二进制编码时，字符出现频率天差地别——<code>a</code> 可能出现 5000 次，<code>z</code> 只出现 3 次。如果每个字符都固定占 8 位，等于让&quot;天天用的 a&quot;和&quot;几乎不用的 z&quot;付一样的房租。<strong>朴素想法</strong>很自然：常用的给短码、少用的给长码，总位数就降下来了。但马上冒出新麻烦：码长不一，读的时候会切错位置。哈夫曼树就是那个&quot;既让常用字拿到短码、又保证读起来不歧义&quot;的标准答案。</p>
+<h4 id="h-13">先认五个关键词（丢分多半丢在这几个名词上）</h4>
+<p><strong>① 路径长度</strong>：从一个节点往下走到另一个节点，<strong>经过的边数</strong>（走一条边算 1）。根走到根，路径长度是 0。</p>
+<p><strong>② 权（weight）</strong>：贴在节点上的一个数字，表示它的&quot;分量&quot;。在哈夫曼编码里，权就是<strong>该字符出现的次数（频率）</strong>。</p>
+<p><strong>③ 带权路径长度 WPL</strong>：Σ（每个叶子的权 × 该叶子到根的路径长度）。两个限定必须记牢：<strong>只算叶子</strong>，<strong>乘的是边数不是层次号</strong>。</p>
+<pre><code>                        *            ← 根（内部节点，权 = 8 + 7 = 15）
+                      /   \
+                     (8)  *      ← 内部节点，权 = 5 + 2 = 7
+                        /   \
+                       (5) (2)
+
+  三个叶子：(8) 路径长 1    (5) 路径长 2    (2) 路径长 2
+  WPL = 8×1 + 5×2 + 2×2 = 8 + 10 + 4 = 22
+</code></pre>
+<p>图中带括号的 <strong>(8)、(5)、(2) 是带权的叶子</strong>，星号节点是合并出来的<strong>内部节点</strong>（它的权值等于两个孩子之和，只是算 WPL 时用不上）。最高频的失分点就在这儿：WPL 求和时<strong>只挑叶子</strong>，那些 7、15 写在那儿也不许乘路径长——用非叶节点求和是另一套算法（见后面结论 4），两套不能混着用。</p>
+<p><strong>④ 哈夫曼树</strong>：在所有&quot;叶子权值恰好是给定这组数&quot;的二叉树里，<strong>WPL 最小的那一棵</strong>（因此也叫最优二叉树）。</p>
+<p><strong>⑤ 前缀码</strong>：任何一个字符的编码，都不是另一个字符编码的<strong>开头</strong>。所有的二进制编码只要满足这条，就能从左往右一路读下去、不会切错。（为什么必须满足，后面有反例。）</p>
+<h4 id="h-14">构造过程：拿权 {1, 2, 3, 4} 走一遍</h4>
+<p>规则一句话：<strong>每轮从森林里挑权值最小的两棵树，合并成一棵新树（新根权值 = 两者之和），再放回森林。重复到只剩一棵。</strong></p>
+<p>下面三张图里，<strong>( ) 带括号的是原始叶子，裸写的数字是合并出来的内部节点</strong>——权值撞车时（下面就会出现两个 3）靠这个区分。</p>
+<pre><code>时刻 0   森林 = { (1)  (2)  (3)  (4) }       ← 四棵单节点树，全是叶子
+
+时刻 1   挑最小的两个（1 和 2）→ 合并，新根权 = 1 + 2 = 3
+
+              3
+             / \
+           (1) (2)                          森林 = { 3, (3), (4) }
+
+时刻 2   现在的数是 3、3、4 —— 最小的两个是&quot;两个 3&quot;（新 3 与原 3）
+
+                6
+              /   \
+             3    (3)
+            / \
+          (1) (2)                           森林 = { 6, (4) }
+
+时刻 3   只剩 4 和 6 → 合并，新根权 = 10，森林只剩一棵，结束
+
+                  10
+                /    \
+               6     (4)
+              / \
+             3  (3)
+            / \
+          (1) (2)
+</code></pre>
+<p><strong>别踩这个坑</strong>：时刻 2 森林里是 {3（刚合并的）, 3（原来的）, 4}，&quot;最小的两个&quot;是 <strong>3 和 3</strong>，不是 3 和 4。假如挑了 3 和 4，会合并出 7，森林变成 {3, 7}，时刻 3 再算 3 + 7 —— <strong>结果还是 10，看起来&quot;没差&quot;</strong>。但把它当哈夫曼树来算 WPL 就露馅了：</p>
+<pre><code>                    10
+                 /      \
+               (3)       7          ← 权 4 到了第 2 层，权 3 却还在第 1 层
+                        /   \       ← （违反&quot;权大离根近&quot;，一眼就该起疑）
+                      (4)   3
+                           / \
+                         (1) (2)
+
+WPL = 3×1 + 4×2 + 1×3 + 2×3 = 3 + 8 + 3 + 6 = 20   （非叶节点和 = 3+7+10 = 20 ✓ 自洽）
+</code></pre>
+<p><strong>教训</strong>：别拿&quot;最后总数一不一样&quot;当判据，<strong>WPL 才是唯一判据</strong>；用结论 4 自查一遍立刻就能发现。</p>
+<h4 id="h-15">从树到编码：左 0 右 1</h4>
+<p>约定<strong>左分支记 0、右分支记 1</strong>（左右互换也合法，编码变了但码长不变）。从根出发，把走过的分支依次写下来，就是这个叶子的编码：</p>
+<pre><code>                  10            ← 根
+                /    \
+               6     (4)        ← (4) 在根的右边
+              / \
+             3  (3)             ← (3) 在 6 的右边：先左后右
+            / \
+          (1) (2)              ← 1、2 在&quot;左、左&quot;之后分道
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>叶子（权）</th>
+<th>从根走的路径</th>
+<th>编码</th>
+<th>码长</th>
+<th>贡献位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td>右</td>
+<td><code>1</code></td>
+<td>1</td>
+<td>4×1 = 4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>左 → 右</td>
+<td><code>01</code></td>
+<td>2</td>
+<td>3×2 = 6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>左 → 左 → 左</td>
+<td><code>000</code></td>
+<td>3</td>
+<td>1×3 = 3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>左 → 左 → 右</td>
+<td><code>001</code></td>
+<td>3</td>
+<td>2×3 = 6</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>WPL = 4×1 + 3×2 + 1×3 + 2×3 = 19</strong>。
+<strong>第二种方法验算</strong>：WPL = 所有<strong>非叶节点</strong>权值之和 = 3 + 6 + 10 = <strong>19</strong> ✓
+<strong>它的含义</strong>：这 4 个字符一共出现 10 次（1+2+3+4），用这套编码只需要 19 位；定长编码 4 个字符要 2 位，同样 10 次要 20 位。只省 1 位——因为 {1,2,3,4} 这组权太均匀了，<strong>权值越悬殊，哈夫曼的收益越大</strong>。下一个例子正好演示这一点。</p>
+<h4 id="h-16">再看一个&quot;像真题&quot;的例子：权 {5, 9, 12, 13, 16, 45}</h4>
+<p>6 个字符、频率悬殊，这是考题的典型长相。照规则走：</p>
+<pre><code>  5 + 9   = 14   →  森林 {12, 13, 14, 16, 45}
+ 12 + 13  = 25   →  森林 {14, 16, 25, 45}
+ 14 + 16  = 30   →  森林 {25, 30, 45}
+ 25 + 30  = 55   →  森林 {45, 55}
+ 45 + 55  = 100  →  只剩一棵，结束
+</code></pre>
+<p>最终树形（裸写数字＝节点权值，内部节点的值恒等于两个孩子之和）：</p>
+<pre><code>                    100
+                 /       \
+                45      55
+                     /      \
+                    25      30
+                   /  \    /  \
+                  12 13   14 16
+                         /  \
+                         5  9
+</code></pre>
+<p>按&quot;左 0 右 1&quot;读根到每个叶子的路径，得到编码表：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>权（字符频率）</th>
+<th>编码</th>
+<th>码长</th>
+<th>贡献位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45</td>
+<td><code>0</code></td>
+<td>1</td>
+<td>45</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>100</code></td>
+<td>3</td>
+<td>36</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>101</code></td>
+<td>3</td>
+<td>39</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>111</code></td>
+<td>3</td>
+<td>48</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>1100</code></td>
+<td>4</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>1101</code></td>
+<td>4</td>
+<td>36</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>WPL = 45×1 + 12×3 + 13×3 + 16×3 + 5×4 + 9×4 = 45 + 36 + 39 + 48 + 20 + 36 = 224</strong>
+<strong>验算</strong>：非叶节点权值之和 = 14 + 25 + 30 + 55 + 100 = <strong>224</strong> ✓</p>
+<p>两个值得记住的观察：</p>
 <ul>
-<li><strong>概念</strong>：带权路径长度（WPL）最小的二叉树。WPL = Σ(权值 × 该节点到根的路径长度)。</li>
-<li><strong>构造方法</strong>：每次取<strong>权值最小的两棵树合并</strong>，新节点权值为两者之和，重复直到只剩一棵。</li>
-<li><strong>重要结论</strong>：<ul>
-<li>n 个叶子的哈夫曼树<strong>总节点数 = 2n − 1</strong>，且<strong>没有度为 1 的节点</strong>。</li>
-<li>权值越大的叶子离根越近。</li>
+<li><strong>频率越大码越短</strong>：45 只占 1 位，5 和 9 要 4 位。这就是&quot;常用字付低房租&quot;。</li>
+<li><strong>收益来自不均衡</strong>：6 个字符定长要 3 位，100 次共 300 位；哈夫曼只用 224 位，省掉 25%。</li>
 </ul>
-</li>
-<li><strong>哈夫曼编码</strong>：左分支记 0、右分支记 1（可互换），从根到叶子的路径就是该字符编码。它是<strong>前缀码</strong>（任何编码不是另一个的前缀），总长度最短。<ul>
-<li><strong>为什么必须是前缀码</strong>：译码时从左往右扫，遇到一个编码就确定一个字符。若 a=0、b=01（b 包含了 a），收到 <code>01</code> 就分不清是&quot;b&quot;还是&quot;a 开头后面还有&quot;——歧义了。哈夫曼树中字符全在叶子上，从根到叶子的路径互不为前缀，所以天然无歧义。</li>
+<h4 id="h-17">前缀码为什么必须满足，哈夫曼为什么天然满足</h4>
+<p>译码的方式是<strong>从左往右一位一位读</strong>，读到凑够某个字符的完整编码，就切一刀、认一个字。</p>
+<p><strong>反例</strong>：假设编码表是 <code>e=0、a=1、b=01、d=00</code>（随手定的、没有树在背后撑腰），收到一串 <code>0100</code>：</p>
+<ul>
+<li>按 <code>e</code>(0) 切：剩下 <code>100</code> → 没有任何字符的编码是 <code>100</code>，<strong>卡住译不下去</strong>；</li>
+<li>换个切法：<code>01</code>(b) + <code>00</code>(d) → 读出 <code>bd</code>。</li>
 </ul>
-</li>
+<p>同一串二进制读出两种结果，这就是<strong>非前缀码</strong>的歧义（<code>b=01</code> 以 <code>e=0</code> 开头，读的时候分不清 0 后面还有没有内容）。</p>
+<p>哈夫曼树不会出这种事，因为<strong>所有字符都挂在叶子上</strong>，而&quot;叶子&quot;的定义就是<strong>没有孩子、路到此为止</strong>：</p>
+<blockquote>
+<p><strong>叶子 = 编码终点；中间节点不是字符，只是岔路口。</strong></p>
+</blockquote>
+<p>从根走到一个叶子的路径，绝不可能恰好是通往另一个叶子的路径的开头——只要在中间某点就&quot;认出字&quot;了，那个点下面就不会再有路，它也就不是中间节点了。所以这一条反过来说明：<strong>字符必须放在叶子上，不能放在中间节点</strong>。</p>
+<h4 id="h-18">四条必背结论（选择题原话考）</h4>
+<ol>
+<li><strong>n 个叶子的哈夫曼树，节点总数 = 2n − 1，且没有度为 1 的节点。</strong>
+为什么：每轮合并都是&quot;两棵并成一棵&quot;，新造出来的节点必然有两个孩子 → 所有非叶节点的度都是 2，<strong>不存在度为 1 的节点</strong>。n 棵单节点树要合并 n−1 次，所以非叶节点共 n−1 个，总数 n + (n−1) = 2n−1。</li>
+<li><strong>权越大的叶子离根越近</strong>（路径长度越小）——这是每轮挑最小合并的顺序决定的。</li>
+<li><strong>哈夫曼树不唯一，但 WPL 唯一。</strong> 权值相同的叶子可以左右互换、并列最小的几组可以调换合并次序，长出来的形状可能不同，但最小总长是定死的。同理：<strong>编码不唯一，但码长分布唯一</strong>。考题问&quot;编码是否唯一&quot;答<strong>不唯一</strong>，问&quot;WPL / 最短码长&quot;答<strong>唯一</strong>，两者别混。</li>
+<li><strong>WPL = 所有非叶节点权值之和</strong>（自检神器：用叶子算一遍，再用非叶节点算一遍，两个数必须相等；不等就是合并过程挑错了数）。</li>
+</ol>
+<h4 id="h-19">应试动作（手算四步，30 秒内）</h4>
+<ol>
+<li><strong>把权值抄成升序列表</strong>——避免&quot;最小两个&quot;漏挑。</li>
+<li><strong>合并 → 划掉两个 → 写下和 → 把和插回有序列表</strong>，逐轮写清楚（草稿纸上一行一轮，别跳步）。</li>
+<li><strong>树从最后一次合并往回拆着画</strong>，不要一开始就凭空画树。</li>
+<li><strong>求 WPL 用两种方法互验</strong>：叶子求和法 ↔ 非叶节点求和法；两者不等就回第 2 步重查。</li>
+</ol>
+<p><strong>补充一句读法</strong>：有些教材把&quot;第几层&quot;和&quot;路径长度&quot;混着说——层次从 1 起算时，<strong>路径长度 = 层次 − 1</strong>。本讲义一律用&quot;路径长度 = 边数&quot;，根为 0。</p>
+<h3 id="h-20">2.5 平衡二叉树（AVL 树）<span class="stars">★</span>（低频，选择题偶尔 1 题）<button type="button" class="sec-status" data-status-key="2.5 平衡二叉树（AVL 树）★（低频，选择题偶尔 1 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 平衡二叉树（AVL 树）★（低频，选择题偶尔 1 题）」的学习状态"></button></h3>
+<p><strong>先把考频说清</strong>：这一节不是重点。按考频编排的考前资料里，AVL 只剩<strong>一句话定义</strong>（&quot;任一结点的左右子树高度之差不超过 1&quot;），真题精选题库里也几乎不单独出它的题。所以别背过程，做到三件事就够：<strong>认得出</strong>一棵树是不是 AVL、<strong>判得出</strong>插入点该用哪种旋转、<strong>记得住</strong>最少节点数公式。真正要花时间的是 2.2 遍历和 2.4 哈夫曼。</p>
+<p><strong>它解决什么问题</strong>：二叉排序树的效率完全取决于树的形状——按 1、2、3、4、5 的顺序插入，树会退化成一条斜链，查找从 O(log₂n) 掉回 O(n)。AVL 的解法是给树加一条硬规矩：<strong>任何节点左右子树的高度差不许超过 1</strong>，插完发现违规就<strong>旋转</strong>修正，把最坏情况重新压回 O(log₂n)。（BST 本身的定义、插入删除、退化过程在第四节 4.4，那里讲得更细。）</p>
+<p><strong>两个词必须先认识</strong>：</p>
+<ul>
+<li><strong>AVL 树</strong>：任意节点左右子树<strong>高度差 ≤ 1</strong> 的<strong>二叉排序树</strong>。两个条件都要满足——先得是 BST，再谈平衡。</li>
+<li><strong>平衡因子（BF）</strong>：<code>BF = 左子树高度 − 右子树高度</code>，合法取值只有 <strong>−1、0、+1</strong> 三个。某个节点的 BF 一旦变成 ±2，这棵树就失衡了。（高度按<strong>层数</strong>算：只有一个节点的子树高 1，空子树高 0——这是教材算 BF 的通用口径。）</li>
 </ul>
-<p>例：权 {1, 2, 3, 4}，合并 1+2=3 → {3,3,4} → 合并 3+3=6 → {4,6} → 合并 4+6=10。WPL = 1×3+2×3+3×2+4×1 = 19。</p>
-<h3 id="h-13">2.5 平衡二叉树（AVL 树）<button type="button" class="sec-status" data-status-key="2.5 平衡二叉树（AVL 树）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 平衡二叉树（AVL 树）」的学习状态"></button></h3>
-<p>任意节点左右子树<strong>高度差 ≤ 1</strong> 的二叉排序树。插入后失衡时通过<strong>旋转</strong>恢复平衡。</p>
+<pre><code>【是 AVL】每个节点的 BF 都落在 −1 ~ +1 内
+
+        5
+       / \
+      3   8
+     /   / \
+    1   7   9
+
+  BF(5) = 左高 2 − 右高 2 = 0        BF(3) = 1 − 0 = +1        BF(8) = 1 − 1 = 0
+  1、7、9 是叶子（左右都空，0 − 0 = 0），BF 也都是 0    → 全部合法 ✓
+
+【不是 AVL】节点 8 失衡
+
+        8
+       / \
+      6   25
+     / \
+    4   7
+   /
+  2
+
+  BF(8) = 左子树(6→4→2)高 3 − 右子树(25)高 1 = +2  → 越界 ✗
+  （BF(6) = 2 − 1 = +1、BF(4) = 1 − 0 = +1 都合法；整棵树只要有一个节点越界，就不是 AVL）
+</code></pre>
 <p><strong>四种旋转怎么记</strong>：LL、RR、LR、RL 的字母，第一个字母是<strong>插入点相对失衡节点的位置</strong>（L=左子树侧，R=右子树侧），第二个字母是再往里的方向。口诀：</p>
 <ul>
-<li><strong>LL 和 RR（同侧）</strong>：做一次&quot;反方向旋转&quot;。LL（全在左边）→ 右旋；RR（全在右边）→ 左旋。想象三个节点排成一条直线，把中间那个提起来当根，树就转平了。</li>
+<li><strong>LL 和 RR（同侧）</strong>：做一次&quot;反方向旋转&quot;。LL（全在左边）→ <strong>右旋</strong>；RR（全在右边）→ <strong>左旋</strong>。想象三个节点排成一条直线，把中间那个提起来当根，树就转平了。</li>
 <li><strong>LR 和 RL（异侧）</strong>：先对<strong>中间两个节点</strong>做一次旋转（变成 LL/RR），再按同侧规则转一次。口诀：<strong>先局部再整体，转两次</strong>。</li>
-<li>考题常给一棵失衡树问&quot;应采用哪种旋转&quot;，先判断插入点位置即可作答。</li>
 </ul>
+<pre><code>【LL 型】插入点落在&quot;左子树的左边&quot; → 对失衡节点做一次右旋
+
+变换前（插入 0 之后，节点 5 失衡）：
+
+        5
+       / \
+      3   8
+     /
+    1
+   /
+  0
+
+变换后（3 提上来当根，5 降为它的右孩子）：
+
+        3
+       / \
+      1   5
+     /     \
+    0       8
+</code></pre>
+<pre><code>【LR 型】插入点落在&quot;左子树的右边&quot; → 先左旋、再右旋（转两次）
+
+变换前（插入 8 之后，节点 10 失衡）：
+
+        10
+       /  \
+      5    15
+     / \
+    3   7
+         \
+          8
+
+第一步：对 5 做左旋（7 提上来，5 降为它的左孩子）：
+
+        10
+       /  \
+      7    15
+     / \
+    5   8
+   /
+  3
+
+第二步：再对 10 做右旋（7 提上来当根，10 降为它的右孩子）：
+
+        7
+       / \
+      5   10
+     /   /  \
+    3   8    15
+</code></pre>
 <p><strong>最少节点数</strong>：高度为 h 的 AVL 树最少节点数 N(h) = N(h−1) + N(h−2) + 1（N(1)=1, N(2)=2）。</p>
 <ul>
 <li><strong>公式怎么来的</strong>：要&quot;节点最少&quot;，根占 1 个；一棵子树塞满（高度 h−1），另一棵只求合法（高度只能是 h−2，差 1 是 AVL 的底线，再矮就失衡了）。所以 N(h) = 1 + N(h−1) + N(h−2)。</li>
 <li><strong>代入算例</strong>：N(3)=N(2)+N(1)+1=2+1+1=4，N(4)=4+2+1=7，N(5)=7+4+1=12。考法：&quot;高度为 4 的 AVL 树最少有几个节点？&quot; → 7。</li>
 </ul>
-<h3 id="h-14">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）<button type="button" class="sec-status" data-status-key="2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）」的学习状态"></button></h3>
+<p><strong>考试怎么问</strong>：① 给几棵树问&quot;哪个是 AVL&quot;——数每个节点的 BF，越界的排除；② 给一棵插入后的失衡图问&quot;应采用哪种旋转&quot;——先找<strong>离插入点最近的失衡节点</strong>，再看插入点落在它的左子树侧还是右子树侧。旋转后的树形很少要求现场画，记住&quot;谁当新根、哪棵子树改挂&quot;就够了。</p>
+<h3 id="h-21">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）<button type="button" class="sec-status" data-status-key="2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）」的学习状态"></button></h3>
+<p><strong>考频先说清</strong>：真题目库里几乎没有 B 树的独立题，按考频精炼的考前资料里干脆不提它。所以只做三件事：<strong>知道它为什么存在</strong>、<strong>认得出两张结构图的区别</strong>、<strong>背下那张对比表</strong>。阶数公式、插入分裂过程都不必背。</p>
+<p><strong>它解决什么问题</strong>：磁盘 I/O。二叉树查找要一层层往下走，<strong>每下一层就是一次磁盘访问</strong>——100 万条记录，二叉树高度约 20，最坏情况要读 20 次盘。把树&quot;变胖&quot;就解决了：一个节点塞几百个关键字、带几百个孩子，树高压到 3~4 层，磁盘只需读三四次。<strong>B 树是被磁盘逼出来的结构，不是为内存设计的。</strong></p>
+<p><strong>定义（m 阶 B 树）</strong>：&quot;阶&quot;就是一个节点<strong>最多能有多少个孩子</strong>。</p>
+<ul>
+<li>每个节点最多 m 个孩子、m−1 个关键字；</li>
+<li>除根外每个节点至少有 ⌈m/2⌉ 个孩子（根至少 2 个）；</li>
+<li><strong>所有叶子节点都在同一层</strong>——这一条让它天然平衡，不需要旋转。</li>
+</ul>
+<p><strong>结构图</strong>：下面是 3 阶（每个节点最多 3 个孩子、2 个关键字）的两种树。两者的拓扑长得几乎一样，差别只在<strong>数据放在哪、叶子连不连</strong>：</p>
+<pre><code>【B 树】关键字和数据存在每一个节点里，查到哪一层就在哪一层返回
+
+                  [ 8 |17 ]
+              /       |       \
+      [ 3 | 5 ]   [ 11|13 ]   [ 20|25 ]
+</code></pre>
+<pre><code>【B+ 树】上层只做&quot;路标&quot;，数据全压在最后一层，且横向串成链表
+（示意图，只强调&quot;数据放在哪、叶子连不连&quot;两点；节点的关键字个数与子树的严格对应关系软考不考）
+
+                  [ 8 |17 ]                 ← 内部节点：只有索引，没有数据
+              /       |       \
+      [ 3 | 5 ]   [ 11|13 ]   [ 20|25 ]     ← 叶子节点：数据都在这儿
+      +-----------+-----------+             ← 叶子串成链表，范围查询顺着扫
+</code></pre>
 <div class="table-wrap">
 <table>
 <thead>
@@ -813,97 +1125,1321 @@ int dequeue(void) {
 <td><strong>串成链表</strong>，便于范围查询</td>
 </tr>
 <tr>
+<td>查找路径</td>
+<td>可能在半路就命中，长度不定</td>
+<td><strong>一定要走到叶子</strong>，每次查找路径长度相同</td>
+</tr>
+<tr>
 <td>用途</td>
 <td>文件系统</td>
 <td><strong>数据库索引</strong>（MySQL）</td>
 </tr>
 </tbody></table>
 </div>
+<p><strong>为什么数据库索引用 B+ 树不用 B 树</strong>（两句就够）：</p>
+<ol>
+<li>内部节点不存数据 → 同样一个磁盘块能装下更多关键字 → 树更矮 → 磁盘访问次数更少；</li>
+<li>叶子串成链表 → &quot;查 10 到 500 之间的记录&quot;顺着链表扫一段就行，B 树得反复回到上层重新往下走。</li>
+</ol>
+<p><strong>考试怎么问</strong>：给两张图问&quot;哪棵是 B+ 树&quot;（看数据是不是全在最底层、叶子有没有连线）；问&quot;B+ 树叶子节点的作用&quot;（存全部数据 + 串成链表支持范围查询）；问&quot;数据库为什么用 B+ 树&quot;（上面那两句）。都不涉及算法，背表即可。</p>
 <hr>
-<h2 id="h-15">第三节 图 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第三节 图 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 图 ★★★」的学习状态"></button></h2>
-<h3 id="h-16">3.1 存储结构<button type="button" class="sec-status" data-status-key="3.1 存储结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 存储结构」的学习状态"></button></h3>
-<ul>
-<li><strong>邻接矩阵</strong>：n 个顶点用 n×n 矩阵，<code>A[i][j]=1</code> 表示有边。无向图矩阵对称。<strong>空间 O(n²)</strong>，适合稠密图；判断任意两点是否相邻 O(1)。</li>
-<li><strong>邻接表</strong>：每个顶点挂一条链表存它的邻接点。空间 O(n+e)，适合<strong>稀疏图</strong>。</li>
-</ul>
-<p><strong><span class="stars">★</span> 无向图边数 = 度数总和 ÷ 2</strong>（每条边贡献 2 个度）。有向图：度 = 入度 + 出度，边数 = 入度总和 = 出度总和。</p>
-<h3 id="h-17">3.2 遍历<button type="button" class="sec-status" data-status-key="3.2 遍历" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 遍历」的学习状态"></button></h3>
-<ul>
-<li><strong>DFS（深度优先）</strong>：一条路走到黑，走不动再回退。用<strong>栈</strong>（或递归）。类比走迷宫摸墙。</li>
-<li><strong>BFS（广度优先）</strong>：一圈一圈向外扩。用<strong>队列</strong>。类比水波扩散。</li>
-<li>复杂度：邻接矩阵 O(n²)，邻接表 O(n+e)。</li>
-<li>BFS 求出的单源路径是<strong>边数最少</strong>的路径。</li>
-</ul>
-<h3 id="h-18">3.3 最小生成树（MST）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="3.3 最小生成树（MST）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 最小生成树（MST）★」的学习状态"></button></h3>
-<p>生成树：包含全部 n 个顶点、只有 n−1 条边、无回路的子图。带权图中权值和最小的生成树叫最小生成树。<strong>同一张图的最小生成树可能不唯一，但权值和唯一。</strong></p>
+<h2 id="h-22">第三节 图 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第三节 图 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 图 ★★★」的学习状态"></button></h2>
+<h3 id="h-23">3.0 先认图：从&quot;一对一&quot;到&quot;多对多&quot;<button type="button" class="sec-status" data-status-key="3.0 先认图：从&amp;quot;一对一&amp;quot;到&amp;quot;多对多&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.0 先认图：从&quot;一对一&quot;到&quot;多对多&quot;」的学习状态"></button></h3>
+<p>线性表是<strong>一对一</strong>（排队，前一个后一个），树是<strong>一对多</strong>（族谱，一个爸爸几个孩子），图是<strong>多对多</strong>——朋友圈里互相是好友、地铁站互相能到达、任务之间互相有依赖，都是&quot;谁都可能认识谁&quot;的关系。</p>
+<p>图为什么值得单开一节：树里的&quot;父子&quot;关系规定了层级，所以只有前中后序那么几种走法；图里没有层级，任意两点都可能相连，于是&quot;怎么存、怎么走、怎么找最优解&quot;各自都变成了一类固定题型，也就是软考固定考的六块：<strong>存储、遍历、最小生成树、最短路径、拓扑排序、关键路径</strong>。</p>
+<p><strong>一张图 = 一堆点 + 一堆线</strong>，记作 <code>G = (V, E)</code>：V 是顶点（vertex）集合，E 是边（edge）集合。本课反复用下面这张图（叫它 <strong>G1</strong>，无向、无权、连通、带一个回路）：</p>
+<pre><code>        A ─── B
+        │     │
+        C ─── D ─── E
+
+顶点 V = { A, B, C, D, E }              （5 个顶点）
+边   E = { A-B, A-C, B-D, C-D, D-E }    （5 条边，无向边不写箭头）
+</code></pre>
+<p>肉眼验一下：A-B-D-C-A 这一圈首尾相接 → 图里有<strong>回路</strong>（这正是图与树的区别，树不允许有回路）。</p>
+<p><strong>术语一次认全</strong>（选择题直接考定义，下面这张表要能默写）：</p>
 <div class="table-wrap">
 <table>
 <thead>
 <tr>
-<th>算法</th>
-<th>思想</th>
-<th>适用</th>
+<th>术语</th>
+<th>含义</th>
+<th>用 G1 对照</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>Prim（普里姆）</strong></td>
-<td>从一个顶点出发，每次挑&quot;树内到树外&quot;最短的边，逐步长出树</td>
-<td><strong>稠密图</strong>（边多）</td>
+<td>无向图 / 有向图</td>
+<td>边有没有方向。有向边写 A→B，A 是起点、B 是终点</td>
+<td>G1 是无向图</td>
 </tr>
 <tr>
-<td><strong>Kruskal（克鲁斯卡尔）</strong></td>
-<td>把所有边按权排序，从小到大选，不构成回路就要</td>
-<td><strong>稀疏图</strong>（边少）</td>
+<td>邻接</td>
+<td>两点之间直接有边相连</td>
+<td>A 与 B 邻接；A 与 E 不邻接</td>
+</tr>
+<tr>
+<td>度</td>
+<td>一个顶点连着的边数</td>
+<td>D 的度 = 3（B-D、C-D、D-E）</td>
+</tr>
+<tr>
+<td>入度 / 出度</td>
+<td>有向图专用：多少条边指向它 / 由它指出</td>
+<td>无向图不分入度出度</td>
+</tr>
+<tr>
+<td>路径</td>
+<td>从一点走到另一点经过的边序列</td>
+<td>A-D-E 是 A 到 E 的一条路径</td>
+</tr>
+<tr>
+<td>路径长度</td>
+<td>无权图 = 路径上的<strong>边数</strong>；带权图 = 各边<strong>权值之和</strong></td>
+<td>A-D-E 长度为 2</td>
+</tr>
+<tr>
+<td>回路（环）</td>
+<td>起点与终点相同的路径</td>
+<td>A-B-D-C-A 是 G1 的回路</td>
+</tr>
+<tr>
+<td>连通图</td>
+<td>图中<strong>任意两点</strong>之间都有路径</td>
+<td>G1 连通</td>
+</tr>
+<tr>
+<td>连通分量</td>
+<td>非连通图里&quot;各自连成一片&quot;的极大子图</td>
+<td>见下面例子</td>
+</tr>
+<tr>
+<td>完全图</td>
+<td><strong>任意两点之间都有边</strong></td>
+<td>n 个顶点的无向完全图有 n(n−1)/2 条边</td>
+</tr>
+<tr>
+<td>子图</td>
+<td>从原图里挑一部分顶点和一部分边</td>
+<td><code>A─B</code> + <code>D─E</code> 是 G1 的子图</td>
+</tr>
+<tr>
+<td>生成树</td>
+<td>含<strong>全部 n 个顶点</strong>、恰好 <strong>n−1 条边</strong>、无回路的子图</td>
+<td>3.3 节详讲</td>
+</tr>
+<tr>
+<td>网</td>
+<td>每条边带权值的图（带权图），权可以是距离/费用/工期</td>
+<td>3.3 节开始使用</td>
 </tr>
 </tbody></table>
 </div>
-<p><strong>手算技巧</strong>：Kruskal 就是&quot;把边从短到长排队，依次画上去，画到会形成环的跳过&quot;。</p>
-<h3 id="h-19">3.4 最短路径（Dijkstra）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="3.4 最短路径（Dijkstra）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.4 最短路径（Dijkstra）★」的学习状态"></button></h3>
-<p>求一个源点到其他所有顶点的最短路径。思想：贪心，每轮把&quot;当前距离最小的未确定顶点&quot;确定为最终结果，再用它去松弛邻居。<strong>不能处理负权边</strong>（经典考点）。时间复杂度 O(n²)。</p>
-<h3 id="h-20">3.5 拓扑排序（AOV 网）<button type="button" class="sec-status" data-status-key="3.5 拓扑排序（AOV 网）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.5 拓扑排序（AOV 网）」的学习状态"></button></h3>
-<p>有向无环图（DAG）中把顶点排成序列，使每条边都从前面指向后面。方法：<strong>每次取入度为 0 的顶点输出并删除其出边</strong>。拓扑序列<strong>不唯一</strong>；图中有环则无法完成拓扑排序（工程上用于检测任务循环依赖）。</p>
-<h3 id="h-21">3.6 关键路径（AOE 网）<span class="stars">★★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="3.6 关键路径（AOE 网）★★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.6 关键路径（AOE 网）★★★（计算题大户）」的学习状态"></button></h3>
-<p>AOE 网：边表示活动（有权=工期），点表示事件（状态）。</p>
-<ul>
-<li><strong>关键路径 = 从源点到汇点的最长路径</strong>，其长度 = 整个工程的最短工期。关键路径上的活动是<strong>关键活动</strong>，延误则整个工程延误。</li>
-<li><strong>四个量</strong>（每个事件/顶点 v，每条活动/边 a）：<ol>
-<li>事件最早发生时间 ve(v)：从源点<strong>顺推</strong>取 max。</li>
-<li>事件最迟发生时间 vl(v)：从汇点<strong>逆推</strong>取 min（vl(汇点)=ve(汇点)）。</li>
-<li>活动最早开始时间 e(a) = 边起点的 ve。</li>
-<li>活动最迟开始时间 l(a) = 边终点的 vl − 该活动工期。</li>
+<p><strong>连通分量长什么样</strong>（另取一张&quot;不连通&quot;的图做例子）：</p>
+<pre><code>        A ─── B            C ← 孤立点，不连任何边
+        │     │
+        └──── D
+
+     A、B、D 三点互相可达 → 连成一片，算 1 个连通分量
+     C 谁也不连 → 它自己也算 1 个连通分量
+     ⇒ 这张图共有 2 个连通分量，所以它「不是」连通图
+</code></pre>
+<p><strong>判别口诀</strong>：<strong>连通分量 = 数一数图被&quot;断&quot;成了几片</strong>（孤立的一个点也算一片）。遍历时对每个未访问顶点各起一次遍历，起了几次就有几个连通分量（3.2 节会用到）。</p>
+<p><strong><span class="stars">★</span> 边数公式（必背两条 + 一条反推）</strong>：</p>
+<ol>
+<li><strong>无向完全图</strong>：<code>n(n−1)/2</code> 条边。n=5 → 5×4/2 = 10 条。</li>
+<li><strong>有向完全图</strong>：<code>n(n−1)</code> 条边（每对顶点两个方向的边都要有）。n=5 → 20 条。</li>
+<li>反推：无向图边数<strong>最多</strong> <code>n(n−1)/2</code>。边数接近这个上限 = <strong>稠密图</strong>；远小于上限 = <strong>稀疏图</strong>。这个判别直接决定 3.1 节用哪种存储（稠密用矩阵、稀疏用邻接表）。</li>
 </ol>
-</li>
-<li><strong>时间余量 = l − e，等于 0 的活动就是关键活动。</strong></li>
-<li>关键路径可以不止一条；<strong>缩短工期必须压缩所有关键路径上的公共关键活动</strong>。</li>
-</ul>
-<p>手算例：某 AOE 网有活动 A→B(3)、A→C(2)、B→D(4)、C→D(5)、D→E(1)。从源点顺推：ve(B)=3，ve(C)=2，ve(D)=max(3+4, 2+5)=max(7,7)=7，ve(E)=7+1=8，<strong>总工期 8</strong>。可见两条路径长度同为 7，都是关键路径——这正解释了上面那条结论&quot;缩短工期必须压缩所有关键路径的公共活动&quot;：只压 B→D，A→C→D 这条关键路径不受影响，工期纹丝不动。做题时列表逐点算即可，务必动手练一遍真题。</p>
-<hr>
-<h2 id="h-22">第四节 查找 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第四节 查找 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 查找 ★★」的学习状态"></button></h2>
-<h3 id="h-23">4.1 顺序查找与二分查找<button type="button" class="sec-status" data-status-key="4.1 顺序查找与二分查找" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 顺序查找与二分查找」的学习状态"></button></h3>
+<p><strong><span class="stars">★</span> 度数定理（每年都有它的题）</strong>：无向图中<strong>所有顶点的度数之和 = 2e</strong>（e 是边数）。理由很朴素：一条边有两个端点，它给两头的度数各加 1。</p>
 <ul>
-<li>顺序查找：O(n)，无序表也能查。</li>
-<li><strong>二分查找</strong>：仅适用于<strong>有序的顺序表</strong>。O(log₂n)。<ul>
-<li><strong><span class="stars">★</span> 最多比较次数 = ⌈log₂(n+1)⌉</strong>（即判定树深度）。n=15 时最多 4 次。</li>
-<li>判定树：中间元素做根，左右折半递归。<strong>n 个元素二分查找的成功平均查找长度 ≈ log₂(n+1) − 1</strong>。</li>
+<li>用 G1 验算：度数 2+2+2+3+1 = <strong>10</strong>（A2、B2、C2、D3、E1），边数 5 → 10 = 2×5 ✓</li>
+<li>反向用（这是常见考法）：&quot;某无向图有 10 个顶点、每个顶点的度都是 4，问边数&quot; → 度数和 = 40 = 2e → <strong>e = 20</strong>。</li>
+<li>推论（握手定理）：<strong>度数为奇数的顶点个数必为偶数</strong>。所以&quot;给一组度数问能不能画出图&quot;的题，第一步就数奇数度的点有几个——奇数个就直接不存在。</li>
+<li>有向图版本：<strong>入度总和 = 出度总和 = 边数</strong>（每条边恰好贡献一个入度和一个出度）。</li>
 </ul>
-</li>
-</ul>
-<h3 id="h-24">4.2 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="4.2 散列表（Hash 表）★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 散列表（Hash 表）★★（计算题大户）」的学习状态"></button></h3>
-<p>把关键字通过哈希函数直接映射到存储位置，理想查找 O(1)。</p>
-<ul>
-<li><strong>冲突</strong>：不同关键字映射到同一位置。<strong>同义词</strong>：哈希函数值相同的关键字。</li>
-<li><strong>冲突处理方法</strong>：<ol>
-<li><strong>开放定址法（线性探测）</strong>：冲突就往后挪一格，直到有空位。缺点：会产生<strong>堆积（聚集）</strong>，非同义词也可能争抢同一批位置。</li>
-<li><strong>链地址法</strong>：每个位置挂一条链表。优点：删除方便、无堆积。</li>
-<li>再散列、公共溢出区（了解即可）。</li>
+<p><strong>易错点</strong>：<strong>连通 ≠ 完全</strong>。连通要求&quot;能走到&quot;，完全要求&quot;直接有边&quot;。完全图一定是连通图；连通图不必是完全图（G1 连通，但 A 和 E 之间没有直连边，所以不是完全图）。题目常把这两句换着说法让你判对错。</p>
+<p><strong>延伸阅读</strong>：类型与术语的配图见 <a href="https://www.hello-algo.com/chapter_graph/graph/">hello-algo · 图</a>（在线打开可看插图；离线阅读时忽略本行即可，不影响本讲义自足）。</p>
+<h3 id="h-24">3.1 存储结构：邻接矩阵 vs 邻接表<button type="button" class="sec-status" data-status-key="3.1 存储结构：邻接矩阵 vs 邻接表" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 存储结构：邻接矩阵 vs 邻接表」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：图（点和线）怎么放进内存？两条路——<strong>把所有&quot;谁和谁相邻&quot;记成一张表格（矩阵）</strong>，或者<strong>给每个顶点各挂一张&quot;我的邻居&quot;清单（链表）</strong>。</p>
+<h4 id="h-25">邻接矩阵：一张 n×n 的表</h4>
+<p>n 个顶点就开 n×n 的二维数组，<code>A[i][j] = 1</code> 表示顶点 i 到顶点 j 有边，<code>0</code> 表示无边。<strong>G1 的邻接矩阵</strong>（顶点顺序按 A、B、C、D、E）：</p>
+<pre><code>        A  B  C  D  E
+   A [  0  1  1  0  0 ]     ← A 与 B、C 相邻
+   B [  1  0  0  1  0 ]     ← B 与 A、D 相邻
+   C [  1  0  0  1  0 ]     ← C 与 A、D 相邻
+   D [  0  1  1  0  1 ]     ← D 与 B、C、E 相邻
+   E [  0  0  0  1  0 ]     ← E 只与 D 相邻
+</code></pre>
+<p>读法：<strong>第 i 行第 j 列为 1 ⇒ 顶点 i 与顶点 j 之间有边</strong>。行号列号的对应关系靠&quot;顶点顺序表&quot;记着（这里第 1<del>5 行分别是 A</del>E）。</p>
+<p>三个可以直接考的结论：</p>
+<ol>
+<li><strong>无向图的矩阵一定对称</strong>（A 与 B 有边 ⇔ B 与 A 有边），主对角线全是 0（自己跟自己不算相邻）。</li>
+<li><strong>某一行上 1 的个数 = 该顶点的度</strong>。D 那行有 3 个 1 → D 的度是 3 ✓ 这也是&quot;数度&quot;最快的算法。</li>
+<li>若把 1 换成边的权值 → 就是<strong>带权图</strong>的邻接矩阵（无边处记 ∞ 或 0，看题目约定）。</li>
 </ol>
-</li>
-<li><strong>装填因子 α = 表中元素数 / 表长</strong>。α 越大越容易冲突，平均查找长度越大。</li>
-<li><strong><span class="stars">★</span> 平均查找长度（ASL）计算</strong>：成功查找的 ASL = Σ(每个元素的比较次数)/元素个数。必须动手算一遍：例如线性探测下，某元素放的位置离它的哈希地址隔了 k 格，它查找成功就要比较 k+1 次。</li>
+<p><strong>有向图不对称，反例先说清</strong>：若边是有向的，比如 A→B 存在、B→A 不存在，那么第 A 行 B 列为 1、第 B 行 A 列为 0 → 矩阵<strong>不对称</strong>。于是有这条判别：<strong>矩阵不对称 ⇒ 一定是有向图；矩阵对称 ⇒ 可能是无向图，也可能是&quot;有向图但两个方向恰好都有边&quot;</strong>（参考资料里的原话：&quot;不对称的矩阵一定是有向图，对称的矩阵可能是有向图&quot;）。</p>
+<p><strong>代价</strong>：空间 O(n²)。G1 只有 5 条边却开了 25 格，浪费；顶点多时（如 1000 个顶点、10 条边）几乎全是 0，浪费更严重。优点是<strong>查&quot;两点是否相邻&quot;是 O(1)</strong>（直接看格子的值），以空间换时间。</p>
+<h4 id="h-26">邻接表：每个顶点一条&quot;邻居清单&quot;</h4>
+<p>开一个一维数组存 n 个顶点，每个顶点后面挂一条链表，链表里存它的所有邻接顶点。<strong>G1 的邻接表</strong>：</p>
+<pre><code>   [0] A → B → C ∧
+   [1] B → A → D ∧
+   [2] C → A → D ∧
+   [3] D → B → C → E ∧
+   [4] E → D ∧
+</code></pre>
+<ul>
+<li>空间 <strong>O(n+e)</strong>：n 个顶点各一个表头 + 每条边在两头的链表中各出现一次（无向图），所以&quot;边节点&quot;总数 = 2e。G1：5 个表头 + 10 个边节点 = 15 个节点。</li>
+<li><strong><span class="stars">★</span> 固定考点（参考资料原话）</strong>：&quot;有向图的邻接表有 <strong>n+e</strong> 个点，无向图的邻接表有 <strong>n+2e</strong> 个点。&quot;有向图每条边只在一个链表里出现一次，所以是 n+e。<strong>这个 n+e / n+2e 是选择题的固定考法。</strong></li>
+<li>缺点是<strong>判断两点是否相邻要从头扫链表</strong>（O(度) 而不是 O(1)）。</li>
 </ul>
+<h4 id="h-27">两种存储的正面对比（背下来）</h4>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>邻接矩阵</th>
+<th>邻接表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空间</td>
+<td>O(n²)</td>
+<td><strong>O(n+e)</strong></td>
+</tr>
+<tr>
+<td>判断两点是否相邻</td>
+<td><strong>O(1)</strong></td>
+<td>O(n)（要扫链表）</td>
+</tr>
+<tr>
+<td>适合的图</td>
+<td><strong>稠密图</strong>（边接近 n(n−1)/2）</td>
+<td><strong>稀疏图</strong>（边很少）</td>
+</tr>
+<tr>
+<td>无向图存法</td>
+<td>对称矩阵，存一份或两倍</td>
+<td>每条边在两个链表各出现一次（2e）</td>
+</tr>
+<tr>
+<td>数的度数</td>
+<td>扫一行 O(n)</td>
+<td>扫自己的链表 O(度)</td>
+</tr>
+<tr>
+<td>存带权图</td>
+<td>矩阵元素直接放权值</td>
+<td>链表节点多带一个权值字段</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>手算口诀</strong>：<strong>稠密用矩阵、稀疏用邻接表；矩阵好查（O(1)）费空间，邻接表省空间查得慢。</strong></p>
+<p><strong>还有两个&quot;见过就行&quot;的存储</strong>（软考偶尔在选项里出现，知道名字和用途即可）：</p>
+<ul>
+<li><strong>十字链表</strong>：有向图的邻接表改良版，一条边只存一次又能同时顺着&quot;出边&quot;和&quot;入边&quot;找，专门服务有向图求入度/出度。</li>
+<li><strong>邻接多重表</strong>：无向图的邻接表改良版，同样让每条边只存一份（邻接表里无向边要存两次），便于<strong>删除边</strong>。</li>
+</ul>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：题目给一个矩阵问&quot;这是哪种存储/某顶点的度是多少/图是否连通&quot;，就看<strong>行内 1 的个数（度）</strong>、<strong>是否对称（无向）</strong>。</li>
+<li>背什么：<code>O(n²)</code> vs <code>O(n+e)</code>、<code>n+e</code> vs <code>n+2e</code>、无向完全图边数 <code>n(n−1)/2</code>、度数和 <code>= 2e</code>。</li>
+<li>哪些靠算：给邻接表算某点的度、给矩阵算边数——都是&quot;数 1&quot;的活，别慌，慢慢数。</li>
+</ul>
+<p><strong>延伸阅读</strong>：矩阵/邻接表的增删边与顶点、效率对比表见 <a href="https://www.hello-algo.com/chapter_graph/graph_operations/">hello-algo · 图的基础操作</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-28">3.2 遍历：DFS 与 BFS（选择题必有，案例题也用）<button type="button" class="sec-status" data-status-key="3.2 遍历：DFS 与 BFS（选择题必有，案例题也用）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 遍历：DFS 与 BFS（选择题必有，案例题也用）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：从某个顶点出发，怎样把整张图<strong>每个点恰好走一遍</strong>？</p>
+<p>树为什么不用操心这个？因为树没有回路，顺着走就能不重不漏。<strong>图里有回路</strong>（G1 里 A-B-D-C-A 就是一圈），走法不当就会原地转圈。所以图遍历比树遍历多了一个必需装备：<strong>visited 标记数组</strong>，走过的点打标记，遇到打过标记的点就跳过。<strong>忘掉 visited 是本节最容易犯的错</strong>（也是判断题里最爱设计的陷阱）。</p>
+<p>两种走法，区别只在&quot;优先照顾哪个方向的邻居&quot;：</p>
+<h4 id="h-29">DFS（深度优先遍历，Depth-First Search）：一条路走到黑</h4>
+<p>策略：访问当前顶点 → 挑一个<strong>还没访问过的邻居</strong>钻进去 → 继续往下钻 → 直到某个顶点周围全是&quot;已访问&quot;，<strong>回退</strong>到上一个还有未访问邻居的顶点，继续钻。实现靠<strong>栈</strong>（递归写法用的就是系统栈）。</p>
+<p>用 G1 从 A 出发（邻居按邻接表顺序取，字母小的先取）：</p>
+<pre><code>   G1 邻接表：  A→B→C   B→A→D   C→A→D   D→B→C→E   E→D
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>动作</th>
+<th>栈（顶在右）</th>
+<th>已访问（输出序）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>A 无路可退，先访问 A、压栈</td>
+<td><code>A</code></td>
+<td>A</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A 的第一个未访问邻居 B → 访问 B、压栈</td>
+<td><code>A B</code></td>
+<td>A B</td>
+</tr>
+<tr>
+<td>3</td>
+<td>B 的第一个未访问邻居 D → 访问 D、压栈</td>
+<td><code>A B D</code></td>
+<td>A B D</td>
+</tr>
+<tr>
+<td>4</td>
+<td>D 的第一个未访问邻居 C → 访问 C、压栈</td>
+<td><code>A B D C</code></td>
+<td>A B D C</td>
+</tr>
+<tr>
+<td>5</td>
+<td>C 的邻居 A、D <strong>都访问过了</strong> → 无路可走，弹栈回退到 D</td>
+<td><code>A B D</code></td>
+<td>A B D C</td>
+</tr>
+<tr>
+<td>6</td>
+<td>回到 D，找它下一个未访问邻居 E → 访问 E、压栈</td>
+<td><code>A B D E</code></td>
+<td>A B D C <strong>E</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>E 的邻居 D 已访问 → 无路可走，连续弹栈回退到 A，栈空，结束</td>
+<td>（空）</td>
+<td>A B D C E</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>DFS 序列：A B D C E</strong></p>
+<p>两个必须看懂的细节：</p>
+<ul>
+<li><strong>第 5 步弹栈时 C 不再输出</strong>。弹栈只是&quot;退回去找别的路&quot;，不是&quot;重新访问&quot;。C 只在第 4 步被输出一次。</li>
+<li><strong>回退的粒度是&quot;顶点&quot;不是&quot;边&quot;</strong>：C 走不通，一次退到最近的一个&quot;还有未访问邻居&quot;的顶点（这里是 D），不是退一步就停。</li>
+</ul>
+<h4 id="h-30">BFS（广度优先遍历，Breadth-First Search）：一圈一圈往外扩</h4>
+<p>策略：先把起点的<strong>所有邻居</strong>访问完，再访问邻居的邻居……实现靠<strong>队列</strong>（先进先出，保证同层先来先服务）。</p>
+<p>同样从 A 出发：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>动作</th>
+<th>队列（头在左）</th>
+<th>已访问（输出序）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>A 入队</td>
+<td><code>[A]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>出队并访问 A，把 A 的未访问邻居 B、C <strong>入队</strong></td>
+<td><code>[B, C]</code></td>
+<td>A</td>
+</tr>
+<tr>
+<td>3</td>
+<td>出队并访问 B，把 B 的未访问邻居 D 入队</td>
+<td><code>[C, D]</code></td>
+<td>A B</td>
+</tr>
+<tr>
+<td>4</td>
+<td>出队并访问 C，C 的邻居 A、D <strong>都已访问/已在队</strong> → 不入队</td>
+<td><code>[D]</code></td>
+<td>A B C</td>
+</tr>
+<tr>
+<td>5</td>
+<td>出队并访问 D，把 D 的未访问邻居 E 入队</td>
+<td><code>[E]</code></td>
+<td>A B C D</td>
+</tr>
+<tr>
+<td>6</td>
+<td>出队并访问 E，邻居 D 已访问 → 队空，结束</td>
+<td><code>[]</code></td>
+<td>A B C D E</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>BFS 序列：A B C D E</strong></p>
+<p><strong><span class="stars">★</span> BFS 的关键实现细节</strong>：标记 visited 要在<strong>入队的那一刻</strong>就打，不能等出队。否则第 3 步 D 入队后，第 4 步处理 C 时看到 D 还没&quot;被访问&quot;（只是排队），会把 D <strong>重复入队</strong>。判断题常拿这里做考点。</p>
+<h4 id="h-31">两者对比（这张表要能默写）</h4>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DFS 深度优先</th>
+<th>BFS 广度优先</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>走法</td>
+<td>一条路走到黑，走不动才回退</td>
+<td>一圈一圈向外扩</td>
+</tr>
+<tr>
+<td>辅助结构</td>
+<td><strong>栈</strong>（或递归）</td>
+<td><strong>队列</strong></td>
+</tr>
+<tr>
+<td>树的对应</td>
+<td>相当于树的**先根（前序）**遍历</td>
+<td>相当于树的<strong>层序</strong>遍历</td>
+</tr>
+<tr>
+<td>生活类比</td>
+<td>走迷宫贴着墙一直走到底</td>
+<td>水波从落水点向外扩散</td>
+</tr>
+<tr>
+<td>遍历序列</td>
+<td><strong>不唯一</strong>（邻居次序不同结果不同）</td>
+<td><strong>不唯一</strong></td>
+</tr>
+<tr>
+<td>求<strong>无权图</strong>单源最短路径</td>
+<td>不行</td>
+<td><strong>可以</strong>：BFS 第一次到达某点时的层数就是最少边数</td>
+</tr>
+<tr>
+<td>时间复杂度</td>
+<td>邻接矩阵 O(n²)、邻接表 <strong>O(n+e)</strong></td>
+<td>同左</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>两个可以直接考的结论</strong>：</p>
+<ol>
+<li><strong>遍历序列不唯一</strong>，因为&quot;先钻哪个邻居&quot;没有硬性规定。所以题目若给出<strong>邻接表 + 起点 + 邻居顺序</strong>，序列才是唯一的——题干一般都会强调&quot;按邻接表顺序访问&quot;。反过来，&quot;下面哪个序列<strong>不可能</strong>是某个图的 DFS/BFS 序列&quot;这类题，要靠&quot;同层内任意、跨层有约束&quot;去筛。</li>
+<li><strong>复杂度只和存储结构有关，与 DFS/BFS 无关</strong>：矩阵 O(n²)、邻接表 O(n+e)。记住这句原话，选择题很喜欢用它做选项。</li>
+<li><strong>非连通图</strong>一次遍历只能走完一个连通分量；要访问全部顶点，就得对每个未访问顶点各起一次遍历 → <strong>调用遍历的次数 = 连通分量个数</strong>。</li>
+</ol>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：给一个图/邻接表问&quot;从 V1 出发的 DFS 序列&quot;，或给序列问&quot;是否是 DFS 序列&quot;。看到&quot;深度/一条路走到黑&quot;选 DFS（栈），看到&quot;逐层/由近及远&quot;选 BFS（队列）。</li>
+<li>手算技巧：DFS 在草稿上<strong>画出递归的走向箭头</strong>（进去 →、回退 ←），比盯代码快；BFS 就老老实实画队列的进出。</li>
+<li>背什么：栈 ↔ DFS、队列 ↔ BFS；无权图最短路径只能靠 BFS。</li>
+</ul>
+<p><strong>延伸阅读</strong>：BFS/DFS 的逐帧动画与实现代码见 <a href="https://www.hello-algo.com/chapter_graph/graph_traversal/">hello-algo · 图的遍历</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-32">3.3 最小生成树：Prim 与 Kruskal<button type="button" class="sec-status" data-status-key="3.3 最小生成树：Prim 与 Kruskal" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 最小生成树：Prim 与 Kruskal」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：n 座城市要铺通信线路，任意两城能互通即可（不要求直连），怎么铺<strong>总造价最低</strong>？</p>
+<p>这个问题有两个隐含要求，正是&quot;生成树&quot;的定义：<strong>要连通</strong>（否则有的城市联系不上）、<strong>要最省</strong>（能连通 n 个点最少只要 n−1 条边，多铺一条都是浪费）——再不允许有回路（有回路就说明多铺了一条线）。</p>
+<p><strong>生成树的四个特征</strong>（说三个就能推出第四个）：含<strong>全部 n 个顶点</strong>、恰好 <strong>n−1 条边</strong>、<strong>连通</strong>、<strong>无回路</strong>。</p>
+<p><strong>最小生成树（MST）</strong>：带权图中&quot;边权之和最小&quot;的那棵生成树。</p>
+<ul>
+<li><strong><span class="stars">★</span> 权值和唯一，但树本身可能不唯一</strong>：当图里有<strong>权值相同的边</strong>时，可选的方案不止一种，但最小权值和是唯一的。这句话选择题直接考。</li>
+<li><strong>找法思路</strong>：不管哪种算法，都是<strong>贪心</strong>——每一步都挑当前最小的边，区别只在&quot;从哪里开始挑&quot;。</li>
+</ul>
+<h4 id="h-33">先用一张图把两个算法都跑一遍（G2）</h4>
+<pre><code>        A ──4── B
+        │ ╲     │
+        5   2   1
+        │     ╲ │
+        D ──3── C
+        │
+        4
+        │
+        E
+
+   G2 的边（无向）：A-B 4、A-C 2、A-D 5、B-C 1、C-D 3、D-E 4        共 6 条边、5 个顶点
+</code></pre>
+<h4 id="h-34">Kruskal（克鲁斯卡尔）：加边法——&quot;把边按长短排队，短的先上，成环就跳过&quot;</h4>
+<p>一步都不用画树，纯排序 + 查环：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>候选边（从小到大）</th>
+<th>权</th>
+<th>判断</th>
+<th>是否选中</th>
+<th>已选中的边</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>B-C</td>
+<td>1</td>
+<td>两端不连通</td>
+<td>✔</td>
+<td>BC</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A-C</td>
+<td>2</td>
+<td>不连通（A 还是孤点）</td>
+<td>✔</td>
+<td>BC、AC</td>
+</tr>
+<tr>
+<td>3</td>
+<td>C-D</td>
+<td>3</td>
+<td>不连通（D 还是孤点）</td>
+<td>✔</td>
+<td>BC、AC、CD</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>A-B</strong></td>
+<td>4</td>
+<td>A、B <strong>已经连通</strong>（A-C-B）→ 选了会成环</td>
+<td>✘ 跳过</td>
+<td>—</td>
+</tr>
+<tr>
+<td>5</td>
+<td>D-E</td>
+<td>4</td>
+<td>不连通（E 还是孤点）</td>
+<td>✔</td>
+<td>BC、AC、CD、DE</td>
+</tr>
+<tr>
+<td>—</td>
+<td>A-D 5</td>
+<td>5</td>
+<td>已连满 4 条边（n−1=4），结束</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>结果</strong>：MST = {BC 1, AC 2, CD 3, DE 4}，<strong>权值和 = 1+2+3+4 = 10</strong>，4 条边 = n−1 ✓，无回路 ✓，覆盖 A~E ✓</p>
+<p><strong>反例前置（最容易错的一步）</strong>：第 4 步 A-B 权 4 比 D-E 的 4 一样小，看着都该选——但 A 和 B 此时已经通过 A-C-B 连通了，加上 A-B 就形成回路 A-B-C-A，而生成树<strong>不许有回路</strong>，所以必须<strong>跳过</strong>。很多同学&quot;见小的就选&quot;，就错在这一步。Kruskal 唯一要动脑的地方就是<strong>查环</strong>：只要一条边的两个端点已经连通，就跳过。</p>
+<h4 id="h-35">Prim（普里姆）：加点法——&quot;从一棵树苗开始，每次接一个最近的顶点进来&quot;</h4>
+<p>Prim 不排序边，而是维护一个&quot;已经长成的树&quot;的顶点集合 S：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>已选顶点集合 S</th>
+<th>从 S 连到<strong>集合外</strong>的所有边</th>
+<th>最短的</th>
+<th>接进来的点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始</td>
+<td>{A}</td>
+<td>A-B 4、A-C 2、A-D 5</td>
+<td>A-C 2</td>
+<td>C</td>
+</tr>
+<tr>
+<td>2</td>
+<td>{A, C}</td>
+<td>A-B 4、A-D 5、C-B 1、C-D 3</td>
+<td>C-B 1</td>
+<td>B</td>
+</tr>
+<tr>
+<td>3</td>
+<td>{A, C, B}</td>
+<td>A-D 5、C-D 3</td>
+<td>C-D 3</td>
+<td>D</td>
+</tr>
+<tr>
+<td>4</td>
+<td>{A, C, B, D}</td>
+<td>D-E 4</td>
+<td>D-E 4</td>
+<td>E（点全到齐，结束）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>结果</strong>：选中的边 = {AC 2, CB 1, CD 3, DE 4}，<strong>权值和 = 10</strong> —— 与 Kruskal 完全一致 ✓</p>
+<blockquote>
+<p><strong>这正是一次&quot;用第二种方法反向验证&quot;</strong>：两个算法的思路差得远（一个加边一个加点），却给出同一个权值和 10，说明算对了。考场上若时间允许，用另一个算法复核，比反复验算同一条路更可靠。</p>
+</blockquote>
+<p><strong>易错点</strong>：Prim 第 2 步&quot;从 S 连到集合外的边&quot;要<strong>包括 S 里所有点</strong>发出的边（A-B 4 和 C-B 1 都要列出来），只盯新接进来的 C 会漏掉 A-B，可能选错。<strong>Prim 是&quot;整个集合对外的最短边&quot;，不是&quot;新点的最短边&quot;</strong>。</p>
+<h4 id="h-36">两个算法的分工（常考&quot;选哪个算法&quot;）</h4>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prim（普里姆）</th>
+<th>Kruskal（克鲁斯卡尔）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>思路</td>
+<td><strong>加点</strong>：每次把离树最近的<strong>顶点</strong>接进来</td>
+<td><strong>加边</strong>：每次取全图最短的<strong>边</strong>，成环则跳过</td>
+</tr>
+<tr>
+<td>复杂度关键</td>
+<td>与<strong>顶点数</strong> n 有关（传统实现 O(n²)）</td>
+<td>与<strong>边数</strong> e 有关（排序 O(e·log e)）</td>
+</tr>
+<tr>
+<td>更适合</td>
+<td><strong>稠密图</strong>（边多，n 小）</td>
+<td><strong>稀疏图</strong>（边少）</td>
+</tr>
+<tr>
+<td>手算感觉</td>
+<td>围着&quot;已选集合&quot;一圈一圈找最近的点</td>
+<td>把边排成一队，从上往下捡</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>手算口诀</strong>：<strong>Prim 加点（对外找最短）、Kruskal 加边（排队捡短的、成环丢掉）；稠密 Prim、稀疏 Kruskal。</strong></p>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：&quot;求最小生成树/最省造价线路&quot; → 立即边列表排序（Kruskal）或标出已选集合（Prim）。</li>
+<li>必查三件事：<strong>边的条数 = n−1</strong>、<strong>无回路</strong>、<strong>覆盖所有顶点</strong>。三件都过才算做完（这也是自检口径）。</li>
+<li>背什么：MST 权值和唯一、树可能不唯一；Prim 稠密、Kruskal 稀疏。</li>
+<li>哪些靠算：给图算 MST 权值和——必须动手画一遍，光看不能得出答案。</li>
+</ul>
+<p><strong>延伸阅读</strong>：也有用&quot;优先队列&quot;实现 Prim/Kruskal 的写法，若想看代码可查 <a href="https://www.hello-algo.com/chapter_graph/graph_operations/">hello-algo · 图的基础操作</a>（软考只考手算，不考代码）。</p>
+<h3 id="h-37">3.4 最短路径：BFS（无权）与 Dijkstra（带权）<button type="button" class="sec-status" data-status-key="3.4 最短路径：BFS（无权）与 Dijkstra（带权）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.4 最短路径：BFS（无权）与 Dijkstra（带权）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：从一点到另一点怎么走最近？注意分两种&quot;近&quot;：</p>
+<ul>
+<li><strong>无权图</strong>：边没有权值，&quot;近&quot;= <strong>经过的边数最少</strong> → 用 <strong>BFS</strong>（3.2 已述：BFS 第一次到达某点时的层数就是最少边数）。</li>
+<li><strong>带权图（网）</strong>：边上带距离/花费/时间，&quot;近&quot;= <strong>权值之和最小</strong> → 用 <strong>Dijkstra（迪杰斯特拉）</strong>。</li>
+</ul>
+<h4 id="h-38">Dijkstra 的思路：贪心，每轮&quot;认定&quot;一个点</h4>
+<p>一句话：<strong>每轮从&quot;还没确定的点&quot;里挑出当前距离最小的那个，宣布它的最短距离已定，然后用它去更新（松弛）所有邻居的距离。</strong></p>
+<ul>
+<li>&quot;松弛&quot;（relax）= 试着用新确定的点做中转：<code>若 起点的距离 + 这条边的权 &lt; 邻居原来的距离，就改小它</code>。<strong>&quot;松弛&quot;这个词会出现在题干里，要知道它就是&quot;试一试能不能更短&quot;</strong>。</li>
+<li>直觉：既然所有边权都是正的，那么<strong>当前离起点最近的那个点</strong>，不可能再有别的更短路线绕到它（绕路只会花更多）——所以可以放心&quot;认定&quot;。这就是贪心法的立足点。</li>
+</ul>
+<h4 id="h-39">完整演算一遍（G3，有向网，源点 V1）</h4>
+<pre><code>   顶点从左到右排：V1  V2  V3  V4  V5       所有箭头一律只能「从左指向右」（无环）
+
+   V1 ══4══▶ V2 ══1══▶ V3 ══5══▶ V4 ══2══▶ V5      ← 主干链
+   V1 ══6══▶ V3                                     ← 跨一格
+   V2 ══7══▶ V4                                     ← 跨一格
+   V3 ══9══▶ V5                                     ← 跨一格
+</code></pre>
+<p>初始化：<code>d(V1)=0</code>（起点到自己），有直接边的先写上权值，其余记 ∞。
+即 <strong>d(V2)=4、d(V3)=6、d(V4)=∞、d(V5)=∞</strong>。已确定的集合 S = {V1}。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>轮</th>
+<th>未确定的点及其当前距离</th>
+<th>本轮认定（距离最小者）</th>
+<th>松弛动作</th>
+<th>松弛后的距离</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>V2=4、V3=6、V4=∞、V5=∞</td>
+<td><strong>V2（4）</strong></td>
+<td>V2→V3：4+1=5 &lt; 6 → 改小；V2→V4：4+7=11 &lt; ∞ → 写上</td>
+<td>d(V3)=<strong>5</strong>、d(V4)=<strong>11</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>V3=5、V4=11、V5=∞</td>
+<td><strong>V3（5）</strong></td>
+<td>V3→V4：5+5=10 &lt; 11 → 改小；V3→V5：5+9=14 &lt; ∞ → 写上</td>
+<td>d(V4)=<strong>10</strong>、d(V5)=<strong>14</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>V4=10、V5=14</td>
+<td><strong>V4（10）</strong></td>
+<td>V4→V5：10+2=12 &lt; 14 → 改小</td>
+<td>d(V5)=<strong>12</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>V5=12</td>
+<td><strong>V5（12）</strong></td>
+<td>没有出边，结束</td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>最终结果：d(V1)=0、d(V2)=4、d(V3)=5、d(V4)=10、d(V5)=12。</strong>
+V1 到 V5 的最短路径 = <strong>V1→V2→V3→V4→V5</strong>，长度 <strong>4+1+5+2 = 12</strong>。</p>
+<p><strong>反向验算</strong>（必须做）：V1 到 V5 的其他可能路线：</p>
+<ul>
+<li>V1→V2→V4→V5 = 4+7+2 = 13 &gt; 12 ✗</li>
+<li>V1→V3→V4→V5 = 6+5+2 = 13 &gt; 12 ✗</li>
+<li>V1→V3→V5 = 6+9 = 15 ✗
+所以 12 确实是最小的 ✓</li>
+</ul>
+<p><strong>这一轮最值得看的是 V3</strong>：V1 到 V3 明明有直达边权 6，但第 1 轮经 V2 中转只需 4+1 = 5，于是 d(V3) 从 6 被改小成 5。<strong>这就是&quot;松弛&quot;的价值，也说明了为什么每轮都要重新挑最小</strong>——不能一开始就把&quot;直达边的权值&quot;当成最终答案。</p>
+<h4 id="h-40">两个固定考点</h4>
+<ol>
+<li><strong>Dijkstra 不能处理负权边</strong>（选择题几乎年年出）。
+反例（就三个点，一眼看懂）：<pre><code>V1 ══1══▶ V2        V1 ══2══▶ V3        V3 ══(−2)══▶ V2
+</code></pre>
+真实最短路径：V1→V3→V2 = 2 + (−2) = <strong>0</strong>。
+但 Dijkstra 第 1 轮会挑中 V2（d=1）并<strong>宣布它已确定</strong>；第 2 轮才处理 V3，发现 V1→V3→V2 只要 0，比已宣布的 1 更小——算法却不会再回头改。<strong>负权边破坏了&quot;当前最近的点不可能被绕路超越&quot;这个贪心前提</strong>，所以 Dijkstra 失效。</li>
+<li><strong>Floyd（弗洛伊德）求&quot;多源&quot;最短路径</strong>：一次算出<strong>任意两点之间</strong>的最短路径（Dijkstra 是单源：只算一个源点到其他所有点）。Floyd 是<strong>动态规划</strong>思想，三重循环实现；它可以处理负权边，但同样不能处理<strong>负权回路</strong>。
+<strong>记法</strong>：<strong>单源 Dijkstra（贪心）、多源 Floyd（动态规划）</strong>。这句对照几乎每年以选项形式出现。</li>
+</ol>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：给带权有向/无向图问&quot;源点到各点的最短距离&quot;&quot;哪条是最短路径&quot; → Dijkstra 表格法（画一列表格逐轮填）。</li>
+<li>手算纪律：<strong>每轮必须重新扫描所有未确定的点选最小</strong>，别凭直觉跳步；每轮松弛完把距离写清楚，便于回查。</li>
+<li>背什么：Dijkstra 是贪心、不能负权；Floyd 是多源、可负权不能负环；无权图最短路用 BFS。</li>
+<li>哪些靠算：具体的最短距离与路径必须自己算一遍（本例 12），光看答案记不住。</li>
+</ul>
+<h3 id="h-41">3.5 拓扑排序（AOV 网）<button type="button" class="sec-status" data-status-key="3.5 拓扑排序（AOV 网）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.5 拓扑排序（AOV 网）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：做事情有先后依赖——&quot;先打地基才能砌墙&quot;&quot;先修课程 A 才能修课程 B&quot;。怎么把一堆有依赖关系的活动排成一个合法的执行顺序？</p>
+<p><strong>AOV 网</strong>：<strong>顶点表示活动，有向边表示活动之间的先后约束</strong>（A→B 表示 A 必须排在 B 前面）。要求这张有向图<strong>没有回路</strong>（有回路意味着&quot;A 要在 B 前、B 又要 A 在 A 前&quot;，矛盾）——没有回路的有向图叫 <strong>DAG（有向无环图）</strong>。</p>
+<p><strong>拓扑排序</strong>：把 AOV 网的所有顶点排成一个线性序列，使得<strong>每条边都从序列的前面指向后面</strong>（若图中有 Vi→Vj 的路径，序列里 Vi 必须排在 Vj 之前）。</p>
+<h4 id="h-42">做法：反复挑&quot;入度为 0&quot;的点</h4>
+<p><strong>入度为 0 = 没有任何前置活动</strong>——这种活现在就能干。步骤：</p>
+<ol>
+<li>找一个入度为 0 的顶点，输出它；</li>
+<li><strong>删除</strong>它的所有出边（相当于&quot;这件活干完了，它解锁了后面的活&quot;）；</li>
+<li>重复 1~2，直到所有顶点都输出（或发现没有入度为 0 的点 → 说明有环，排序失败）。</li>
+</ol>
+<p>演算一遍（AOV：A→B、A→C、B→D、C→D、D→E）：</p>
+<pre><code>   A ──→ B ──┐
+   │         ↓
+   └──→ C ──→ D ──→ E
+
+   各点入度：A 0、B 1、C 1、D 2、E 1
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>当前所有入度为 0 的点</th>
+<th>本轮输出（任选一个）</th>
+<th>删除它的出边后，入度变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>A</td>
+<td><strong>A</strong></td>
+<td>删 A→B、A→C → B 变 0、C 变 0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B、C</td>
+<td><strong>B</strong>（也可先输出 C）</td>
+<td>删 B→D → D 从 2 变 1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>C</td>
+<td><strong>C</strong></td>
+<td>删 C→D → D 从 1 变 0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>D</td>
+<td><strong>D</strong></td>
+<td>删 D→E → E 从 1 变 0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>E</td>
+<td><strong>E</strong></td>
+<td>无出边，结束</td>
+</tr>
+</tbody></table>
+</div>
+<p>得到一个合法拓扑序列：<strong>A B C D E</strong>（另一个是 A C B D E，<strong>只有这两种</strong>：A 必须第一、E 必须最后、B 与 C 之间无约束可互换、D 必须夹在 B、C 之后和 E 之前）。</p>
+<h4 id="h-43">三条结论（选择题原话考）</h4>
+<ol>
+<li><strong>拓扑序列不唯一</strong>：没有先后约束的点之间可以任意换位置。</li>
+<li><strong>图中有环 → 拓扑排序做不下去</strong>（会出现&quot;所有剩下的点入度都 ≥ 1&quot;的死局）。工程上正用它来<strong>检测循环依赖</strong>（比如 Makefile/编译系统报&quot;circular dependency&quot;）。</li>
+<li><strong>深度优先遍历的逆序也是一种合法的拓扑序列</strong>。道理：DFS 退出的时刻，某个点后面能到达的点都已经先退出了，所以把&quot;退出顺序&quot;倒过来看，就是&quot;被依赖的排后面&quot;→ 正好满足拓扑序。（顺带记住另一条：<strong>逆拓扑排序</strong>是每次取出度为 0 的点输出并删除其所有入边。）</li>
+</ol>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>拓扑排序只关心<strong>入度</strong>（谁没有被依赖），别看去度去。判&quot;是否能完成拓扑排序&quot;用入度法最稳。</li>
+<li>拓扑排序<strong>不是</strong>排序算法（不比较大小），它只解决&quot;先后约束&quot;，和第五节那些排序是两码事。</li>
+<li>题干给的&quot;先后关系&quot;要转成边的方向：<strong>&quot;A 必须在 B 之前完成&quot; ⇒ 边 A→B</strong>（从&quot;前&quot;指向&quot;后&quot;），画反了整题就反了。</li>
+</ul>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：题目出现&quot;先后顺序/前置任务/课程安排/能否完成&quot;，或直接问&quot;下列哪个是合法拓扑序列&quot;。</li>
+<li>判别&quot;某个序列是否合法&quot;的最快方法：<strong>对着题图的每条边检查一次</strong>&quot;起点是否排在终点前面&quot;，有一条不满足就非法。（一句话口诀：&quot;图中 A→B，序列中 A 在 B 前面；A 和 B 没有关系，序列中 A 可前可后。&quot;）</li>
+<li>背什么：入度法三步；有环则无拓扑序；DFS 逆序可行。</li>
+</ul>
+<h3 id="h-44">3.6 关键路径（AOE 网）<span class="stars">★★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="3.6 关键路径（AOE 网）★★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.6 关键路径（AOE 网）★★★（计算题大户）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：整个工程<strong>最快多久能完工</strong>？哪些活动<strong>一天都不能拖</strong>（拖了就拖累整体工期）、哪些活动<strong>可以摸鱼</strong>（拖几天不影响总工期）？</p>
+<p><strong>AOE 网</strong>：<strong>边表示活动</strong>（边权 = 活动工期），<strong>顶点表示事件</strong>（事件的&quot;发生&quot;= 它所有前置活动都已完成的状态）。</p>
+<ul>
+<li><strong>源点</strong>：入度为 0 的顶点，代表工程开始；<strong>汇点</strong>：出度为 0 的顶点，代表工程结束。</li>
+<li>与 AOV 网的区别一句话：<strong>AOV 边只表示先后（顶点是活动），AOE 边既表示先后又带工期（边是活动）</strong>。AOV 用来排顺序，AOE 用来算工期。</li>
+</ul>
+<p><strong><span class="stars">★</span> 关键路径 = 从源点到汇点的最长路径</strong>，它的长度 = <strong>整个工程的最短工期</strong>。</p>
+<p><strong>&quot;最长&quot;为什么反而是&quot;最短工期&quot;</strong>（这是本节的&quot;动机&quot;，理解了才不别扭）：汇点要&quot;发生&quot;，它前面所有的活动都得干完；而最长的那条链上一个活动都省不掉，工期<strong>不可能</strong>比它短。同时，按这条最长链去安排进度，其余活动都能塞进这个时间窗内完成，所以这个时间<strong>刚好够</strong>。上下夹住，于是最长路径长度 = 最短完工时间。</p>
+<p><strong>四个量、两趟推</strong>（每个事件一个 ve/vl，每个活动一个 e/l）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>含义</th>
+<th>怎么算</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ve(v)</strong> 事件最早发生时间</td>
+<td>这个事件最早什么时候能发生</td>
+<td>源点 ve(源)=0；<strong>顺推取 max</strong>：ve(v) = max 所有入边 { ve(前驱) + 该活动工期 }</td>
+</tr>
+<tr>
+<td><strong>vl(v)</strong> 事件最迟发生时间</td>
+<td>这个事件最晚什么时候发生还不拖累工期</td>
+<td>汇点 vl(汇)=ve(汇)；<strong>逆推取 min</strong>：vl(v) = min 所有出边 { vl(后继) − 该活动工期 }</td>
+</tr>
+<tr>
+<td><strong>e(a)</strong> 活动最早开始时间</td>
+<td>起点事件一发生它就能开工</td>
+<td>e(a) = <strong>起点</strong>的 ve</td>
+</tr>
+<tr>
+<td><strong>l(a)</strong> 活动最迟开始时间</td>
+<td>再晚开工就拖累工期</td>
+<td>l(a) = <strong>终点</strong>的 vl − 该活动工期</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 时间余量（松弛时间）= l(a) − e(a)</strong>，<strong>余量为 0 的活动就是关键活动</strong>，把它们连起来就是关键路径。</p>
+<h4 id="h-45">完整算一遍（G4，6 个事件、7 个活动）</h4>
+<pre><code>       a1=3                 a3=2
+  V1 ────────▶ V2 ───────────────▶ V4 ─────a6=2────▶ V6
+   │                                ▲                 ▲
+   │ a2=2                           │ a4=4            │
+   └─────────▶ V3 ──────────────────┘                 │
+               │                                      │
+               │ a5=3                                 │
+               └─────────▶ V5 ───────a7=1─────────────┘
+
+  事件（顶点）：V1 源点、V6 汇点
+  活动（边）：a1 V1→V2 =3   a2 V1→V3 =2   a3 V2→V4 =2   a4 V3→V4 =4
+              a5 V3→V5 =3   a6 V4→V6 =2   a7 V5→V6 =1
+</code></pre>
+<p><strong>第一趟：顺推求 ve（取 max）</strong></p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>谁指向它</th>
+<th>计算</th>
+<th>ve</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V1（源点）</td>
+<td>—</td>
+<td>规定为 0</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>V2</td>
+<td>V1(a1=3)</td>
+<td>0+3</td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>V3</td>
+<td>V1(a2=2)</td>
+<td>0+2</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>V4</td>
+<td>V2(a3=2)、V3(a4=4)</td>
+<td>max(3+2=5, 2+4=6)</td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td>V5</td>
+<td>V3(a5=3)</td>
+<td>2+3</td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td>V6（汇点）</td>
+<td>V4(a6=2)、V5(a7=1)</td>
+<td>max(6+2=<strong>8</strong>, 5+1=6)</td>
+<td><strong>8</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>→ <strong>总工期 = ve(V6) = 8</strong>。注意 V4 那步必须把所有入边都算上取最大（只用一条会算成 5，这是最常见的错）。</p>
+<p><strong>第二趟：逆推求 vl（取 min）</strong></p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>它指向谁</th>
+<th>计算</th>
+<th>vl</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V6（汇点）</td>
+<td>—</td>
+<td>与 ve 相同 = 8</td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td>V5</td>
+<td>V6(a7=1)</td>
+<td>8−1</td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td>V4</td>
+<td>V6(a6=2)</td>
+<td>8−2</td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td>V3</td>
+<td>V4(a4=4)、V5(a5=3)</td>
+<td>min(6−4=2, 7−3=4)</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>V2</td>
+<td>V4(a3=2)</td>
+<td>6−2</td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td>V1（源点）</td>
+<td>V2(a1=3)、V3(a2=2)</td>
+<td>min(4−3=1, 2−2=<strong>0</strong>)</td>
+<td><strong>0</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>（自检：源点逆推出来必须是 0，不是 0 说明前面算错了。）</p>
+<p><strong>第三趟：算每个活动的 e、l、余量</strong></p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>起点 ve（=e）</th>
+<th>终点 vl − 工期（=l）</th>
+<th>余量 l−e</th>
+<th>是否关键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1 V1→V2 =3</td>
+<td>0</td>
+<td>4−3 = 1</td>
+<td><strong>1</strong></td>
+<td>否</td>
+</tr>
+<tr>
+<td>a2 V1→V3 =2</td>
+<td>0</td>
+<td>2−2 = 0</td>
+<td><strong>0</strong></td>
+<td><strong><span class="stars">★</span> 是</strong></td>
+</tr>
+<tr>
+<td>a3 V2→V4 =2</td>
+<td>3</td>
+<td>6−2 = 4</td>
+<td><strong>1</strong></td>
+<td>否</td>
+</tr>
+<tr>
+<td>a4 V3→V4 =4</td>
+<td>2</td>
+<td>6−4 = 2</td>
+<td><strong>0</strong></td>
+<td><strong><span class="stars">★</span> 是</strong></td>
+</tr>
+<tr>
+<td>a5 V3→V5 =3</td>
+<td>2</td>
+<td>7−3 = 4</td>
+<td><strong>2</strong></td>
+<td>否</td>
+</tr>
+<tr>
+<td>a6 V4→V6 =2</td>
+<td>6</td>
+<td>8−2 = 6</td>
+<td><strong>0</strong></td>
+<td><strong><span class="stars">★</span> 是</strong></td>
+</tr>
+<tr>
+<td>a7 V5→V6 =1</td>
+<td>5</td>
+<td>8−1 = 7</td>
+<td><strong>2</strong></td>
+<td>否</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>关键路径：V1 → V3 → V4 → V6，长度 = 2+4+2 = 8</strong>，与 ve(V6) 一致 ✓</p>
+<p><strong>反向验算（必做）</strong>：从源点到汇点的其他所有路线都不许超过 8——</p>
+<ul>
+<li>V1→V2→V4→V6 = 3+2+2 = <strong>7</strong> &lt; 8 ✓</li>
+<li>V1→V3→V5→V6 = 2+3+1 = <strong>6</strong> &lt; 8 ✓
+只有 V1→V3→V4→V6 达到 8，所以关键路径唯一 ✓（关键活动 a2、a4、a6 首尾相接，恰好构成一条从源点到汇点的完整通路，这也是自检口径。）</li>
+</ul>
+<h4 id="h-46">三条必考结论</h4>
+<ol>
+<li><strong>关键路径可能不止一条</strong>。多条关键路径时，<strong>所有关键活动都长在关键路径上，但某条关键路径上的活动未必在另一条上</strong>，于是有了结论 2。</li>
+<li><strong>缩短工期必须压缩&quot;所有关键路径的公共关键活动&quot;</strong>。只压缩某一条关键路径上的活动，另一条关键路径长度不变，总工期纹丝不动。<ul>
+<li>用本例看：a1 有余量 1，压缩它（哪怕压到 0）工期仍是 8；压 a6 才有用。</li>
+</ul>
+</li>
+<li><strong>关键路径可能因&quot;压过头&quot;而转移</strong>：把某条关键路径压到比另一条短，最长路径就换人了，工期不再继续缩短——所以&quot;压关键活动一定能缩短工期&quot;这句话只在&quot;压公共活动且没压过头&quot;的前提下成立。选择题里&quot;缩短任一关键活动都能缩短工期&quot;是<strong>错的</strong>（见课后题 15）。</li>
+</ol>
+<p><strong>易错点清单</strong>：</p>
+<ul>
+<li>顺推<strong>取 max</strong>、逆推<strong>取 min</strong>，别记反（顺推是&quot;要等所有前置做完才能开始&quot;，所以取最大；逆推是&quot;必须给所有后续留够时间&quot;，所以取最小）。</li>
+<li>l(a) = <strong>终点</strong>的 vl <strong>减</strong>工期。写成&quot;起点的 vl&quot;或&quot;加工期&quot;都错。</li>
+<li>ve 和 vl 是**事件（顶点）<strong>的量，e 和 l 是</strong>活动（边）**的量，两张表别混。</li>
+<li>时间余量为 0 <strong>才</strong>是关键活动（余量不为 0 的活动还有缓冲）。</li>
+</ul>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：题干出现&quot;AOE 网/工期/最早发生/最迟开始/时间余量&quot; → 立刻画两张表（ve 表、vl 表），再列活动表算 e、l、余量。</li>
+<li>手算纪律：每张表算完做一次自检——<strong>ve(源)=0、vl(源)=0、vl(汇)=ve(汇)、关键活动首尾相接构成一条源→汇通路</strong>，四条全过基本就没算错。</li>
+<li>背什么：四个量的定义与&quot;顺 max 逆 min&quot;、余量 0 即关键、&quot;压缩要压公共关键活动&quot;。</li>
+<li>哪些靠算：任何一道关键路径题都必须动手列表，凭直觉猜最长路径在 4 个以上的活动时几乎必错。</li>
+</ul>
+<p><strong>跨课联动</strong>：软件工程部分（<a href="03-软件工程基础.html">03-软件工程基础.html</a>）里的甘特图、项目工期、总时差（松弛时间）与本节是同一套东西，只是那边用 ES/EF/LS/LF 的记号表示，本质完全一致——<strong>在这里算熟，那边直接得分</strong>。</p>
+<h3 id="h-47">3.7 第三节小结：六块内容的&quot;一句话抓手&quot;<button type="button" class="sec-status" data-status-key="3.7 第三节小结：六块内容的&amp;quot;一句话抓手&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.7 第三节小结：六块内容的&quot;一句话抓手&quot;」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>一句话抓手</th>
+<th>最常考的判别点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图的术语与边数</td>
+<td>无向完全图 n(n−1)/2 条边；度数和 = 2e</td>
+<td>连通 vs 完全；度数和必为偶数</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>稠密用矩阵 O(n²)、稀疏用邻接表 O(n+e)</td>
+<td>有向 n+e 个点、无向 n+2e 个点；无向矩阵对称</td>
+</tr>
+<tr>
+<td>遍历</td>
+<td>DFS 用栈一条路走到黑；BFS 用队列一圈圈扩</td>
+<td>序列不唯一；复杂度只看存储；无权最短路只能用 BFS</td>
+</tr>
+<tr>
+<td>最小生成树</td>
+<td>Prim 加点（对外找最短）、Kruskal 加边（排队捡短的、成环丢掉）</td>
+<td>边数 n−1；权值和唯一、树可能不唯一；Prim 稠密 / Kruskal 稀疏</td>
+</tr>
+<tr>
+<td>最短路径</td>
+<td>单源 Dijkstra（贪心、不能负权）；多源 Floyd（动态规划）</td>
+<td>松弛要重挑最小；负权失效的三个点反例</td>
+</tr>
+<tr>
+<td>拓扑排序</td>
+<td>反复取入度 0 的点，删它的出边</td>
+<td>序列不唯一；有环则失败（用来查循环依赖）；DFS 逆序也合法</td>
+</tr>
+<tr>
+<td>关键路径</td>
+<td>最长路径 = 最短工期；余量 0 即关键</td>
+<td>顺 max 逆 min；压缩要压公共关键活动</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>案例题里图怎么考</strong>（与第七节「案例题专攻」联动）：算法填空题常给<strong>邻接矩阵的遍历</strong>（两层 for 扫矩阵）或<strong>BFS 队列式最短路</strong>（入队/出队 + 距离数组）的代码挖空。填这类空的抓手就是本节的三句话：<strong>&quot;矩阵是两层循环扫 n×n&quot;&quot;BFS 用队列、入队时标记 visited&quot;&quot;Dijkstra 每轮找当前最小并松弛邻居&quot;</strong>。</p>
+<p><strong>延伸阅读</strong>：图的整体结构图与代码实现见 <a href="https://www.hello-algo.com/chapter_graph/graph/">hello-algo · 图</a>；软考只考上面这六块的手算与判别，不需要写代码。</p>
 <hr>
-<h2 id="h-25">第五节 排序 <span class="stars">★★★</span>（每年稳定 1–2 题）<button type="button" class="sec-status" data-status-key="第五节 排序 ★★★（每年稳定 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 排序 ★★★（每年稳定 1–2 题）」的学习状态"></button></h2>
-<h3 id="h-26">5.1 八大排序总表（背下来，直接得分）<button type="button" class="sec-status" data-status-key="5.1 八大排序总表（背下来，直接得分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 八大排序总表（背下来，直接得分）」的学习状态"></button></h3>
+<h2 id="h-48">第四节 查找 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第四节 查找 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 查找 ★★」的学习状态"></button></h2>
+<h3 id="h-49">4.1 五种查找的定位（先看清各自的&quot;前提条件&quot;）<button type="button" class="sec-status" data-status-key="4.1 五种查找的定位（先看清各自的&amp;quot;前提条件&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 五种查找的定位（先看清各自的&quot;前提条件&quot;）」的学习状态"></button></h3>
+<p>查找这件事的难点不在算法本身，而在<strong>前提条件</strong>：你手上是一张无序表还是有序表？是顺序存储还是链式存储？数据是静态的还是要频繁插入删除？条件不同，可选的算法完全不同，<strong>软考最爱考的就是&quot;哪个方法在这个条件下不能用&quot;</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>查找方法</th>
+<th>前提条件</th>
+<th>平均时间</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>顺序查找</strong></td>
+<td>无要求（顺序/链式、有序/无序都行）</td>
+<td>O(n)</td>
+<td>一个个比过去，最笨但最万能</td>
+</tr>
+<tr>
+<td><strong>二分查找</strong></td>
+<td><strong>有序 + 顺序存储（数组）</strong></td>
+<td>O(log₂n)</td>
+<td>每次砍一半</td>
+</tr>
+<tr>
+<td><strong>分块查找</strong></td>
+<td>块间有序、块内无序</td>
+<td>O(√n) 量级</td>
+<td>先查索引再查块，二分与顺序的折中</td>
+</tr>
+<tr>
+<td><strong>二叉排序树</strong></td>
+<td>树是 BST</td>
+<td>平均 O(log₂n)，最坏 O(n)</td>
+<td>动态查找：插入删除都方便</td>
+</tr>
+<tr>
+<td><strong>散列表（Hash）</strong></td>
+<td>有哈希函数</td>
+<td><strong>O(1)</strong>（理想）</td>
+<td>直接算出地址，不比较</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点（第一条就是送分题级别的）</strong>：<strong>链表不能做二分查找</strong>。二分要靠下标跳到&quot;中间元素&quot;，而链表找中间元素只能从头走，砍一半的便宜立刻没了。所以&quot;有序链表用二分查找做 O(log n) 查询&quot;是错的。</p>
+<h3 id="h-50">4.2 顺序查找与二分查找<button type="button" class="sec-status" data-status-key="4.2 顺序查找与二分查找" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 顺序查找与二分查找」的学习状态"></button></h3>
+<ul>
+<li><strong>顺序查找</strong>：从头到尾逐个比。无序表也能用（这是它唯一的优势）。等概率下查找成功的平均查找长度 <strong>ASL = (n+1)/2</strong>（1+2+…+n 除以 n）。</li>
+<li><strong>二分查找（折半查找）</strong>：每次取中间元素比较，小就往左半区、大就往右半区，比较一次砍掉一半。<strong>O(log₂n)</strong>。<ul>
+<li><strong><span class="stars">★</span> 最多比较次数 = ⌈log₂(n+1)⌉</strong>（等于判定树的深度）。n=15 → ⌈log₂16⌉ = <strong>4 次</strong>；n=1000 → ⌈log₂1001⌉ = <strong>10 次</strong>。</li>
+<li><strong>判定树</strong>：把&quot;每次取中间元素&quot;的过程画成树——第一层的中间元素做根，左右两半各自递归。<strong>树有几层，最多就比较几次</strong>。</li>
+<li><strong>ASL（成功，等概率）≈ log₂(n+1) − 1</strong>。</li>
+<li>二分查找的&quot;找不到&quot;也不难判：最后区间为空就是失败；&quot;插入位置&quot;就是最后落幕的那个下标（案例题的二分插入代码常挖这个空）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>判定树长什么样（n=11 的例子）</strong>：中间元素是第 6 个，它做根；左边 1<del>5、右边 7</del>11 各自再取中间，得到深度 4 的树，⌈log₂12⌉ = 4 ✓</p>
+<pre><code>            6
+         /     \
+        3        9
+       / \      / \
+      1   5    7   11
+       \  /     \  /
+        2 4     8 10
+</code></pre>
+<p><strong>应试动作</strong>：看到&quot;有序 + 顺序存储 + 求最多比较次数&quot;，直接套 ⌈log₂(n+1)⌉；n 给 2^k−1（如 15、31、63）时答案就是 k，别自己算错。</p>
+<h3 id="h-51">4.3 分块查找（索引顺序查找）<button type="button" class="sec-status" data-status-key="4.3 分块查找（索引顺序查找）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 分块查找（索引顺序查找）」的学习状态"></button></h3>
+<p><strong>动机</strong>：顺序查找太慢、二分查找又要求全体有序（维护成本高）。折中方案：把表分成若干块，<strong>块间有序、块内无序</strong>。</p>
+<ul>
+<li>分块规则：第一块里所有元素都小于第二块里所有元素，第二块全小于第三块……<strong>块内不要求有序</strong>。</li>
+<li>查找分两步：① 先在<strong>索引表</strong>（每个块的最大值和块起始位置，是有序的）里确定目标在哪块；② 再在<strong>该块内顺序查找</strong>。</li>
+<li><strong>ASL = 索引查找的 ASL + 块内查找的 ASL</strong>。n 个元素分成 b 块、每块 s 个（b·s = n），两边都用顺序查找时：
+<code>ASL = (b+1)/2 + (s+1)/2 = (b+s+2)/2</code></li>
+<li><strong><span class="stars">★</span> 最优块长 s = √n</strong>（这样 b = s = √n 时 b+s 最小），此时 <strong>ASL ≈ √n + 1</strong>。<ul>
+<li>代入算例：n=100 → 取 s=10、b=10 → ASL = (10+10+2)/2 = <strong>11 = √100 + 1</strong> ✓</li>
+<li>n=100 若用顺序查找，ASL = (100+1)/2 = 50.5 → 分块把它降到 11，这就是分块的价值。</li>
+</ul>
+</li>
+</ul>
+<p><strong>应试动作</strong>：认题特征——题干出现&quot;索引表/块/分块&quot;，或给一张&quot;块内无序、块间有序&quot;的表问平均查找长度。记两条：<strong>总 ASL = 两步 ASL 相加</strong>、<strong>s=√n 时最优、ASL≈√n+1</strong>。</p>
+<h3 id="h-52">4.4 二叉排序树（BST）<span class="stars">★★</span>——动态查找的答案<button type="button" class="sec-status" data-status-key="4.4 二叉排序树（BST）★★——动态查找的答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.4 二叉排序树（BST）★★——动态查找的答案」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：顺序表插入删除要搬家（O(n)），链表查找要走路（O(n)）。有没有一种结构，<strong>查找像二分那样快，插入删除又像链表那样便宜</strong>？答案就是二叉排序树。</p>
+<p><strong>定义（也叫二叉搜索树/BST）</strong>：一棵二叉树，满足&quot;<strong>左子树上所有节点的值 &lt; 根 &lt; 右子树上所有节点的值</strong>&quot;，且左右子树各自也是二叉排序树。</p>
+<p><strong><span class="stars">★</span> 最重要的一条性质</strong>：<strong>对二叉排序树做中序遍历，得到的序列是递增有序的</strong>（因为它就是&quot;左 &lt; 根 &lt; 右&quot;）。考法：给一棵树问&quot;中序序列是什么&quot;（直接考），或&quot;这棵树是不是 BST&quot;（中序递增就是）。</p>
+<p><strong>查找</strong>：从根开始，目标比当前节点小就往左走、大就往右走——<strong>一次比较砍掉一整棵子树</strong>，同二分一个道理。</p>
+<p><strong>插入</strong>：按查找的路线一路走到 NULL，把新节点挂在那个空位置上（所以<strong>新插入的节点一定是叶子</strong>）。</p>
+<p><strong>删除（三种情况，按树的形状分）</strong>，设要删的节点为 p：</p>
+<ol>
+<li><strong>p 是叶子</strong>：直接摘掉。</li>
+<li><strong>p 只有一个孩子</strong>：让这个孩子直接顶替 p 的位置（整棵子树搬上去）。</li>
+<li><strong>p 有两个孩子</strong>：不能简单顶替（两个都得管）。做法是找一个&quot;替身&quot;来占 p 的位置——<strong>中序前驱</strong>（左子树里最大的那个，即左子树一路往右走到底）或<strong>中序后继</strong>（右子树里最小的那个），把它的值写到 p 上，然后<strong>递归地去删除那个替身节点</strong>（替身至多只有一个孩子，于是退回情况 1 或 2，好删）。</li>
+</ol>
+<p><strong>完整演算一遍</strong>（本例树后续还用来算 ASL）：</p>
+<pre><code>            45                    ← 根
+          /    \
+        24      53
+       /  \        \
+     12    37       93
+</code></pre>
+<ul>
+<li><strong>删 12</strong>（叶子）：直接摘掉，树变成 45 下左子树只剩 37 ✓</li>
+<li><strong>删 53</strong>（只有一个孩子 93）：让 93 顶替 53，成为 45 的右孩子 ✓</li>
+<li><strong>删 24</strong>（有两个孩子 12、37）：取<strong>中序前驱</strong>（左子树里最大）= <strong>37</strong>，把 37 写到 24 的位置，再去删原来的 37（它是叶子）。结果：<pre><code>          45
+        /    \
+      37      53
+     /           \
+   12             93
+（若改用&quot;中序后继&quot;= 右子树最小，本例右子树只有 37 自己，结果相同；两者都对。）
+</code></pre>
+</li>
+</ul>
+<p><strong>查找效率：完全取决于树的形状</strong>（这是本节最常考的判断）：</p>
+<ul>
+<li><strong>最好的形状是平衡</strong>（左右差不多高）→ 高度约 log₂n → 查找 O(log₂n)，和二分一样快。</li>
+<li><strong>最坏的形状是一条斜链</strong>（每个节点只有一个孩子）→ 高度 n → 查找 O(n)，退化成一个链表。</li>
+<li><strong>什么时候会退化</strong>：<strong>按有序顺序依次插入</strong>。例：依次插入 1、2、3、4、5，1 是根、2 挂右、3 再挂右……形成一条向右下斜的链，<strong>找 5 要比较 5 次</strong>。反例记住这一句话就够：&quot;<strong>BST 最坏时可退化成单支树，查找退化为 O(n)</strong>。&quot;</li>
+<li><strong>ASL 算例</strong>（用上面那棵 6 个节点的原始树，等概率）：各节点的比较次数 = 它所在的层数：
+45 第 1 层（1 次）、24 和 53 第 2 层（各 2 次）、12、37、93 第 3 层（各 3 次）
+→ <strong>ASL(成功) = (1 + 2 + 2 + 3 + 3 + 3) / 6 = 14/6 ≈ 2.33</strong>
+<strong>算法就是&quot;把每个节点的层数加起来除以节点数&quot;</strong>——层数 = 查找它的比较次数，这是算 ASL 的通用套路（顺序、二分、BST 都一样）。</li>
+</ul>
+<p><strong>和平衡二叉树的关系</strong>（联动第二节 2.5 平衡二叉树）：既然形状决定效率，那就<strong>强制它平衡</strong>——这就是 <strong>AVL 树</strong>（任意节点左右子树高度差 ≤ 1），插入失衡就旋转修正，把最坏情况从 O(n) 拉回 O(log₂n)。</p>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：&quot;左小右大&quot;&quot;中序递增&quot;&quot;无序插入后建树&quot;→ 立刻画树，千万别只在脑子里想。</li>
+<li>必背三条：<strong>中序递增</strong>；<strong>插入的节点必是叶子</strong>；<strong>删除有两个孩子的节点要用中序前驱/后继顶替</strong>。</li>
+<li>算 ASL：<strong>数层数</strong>求平均；问最好/最坏情况就答&quot;平衡时 log₂n / 退化成单支时 n&quot;。</li>
+</ul>
+<p><strong>延伸阅读</strong>：BST 的查找/插入/删除过程与配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_search_tree/">hello-algo · 二叉搜索树</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-53">4.5 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="4.5 散列表（Hash 表）★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.5 散列表（Hash 表）★★（计算题大户）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：前面几种方法最快也要 O(log₂n)，因为它们都在&quot;比较&quot;。<strong>能不能不比较？</strong> 能——用哈希函数 <code>H(key)</code> 直接<strong>算出</strong>关键字该放的位置，一次到位，理想情况查找 O(1)。</p>
+<p><strong>哈希函数怎么定</strong>：最常用<strong>除留余数法</strong> <code>H(key) = key mod p</code>，其中 <strong>p 通常取&quot;不大于表长的最大素数&quot;</strong>（取素数能让余数分布更均匀）。例：表长 13 → p = 13；表长 12 → p = 11。</p>
+<p><strong>冲突与同义词</strong>：</p>
+<ul>
+<li><strong>冲突</strong>：两个不同的关键字算出了同一个地址。</li>
+<li><strong>同义词</strong>：<code>H(key)</code> 值相同的那些关键字（比如 9 和 17 在 <code>H=k mod 8</code> 下都是 1，它们就是同义词）。</li>
+</ul>
+<p><strong>冲突处理方法</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>做法</th>
+<th>优缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>线性探测</strong>（开放定址）</td>
+<td>该位置被占了就往后挪一格、再挪一格……直到有空位</td>
+<td>实现简单；<strong>会产生&quot;堆积（聚集）&quot;</strong>：连续被占的区间越来越长，<strong>非同义词也被牵连</strong>（见下面算例）</td>
+</tr>
+<tr>
+<td><strong>平方探测</strong>（开放定址）</td>
+<td>依次试 +1²、−1²、+2²、−2²……</td>
+<td>缓解堆积，但可能漏掉空位</td>
+</tr>
+<tr>
+<td><strong>再散列（双散列）</strong></td>
+<td>冲突时换第二个哈希函数算新地址</td>
+<td>分布更好，实现稍麻烦</td>
+</tr>
+<tr>
+<td><strong>链地址法</strong></td>
+<td>每个位置挂一条链表，冲突的节点都挂在同一链上</td>
+<td><strong>无堆积</strong>（不同地址互不干扰）、<strong>删除方便</strong>；链表变长时可改成树</td>
+</tr>
+<tr>
+<td>公共溢出区</td>
+<td>冲突的一律丢进另一张表</td>
+<td>了解即可</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 装填因子</strong> <code>α = 表中元素个数 / 表长</code>。<strong>α 越大冲突越多、ASL 越大</strong>——散列表的查找效率取决于 <strong>α</strong>，而<strong>不是表的绝对长度</strong>（这句是原话考点：把表长从 100 改成 1000、元素数同比例变化时 ASL 基本不变）。</p>
+<p><strong><span class="stars">★</span> ASL 一定要动手算</strong>：<code>ASL(成功) = Σ(每个元素的比较次数) / 元素个数</code>。每个元素的比较次数 = <strong>从它的哈希地址走到它的实际位置，一路上看了几个格子</strong>。</p>
+<p><strong>算例（同时演示&quot;堆积怎么牵连别人&quot;）</strong>：表长 8，<code>H(key) = key mod 8</code>，依次插入 <strong>9、17、25、3</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>H(key)</th>
+<th>线性探测后的位置</th>
+<th>比较次数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>一次命中</td>
+</tr>
+<tr>
+<td>17</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>位置 1 被占，往后挪</td>
+</tr>
+<tr>
+<td>25</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>位置 1、2 都被占</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>注意：3 本来该待在自己家 3 号位，但 25 占了它 → 被牵连到 4 号位</strong></td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>线性探测：<strong>ASL(成功) = (1+2+3+2)/4 = 2</strong>。</li>
+<li>换<strong>链地址法</strong>：位置 1 挂链 <code>9→17→25</code>，位置 3 挂链 <code>3</code> → 各自的比较次数 1、2、3、<strong>1</strong> → <strong>ASL = (1+2+3+1)/4 = 1.75</strong>。</li>
+<li><strong>对比出的结论</strong>：25 只是一次普通冲突，却把毫不相干的 3 号位置&quot;占&quot;了，害得 3 多比一次——<strong>这就是堆积，链地址法没有这个问题</strong>，因为每个地址各自成链、互不干扰。</li>
+</ul>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>算 ASL 时<strong>别把&quot;哈希地址&quot;当&quot;存储位置&quot;</strong>，实际存放位置要按探测规则一步步推。</li>
+<li>线性探测下&quot;某元素查找成功需要比较 k+1 次&quot;里的 k 是<strong>它离自己哈希地址的格数</strong>（隔 0 格就是 1 次）。</li>
+<li>散列表的删除<strong>不能直接抹掉</strong>（线性探测下会截断别人的探测链），要用&quot;墓碑标记&quot;；链地址法没有这个烦恼——这也是&quot;链地址法删除方便&quot;的由来。</li>
+</ul>
+<p><strong>延伸阅读</strong>：四种冲突处理方式的实现与对比见 <a href="https://www.hello-algo.com/chapter_hashing/hash_collision/">hello-algo · 哈希冲突</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-54">4.6 第四节小结与应试清单<button type="button" class="sec-status" data-status-key="4.6 第四节小结与应试清单" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.6 第四节小结与应试清单」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>考点</th>
+<th>一句话抓手</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>顺序查找</td>
+<td>万能但慢：ASL=(n+1)/2</td>
+</tr>
+<tr>
+<td>二分查找</td>
+<td><strong>有序 + 顺序存储</strong>；最多比较 ⌈log₂(n+1)⌉；<strong>链表不能用</strong></td>
+</tr>
+<tr>
+<td>分块查找</td>
+<td>两步 ASL 相加；s=√n 最优，ASL≈√n+1</td>
+</tr>
+<tr>
+<td>二叉排序树</td>
+<td>中序递增；插入必在叶子；删双孩子用中序前驱/后继顶替；ASL 数层数；最坏退化 O(n)</td>
+</tr>
+<tr>
+<td>散列表</td>
+<td>除留余数法（p 取≤表长的最大素数）；线性探测有堆积、链地址无堆积；ASL 手算；效率看 α</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>跨课联动</strong>：B 树/B+ 树（第二节 2.6 B 树与 B+ 树）是&quot;磁盘上的多路平衡查找树&quot;，数据库索引用它正是因为外存查找一次 I/O 代价高、要让树尽量矮——把本节&quot;平衡 → O(log n)&quot;的直觉套到磁盘上，这个考点就通了。</p>
+<hr>
+<h2 id="h-55">第五节 排序 <span class="stars">★★★</span>（每年稳定 1–2 题）<button type="button" class="sec-status" data-status-key="第五节 排序 ★★★（每年稳定 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 排序 ★★★（每年稳定 1–2 题）」的学习状态"></button></h2>
+<h3 id="h-56">5.1 八大排序总表（背下来，直接得分）<button type="button" class="sec-status" data-status-key="5.1 八大排序总表（背下来，直接得分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 八大排序总表（背下来，直接得分）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -984,7 +2520,7 @@ int dequeue(void) {
 </div>
 <p><strong><span class="stars">★</span> 稳定排序只有 4 个</strong>：直接插入、冒泡、归并、基数。口诀：「<strong>插冒归基</strong>稳定，其余都不稳」。</p>
 <p><strong><span class="stars">★</span> 稳定性含义</strong>：相等元素排序后相对次序不变。考法：&quot;待排序列中相等元素排序前后顺序颠倒了，问可能是什么排序&quot;——答不稳定的那个。</p>
-<h3 id="h-27">5.2 高频判别题：给中间过程猜算法<button type="button" class="sec-status" data-status-key="5.2 高频判别题：给中间过程猜算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 高频判别题：给中间过程猜算法」的学习状态"></button></h3>
+<h3 id="h-57">5.2 高频判别题：给中间过程猜算法<button type="button" class="sec-status" data-status-key="5.2 高频判别题：给中间过程猜算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 高频判别题：给中间过程猜算法」的学习状态"></button></h3>
 <p>题目给出一趟或两趟排序后的序列，问是哪种排序。识别特征：</p>
 <ul>
 <li><strong>冒泡一趟</strong>：从头两两比较，一趟结束后<strong>最大（小）元素沉到末尾</strong>。</li>
@@ -993,15 +2529,199 @@ int dequeue(void) {
 <li><strong>快排一趟</strong>：<strong>某个元素到了最终位置</strong>，它左边全比它小、右边全比它大。</li>
 <li><strong>堆排一趟</strong>：最大元素到了末尾。</li>
 </ul>
-<h3 id="h-28">5.3 各排序补充要点<button type="button" class="sec-status" data-status-key="5.3 各排序补充要点" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 各排序补充要点」的学习状态"></button></h3>
+<h3 id="h-58">5.3 各排序补充要点<button type="button" class="sec-status" data-status-key="5.3 各排序补充要点" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 各排序补充要点」的学习状态"></button></h3>
 <ul>
 <li><strong>快排</strong>：每趟以枢轴为界划分。<strong>序列已有序（正序/逆序）时退化到 O(n²)</strong>，这是最常考的&quot;最坏情况&quot;。</li>
 <li><strong>堆</strong>：大顶堆（父 ≥ 子）用于升序排序。建堆从最后一个非叶节点 ⌊n/2⌋ 开始向前调整。</li>
 <li><strong>外部排序</strong>：数据太大放外存时用<strong>多路归并</strong>，败者树/最佳归并树（哈夫曼思想）减少 I/O，选择题考过概念。</li>
 </ul>
+<h3 id="h-59">5.4 三种过程亲手走一遍（&quot;给中间过程判算法&quot;靠它，建堆过程几乎年年考）<button type="button" class="sec-status" data-status-key="5.4 三种过程亲手走一遍（&amp;quot;给中间过程判算法&amp;quot;靠它，建堆过程几乎年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.4 三种过程亲手走一遍（&quot;给中间过程判算法&quot;靠它，建堆过程几乎年年考）」的学习状态"></button></h3>
+<p>5.2 教的是&quot;看特征认算法&quot;，这一节把三种最容易考的<strong>过程</strong>完整走一遍。考场上要么给你中间过程问算法，要么问&quot;建堆后的序列是什么&quot;，都得靠手上熟练。</p>
+<h4 id="h-60">快速排序一趟（挖坑法，枢轴取第一个元素）</h4>
+<p><strong>要解决的问题</strong>：怎么用一个元素（枢轴 pivot）把序列切成&quot;左小右大&quot;两半？</p>
+<p><strong>做法</strong>（左右双指针 + 挖坑）：枢轴先&quot;存起来&quot;，它原来的位置就成了一个<strong>空坑</strong>，然后</p>
+<ol>
+<li><strong>右指针</strong>从右往左找&quot;比枢轴<strong>小</strong>&quot;的元素，找到就<strong>填进左边的坑</strong>（它自己原来的位置变成新坑）；</li>
+<li><strong>左指针</strong>从左往右找&quot;比枢轴<strong>大</strong>&quot;的元素，找到就<strong>填进右边的坑</strong>；</li>
+<li>左右指针相遇时，把枢轴填进最后的坑——<strong>枢轴到此彻底归位</strong>，左边全比它小、右边全比它大。</li>
+</ol>
+<p>序列 <code>[52, 49, 80, 36, 14, 58, 61, 97, 23, 75]</code> 走一趟（枢轴 = 52）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>动作</th>
+<th>序列变化</th>
+<th>坑在几号位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始</td>
+<td>52 存为枢轴，1 号位成坑</td>
+<td><code>[ _ , 49, 80, 36, 14, 58, 61, 97, 23, 75]</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>右指针左移找第一个 &lt; 52 的：<strong>23</strong>（9 号位）→ 填进 1 号坑</td>
+<td><code>[23, 49, 80, 36, 14, 58, 61, 97, _ , 75]</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td>2</td>
+<td>左指针右移找第一个 &gt; 52 的：<strong>80</strong>（3 号位）→ 填进 9 号坑</td>
+<td><code>[23, 49, _ , 36, 14, 58, 61, 97, 80, 75]</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>右指针继续左移（75、97、61、58 都 &gt; 52），找到 <strong>14</strong>（5 号位）&lt; 52 → 填进 3 号坑</td>
+<td><code>[23, 49, 14, 36, _ , 58, 61, 97, 80, 75]</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>左指针右移（14、36 都 &lt; 52）走到 5 号位与右指针<strong>相遇</strong> → 把 52 填进 5 号坑，结束</td>
+<td><code>[23, 49, 14, 36, **52**, 58, 61, 97, 80, 75]</code></td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>结果</strong>：<code>23 49 14 36 | 52 | 58 61 97 80 75</code> —— 52 落在<strong>第 5 位</strong>（说明原序列里比它小的恰好 4 个），左半边 4 个数全 &lt; 52 ✓、右半边 5 个数全 &gt; 52 ✓。</p>
+<p><strong><span class="stars">★</span> 判算法的唯一依据</strong>：一趟之后<strong>枢轴 52 到了它的最终位置</strong>。左半区内部谁先谁后，<strong>不同教材的交换次序不一样</strong>，不必和上表完全一致——所以 5.2 才强调&quot;判别靠枢轴归位 + 两侧大小关系，不必精确模拟每步交换&quot;。</p>
+<p><strong>反例前置</strong>：选项里若出现&quot;52 还在第 1 位附近&quot;（前面没有 4 个比它小的数），或它左边混进了 &gt; 52 的数，直接排除，不用算。</p>
+<h4 id="h-61">堆排序第一步：把任意序列建成大顶堆（最高频）</h4>
+<p>规则：把序列按<strong>层序</strong>塞进完全二叉树（下标 i 的左孩子是 2i、右孩子 2i+1，见第二节 2.1 完全二叉树顺序存储的下标关系），然后<strong>从最后一个非叶节点（第 ⌊n/2⌋ 个）开始往前</strong>，逐个做&quot;下沉调整&quot;：父亲与两个孩子里最大的那个交换，直到父 ≥ 子。</p>
+<p>序列 <code>[49, 38, 65, 97, 76, 13, 27]</code>，n = 7 → 最后一个非叶节点是 ⌊7/2⌋ = <strong>3 号</strong>：</p>
+<pre><code>原始（按层序摆好）
+        49
+      /    \
+    38      65
+   /  \    /  \
+  97  76  13  27
+
+① 调整 3 号（65）：它的孩子是 13、27，都不大于 65 → 不动
+
+② 调整 2 号（38）：它的孩子是 97、76，最大者 97 &gt; 38 → 与 97 交换
+   （38 换到 4 号位，4 号没有孩子 → 停止）
+        49
+      /    \
+    97      65
+   /  \    /  \
+  38  76  13  27
+
+③ 调整 1 号（49）：它的孩子是 97、65，最大者 97 &gt; 49 → 与 97 交换；
+   换下来后 49 到了 2 号位，它的孩子是 38、76，76 更大 → 49 再与 76 交换
+   （49 落到 5 号位，5 号没有孩子 → 停止）
+        97
+      /    \
+    76      65
+   /  \    /  \
+  38  49  13  27
+</code></pre>
+<p><strong>建堆完成</strong>，堆的层序（即数组形态）：<strong>97, 76, 65, 38, 49, 13, 27</strong>。
+自检口诀：<strong>逐个检查&quot;父 ≥ 左右孩子&quot;</strong>——97 ≥ 76、65 ✓；76 ≥ 38、49 ✓；65 ≥ 13、27 ✓，全过 → 合法大顶堆。</p>
+<p><strong>接着取堆顶（第一趟）</strong>：堆顶 97 是最大值，与<strong>最后一个元素 27 交换</strong>（97 归位到数组末尾，从此不再参与），再让 27 从堆顶往下沉：</p>
+<pre><code>交换 97 与末尾的 27：              27 下沉：先与 76 换（76 是孩子里最大的），
+        27                             49 是 27 换位后孩子们里更大的 → 再与 49 换
+      /    \                          → 最终：
+    76      65                            76
+   /  \    /                            /    \
+  38  49  13                          49      65
+                                     /  \    /
+                                    38  27  13
+</code></pre>
+<p><strong>第一趟结束</strong>：已归位的部分是 <code>97</code>（数组末位），剩下的堆是 <strong>76, 49, 65, 38, 27, 13</strong>（自检：76 ≥ 49、65 ✓；49 ≥ 38、27 ✓；65 ≥ 13 ✓）。重复&quot;换堆顶、下沉调整&quot;共 n−1 趟，就得到升序序列。</p>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>建堆是<strong>从 ⌊n/2⌋ 往前</strong>调（自下而上、从后往前），不是从根往下；顺序反了结果就不是堆。</li>
+<li>一次交换后，<strong>被换下来的小元素往往还要继续往下沉</strong>（如 ③ 里的 49、第一趟里的 27），只换一次就收工是错的。</li>
+<li><strong>大顶堆排出升序、小顶堆排出降序</strong>，别记反。</li>
+</ul>
+<h4 id="h-62">归并排序的三趟（2 路归并）</h4>
+<p>规则：把序列看成 n 个长度为 1 的有序段，<strong>两两合并</strong>成更大的有序段，段长翻倍，重复到只剩一段。</p>
+<p>序列 <code>[49, 38, 65, 97, 76, 13, 27]</code>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>趟</th>
+<th>分组情况</th>
+<th>合并后的序列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第 1 趟</td>
+<td><code>[49][38]</code>、<code>[65][97]</code>、<code>[76][13]</code>、<code>[27]</code></td>
+<td><code>38 49</code>／<code>65 97</code>／<code>13 76</code>／<code>27</code> → <strong>38 49 65 97 13 76 27</strong></td>
+</tr>
+<tr>
+<td>第 2 趟</td>
+<td><code>[38 49][65 97]</code>、<code>[13 76][27]</code></td>
+<td><code>38 49 65 97</code>／<code>13 27 76</code> → <strong>38 49 65 97 13 27 76</strong></td>
+</tr>
+<tr>
+<td>第 3 趟</td>
+<td>两段合并</td>
+<td><strong>13 27 38 49 65 76 97</strong> ✓</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li><strong>趟数 = ⌈log₂n⌉</strong>：n=7 → ⌈log₂7⌉ = <strong>3</strong> 趟 ✓（与 5.1 表里那句&quot;n 个元素归并趟数 = ⌈log₂n⌉&quot;一致）。</li>
+<li><strong>判算法的特征</strong>：中间过程&quot;<strong>有序段成对出现、段长 1→2→4 翻倍</strong>&quot;，而整体并未有序。</li>
+<li>归并过程<strong>不需要交换</strong>，只按段拷贝，但需要 n 长度的辅助数组 → 空间 O(n)，这是它空间代价最大的原因。</li>
+</ul>
+<p><strong>小结：三种过程一眼认</strong>——</p>
+<ul>
+<li><strong>快排</strong>：某个元素归位 + 左小右大；</li>
+<li><strong>堆排</strong>：先是一个<strong>合法堆</strong>（父 ≥ 子），再看到&quot;最大值跑到了末尾&quot;；</li>
+<li><strong>归并</strong>：有序段<strong>长度翻倍</strong>地两两合并。</li>
+</ul>
 <hr>
-<h2 id="h-29">第六节 算法设计与分析基础<button type="button" class="sec-status" data-status-key="第六节 算法设计与分析基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 算法设计与分析基础」的学习状态"></button></h2>
-<h3 id="h-30">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）<button type="button" class="sec-status" data-status-key="6.1 五大算法策略（选择题常考&amp;quot;这是哪种策略&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）」的学习状态"></button></h3>
+<h2 id="h-63">第六节 算法设计与分析基础<button type="button" class="sec-status" data-status-key="第六节 算法设计与分析基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 算法设计与分析基础」的学习状态"></button></h2>
+<h3 id="h-64">6.0 先补两件基础：算法的五个特性、好算法的标准<button type="button" class="sec-status" data-status-key="6.0 先补两件基础：算法的五个特性、好算法的标准" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.0 先补两件基础：算法的五个特性、好算法的标准」的学习状态"></button></h3>
+<p><strong>算法的五个特性</strong>（选择题原话考，五个字要背准）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>含义</th>
+<th>反例（哪个不满足）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>有穷性</strong></td>
+<td>执行<strong>有穷步</strong>之后必须结束</td>
+<td>&quot;不断重复直到满足条件&quot;若永不满足就不算算法</td>
+</tr>
+<tr>
+<td><strong>确定性</strong></td>
+<td>每条指令含义唯一、无歧义</td>
+<td><code>x = 随机数</code> 不算（结果不确定）</td>
+</tr>
+<tr>
+<td><strong>可行性</strong></td>
+<td>每步都能用基本运算有限次实现</td>
+<td>&quot;求 π 的精确值&quot;不可行</td>
+</tr>
+<tr>
+<td><strong>输入</strong></td>
+<td>有 0 个或多个输入</td>
+<td>&quot;无输入的算法&quot;是合法的（如打印一行字）</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td><strong>至少一个输出</strong></td>
+<td>没有任何输出的不能叫算法</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点</strong>：<strong>输入可以是 0 个，输出至少 1 个</strong>——这两个数字经常被互换着考。程序与算法的区别也只在这条：<strong>程序可以不满足有穷性</strong>（操作系统就是一个&quot;永不结束&quot;的程序），算法必须满足。</p>
+<p><strong>好算法的标准</strong>：正确性、可读性、<strong>健壮性</strong>（对非法输入能处理）、高效性（时间与空间）。题干问&quot;评价算法优劣主要看什么&quot;→ 正确性 + 效率。</p>
+<h3 id="h-65">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）<button type="button" class="sec-status" data-status-key="6.1 五大算法策略（选择题常考&amp;quot;这是哪种策略&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -1013,48 +2733,296 @@ int dequeue(void) {
 </thead>
 <tbody><tr>
 <td><strong>分治法</strong></td>
-<td>拆成独立子问题，分别解再合并</td>
-<td>二分查找、归并排序、快排、大整数乘法</td>
+<td>拆成<strong>互相独立</strong>的子问题，分别解再合并</td>
+<td>二分查找、归并排序、快排、汉诺塔、大整数乘法</td>
 </tr>
 <tr>
 <td><strong>动态规划</strong></td>
-<td>子问题<strong>重叠</strong>，保存子问题解（自底向上），<strong>最优子结构</strong></td>
-<td>矩阵连乘、最长公共子序列、0-1 背包、Fibonacci</td>
+<td>子问题<strong>重叠</strong>，用表保存子问题的解（自底向上），要求<strong>最优子结构</strong></td>
+<td>矩阵连乘、最长公共子序列、0-1 背包、LIS、Fibonacci</td>
 </tr>
 <tr>
 <td><strong>贪心法</strong></td>
-<td>每步取当前最优，<strong>不回溯</strong>，不保证全局最优</td>
+<td>每步取当前最优，<strong>不回溯</strong>，<strong>不保证全局最优</strong></td>
 <td>Prim、Kruskal、Dijkstra、哈夫曼、部分背包</td>
 </tr>
 <tr>
 <td><strong>回溯法</strong></td>
-<td>深搜 + 试探 + <strong>走不通退回来</strong>（剪枝）</td>
-<td>N 皇后、迷宫、子集和</td>
+<td><strong>深搜 + 试探 + 走不通就退回来</strong>（可剪枝）</td>
+<td>N 皇后、迷宫、子集和、图着色</td>
 </tr>
 <tr>
 <td><strong>分支限界</strong></td>
-<td>广搜式搜索，用界限剪枝</td>
-<td>旅行商问题</td>
+<td><strong>广搜式</strong>搜索 + 用&quot;界限&quot;剪枝</td>
+<td>旅行商问题（TSP）</td>
 </tr>
 </tbody></table>
 </div>
-<p><strong><span class="stars">★</span> 动态规划 vs 分治</strong>：分治的子问题互相独立；动态规划的子问题重叠，所以要用表保存结果避免重复计算。
-<strong><span class="stars">★</span> 贪心 vs 动态规划</strong>：贪心只走一条路不回头，动态规划考察所有子问题。</p>
-<h3 id="h-31">6.2 时间复杂度（必考 1–2 题）<button type="button" class="sec-status" data-status-key="6.2 时间复杂度（必考 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 时间复杂度（必考 1–2 题）」的学习状态"></button></h3>
-<p>常见复杂度从小到大：<strong>O(1) &lt; O(log n) &lt; O(n) &lt; O(nlog n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</strong></p>
+<p><strong><span class="stars">★</span> 动态规划 vs 分治</strong>：分治的子问题<strong>互相独立</strong>（算左边不用管右边）；动态规划的子问题<strong>重叠</strong>（同一个子问题会被反复用到），所以要用表存下答案避免重复计算。<strong>这也是 DP 比&quot;朴素递归&quot;快的唯一原因</strong>——比如求 Fibonacci，朴素递归是 O(2ⁿ)，加了记忆表就是 O(n)。
+<strong><span class="stars">★</span> 贪心 vs 动态规划</strong>：贪心<strong>只走一条路、走了不回头</strong>；动态规划<strong>考察所有子问题</strong>再取最优。所以贪心快但可能错，DP 稳但要多花空间。</p>
+<p><strong>动态规划的四个要件</strong>（题目问&quot;能否用 DP&quot;时拿这四条对）：最优子结构（大问题的最优解由小问题的最优解拼成）、重叠子问题、状态与状态转移方程、无后效性（当前状态一旦确定，不受后面怎么决策影响）。</p>
+<p>下面把五个策略各配一个<strong>能亲手算的小例子</strong>，考试时要能&quot;给代码说策略、给策略说思路&quot;。</p>
+<h4 id="h-66">分治：汉诺塔（把&quot;分治&quot;算到底）</h4>
+<p><strong>规则</strong>：n 个盘子从 A 柱移到 C 柱，一次只能挪一个，且任何时候大盘不能压在小盘上。</p>
+<p><strong>分治三步</strong>：</p>
+<ol>
+<li><strong>分</strong>：把&quot;n 个盘子从 A 到 C&quot;拆成三件事：先把上面 n−1 个从 A 挪到 B（中转柱）；</li>
+<li><strong>治</strong>：把最大的第 n 个盘从 A 直接挪到 C（就这一下）；</li>
+<li><strong>合</strong>：再把 B 上的 n−1 个挪到 C。</li>
+</ol>
+<p>递推式：<code>T(n) = 2·T(n−1) + 1</code>，边界 <code>T(1) = 1</code>。</p>
 <ul>
-<li>二分查找、平衡树操作 → O(log n)</li>
-<li>遍历链表/数组一遍 → O(n)</li>
-<li>两层嵌套循环各 n → O(n²)</li>
-<li>汉诺塔、暴力枚举子集 → O(2ⁿ)</li>
+<li><strong>代入算例</strong>：T(1)=1 → T(2)=2×1+1=<strong>3</strong> → T(3)=2×3+1=<strong>7</strong> → T(4)=15……</li>
+<li><strong>通项</strong>：每次&quot;翻倍再加一&quot;，答案就是 <strong>T(n) = 2ⁿ − 1</strong>（n=3 时 7 ✓，n=4 时 15 ✓）。</li>
+<li><strong>它说明什么</strong>：n=64 时约 1.8×10¹⁹ 次——<strong>指数级增长的可怕</strong>，这就是&quot;O(2ⁿ) 不可做&quot;的直观来源。选择题问&quot;汉诺塔的时间复杂度&quot;答 <strong>O(2ⁿ)</strong>。</li>
 </ul>
-<p><strong><span class="stars">★</span> 渐近记号</strong>：O 是上界、Ω 是下界、Θ 是精确界。选择题考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。</p>
+<h4 id="h-67">动态规划：0-1 背包（把表亲手填一遍）</h4>
+<p><strong>问题</strong>：背包容量 5，3 件物品（每件只能<strong>整个拿或不拿</strong>）：A 重 2 值 3、B 重 3 值 4、C 重 4 值 5。求能装的最大价值。</p>
+<p><strong>状态</strong>：<code>dp[i][j]</code> = 只考虑前 i 件物品、容量为 j 时的最大价值。
+<strong>状态转移方程</strong>（<span class="stars">★</span> 必背）：</p>
+<pre><code>dp[i][j] = max( dp[i-1][j] ,                    ← 不放第 i 件
+                dp[i-1][j - w[i]] + v[i] )      ← 放第 i 件（前提：j ≥ w[i]）
+</code></pre>
+<p><strong>含义</strong>：&quot;要么不要它（继承上一行同列），要么要它（腾出 w[i] 的容量，再加上它的价值）&quot;——两者取大。</p>
+<p><strong>填表</strong>（行 = 只考虑前 i 件，列 = 容量 j 从 0 到 5）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>j=0</th>
+<th>j=1</th>
+<th>j=2</th>
+<th>j=3</th>
+<th>j=4</th>
+<th>j=5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i=0（无物品）</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>i=1（只有 A：w2 v3）</td>
+<td>0</td>
+<td>0</td>
+<td><strong>3</strong></td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>i=2（加入 B：w3 v4）</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td><strong>4</strong></td>
+<td>4</td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td>i=3（加入 C：w4 v5）</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>7</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>读答案</strong>：<code>dp[3][5] = 7</code>。
+<strong>反向追出&quot;拿了哪几件&quot;</strong>（考点：DP 不只给数值，还能回溯方案）：</p>
+<ul>
+<li><code>dp[3][5] = 7</code> 等于 <code>dp[2][5] = 7</code> → C（第 3 件）<strong>没拿</strong>；</li>
+<li><code>dp[2][5] = 7 = dp[1][5−3] + 4 = 3 + 4</code> → <strong>拿了 B</strong>；</li>
+<li><code>dp[1][2] = 3 = dp[0][2−2] + 3 = 0 + 3</code> → <strong>拿了 A</strong>。
+→ 最优方案 = {A, B}，重量 2+3=5 恰好装满、价值 <strong>7</strong> ✓（与表格一致）</li>
+</ul>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>填表顺序是<strong>逐行从左到右</strong>（每格只依赖上一行和本行左边的格子），手算时别跳行。</li>
+<li><code>j &lt; w[i]</code> 的格子不能&quot;放&quot;，只能继承上一行——初学者最爱在这里瞎算。</li>
+<li>时间复杂度 <strong>O(n·C)</strong>（物品数 × 容量），不是多项式时间里的&quot;n 的多项式&quot;（C 是数值，所以叫伪多项式）。</li>
+<li><strong>0-1 背包的滚动数组写法</strong>：把二维压成一维 <code>dp[j]</code> 时 <strong>j 必须从大到小</strong>遍历（否则同一件物品会被重复拿，变成&quot;完全背包&quot;）。这个&quot;从大到小&quot;是案例题的高频空。</li>
+</ul>
+<h4 id="h-68">贪心：两个反例（说明&quot;贪心为什么不一定最优&quot;）</h4>
+<p><strong>反例 1——找零钱</strong>：面额 {1, 3, 4}，要凑出 6。</p>
+<ul>
+<li>贪心的做法：每次拿不超过剩余金额的最大面额 → 拿 4 → 剩 2 → 拿 1 → 拿 1 → <strong>3 枚</strong>。</li>
+<li>最优解：3 + 3 = 6 → <strong>2 枚</strong>。贪心错了 ✓</li>
+</ul>
+<p><strong>反例 2——0-1 背包</strong>：容量 10，物品 A(重 8 值 80)、B(重 5 值 49)、C(重 5 值 49)。</p>
+<ul>
+<li>贪心按&quot;单位价值&quot;排：A 每单位 10 最高 → 先拿 A → 剩余容量 2，B、C 都放不下 → 总价值 <strong>80</strong>。（B 9.8、C 9.8）</li>
+<li>最优解：拿 B + C，重量 5+5=10，价值 <strong>49+49 = 98</strong> &gt; 80。贪心又错了 ✓</li>
+</ul>
+<p><strong>为什么&quot;部分背包&quot;贪心就对</strong>：如果物品<strong>可以切碎</strong>（比如装金粉），那容量 10 时拿 A(8) 后还能再装 2 单位的 B → 价值 80 + 49×2/5 = 99.6，反而超过了只拿 B+C 的 98，<strong>贪心确实最优</strong>。
+<strong>结论（考点）</strong>：<strong>背包问题可以分割时用贪心，不可分割（0-1）时必须用动态规划</strong>。这一句是贪心与 DP 分界线的标准考法。</p>
+<p><strong>为什么 Prim/Kruskal/Dijkstra/哈夫曼贪心对</strong>：它们的问题结构有&quot;拟阵&quot;性质或特殊性质，能保证局部最优能拼出全局最优——考试不必证明，记住这四个是&quot;贪心但正确&quot;的就行。</p>
+<h4 id="h-69">回溯：N 皇后（DFS + 剪枝）</h4>
+<p><strong>问题</strong>：n×n 棋盘放 n 个皇后，任意两个不同行、不同列、不同斜线。</p>
+<p><strong>回溯的骨架</strong>（一段伪代码背下来，案例题填空就是它）：</p>
+<pre><code>放第 row 行：
+    for 每一列 col:
+        若 (row, col) 不冲突:
+            摆上皇后            ← 试探
+            若 row == n: 输出一个解
+            否则 放第 row+1 行   ← 递归深入
+            撤掉皇后            ← 回溯（关键！恢复现场）
+</code></pre>
+<ul>
+<li><strong>试探 → 深入 → 撤回</strong>三步循环，就是&quot;一条路走到黑，走不通退回来换条路&quot;。</li>
+<li><strong>剪枝</strong>：一旦当前摆法已经冲突，立刻停（不再往下递归），省掉整棵子树。剪枝越狠越快。</li>
+<li><strong>4 皇后只有 2 个解</strong>（选择题考过&quot;n=4 时解的数量&quot;）；8 皇后 92 个解。</li>
+<li><strong>回溯与图遍历的关系</strong>：回溯 = 在&quot;状态空间树&quot;上做 DFS。3.2 节的 DFS 是它在<strong>图</strong>上的特例，本节是它在&quot;所有可能的选择组合&quot;上的推广——所以两者都用递归 + 恢复现场。</li>
+<li><strong>子集和问题</strong>：从一堆数里挑出若干使和 = 目标值；做法就是&quot;每个数选择拿/不拿两分支&quot;的 DFS，和 0-1 背包的搜索版同族。</li>
+</ul>
+<h4 id="h-70">分支限界 vs 回溯（一字之差）</h4>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>回溯法</th>
+<th>分支限界法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索方式</td>
+<td><strong>深度</strong>优先（一条路走到底）</td>
+<td><strong>广度</strong>优先（一层层扩）</td>
+</tr>
+<tr>
+<td>剪枝依据</td>
+<td>约束条件（不合法就停）</td>
+<td><strong>界限函数</strong>（当前活结点若&quot;不可能比已知最优更好&quot;就砍）</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>找出<strong>所有</strong>可行解 / 任意一个解</td>
+<td>通常求<strong>最优解</strong></td>
+</tr>
+<tr>
+<td>典型</td>
+<td>N 皇后、迷宫、图着色</td>
+<td>旅行商问题（TSP）、0-1 背包最优化</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记法</strong>：<strong>回溯很深、限界很广；回溯看&quot;合不合法&quot;、限界看&quot;划不划算&quot;。</strong></p>
+<p><strong>延伸阅读</strong>：汉诺塔、0-1 背包、N 皇后的分步图示与代码见 <a href="https://www.hello-algo.com/chapter_divide_and_conquer/">hello-algo · 分治</a>、<a href="https://www.hello-algo.com/chapter_dynamic_programming/">动态规划</a>、<a href="https://www.hello-algo.com/chapter_backtracking/">回溯</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-71">6.2 时间复杂度（必考 1–2 题）<button type="button" class="sec-status" data-status-key="6.2 时间复杂度（必考 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 时间复杂度（必考 1–2 题）」的学习状态"></button></h3>
+<p>常见复杂度从小到大：<strong>O(1) &lt; O(log n) &lt; O(n) &lt; O(nlog n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</strong></p>
+<p><strong>怎么&quot;数&quot;出来</strong>（不用背公式，数循环）：</p>
+<ul>
+<li><strong>单层循环 n 次</strong> → O(n)。</li>
+<li><strong>两层嵌套、各 n 次</strong> → 乘起来 O(n²)。三层 → O(n³)。</li>
+<li><strong>循环变量每次 ×2 或 ÷2</strong> → 只跑 <strong>log₂n 次</strong> → O(log n)。例：<code>for (i=1; i&lt;=n; i*=2)</code> 是 log₂n 次。</li>
+<li><strong>一外一内：外 ×2 内 n</strong> → O(nlog n)（这就是归并/快排的来源）。</li>
+<li><strong>递归</strong>：看递推式——<code>T(n)=2T(n−1)+1</code>（汉诺塔）→ O(2ⁿ)；<code>T(n)=2T(n/2)+n</code>（归并）→ O(nlog n)；<code>T(n)=T(n/2)+1</code>（二分）→ O(log n)。</li>
+<li><strong>暴力枚举子集/全排列</strong> → O(2ⁿ)、O(n!)。</li>
+</ul>
+<p><strong>对照表（考前扫一眼）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>代码特征</th>
+<th>复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>三条语句、无循环</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>for i=1..n</code></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>for i=1..n</code> 套 <code>for j=1..n</code></td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td><code>while (i&lt;n) i*=2;</code></td>
+<td>O(log₂n)</td>
+</tr>
+<tr>
+<td>外层 i*=2、内层 j 跑 n</td>
+<td>O(nlog₂n)</td>
+</tr>
+<tr>
+<td>汉诺塔 <code>T(n)=2T(n−1)+1</code></td>
+<td>O(2ⁿ)</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 渐近记号</strong>：<strong>O 是上界</strong>（增长率不超过 f(n) 的量级）、<strong>Ω 是下界</strong>、<strong>Θ 是精确界</strong>（上下界同阶）。选择题常考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。
+<strong>易错点</strong>：O(2n) 就是 O(n)、O(n²+n) 就是 O(n²)——<strong>常数系数和低阶项都要扔掉</strong>，只留增长最快的项。</p>
+<h3 id="h-72">6.3 空间复杂度与递归<button type="button" class="sec-status" data-status-key="6.3 空间复杂度与递归" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.3 空间复杂度与递归」的学习状态"></button></h3>
+<ul>
+<li>空间复杂度看的是<strong>额外</strong>开销：几个临时变量是 O(1)；开一个长度 n 的数组是 O(n)。</li>
+<li><strong>递归的空间 = 递归深度 × 每层开销</strong>：快排平均递归深度 log₂n → 空间 O(log₂n)；<strong>最坏（已有序）深度退化为 n → 空间 O(n)</strong>（第 5.1 节的表里那一列就是这么来的）；归并排序要一个 n 长度的辅助数组 → O(n)。</li>
+<li><strong>递归的两面</strong>：写起来简洁（树遍历、汉诺塔、回溯全靠它），代价是<strong>栈空间</strong>和<strong>函数调用开销</strong>。想改成迭代，就用<strong>自己维护的栈</strong>（3.2 节 DFS 的栈实现就是这个道理）。</li>
+<li><strong>递归三要素</strong>（案例题挖空必考）：① <strong>边界条件</strong>（什么情况下直接返回）；② <strong>递推式</strong>（大问题怎么用小问题表达）；③ <strong>返回值/现场恢复</strong>。缺边界条件 → 无限递归 → 栈溢出。</li>
+</ul>
+<h3 id="h-73">6.4 第六节小结与应试清单<button type="button" class="sec-status" data-status-key="6.4 第六节小结与应试清单" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.4 第六节小结与应试清单」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>考点</th>
+<th>一句话抓手</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算法五特性</td>
+<td>有穷、确定、可行、输入（0 个也行）、输出（至少 1 个）</td>
+</tr>
+<tr>
+<td>五大策略</td>
+<td>分治（独立子问题）、DP（重叠子问题+最优子结构）、贪心（不回溯不保证最优）、回溯（深搜+剪枝）、分支限界（广搜+界限）</td>
+</tr>
+<tr>
+<td>汉诺塔</td>
+<td>T(n)=2ⁿ−1，O(2ⁿ)</td>
+</tr>
+<tr>
+<td>0-1 背包</td>
+<td><code>dp[i][j]=max(不放, 放)</code>；滚动数组要<strong>倒着</strong>遍历 j</td>
+</tr>
+<tr>
+<td>贪心边界</td>
+<td>可分割背包 → 贪心对；0-1 背包 → 必须 DP</td>
+</tr>
+<tr>
+<td>复杂度数法</td>
+<td>嵌套相乘、倍增取 log、递推式看分治结构</td>
+</tr>
+<tr>
+<td>复杂度记号</td>
+<td>O 上界、Ω 下界、Θ 精确界；常数与低阶项全扔</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>案例题第 4 题（约 15 分）常给一段 DP 或回溯代码挖空。<strong>先看&quot;状态定义&quot;那句话</strong>（说明里一定有），空基本就在&quot;初始化、转移方程、边界、返回&quot;四处。</li>
+<li>手算纪律：DP 题填完表要<strong>反向追一次方案</strong>（像上面背包那样），能对上才算真懂；填表时按&quot;逐行从左到右&quot;一行行来，别跳。</li>
+<li>背什么：五个策略的&quot;典型例子归属&quot;（看到 Prim 就要能反应&quot;贪心&quot;）、汉诺塔 2ⁿ−1、背包转移方程、O/Ω/Θ 的含义。</li>
+</ul>
 <hr>
-<h2 id="h-32">第七节 案例题专攻：算法填空解题套路（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：算法填空解题套路（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：算法填空解题套路（约 15 分）」的学习状态"></button></h2>
+<h2 id="h-74">第七节 案例题专攻：算法填空解题套路（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：算法填空解题套路（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：算法填空解题套路（约 15 分）」的学习状态"></button></h2>
 <p>案例第 4 题一般是「一段说明 + C 代码（或伪代码）+ 3~5 个空 + 1 小问」，常考：动态规划、贪心、回溯、字符串处理、链表/树操作。<strong>套路如下：</strong></p>
-<h3 id="h-33">套路一：先读说明再读代码，说明就是答案说明书<button type="button" class="sec-status" data-status-key="套路一：先读说明再读代码，说明就是答案说明书" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：先读说明再读代码，说明就是答案说明书」的学习状态"></button></h3>
+<h3 id="h-75">套路一：先读说明再读代码，说明就是答案说明书<button type="button" class="sec-status" data-status-key="套路一：先读说明再读代码，说明就是答案说明书" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：先读说明再读代码，说明就是答案说明书」的学习状态"></button></h3>
 <p>题干「说明」部分会用文字描述算法步骤，例如&quot;第 3 步：若 a[i] 大于当前最大值，则更新最大值&quot;。<strong>空基本就藏在文字步骤对应的代码行上，照着文字填代码。</strong></p>
-<h3 id="h-34">套路二：看空的位置判断要填什么<button type="button" class="sec-status" data-status-key="套路二：看空的位置判断要填什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：看空的位置判断要填什么」的学习状态"></button></h3>
+<h3 id="h-76">套路二：看空的位置判断要填什么<button type="button" class="sec-status" data-status-key="套路二：看空的位置判断要填什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：看空的位置判断要填什么」的学习状态"></button></h3>
 <ol>
 <li><strong>空在初始化处</strong>：常填 <code>0</code>、<code>1</code>、<code>-1</code>、<code>INT_MAX</code> 或数组首元素 <code>a[0]</code>。</li>
 <li><strong>空在循环条件</strong>：看循环变量和边界，<code>i &lt; n</code>、<code>j &gt; 0</code>，或动态规划的 <code>i &lt;= n</code>。</li>
@@ -1062,9 +3030,9 @@ int dequeue(void) {
 <li><strong>空在递归调用</strong>：填递归式，参数看函数定义对应着填，注意返回值 <code>return f(...)</code>。</li>
 <li><strong>空在 return</strong>：动态规划常填 <code>dp[n]</code> 或 <code>dp[m][n]</code>。</li>
 </ol>
-<h3 id="h-35">套路三：代入一个具体例子验证<button type="button" class="sec-status" data-status-key="套路三：代入一个具体例子验证" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：代入一个具体例子验证」的学习状态"></button></h3>
+<h3 id="h-77">套路三：代入一个具体例子验证<button type="button" class="sec-status" data-status-key="套路三：代入一个具体例子验证" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：代入一个具体例子验证」的学习状态"></button></h3>
 <p>填完后，用一个 n=2 或 n=3 的小例子手动模拟整段代码，能跑通且结果符合说明，基本就对了。</p>
-<h3 id="h-36">常见考题模板速记<button type="button" class="sec-status" data-status-key="常见考题模板速记" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「常见考题模板速记」的学习状态"></button></h3>
+<h3 id="h-78">常见考题模板速记<button type="button" class="sec-status" data-status-key="常见考题模板速记" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「常见考题模板速记」的学习状态"></button></h3>
 <ul>
 <li><strong>0-1 背包</strong>：<code>dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]] + v[i])</code>，j 从大到小滚动数组。</li>
 <li><strong>最长公共子序列</strong>：字符相等 <code>dp[i][j]=dp[i-1][j-1]+1</code>，否则 <code>max(dp[i-1][j], dp[i][j-1])</code>。</li>
@@ -1074,7 +3042,7 @@ int dequeue(void) {
 <li><strong>二叉树递归遍历</strong>：<code>visit(root); f(root-&gt;left); f(root-&gt;right);</code> 按序对应前中后序。</li>
 </ul>
 <hr>
-<h2 id="h-37">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h2 id="h-79">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>某二叉树有 5 个度为 2 的节点，则该二叉树的叶子节点数为（ ）。
@@ -1155,7 +3123,7 @@ D. 一个 AOE 网可能存在多条关键路径</p>
 <p>问题 1：给出 (1)(2)(3) 处的代码。
 问题 2：该算法的时间复杂度为（ ），当输入序列为 {3, 1, 2, 4} 时，最长递增子序列长度为（ ）。</p>
 <hr>
-<h2 id="h-38">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
+<h2 id="h-80">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【遍历还原】某二叉树的中序序列为 BDCEAFHG，后序序列为 DECBHGFA，画出/写出该二叉树的前序序列。</p>
 </li>
@@ -1177,6 +3145,69 @@ D. 一个 AOE 网可能存在多条关键路径</p>
 </li>
 </ol>
 <hr>
+<h2 id="h-81">补充题（第三节 图 专项）<button type="button" class="sec-status" data-status-key="补充题（第三节 图 专项）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题（第三节 图 专项）」的学习状态"></button></h2>
+<blockquote>
+<p>第三节从 50 行扩写到 500 多行后补的练手题：最小生成树、关键路径、遍历与度数各一题。做完再看末尾的「补充题答案」。</p>
+</blockquote>
+<p><strong>1【最小生成树】</strong> 带权无向图 G：顶点 A、B、C、D、E；边及权值：
+A-B 6、A-C 4、B-C 1、B-D 5、C-D 2、C-E 7、D-E 3。</p>
+<ul>
+<li>(1) 求该图最小生成树的权值和，并列出选中的边。</li>
+<li>(2) 说明为什么 A-B 这条边一定不在最小生成树里。</li>
+</ul>
+<p><strong>2【关键路径】</strong> 某 AOE 网中活动及工期如下（V1 为源点、V5 为汇点）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>起止</th>
+<th>工期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1</td>
+<td>V1→V2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>a2</td>
+<td>V1→V3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>a3</td>
+<td>V2→V4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>a4</td>
+<td>V3→V4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>a5</td>
+<td>V4→V5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>a6</td>
+<td>V3→V5</td>
+<td>9</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>(1) 求整个工程的最短工期。</li>
+<li>(2) 写出关键路径（用顶点序列表示）。</li>
+<li>(3) 逐个求出各活动的时间余量，指出哪些活动一天都不能推迟、哪些可以推迟及最多推迟多久。</li>
+</ul>
+<p><strong>3【遍历与度数】</strong> 无向图 G 的边为：1-2、1-3、2-4、3-5、4-5、2-3。从顶点 1 出发遍历，邻接点一律按编号<strong>从小到大</strong>访问。</p>
+<ul>
+<li>(1) 写出深度优先遍历（DFS）得到的顶点序列。</li>
+<li>(2) 写出广度优先遍历（BFS）得到的顶点序列。</li>
+<li>(3) 该图有多少条边？所有顶点的度数之和是多少？这个图有几个连通分量？</li>
+</ul>
 <details class="answers" id="answers" data-toc="答案与解析">
   <summary>
     <span class="chev" aria-hidden="true"></span>
@@ -1185,7 +3216,7 @@ D. 一个 AOE 网可能存在多条关键路径</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-40">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<h3 id="h-83">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong>
 n0 = n2 + 1 = 5 + 1 = 6。<span class="stars">★</span> 必背结论。易错点：忘了 &quot;+1&quot;，或把度数为 1 的节点扯进来（不需要）。</p>
 <p><strong>2. A（后序 DEBCA）</strong>
@@ -1217,7 +3248,7 @@ Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd
 ⌈log₂65⌉ = 7。易错点：别用 log₂64=6 就填 6，公式里要 n+1。（部分教材按判定树深度的定义对 n=2^k−1 型给出 k 次，64 个元素判定树深度为 7。）</p>
 <p><strong>15. C</strong>
 必须缩短<strong>所有</strong>关键路径共同经过的关键活动才能缩短工期；只压缩一条关键路径上的活动无效。A、B、D 均正确。</p>
-<h3 id="h-41">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<h3 id="h-84">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>问题 1：</strong></p>
 <ul>
 <li>(1) <code>dp[i] = 1</code>（每个元素自己构成长度为 1 的子序列，初始化）</li>
@@ -1230,7 +3261,7 @@ Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd
 <li>输入 {3, 1, 2, 4}：LIS 为 {1,2,4} 或 {3,4}，最长长度 <strong>3</strong>。</li>
 </ul>
 <p><strong>填空套路复盘</strong>：空 (1) 在初始化处填常数；空 (2) 在 if 条件处对应&quot;递增&quot;这一文字描述；空 (3) 在更新处填状态转移。与第七节套路一一对应。</p>
-<h3 id="h-42">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-85">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. 前序 = ABCDEFGH，推导过程</strong>：
 后序最后一个是 A → 根 A；中序 BDCE | AFHG → 左子树 {BDCE}，右子树 {FHG}。
 左子树后序 DECB → 根 B；中序 BDCE 中 B 居首 → B <strong>无左孩子</strong>，右子树 {DCE}；{D,C,E} 的后序（取原后序中对应段 D、E、C）→ 根 C；中序 D|C|E → D 是 C 的左孩子、E 是右孩子。
@@ -1265,10 +3296,95 @@ WPL = 5×2 + 2×3 + 3×2 + 1×3 + 4×2 = 10+6+6+3+8 = <strong>33</strong>。
 外层 i*=2 执行 log₂n 次，内层 n 次，相乘得 O(nlog₂n)。易错点：外层不是 +1 而是 ×2，别答 O(n²)。</p>
 <p><strong>7. 共 2 种：ABCDE 和 ACBDE</strong>
 分析约束：A 是唯一入度为 0 的顶点 → 必须最先；E 入度来自 D → 必须最后；B→D 和 C→D 都指向 D → D 必须排在 B、C <strong>两者</strong>之后，而 B、C 之间无约束、可互换。于是 D 只能落在第 3 位（A 之后、B/C 之后），序列只有 A、{B,C 两种顺序}、D、E 一种骨架 → <strong>2 种</strong>。若答 4 种，是漏了 C→D 这条边对 D 的约束（只看到 B→D 就以为 D 可紧跟 B）。</p>
-</div>
-</details>
 <hr>
-<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="02-数据库系统.html">02-数据库系统.html</a> 并更新进度表。</p>
+<h3 id="h-86">补充题答案（第三节 图 专项）<button type="button" class="sec-status" data-status-key="补充题答案（第三节 图 专项）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案（第三节 图 专项）」的学习状态"></button></h3>
+<p><strong>1【最小生成树】</strong></p>
+<ul>
+<li>(1) <strong>MST 权值和 = 10</strong>，选中的边：<strong>B-C 1、C-D 2、D-E 3、A-C 4</strong>。
+Kruskal 过程（边按权从小到大排队）：B-C 1 ✔（不连通）→ C-D 2 ✔ → D-E 3 ✔ → A-C 4 ✔（A 还是孤点）→ B-D 5 ✘（B、D 已连通）→ A-B 6 ✘（A、B 已连通）→ C-E 7 ✘。
+验算：4 条边 = 5 个顶点 − 1 ✓；覆盖全部 5 个顶点 ✓；无回路 ✓。
+Prim 复核（从 A 出发）：A→C(4) → 经 C→B(1) → 经 C→D(2) → 经 D→E(3)，合计 4+1+2+3 = <strong>10</strong> ✓ 两个算法一致。</li>
+<li>(2) <strong>A-B 权值 6 一定不选</strong>：A 和 B 已经通过 A-C-B 连通（4+1=5 &lt; 6），再选 A-B 就形成了回路 A-B-C-A，而生成树不允许有回路。<strong>更本质的原因</strong>：MST 只要 n−1 条边，任何&quot;两端已连通&quot;的边都是多余的；而且就算比大小，走 A-C-B 只花 5、比 A-B 直接的 6 更省。（<strong>易错点</strong>：做题时只想着&quot;6 比 1、2、3、4 大&quot;是不够的，要养成&quot;按权排序后逐条查环&quot;的习惯。）</li>
+</ul>
+<p><strong>2【关键路径】</strong></p>
+<ul>
+<li>(1) <strong>总工期 = 13</strong>。
+顺推求 ve（取 max）：ve(V1)=0，ve(V2)=6，ve(V3)=4，ve(V4)=max(6+1=7, 4+5=9)=<strong>9</strong>，ve(V5)=max(9+3=12, 4+9=13)=<strong>13</strong>。</li>
+<li>(2) <strong>关键路径：V1 → V3 → V5</strong>，长度 4+9 = <strong>13</strong>。
+反向验算其他路线：V1→V3→V4→V5 = 4+5+3 = 12 &lt; 13 ✓；V1→V2→V4→V5 = 6+1+3 = 10 &lt; 13 ✓ → 关键路径唯一。</li>
+<li>(3) 逆推求 vl（取 min）：vl(V5)=13，vl(V4)=13−3=10，vl(V3)=min(10−5=5, 13−9=4)=<strong>4</strong>，vl(V2)=10−1=9，vl(V1)=min(9−6=3, 4−4=0)=<strong>0</strong> ✓（源点逆推为 0，自检通过）。</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>e = 起点的 ve</th>
+<th>l = 终点的 vl − 工期</th>
+<th>时间余量</th>
+<th>能否推迟</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1 V1→V2 6</td>
+<td>0</td>
+<td>9−6 = 3</td>
+<td><strong>3</strong></td>
+<td>最多推迟 3</td>
+</tr>
+<tr>
+<td>a2 V1→V3 4</td>
+<td>0</td>
+<td>4−4 = 0</td>
+<td><strong>0</strong></td>
+<td><strong>不能推迟（关键活动）</strong></td>
+</tr>
+<tr>
+<td>a3 V2→V4 1</td>
+<td>6</td>
+<td>10−1 = 9</td>
+<td><strong>3</strong></td>
+<td>最多推迟 3</td>
+</tr>
+<tr>
+<td>a4 V3→V4 5</td>
+<td>4</td>
+<td>10−5 = 5</td>
+<td><strong>1</strong></td>
+<td>最多推迟 1</td>
+</tr>
+<tr>
+<td>a5 V4→V5 3</td>
+<td>9</td>
+<td>13−3 = 10</td>
+<td><strong>1</strong></td>
+<td>最多推迟 1</td>
+</tr>
+<tr>
+<td>a6 V3→V5 9</td>
+<td>4</td>
+<td>13−9 = 4</td>
+<td><strong>0</strong></td>
+<td><strong>不能推迟（关键活动）</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>自检：余量为 0 的 a2、a6 首尾相接，正好构成 V1→V3→V5 这条源点到汇点的通路 ✓
+（<strong>易错点</strong>：vl(V3) 必须在两条出边里取 <strong>min</strong>——(10−5)=5 与 (13−9)=4 取小的 4，取错会让后面所有余量都算歪。）</p>
+<p><strong>3【遍历与度数】</strong>
+顶点 1~5 的邻接关系（按编号升序）：1:{2,3}、2:{1,3,4}、3:{1,2,5}、4:{2,5}、5:{3,4}。</p>
+<ul>
+<li>(1) <strong>DFS 序列：1 2 3 5 4</strong>
+走法：1 → 2 →（2 的未访问邻居里编号最小的是 3）3 →（1、2 都访问过了，取 5）5 →（3 访问过，取 4）4 → 4 的邻居 2、5 都已访问 → 一路回退结束。</li>
+<li>(2) <strong>BFS 序列：1 2 3 4 5</strong>
+队列过程：<code>[1]</code> → 访问 1，2、3 入队 <code>[2,3]</code> → 访问 2，4 入队 <code>[3,4]</code>（3 已在队，不重复入队）→ 访问 3，5 入队 <code>[4,5]</code> → 访问 4（2、5 都已访问/在队）→ 访问 5（3、4 都已访问）。
+<strong>注意 BFS 与 DFS 只差最后两位</strong>：BFS 是&quot;按层&quot;，4 在第 3 层、5 在第 4 层，所以 4 先出；DFS 是一条路走到底，先顺着 3→5 钻下去再回头找 4。</li>
+<li>(3) <strong>边数 e = 6</strong>；<strong>度数之和 = 2+3+3+2+2 = 12 = 2e</strong> ✓（度数依次为 1 号 2、2 号 3、3 号 3、4 号 2、5 号 2）；该图<strong>只有 1 个连通分量</strong>（任意两点都能互相到达，是连通图）。
+<strong>易错点</strong>：别漏掉&quot;度数之和一定是偶数&quot;这条自检——若数出来是 11，说明数错了。</li>
+</ul>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="02-数据库系统.html">02-数据库系统.html</a> 并更新进度表。</p></div>
+</details>
+
 
   <footer class="status-bar" data-status-page="01-数据结构与算法">
     <span class="sb-label">本页学习状态</span>

@@ -12,7 +12,7 @@
 //   · 「答案与解析」整段折叠进 <details>，做题时不会误瞄答案；
 //   · 索引页从 00-总览与进度.md 读取勾选状态与分值注解，生成分梯队卡片。
 import { marked } from 'marked';
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, existsSync, lstatSync } from 'node:fs';
 import { basename, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -440,6 +440,22 @@ console.log('✔ index → docs/index.html');
 copyFileSync(join(root, 'tools', 'style.css'), join(docsDir, 'style.css'));
 copyFileSync(join(root, 'tools', 'app.js'), join(docsDir, 'app.js'));
 console.log('✔ docs/style.css、docs/app.js 已更新');
+
+// interactive/：交互演示集中管理（不进 md 生成流，原样递归拷进 docs/ 随仓库发布）
+function copyDir(src, dest) {
+  mkdirSync(dest, { recursive: true });
+  for (const name of readdirSync(src)) {
+    const s = join(src, name);
+    const d = join(dest, name);
+    if (lstatSync(s).isDirectory()) copyDir(s, d);
+    else copyFileSync(s, d);
+  }
+}
+const interactiveSrc = join(root, 'interactive');
+if (existsSync(interactiveSrc)) {
+  copyDir(interactiveSrc, join(docsDir, 'interactive'));
+  console.log('✔ docs/interactive/ 已更新（交互动画随仓库发布）');
+}
 
 // .nojekyll：部署到 GitHub Pages 时跳过 Jekyll 构建。
 // 本项目 docs/ 是纯静态产物、无 Liquid 语法，但仍要这个文件——

@@ -85,18 +85,58 @@
     <h1 id="h-1">04 面向对象与设计模式</h1>
   </header>
   <blockquote class="lead">
-<p><strong class="k">分值地位</strong>：选择题约 5–7 题 + 案例题「UML 建模」一道大题（补用例/类名/关系，约 15 分）。设计模式每年稳定考 2–4 题，是&quot;背了就得分&quot;的典型考点。</p>
-<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 分清封装/继承/多态、重载/重写；② 认出 UML 各图及其要素、类图六种关系；③ 背下 23 种设计模式的分类和&quot;意图一句话&quot;，给场景选出模式；④ 按套路补全 UML 案例题。</p>
+<p><strong class="k">分值地位</strong>：本课是&quot;选择题 + 案例题&quot;双料大头 —— 选择题稳定 5–7 题，案例题第三题（UML 建模）是<strong>必答题</strong>、约 15 分；案例题第五题（Java/C++）也常结合设计模式填空。设计模式属&quot;背了就得分&quot;的典型，是全库性价比最高的记忆型考点之一。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 分清封装/继承/多态、重载/重写，说出多态的四种形态与动态绑定的三个条件；② 说清 OOA/OOD 各做哪几步、OOD 七大原则各自反对什么写法；③ 认出 UML 各图及其要素（重点：用例图三关系、类图六关系、状态图五要素、构件图供/需接口、部署图节点）；④ 背下 23 种模式的分类、&quot;意图一句话&quot;与主要模式的<strong>角色名</strong>；⑤ 按套路补全 UML 建模案例题。</p>
 </blockquote>
 <h2 id="h-2">第一节 面向对象基本概念 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第一节 面向对象基本概念 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 面向对象基本概念 ★」的学习状态"></button></h2>
-<h3 id="h-3">四大基石与&quot;为什么&quot;<button type="button" class="sec-status" data-status-key="四大基石与&amp;quot;为什么&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「四大基石与&quot;为什么&quot;」的学习状态"></button></h3>
+<h3 id="h-3">1.1 四大基石与&quot;为什么&quot;<button type="button" class="sec-status" data-status-key="1.1 四大基石与&amp;quot;为什么&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 四大基石与&quot;为什么&quot;」的学习状态"></button></h3>
 <ul>
 <li><strong>封装</strong>：把数据和对数据的操作捆在一起（类），对外只暴露接口、隐藏实现细节。<strong>动机</strong>：使用者不必知道内部怎么实现，内部改动不波及外部——和数据库三级模式的&quot;隔离变化&quot;是同一个思想。</li>
 <li><strong>继承</strong>：子类自动拥有父类的属性和方法，并可扩展。<strong>动机</strong>：共同点写一遍（放父类），差异点写在子类——消除重复。</li>
 <li><strong>多态</strong>：同一消息发给不同对象，各自做出不同响应。<strong>动机</strong>：调用方写一段代码（面向父类/接口），加新子类时调用方<strong>一行都不用改</strong>——否则就得写满 <code>if 类型==... else if ...</code>，每加一种类型都要回头改调用方。</li>
 <li><strong>消息</strong>：对象之间通过发送消息（调用操作）通信。</li>
 </ul>
-<h3 id="h-4">重载 vs 重写（必考对比）<button type="button" class="sec-status" data-status-key="重载 vs 重写（必考对比）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「重载 vs 重写（必考对比）」的学习状态"></button></h3>
+<p><strong>类的正式定义</strong>（选择题原话出处）：类是对象的<strong>模板</strong>，描述一类对象共有的特征（属性）和行为（方法）；对象是类的<strong>实例</strong>。一个对象 = <strong>属性（数据）+ 方法（操作）+ 对象标识（ID）</strong>——三样都要有，缺 ID 就不是对象。对象占用内存空间，类不占（类是描述，不是数据本身）。</p>
+<p><strong>应试动作</strong>：认&quot;三件套&quot;——问&quot;对象由什么组成&quot;答「属性 + 方法 + 对象 ID」。</p>
+<h3 id="h-4">1.2 类的三种类型（识别题高频）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="1.2 类的三种类型（识别题高频）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 类的三种类型（识别题高频）★」的学习状态"></button></h3>
+<p>建模时会画一堆类，出题人爱问&quot;某某类属于哪一类&quot;。三类各有<strong>外形特征</strong>，抓住&quot;属性多还是方法多、管不管流程&quot;就能秒判：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>别名</th>
+<th>干什么</th>
+<th>外形特征</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>实体类</strong></td>
+<td>数据类</td>
+<td>表示现实世界真实存在的实体</td>
+<td><strong>属性多、方法少</strong></td>
+<td>读者、图书、借阅记录、订单</td>
+</tr>
+<tr>
+<td><strong>边界类</strong></td>
+<td>接口类</td>
+<td>为用户提供与系统交互的方式（窗口、接口、外部系统接口）</td>
+<td><strong>方法多、属性少</strong>；常带 interface、UI、Adapter</td>
+<td>借书窗口、登录界面、支付接口</td>
+</tr>
+<tr>
+<td><strong>控制类</strong></td>
+<td>控制/协调类</td>
+<td>描述业务逻辑、控制活动流，协调实体类与边界类</td>
+<td>名字常带 <strong>Controller、Manager、Session</strong></td>
+<td>借书控制器、订单处理器</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：&quot;图书&quot;和&quot;图书管理界面&quot;都是名词，但一个是<strong>实体类</strong>（有书名/作者/定价等一堆属性），一个是<strong>边界类</strong>（它自己不存数据，只提供&quot;输入书号&quot;&quot;显示结果&quot;这些操作）。做题时别只看名字像不像名词，要看<strong>它是&quot;存数据的&quot;还是&quot;干活的/给人用的&quot;</strong>。</p>
+<p><strong>应试动作</strong>：背一句口诀「<strong>实体存数据、边界接用户、控制管流程</strong>」；看到 Controller / Manager / Session / Handler 结尾的名字，优先判控制类。</p>
+<h3 id="h-5">1.3 重载 vs 重写（必考对比）<button type="button" class="sec-status" data-status-key="1.3 重载 vs 重写（必考对比）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 重载 vs 重写（必考对比）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -121,12 +161,224 @@
 <td><strong>编译期</strong>根据参数选方法</td>
 <td><strong>运行期</strong>根据实际对象类型（多态的基础）</td>
 </tr>
+<tr>
+<td>关系</td>
+<td>体现同一个类中的不同表现</td>
+<td>体现父类与子类的不同表现</td>
+</tr>
 </tbody></table>
 </div>
 <p><strong>反例演示（易错）</strong>：只改返回值类型、参数完全相同——既不是重载也不是重写，是编译错误（重载要求参数不同）；子类方法参数列表与父类不同，那就成了重载（新方法），<strong>父类版本没有被覆盖</strong>，用父类引用调用时执行的还是父类版本——这是&quot;以为重写了、其实重载了&quot;的经典陷阱。</p>
 <p><strong>应试动作</strong>：抓两个判别词——&quot;同类不同参 = 重载；子类同签名 = 重写&quot;。考题常给一段代码问&quot;输出什么&quot;：父类引用指向子类对象，调用被重写的方法 → 执行<strong>子类</strong>版本。</p>
-<h2 id="h-5">第二节 UML 图 <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第二节 UML 图 ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 UML 图 ★★★（案例题必考）」的学习状态"></button></h2>
-<h3 id="h-6">九（十）种图先分静态、动态<button type="button" class="sec-status" data-status-key="九（十）种图先分静态、动态" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「九（十）种图先分静态、动态」的学习状态"></button></h3>
+<h3 id="h-6">1.4 多态的四种形态（选择题送分点）<span class="stars">★</span><button type="button" class="sec-status" data-status-key="1.4 多态的四种形态（选择题送分点）★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 多态的四种形态（选择题送分点）★」的学习状态"></button></h3>
+<p>&quot;多态&quot;不是只有一种，按<strong>形成机制</strong>分四类。考题常问&quot;哪种多态应用最广泛/最纯&quot;或&quot;下面的例子属于哪种多态&quot;：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>形态</th>
+<th>机制</th>
+<th>一句话认法</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>过载多态</strong>（ad hoc）</td>
+<td>同一个名字在不同上下文中含义不同</td>
+<td><strong>就是重载</strong></td>
+<td><code>add(int,int)</code> 与 <code>add(String,String)</code></td>
+</tr>
+<tr>
+<td><strong>参数多态</strong></td>
+<td>类型作为参数，一套代码适配多种类型</td>
+<td><strong>泛型</strong>（&quot;最纯、应用最广泛&quot;）</td>
+<td><code>List&lt;T&gt;</code>、<code>swap&lt;T&gt;(a,b)</code></td>
+</tr>
+<tr>
+<td><strong>包含多态</strong></td>
+<td>同样操作可用于一个类型<strong>及其子类型</strong></td>
+<td><strong>子类替换父类</strong>，需运行期类型检查</td>
+<td>父类引用调子类重写的方法</td>
+</tr>
+<tr>
+<td><strong>强制多态</strong></td>
+<td>编译程序通过语义操作把类型<strong>强行变换</strong></td>
+<td><strong>隐式类型转换</strong></td>
+<td><code>int</code> 参与浮点运算时自动转 <code>double</code></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆抓手</strong>：<strong>过载</strong>名字一样、<strong>参数</strong>类型当参、<strong>包含</strong>子类包进来、<strong>强制</strong>编译器硬转。</p>
+<p><strong>反例演示（易错）</strong>：别把&quot;参数多态&quot;和&quot;包含多态&quot;混了 —— 判断标准是**&quot;靠类型参数化&quot;还是&quot;靠继承层次&quot;<strong>。<code>List&lt;int&gt;</code> 和 <code>List&lt;String&gt;</code> 用同一个 <code>List</code> 是</strong>参数多态**（没有继承关系）；父类引用指向子类对象是<strong>包含多态</strong>（有继承关系）。</p>
+<h3 id="h-7">1.5 动态绑定：多态落地要同时满足三个条件 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="1.5 动态绑定：多态落地要同时满足三个条件 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 动态绑定：多态落地要同时满足三个条件 ★」的学习状态"></button></h3>
+<p>讲义前面说&quot;父类引用指向子类对象、调用被重写的方法就执行子类版本&quot;——这不是无条件成立的，<strong>三个条件缺一不可</strong>：</p>
+<ol>
+<li>要有<strong>继承关系</strong>（子类继承父类）；</li>
+<li>要发生了<strong>重写</strong>（子类覆盖了父类的方法）；</li>
+<li>要有<strong>父类引用指向子类对象</strong>（<code>父类类型 变量 = new 子类类型();</code>）。</li>
+</ol>
+<p><strong>绑定时机对照</strong>：<strong>静态绑定</strong>发生在<strong>编译时</strong>（如重载按参数类型选定方法）；<strong>动态绑定</strong>发生在<strong>运行时</strong>（按对象的实际类型选定方法）。</p>
+<p><strong>反例演示（易错）</strong>：三个条件少一个，多态就不发生 —— 若父类方法<strong>没被子类重写</strong>，父类引用调它就是父类版本；若用<strong>子类引用</strong>调，即使重写了也谈不上&quot;多态&quot;（本来就是子类对象，直接调即可）；若方法被声明为不可覆盖（Java 的 <code>static</code>、<code>final</code>、<code>private</code> 方法），走的就是静态绑定。</p>
+<p><strong>应试动作</strong>：看到代码题里出现 <code>父类 p = new 子类();</code>，先在心里核对这三条，再判定&quot;调的是哪个版本&quot;；问&quot;为什么输出父类版本&quot;时，答案往往就是**&quot;该方法没有被重写&quot;<strong>或</strong>&quot;它不是通过父类引用调用的&quot;**。</p>
+<h2 id="h-8">第二节 面向对象分析与设计过程 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 面向对象分析与设计过程 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 面向对象分析与设计过程 ★★」的学习状态"></button></h2>
+<h3 id="h-9">2.1 为什么先要有&quot;过程&quot;<button type="button" class="sec-status" data-status-key="2.1 为什么先要有&amp;quot;过程&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 为什么先要有&quot;过程&quot;」的学习状态"></button></h3>
+<p>很多人以为&quot;面向对象&quot;就是&quot;写类&quot;。但类从哪来？属性怎么定？关系怎么画？——<strong>不解决这些问题，画出来的类图就是凭感觉摆的</strong>。OOA（面向对象分析）解决&quot;<strong>要什么</strong>&quot;，OOD（面向对象设计）解决&quot;<strong>怎么搭</strong>&quot;，两步各有一套固定动作。考试既考选择题（问&quot;下面哪一步属于 OOA&quot;），更是 UML 案例题的<strong>解题骨架</strong>——案例题让你补类名、补方法名，靠的就是 OOD 的&quot;定义属性/定义服务&quot;这两步。</p>
+<h3 id="h-10">2.2 OOA 四步（背顺序，选择题按顺序出干扰项）<span class="stars">★★</span><button type="button" class="sec-status" data-status-key="2.2 OOA 四步（背顺序，选择题按顺序出干扰项）★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 OOA 四步（背顺序，选择题按顺序出干扰项）★★」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>做什么</th>
+<th>落在案例题里的动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① <strong>认定对象</strong></td>
+<td>从需求描述里挑出<strong>名词</strong>候选</td>
+<td>说明文字里的名词就是类名候选（读者、图书、借阅记录）</td>
+</tr>
+<tr>
+<td>② <strong>组织对象</strong></td>
+<td>把同类对象<strong>抽象成类</strong>，抽出公共属性</td>
+<td>学生读者/教师读者 → 抽父类&quot;读者&quot;</td>
+</tr>
+<tr>
+<td>③ <strong>描述对象间的相互作用</strong></td>
+<td>谁和谁有往来、什么关系、多重性</td>
+<td>读者 1 — 1..* 借阅记录</td>
+</tr>
+<tr>
+<td>④ <strong>基于对象的操作</strong></td>
+<td>每个对象要提供哪些操作（服务）</td>
+<td>补<strong>方法名</strong>（checkOut、getForCheckOut）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆口诀</strong>：<strong>认对象 → 组类 → 拉关系 → 定操作</strong>（&quot;认组拉定&quot;）。</p>
+<h3 id="h-11">2.3 OOD 五步 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="2.3 OOD 五步 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 OOD 五步 ★★」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① <strong>识别类及对象</strong></td>
+<td>在分析结果上补足实现层面的类（控制类、边界类、工具类）</td>
+</tr>
+<tr>
+<td>② <strong>定义属性</strong></td>
+<td>每个类需要存哪些数据（书号、书名、定价）</td>
+</tr>
+<tr>
+<td>③ <strong>定义服务</strong></td>
+<td>每个类要对外提供什么方法（借出、归还、计算应还日期）</td>
+</tr>
+<tr>
+<td>④ <strong>识别关系</strong></td>
+<td>泛化/关联/聚合/组合/依赖，以及多重性</td>
+</tr>
+<tr>
+<td>⑤ <strong>识别包</strong></td>
+<td>把类按职责分组打包，定义包间依赖</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：考题问&quot;下列哪一项属于<strong>面向对象设计</strong>而非分析&quot;——判别标准是&quot;<strong>有没有落到实现细节</strong>&quot;。<strong>&quot;认定对象&quot;是分析</strong>（还在业务层挑名词），<strong>&quot;定义属性/服务&quot;是设计</strong>（已经在写类的成员了）。别把&quot;识别类及对象&quot;错认成分析的&quot;认定对象&quot;：前者是实现视角的补全，后者是需求视角的提取。</p>
+<h3 id="h-12">2.4 OOD 七大原则（送分题，也决定&quot;为什么这么设计&quot;）<span class="stars">★★</span><button type="button" class="sec-status" data-status-key="2.4 OOD 七大原则（送分题，也决定&amp;quot;为什么这么设计&amp;quot;）★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 OOD 七大原则（送分题，也决定&quot;为什么这么设计&quot;）★★」的学习状态"></button></h3>
+<p>这七条是判断题与案例题&quot;为什么要用设计模式&quot;的<strong>答题依据</strong>——注意它们的共同指向：<strong>都反对&quot;改一处牵动全身&quot;的紧耦合写法</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>一句话</th>
+<th>反对什么写法（反例）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>单一职责</strong>（SRP）</td>
+<td>一个类只负责一件事</td>
+<td>一个 <code>BookManager</code> 既管借还、又管打印报表、又管发短信</td>
+</tr>
+<tr>
+<td><strong>开放-封闭</strong>（OCP）</td>
+<td><strong>对扩展开放、对修改封闭</strong></td>
+<td>每加一种支付方式就去改 <code>PaymentService</code> 里的 <code>switch</code></td>
+</tr>
+<tr>
+<td><strong>里氏替换</strong>（LSP）</td>
+<td>子类<strong>可以替换</strong>父类（不破坏父类的约定）</td>
+<td>子类重写后抛异常/收紧前置条件，父类能用的地方用不了</td>
+</tr>
+<tr>
+<td><strong>依赖倒置</strong>（DIP）</td>
+<td>依赖<strong>抽象</strong>，不依赖具体实现；<strong>针对接口编程</strong></td>
+<td>高层业务类里直接 <code>new MySQLDao()</code></td>
+</tr>
+<tr>
+<td><strong>接口隔离</strong>（ISP）</td>
+<td>多个专门接口优于一个总接口</td>
+<td>一个 20 个方法的 <code>IAllService</code>，实现类被迫空实现一堆方法</td>
+</tr>
+<tr>
+<td><strong>组合重用</strong>（CRP）</td>
+<td>尽量用<strong>组合</strong>而不是继承来重用</td>
+<td>为了复用几个方法就继承一个不相干的类（继承层级爆炸）</td>
+</tr>
+<tr>
+<td><strong>迪米特</strong>（LoD，最少知识）</td>
+<td>一个对象对别的对象<strong>知道得越少越好</strong></td>
+<td><code>a.getB().getC().getD().doX()</code> 层层穿透调用</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>依赖倒置的经典原话</strong>（真题原句）：&quot;<strong>抽象不应该依赖于细节，细节应该依赖于抽象</strong>；高层模块不应该依赖低层模块，两者都应该依赖于抽象。&quot;——这句话只要出现，答案就是<strong>依赖倒置原则</strong>。</p>
+<p><strong>里氏替换与多态的关系</strong>：多态能成立，前提正是里氏替换——&quot;父类的地方放子类不出错&quot;。所以 LSP 是<strong>多态的原则性表述</strong>。</p>
+<h3 id="h-13">2.5 包设计原则（低频，认识就够）<button type="button" class="sec-status" data-status-key="2.5 包设计原则（低频，认识就够）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 包设计原则（低频，认识就够）」的学习状态"></button></h3>
+<p>另有六条更细的包（package）级原则，考试偶见，<strong>不要与七大原则混记</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重用发布等价</td>
+<td>重用的粒度就是发布的粒度</td>
+</tr>
+<tr>
+<td>共同封闭</td>
+<td>一个变化应只影响一个包内的类，不波及其他包</td>
+</tr>
+<tr>
+<td>共同重用</td>
+<td>重用了包中一个类，就得重用包中所有类</td>
+</tr>
+<tr>
+<td>无环依赖</td>
+<td>包的依赖图中<strong>不允许有环</strong></td>
+</tr>
+<tr>
+<td>稳定依赖</td>
+<td>朝着<strong>稳定</strong>的方向依赖（不稳定的包依赖稳定的包）</td>
+</tr>
+<tr>
+<td>稳定抽象</td>
+<td>包的<strong>抽象程度应与其稳定程度一致</strong>（越稳定越抽象）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>真题原题形式</strong>：&quot;若重用了一个包中的某个类，就要重用该包中的所有类，这属于（ ）原则&quot; → <strong>共同重用原则</strong>。这句题干里的&quot;某个 → 所有&quot;就是它的唯一识别特征。</p>
+<p><strong>应试动作</strong>：七大原则<strong>必须背名字 + 一句话</strong>（选择题直接考原话）；包原则只背&quot;共同重用&quot;&quot;共同封闭&quot;两条题眼，其余见过即可。案例题里问&quot;采用什么设计模式更好、为什么&quot;，答题时<strong>顺手引用原则名</strong>（如&quot;符合开放-封闭原则，新增算法无需修改原有代码&quot;）能显著提分。</p>
+<h2 id="h-14">第三节 UML 图 <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第三节 UML 图 ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 UML 图 ★★★（案例题必考）」的学习状态"></button></h2>
+<h3 id="h-15">3.0 先建全景：UML 2.x 共 13 种图，按&quot;静态/动态&quot;一刀切开<button type="button" class="sec-status" data-status-key="3.0 先建全景：UML 2.x 共 13 种图，按&amp;quot;静态/动态&amp;quot;一刀切开" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.0 先建全景：UML 2.x 共 13 种图，按&quot;静态/动态&quot;一刀切开」的学习状态"></button></h3>
+<p>UML 2.x 共定义 <strong>13 种图</strong>，按&quot;静态/动态&quot;一刀切开（其中最常见的 10 种必须全认，末尾三种低频，<strong>认名字即可</strong>）：</p>
 <div class="table-wrap">
 <table>
 <thead>
@@ -138,128 +390,441 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>静态（结构）</strong></td>
+<td><strong>静态（结构图）</strong></td>
 <td>类图</td>
-<td>类的属性、操作及类间关系</td>
+<td>一组对象、接口、协作及其关系</td>
 <td>矩形分三格：类名/属性/操作</td>
 </tr>
 <tr>
 <td></td>
 <td>对象图</td>
 <td>某一时刻的对象快照</td>
-<td>名字带下划线</td>
+<td>名字带<strong>下划线</strong></td>
 </tr>
 <tr>
 <td></td>
-<td>构件图</td>
-<td>代码构件之间的依赖</td>
-<td>构件符号（带两个小凸起）</td>
+<td>构件图（组件图）</td>
+<td>一组构件之间的组织和依赖（静态<strong>实现</strong>视图）</td>
+<td>构件符号（带两个小凸起）+ 供/需接口</td>
 </tr>
 <tr>
 <td></td>
 <td>部署图</td>
-<td>软件到<strong>物理节点</strong>的映射</td>
-<td>立方体（节点）</td>
+<td>运行处理<strong>节点</strong>及构件的配置（静态<strong>实施</strong>视图）</td>
+<td><strong>立体长方体</strong>（节点）</td>
 </tr>
 <tr>
 <td></td>
 <td>包图</td>
-<td>模型分组</td>
+<td>类/图如何组织成包及包间依赖</td>
 <td>文件夹形状</td>
 </tr>
 <tr>
-<td><strong>动态（行为）</strong></td>
+<td></td>
+<td>组合结构图</td>
+<td>分解类、构件或用例的<strong>内部结构</strong></td>
+<td>大框套小框、内部部件</td>
+</tr>
+<tr>
+<td><strong>动态（行为图）</strong></td>
 <td>用例图</td>
-<td>系统功能与参与者</td>
+<td>用例、参与者及其关系</td>
 <td>小人（参与者）+ 椭圆（用例）</td>
 </tr>
 <tr>
 <td></td>
-<td>顺序图</td>
-<td>按<strong>时间顺序</strong>的对象交互</td>
+<td>顺序图（序列图）</td>
+<td>以<strong>时间顺序</strong>组织的对象间交互</td>
 <td>竖直生命线 + 水平消息箭头</td>
 </tr>
 <tr>
 <td></td>
-<td>通信图</td>
-<td>同顺序图内容，强调对象间<strong>链接</strong></td>
+<td>通信图（协作图）</td>
+<td>强调收发消息的对象的<strong>组织结构</strong></td>
 <td>对象间连线标消息序号</td>
 </tr>
 <tr>
 <td></td>
 <td>状态图</td>
-<td><strong>单个对象</strong>的状态随事件转换</td>
+<td>一个<strong>状态机</strong>：状态、转换、事件、活动</td>
 <td>圆角矩形（状态）+ 箭头（转换）</td>
 </tr>
 <tr>
 <td></td>
 <td>活动图</td>
-<td>工作流程，类似流程图但支持<strong>并发</strong></td>
+<td>一个活动到另一个活动的<strong>流程</strong></td>
 <td>泳道、分叉/汇合粗横线</td>
+</tr>
+<tr>
+<td></td>
+<td>交互概览图</td>
+<td>组合顺序图与活动图的特征，显示对象如何交互</td>
+<td>像活动图但节点是交互引用</td>
+</tr>
+<tr>
+<td></td>
+<td>定时图</td>
+<td>关注对象改变状态时的<strong>时间约束</strong></td>
+<td>时间刻度、状态阶梯</td>
 </tr>
 </tbody></table>
 </div>
-<p><strong>反例演示（易错）</strong>：状态图和活动图长得像，区别在——状态图描述<strong>一个对象</strong>因事件引起的状态变迁，必须以&quot;事件&quot;为转换条件；活动图描述<strong>业务流程</strong>步骤，支持并发分支（分叉/汇合），不关心某个对象。另外顺序图 vs 通信图：<strong>内容等价、侧重不同</strong>——顺序图突出时间顺序，通信图突出对象间链接结构。</p>
-<h3 id="h-7">类图的六种关系（案例题 + 选择题双考）<button type="button" class="sec-status" data-status-key="类图的六种关系（案例题 + 选择题双考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「类图的六种关系（案例题 + 选择题双考）」的学习状态"></button></h3>
+<p><strong>记忆抓手</strong>：结构图 6 种 = <strong>类、对象、构件、部署、包、组合结构</strong>；行为图 7 种 = <strong>用例、顺序、通信、状态、活动、交互概览、定时</strong>。其中真正高频的是 <strong>10 种（静态五 + 动态五）</strong>——类图、对象图、构件图、部署图、包图、用例图、顺序图、通信图、状态图、活动图。多出的三种（组合结构图、交互概览图、定时图）只会在&quot;UML 图不包括下列哪种&quot;这类题里当干扰项出现。</p>
+<p><strong>反例演示（易错）</strong>：状态图和活动图长得像，区别在——状态图描述<strong>一个对象</strong>因事件引起的状态变迁，必须以&quot;事件&quot;为转换条件；活动图描述<strong>业务流程</strong>步骤，支持并发分支（分叉/汇合），不关心某个对象。另外顺序图 vs 通信图：<strong>内容等价、侧重不同</strong>——顺序图突出时间顺序，通信图突出对象间链接结构，两者可以互相转换（案例题常要求&quot;画出通信图&quot;）。</p>
+<h3 id="h-16">3.1 类图与对象图：三格 + 可见性 + 多重性<button type="button" class="sec-status" data-status-key="3.1 类图与对象图：三格 + 可见性 + 多重性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 类图与对象图：三格 + 可见性 + 多重性」的学习状态"></button></h3>
+<p><strong>类图的矩形三格</strong>（从上到下）：</p>
+<pre><code>┌──────────────────────┐
+│      类名 Book       │  ← 第 1 格：类名（抽象类用斜体）
+├──────────────────────┤
+│ - 书号  : String     │  ← 第 2 格：属性    - 私有  + 公有  # 保护
+│ - 定价  : double     │
+├──────────────────────┤
+│ + 借出() : boolean   │  ← 第 3 格：操作（方法）  括号不能省
+│ + 计算应还日() : Date│
+└──────────────────────┘
+</code></pre>
+<p><strong>可见性符号</strong>（选择题直接问 <code>-</code> 是什么意思）：<code>+</code> 公有 public、<code>-</code> 私有 private、<code>#</code> 保护 protected。考场上看到属性前全是一串减号，说明是<strong>私有属性</strong>（这正是封装）。</p>
+<p><strong>多重性（读书数字）vs 基数</strong>：题目常给你一句业务的自然语言，要你翻成符号。<strong>翻法</strong>是&quot;<strong>在每一端，问自己：一个对面对象能对应几个我</strong>&quot;：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>读作</th>
+<th>业务原话的样子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>1</code></td>
+<td>恰好一个</td>
+<td>&quot;每本书只属于一个书架&quot;</td>
+</tr>
+<tr>
+<td><code>0..1</code></td>
+<td>零个或一个</td>
+<td>&quot;读者可能有一条&quot;欠款记录&quot;，也可能没有&quot;</td>
+</tr>
+<tr>
+<td><code>1..*</code></td>
+<td>一个或多个（<strong>至少一个</strong>）</td>
+<td>&quot;一名读者至少有一条借阅记录&quot;</td>
+</tr>
+<tr>
+<td><code>0..*</code> 或 <code>*</code></td>
+<td>零个或多个（<strong>可以没有</strong>）</td>
+<td>&quot;一个书架可以没有任何图书&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：<code>1..*</code> 与 <code>0..*</code> 只差一个数字，含义却相反。判断口诀——<strong>看&quot;至少&quot;这个词</strong>：题干出现&quot;至少有/必须有&quot;→ 端点写 <code>1..*</code>；出现&quot;可以没有/可能没有/不一定有&quot;→ 写 <code>0..*</code>。这里最容易把手写答案画反，因为<strong>同一句话的两端各有一个多重性</strong>：如&quot;读者可借多本书&quot;，在<strong>图书端</strong>要写的不是&quot;多&quot;而是&quot;1&quot;（一本书只被一条借阅记录指向一个读者），在<strong>读者端</strong>才写 <code>0..*</code>。<strong>逐端问、别照抄句子</strong>。</p>
+<p><strong>对象图</strong>：类图是&quot;模板&quot;，对象图是&quot;<strong>某一时刻的快照</strong>&quot;。识别特征就是<strong>名字带下划线、冒号前是对象名、冒号后是类名</strong>，写成 <code>:图书</code> 或 <code>b1 : 图书</code>。</p>
+<h3 id="h-17">3.2 用例图：三个要素 + 三种关系 + 建模流程四步 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★」的学习状态"></button></h3>
+<p><strong>要素</strong>：<strong>参与者</strong>（小人，缩写可以是人、外部系统）、<strong>用例</strong>（椭圆，一件完整的、有业务价值的事）、<strong>关系</strong>（连线）。</p>
+<p><strong>三种关系</strong>（选择题 + 案例题双考）：</p>
 <div class="table-wrap">
 <table>
 <thead>
 <tr>
 <th>关系</th>
 <th>符号</th>
+<th>判据</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>包含</strong> <code>&lt;&lt;include&gt;&gt;</code></td>
+<td>虚线箭头 + 构造型，<strong>基用例 → 被包含用例</strong></td>
+<td><strong>必经</strong>、可被多个用例共用的公共行为</td>
+<td>借书<strong>必须先</strong>登录；借书/还书/查询<strong>都要</strong>检查权限</td>
+</tr>
+<tr>
+<td><strong>扩展</strong> <code>&lt;&lt;extend&gt;&gt;</code></td>
+<td>虚线箭头 + 构造型，<strong>扩展用例 → 基用例</strong></td>
+<td><strong>可选</strong>、条件触发、是基用例的分支场景</td>
+<td>超额时<strong>才</strong>弹逾期提示；勾选定时发布<strong>才</strong>执行</td>
+</tr>
+<tr>
+<td><strong>泛化</strong></td>
+<td>空心三角实线，<strong>子用例 → 父用例</strong></td>
+<td>多个用例有<strong>共同的类似结构和行为</strong>，抽出父用例</td>
+<td>网上注册/电话注册 → 泛化到&quot;课程注册&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>方向易错</strong>：include 是<strong>基用例指出去</strong>（借书 → 登录）；extend 是<strong>扩展用例指回来</strong>（拒绝提示 → 借书）。口诀：<strong>include 从主干指出，extend 从分支指回</strong>；判断只用一句话——<strong>&quot;没有它这事就干不成&quot;是 include，&quot;有它也行没它也行&quot;是 extend</strong>。</p>
+<p><strong>用例建模流程（四步，其中前三步必须、第四步可选）</strong>：</p>
+<ol>
+<li><strong>识别参与者</strong>（必须）—— 谁使用系统、系统服务谁；</li>
+<li><strong>合并需求获得用例</strong>（必须）—— 把每个参与者要做的事收成用例；</li>
+<li><strong>细化用例描述</strong>（必须）—— 写&quot;典型事件流 + 备选事件流&quot;；</li>
+<li><strong>调整用例模型</strong>（可选）—— 抽 include/extend/泛化，简化模型。</li>
+</ol>
+<p><strong>案例题怎么用这四步</strong>：真题给的&quot;用例详细描述&quot;就是第 3 步的产物，<strong>结构固定为——参与者 / 典型事件流（正常步骤 1、2、3…）/ 备选事件流（2a、4a 这类&quot;异常分支&quot;）</strong>。读题时把<strong>典型事件流的步骤</strong>当主线索（对应顺序图的消息顺序），把<strong>编号带字母的备选事件流</strong>当 <strong>extend 的来源</strong>（如&quot;4a 读者要借的书无法外借&quot;→ 扩展用例）。</p>
+<p><strong>反例演示（易错）</strong>：&quot;参与者&quot;里可以有<strong>外部系统</strong>（如&quot;支付网关&quot;&quot;短信平台&quot;），不一定是人；反过来，&quot;系统内部的某个模块&quot;<strong>不能</strong>当参与者——参与者必须<strong>在系统边界之外</strong>。这是选择题的常见陷阱：给你&quot;数据库&quot;&quot;登录模块&quot;当选项，它们都是系统内部的东西，不是参与者。</p>
+<h3 id="h-18">3.3 顺序图与通信图：同一件事的两种画法<button type="button" class="sec-status" data-status-key="3.3 顺序图与通信图：同一件事的两种画法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 顺序图与通信图：同一件事的两种画法」的学习状态"></button></h3>
+<p><strong>顺序图要素</strong>（从图上一眼能指出来）：<strong>对象</strong>（顶部方框）、<strong>生命线</strong>（对象下方的竖直虚线）、<strong>激活/控制焦点</strong>（生命线上叠的窄长条，表示对象正在执行）、<strong>消息</strong>（水平箭头）、<strong>返回消息</strong>（<strong>虚线</strong>箭头，表示把结果交回）。</p>
+<p><strong>消息方向与种类</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>消息</th>
+<th>画法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同步消息</td>
+<td><strong>实线 + 实心箭头</strong></td>
+<td>发送者<strong>等</strong>对方处理完（普通方法调用）</td>
+</tr>
+<tr>
+<td>异步消息</td>
+<td>实线 + 空心箭头</td>
+<td>发送者<strong>不等</strong>（发完就走）</td>
+</tr>
+<tr>
+<td>返回消息</td>
+<td><strong>虚线 + 箭头</strong></td>
+<td>把结果回传给调用者</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>一条最重要的判图规律</strong>：<strong>从左边第一个对象开始，箭头指向谁，就是谁在干活</strong>；消息自左向右排序，<strong>上下位置 = 时间先后</strong>——所以案例题让你&quot;按说明填消息&quot;，就是<strong>照典型事件流的步骤顺序往右下方排</strong>。</p>
+<p><strong>通信图（协作图）</strong>：同样的交互内容，但<strong>画法完全不同</strong>——对象是<strong>网络式</strong>散布的，消息写在<strong>对象之间的连线上</strong>并用<strong>序号</strong>标注调用层次：</p>
+<pre><code>        :Patron
+           │  2: isFaculty()
+           │
+ 1: checkOut(bookID)      :CheckoutSessionController
+           │  3: find(bookID)
+           ▼
+        :Book  ──── 4: recordBookLoan() ───▶ :Catalog
+</code></pre>
+<p>序号里的点表示<strong>嵌套层级</strong>（<code>1.1</code> 是 <code>1</code> 内部调用的第一句，<code>1.1.2</code> 再深一层）。<strong>顺序图 vs 通信图对照</strong>：两者<strong>语义等价、可以互相转换</strong>；顺序图突出<strong>时间顺序</strong>，通信图突出<strong>对象间的链接结构与调用层次</strong>。</p>
+<p><strong>反例演示（易错）</strong>：判断&quot;哪张是顺序图&quot;不要只看有没有箭头——<strong>定音锤是&quot;有没有生命线（竖直虚线）&quot;</strong>：有竖直生命线、消息横着排的是顺序图；对象用连线连成网状、序号写在线上的是通信图。</p>
+<h3 id="h-19">3.4 活动图：流程 + 并发 + 泳道<button type="button" class="sec-status" data-status-key="3.4 活动图：流程 + 并发 + 泳道" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.4 活动图：流程 + 并发 + 泳道」的学习状态"></button></h3>
+<p><strong>要素</strong>：初始节点（<strong>实心圆</strong>）、结束节点（<strong>带圈的实心圆</strong>）、<strong>动作/活动</strong>（圆角矩形）、<strong>分支与监护表达式</strong>（菱形 + <code>[条件]</code>）、<strong>分叉与汇合</strong>（<strong>粗横线</strong>，表示并发）、<strong>泳道</strong>（按责任人划分的纵向区域）。</p>
+<pre><code>        ●                ← 初始节点
+        │
+   ┌────▼────┐
+   │ 接收订单 │            ← 动作
+   └────┬────┘
+   ═════╪═════             ← 分叉（粗横线）：下面两条并发
+   │         │
+┌──▼──┐  ┌──▼──┐
+│填订单│  │开发票│          两条同时进行
+└──┬──┘  └──┬──┘
+   ═════╪═════             ← 汇合（粗横线）：都做完才往下
+        │
+   ┌────▼────┐
+   │  ◇ [未完成] │           ← 分支（菱形）+ 监护表达式
+   └────┬────┘
+        ▼
+        ◉                ← 结束节点
+</code></pre>
+<p><strong>与流程图的区别</strong>（选择题常问）：活动图<strong>支持并发</strong>（分叉/汇合），流程图只有顺序和分支；活动图还能用<strong>泳道</strong>表达&quot;谁负责哪一段&quot;。</p>
+<p><strong>反例演示（易错）</strong>：<strong>分叉（fork）和分支（decision）都画两条出路，但含义相反</strong>——<strong>分支</strong>是&quot;<strong>二选一</strong>，只走一条&quot;（菱形，路上标条件）；<strong>分叉</strong>是&quot;<strong>两条都要走，并发执行</strong>&quot;（粗横线）。看符号不看箭头数量：<strong>菱形 = 选一条，粗横线 = 全走并同时走</strong>。</p>
+<h3 id="h-20">3.5 状态图：五要素 + 四类事件 + 组合状态 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="3.5 状态图：五要素 + 四类事件 + 组合状态 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.5 状态图：五要素 + 四类事件 + 组合状态 ★★」的学习状态"></button></h3>
+<p>状态图是&quot;<strong>单个对象的生命史</strong>&quot;：它在这辈子经历过哪些状态、因为什么事件而切换。<strong>五要素必须背齐</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>是什么</th>
+<th>画法/写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>状态</strong></td>
+<td>对象所处的情形</td>
+<td>圆角矩形，写状态名（空闲/占线/已锁定）</td>
+</tr>
+<tr>
+<td><strong>事件</strong></td>
+<td>触发状态迁移的事情</td>
+<td>转换线<strong>上方</strong>写事件名</td>
+</tr>
+<tr>
+<td><strong>监护条件</strong></td>
+<td>事件发生还不够，还要满足的条件</td>
+<td>方括号写在事件后：<code>turnOn[有水]</code></td>
+</tr>
+<tr>
+<td><strong>动作</strong></td>
+<td>迁移时执行的一句话</td>
+<td>斜线后写：<code>turnOn[有水]/烧水</code></td>
+</tr>
+<tr>
+<td><strong>转换（转移）</strong></td>
+<td>状态之间的那条箭头</td>
+<td>箭头从源状态指向目标状态</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>一条完整转换的读法</strong>（把上面四样串起来）：</p>
+<pre><code>  空闲 ──── turnOn[有水]/烧水 ────▶ 加热中
+  ↑源状态      ↑事件 ↑监护条件 ↑动作        ↑目标状态
+</code></pre>
+<p><strong>结构规律（选择题原话）</strong>：一个状态图<strong>只能有一个初态</strong>（实心圆），但<strong>可以有一个或多个终态</strong>（带圈实心圆），<strong>也可以没有终态</strong>（比如一个永远循环的系统）。</p>
+<p><strong>四类事件（问&quot;下面属于哪种事件&quot;）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>事件类型</th>
 <th>含义</th>
 <th>例子</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>泛化（继承）</td>
-<td>空心三角实线</td>
-<td>is-a</td>
-<td>猫 → 动物</td>
+<td><strong>信号事件</strong></td>
+<td>对象之间<strong>发送/接收信号</strong>实现通信</td>
+<td>鼠标点击、外部中断</td>
 </tr>
 <tr>
-<td>实现</td>
-<td>空心三角<strong>虚线</strong></td>
-<td>类实现接口</td>
-<td>类 → 接口</td>
+<td><strong>调用事件</strong></td>
+<td>一个对象<strong>请求调用</strong>另一个对象的操作</td>
+<td>方法调用</td>
 </tr>
 <tr>
-<td>关联</td>
-<td>实线（可带多重性 1、1..*）</td>
-<td>长期的结构关系</td>
-<td>读者—借阅记录</td>
+<td><strong>变换事件</strong></td>
+<td><strong>when + 布尔表达式</strong>，条件由假变真即触发</td>
+<td><code>when(温度&gt;100)</code></td>
 </tr>
 <tr>
-<td><strong>聚合</strong></td>
-<td>空心菱形实线</td>
-<td>整体—部分，部分<strong>可独立存在</strong></td>
-<td>雁群 — 雁</td>
-</tr>
-<tr>
-<td><strong>组合</strong></td>
-<td><strong>实心</strong>菱形实线</td>
-<td>整体—部分，同生共死</td>
-<td>鸟 — 翅膀</td>
-</tr>
-<tr>
-<td>依赖</td>
-<td><strong>虚线</strong>箭头</td>
-<td>使用关系（参数、局部变量）</td>
-<td>类方法里临时用到另一个类</td>
+<td><strong>时间事件</strong></td>
+<td>到达某时刻或经过某段时间，用 <strong>when / after</strong></td>
+<td><code>after(5秒)</code>、<code>when(日期=10月24日)</code></td>
 </tr>
 </tbody></table>
 </div>
-<p><strong>记忆法</strong>：菱形在<strong>整体</strong>一端；空心菱形&quot;散了还能活&quot;（聚合），实心菱形&quot;一荣俱荣一损俱损&quot;（组合）；虚线都是&quot;弱关系&quot;（实现是弱化的继承、依赖是弱化的关联）。</p>
-<h3 id="h-8">用例图的三种关系（选择题常考）<button type="button" class="sec-status" data-status-key="用例图的三种关系（选择题常考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「用例图的三种关系（选择题常考）」的学习状态"></button></h3>
+<p><strong>状态内部的五个组成部分</strong>（了解即可）：状态名、<strong>entry/exit 动作</strong>（进入/退出该状态要做的事）、<strong>内部转移</strong>（<code>event/action</code>，不跳出本状态）、<strong>子状态</strong>、<strong>延迟事件</strong>（<code>defer</code>，事件先记下、等以后处理）。</p>
+<pre><code>   ┌──────────── Flashlight ────────────┐
+   │ entry/开灯      do/闪烁五次         │   ← 进入即开灯、在状态内持续闪烁
+   │ exit/关灯       selfTest/defer      │   ← 退出即关灯；selfTest 事件先延迟
+   └────────────────────────────────────┘
+</code></pre>
+<p><strong>组合状态</strong>：一个状态内部还装着子状态，分两种，<strong>这是易混点</strong>：</p>
 <ul>
-<li><strong>包含 include</strong>：基用例<strong>必须</strong>执行另一个用例（虚线箭头 + <code>&lt;&lt;include&gt;&gt;</code>）——&quot;借书前必须登录&quot;。</li>
-<li><strong>扩展 extend</strong>：可选、条件触发的行为（虚线箭头 + <code>&lt;&lt;extend&gt;&gt;</code>）——&quot;超额时弹出逾期提示&quot;（不超额就没有）。</li>
-<li><strong>泛化</strong>：用例的一般化/特殊化。</li>
+<li><strong>顺序子状态</strong>：子状态之间<strong>互斥</strong>（同一时刻只能在一个），要<strong>全部完成</strong>整体才算完成（像是&quot;一串流程分几步&quot;）；</li>
+<li><strong>并发子状态</strong>：某时刻<strong>可以同时达到多个</strong>子状态，内部<strong>并发进行</strong>。</li>
 </ul>
-<p><strong>反例演示</strong>：方向别画反——include 箭头从<strong>基用例</strong>指向被包含用例；extend 箭头从<strong>扩展用例</strong>指向基用例。判断窍门：<strong>必经之路用 include，可选支线用 extend</strong>。</p>
-<p><strong>应试动作</strong>：① 背&quot;静态五图 + 动态五图&quot;归属；② 六种关系认符号（三角=继承实现、菱形=整体部分、虚线=弱）；③ include/extend 按必经/可选判断。</p>
-<h2 id="h-9">第三节 设计模式 <span class="stars">★★★</span>（每年 2–4 题）<button type="button" class="sec-status" data-status-key="第三节 设计模式 ★★★（每年 2–4 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 设计模式 ★★★（每年 2–4 题）」的学习状态"></button></h2>
-<h3 id="h-10">23 种模式的分类框架（先背骨架）<button type="button" class="sec-status" data-status-key="23 种模式的分类框架（先背骨架）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「23 种模式的分类框架（先背骨架）」的学习状态"></button></h3>
+<p><strong>反例演示（易错）</strong>：题干说&quot;进入该状态后，可以同时进行 A、B 两件事&quot;→ <strong>并发子状态</strong>；说&quot;先做 A、做完再做 B，两步都完成状态才结束&quot;→ <strong>顺序子状态</strong>。判别只看一个字：<strong>&quot;同时&quot;还是&quot;先后&quot;</strong>。</p>
+<h3 id="h-21">3.6 构件图：一眼认出供接口和需接口 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="3.6 构件图：一眼认出供接口和需接口 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.6 构件图：一眼认出供接口和需接口 ★」的学习状态"></button></h3>
+<p>构件图（组件图）专注于<strong>静态实现视图</strong>——把系统拆成可替换的软件构件，画清它们之间谁依赖谁。</p>
+<p><strong>构件符号</strong>：矩形 + 左上角画两个小矩形凸起（像插头），框内写 <code>&lt;&lt;component&gt;&gt;</code>。</p>
+<p><strong>接口的画法（高频识别题，必须记住）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>符号</th>
+<th>记忆法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>供接口</strong>（provided，我对外提供的服务）</td>
+<td><strong>整圆</strong>（画成一个完整的圆圈）</td>
+<td>我<strong>给出去</strong>的是完整的；圆是<strong>满</strong>的</td>
+</tr>
+<tr>
+<td><strong>需接口</strong>（required，我需要别人提供的服务）</td>
+<td><strong>半圆</strong>（缺了一块的半圆弧）</td>
+<td>我<strong>要往里接</strong>的是缺口；半圆是<strong>缺</strong>的</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>口诀</strong>：<strong>整圆供、半圆需</strong>（或&quot;<strong>满的给别人、缺的找别人要</strong>&quot;）。</p>
+<p><strong>反例演示（易错）</strong>：依赖箭头从<strong>需接口</strong>指向<strong>供接口</strong>（谁需要谁 → 指向被依赖方），别画反——画反了会变成&quot;提供方依赖使用方&quot;，逻辑颠倒。构件之间的虚线箭头表示<strong>依赖关系</strong>（一个构件的实现离不开另一个）。</p>
+<h3 id="h-22">3.7 部署图：节点是立体长方体<button type="button" class="sec-status" data-status-key="3.7 部署图：节点是立体长方体" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.7 部署图：节点是立体长方体」的学习状态"></button></h3>
+<p>部署图给的是<strong>体系结构的静态实施视图</strong>——软件构件<strong>跑在哪些物理节点上</strong>。</p>
+<p><strong>要素</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>画法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>节点</strong>（node）</td>
+<td><strong>立体长方体</strong>（3D 立方体），表示硬件设备/运行环境，如应用服务器、数据库服务器、PC、手机</td>
+</tr>
+<tr>
+<td><strong>构件</strong></td>
+<td>节点框内放构件符号（表示这台机器上部署了什么）</td>
+</tr>
+<tr>
+<td><strong>连接</strong></td>
+<td>节点之间的实线，可标协议（<code>TCP/IP</code>）或构造型（<code>&lt;&lt;Database&gt;&gt;</code>、<code>&lt;&lt;Storage&gt;&gt;</code>）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>识别特征</strong>：图上一旦出现<strong>立体长方体（有厚度、有顶面和侧面）</strong>，就是部署图——这是它和构件图最容易区分的地方（构件图是平的、带两个小凸起；部署图是立体的）。</p>
+<h3 id="h-23">3.8 UML 全图小结与应试动作<button type="button" class="sec-status" data-status-key="3.8 UML 全图小结与应试动作" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.8 UML 全图小结与应试动作」的学习状态"></button></h3>
+<p><strong>&quot;给场景选图&quot;速判表</strong>（案例题和选择题都用得上）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>题目在说什么</th>
+<th>该用哪张图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统有哪些功能、谁能用</td>
+<td><strong>用例图</strong></td>
+</tr>
+<tr>
+<td>类的属性、操作、类间关系</td>
+<td><strong>类图</strong></td>
+</tr>
+<tr>
+<td>某一时刻的对象快照</td>
+<td><strong>对象图</strong></td>
+</tr>
+<tr>
+<td>按时间顺序的对象交互</td>
+<td><strong>顺序图</strong></td>
+</tr>
+<tr>
+<td>强调对象链接结构与调用层次的交互</td>
+<td><strong>通信图</strong></td>
+</tr>
+<tr>
+<td><strong>单个对象</strong>因事件而状态变迁</td>
+<td><strong>状态图</strong></td>
+</tr>
+<tr>
+<td>业务流程步骤、有并发/责任人划分</td>
+<td><strong>活动图</strong></td>
+</tr>
+<tr>
+<td>软件拆成哪些可替换构件、接口供需</td>
+<td><strong>构件图</strong></td>
+</tr>
+<tr>
+<td>软件跑在哪些硬件节点上</td>
+<td><strong>部署图</strong></td>
+</tr>
+<tr>
+<td>类如何分组打包、包间依赖</td>
+<td><strong>包图</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：</p>
+<ol>
+<li><strong>背分类</strong>：结构图 6 种、行为图 7 种（至少记住高频 10 种的归属）；</li>
+<li><strong>认符号</strong>：三角 = 泛化/实现（虚线是接口实现）、菱形 = 整体部分（空心聚合 / 实心组合）、虚线 = 弱关系（依赖最弱）、<strong>整圆供/半圆需</strong>、<strong>立体长方体 = 部署节点</strong>、<strong>下划线 = 对象</strong>；</li>
+<li><strong>判用例关系</strong>：必经 include（主干指出）、可选 extend（分支指回）；</li>
+<li><strong>状态图五要素</strong>与<strong>四类事件</strong>要能默写（简答题和填空都可能要）。</li>
+</ol>
+<h2 id="h-24">第四节 设计模式 <span class="stars">★★★</span>（每年 2–4 题）<button type="button" class="sec-status" data-status-key="第四节 设计模式 ★★★（每年 2–4 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 设计模式 ★★★（每年 2–4 题）」的学习状态"></button></h2>
+<h3 id="h-25">4.1 23 种模式的分类框架（先背骨架）<button type="button" class="sec-status" data-status-key="4.1 23 种模式的分类框架（先背骨架）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 23 种模式的分类框架（先背骨架）」的学习状态"></button></h3>
 <p>模式按<strong>目的</strong>分三类——这本身就回答了&quot;为什么有 23 种&quot;：<strong>创建型</strong>管&quot;对象怎么造出来&quot;（5 种）、<strong>结构型</strong>管&quot;对象怎么组装起来&quot;（7 种）、<strong>行为型</strong>管&quot;对象怎么交互分工&quot;（11 种）。</p>
 <p>口诀（自编，按序号背）：</p>
 <ul>
@@ -267,7 +832,9 @@
 <li>结构型 7：<strong>适桥组外装享代</strong>（适配器、桥接、组合、外观、装饰器、享元、代理）</li>
 <li>行为型 11：<strong>责命解迭中，备观状策模访</strong>（职责链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者）</li>
 </ul>
-<h3 id="h-11">23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）<button type="button" class="sec-status" data-status-key="23 种意图速查表（背&amp;quot;意图一句话 + 速记词&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）」的学习状态"></button></h3>
+<p><strong>数量口诀</strong>：<strong>5 / 7 / 11</strong>（连着念&quot;五七十一&quot;）。考题问&quot;下列属于创建型的有几个&quot;，先数出 5 个就够了，不必逐个回忆意图。</p>
+<p><strong>另一种分类维度（算考点，别忽略）</strong>：按<strong>作用范围</strong>分<strong>类模式</strong>与<strong>对象模式</strong>——<strong>类模式只有 4 个</strong>：<strong>工厂方法、适配器（类）、模板方法、解释器</strong>；其余 19 个都是<strong>对象模式</strong>（适配器两种都算：既可用类继承实现，也可用对象组合实现，所以两边都列它）。<strong>记住&quot;类模式 = 4 个&quot;这个数</strong>比记名字更实用：看到&quot;下列属于类模式的是&quot;，先在心里数出这 4 个。</p>
+<h3 id="h-26">4.2 23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）<button type="button" class="sec-status" data-status-key="4.2 23 种意图速查表（背&amp;quot;意图一句话 + 速记词&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）」的学习状态"></button></h3>
 <p><strong>创建型（管出生）</strong>：</p>
 <div class="table-wrap">
 <table>
@@ -419,7 +986,7 @@
 </tr>
 </tbody></table>
 </div>
-<h3 id="h-12">高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）<button type="button" class="sec-status" data-status-key="高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）」的学习状态"></button></h3>
+<h3 id="h-27">4.3 高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）<button type="button" class="sec-status" data-status-key="4.3 高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 高频 8 种：用生活场景锁死（单例、工厂方法、观察者、策略、适配器、装饰器、代理、桥接）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -471,37 +1038,137 @@
 </tr>
 </tbody></table>
 </div>
-<p><strong>反例演示（最易混三组）</strong>：</p>
+<p><strong>代理的三种细分（选择题出现过）</strong>：<strong>远程代理</strong>（为不同地址空间的对象提供本地代表，负责编码请求）、<strong>虚拟代理</strong>（缓存信息，<strong>延迟</strong>创建开销大的对象，如图片懒加载）、<strong>保护代理</strong>（检查调用者<strong>权限</strong>）。看到&quot;权限/延迟/远程&quot;三个字眼，就归到代理的对应细分里。</p>
+<h3 id="h-28">4.4 模式的角色名（案例题第五题 Java/C++ 填空的命门）<span class="stars">★★</span><button type="button" class="sec-status" data-status-key="4.4 模式的角色名（案例题第五题 Java/C++ 填空的命门）★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.4 模式的角色名（案例题第五题 Java/C++ 填空的命门）★★」的学习状态"></button></h3>
+<p>案例题第五题常给一段 Java/C++ 代码 + 一张类图让你填空，<strong>填的就是角色名</strong>（如 <code>interface Observer</code>、<code>class Subject</code>）。所以高频模式的<strong>角色名必须能中英对照写出来</strong>。下面按三分类分组列出，箭头 <code>→</code> 表示&quot;抽象到具体&quot;，斜杠 <code>/</code> 表示并列角色：</p>
+<p><strong>创建型（5）</strong></p>
+<ul>
+<li><strong>抽象工厂</strong>：<code>AbstractFactory</code>（抽象工厂，声明创建产品的抽象方法）→ <code>ConcreteFactory</code>（具体工厂，实现方法并生成具体产品）；<code>AbstractProduct</code>（抽象产品，为一种产品声明接口）→ <code>Product</code>（具体产品）；<code>Client</code>（客户，用抽象产品与抽象工厂生成对象）。</li>
+<li><strong>工厂方法</strong>：<code>Product</code>（产品接口）→ <code>ConcreteProduct</code>（真实产品）；<code>Creator</code>（工厂角色，声明工厂方法）→ <code>ConcreteCreator</code>（真实工厂，返回产品实例）。</li>
+<li><strong>原型</strong>：<code>Prototype</code>（抽象原型，定义克隆自己的接口）→ <code>ConcretePrototype</code>（实现 clone、返回自身拷贝）；<code>Client</code> 调 <code>p = prototype.clone()</code>。</li>
+<li><strong>单例</strong>：<code>Singleton</code> 自己——<strong>私有的静态唯一实例变量</strong> + <strong>公有的静态获取方法</strong>（<code>getInstance()</code>），构造方法私有化。</li>
+<li><strong>构建器</strong>：<code>Builder</code>（抽象建造者，为各部件指定抽象接口）→ <code>ConcreteBuilder</code>（具体建造者）；<code>Director</code>（指挥者，按步骤指挥建造）；<code>Product</code>（被构建的复杂对象）。</li>
+</ul>
+<p><strong>结构型（7）</strong></p>
+<ul>
+<li><strong>适配器</strong>：<code>Target</code>（目标抽象类，客户要用的标准接口）；<code>Adapter</code>（适配器，调另一个接口做转换）；<code>Adaptee</code>（被适配者，需要接入的实际接口）；<code>Client</code>。</li>
+<li><strong>桥接</strong>：<code>Abstraction</code>（抽象类，维护一个 Implementor 引用）→ <code>RefinedAbstraction</code>（扩充的抽象类）；<code>Implementor</code>（实现类接口，只给基本操作）→ <code>ConcreteImplementor</code>（具体实现类）。</li>
+<li><strong>组合</strong>：<code>Component</code>（成员父类，统一接口含 Add/Remove/GetChild）→ <code>Leaf</code>（叶子，无子节点）／ <code>Composite</code>（组合类，持子部件列表并<strong>递归调用</strong>）。</li>
+<li><strong>装饰器</strong>：<code>Component</code>（部件接口）→ <code>ConcreteComponent</code>（被装饰者）；<code>Decorator</code>（装饰抽象类，<strong>持有一个 Component</strong>，接口与之一致）→ <code>ConcreteDecorator</code>（加具体职责，内部调 <code>super.operation()</code>）。</li>
+<li><strong>外观</strong>：<code>Facade</code>（外形类，知道哪些子系统负责哪些请求，把客户请求转给相应子系统）；<code>Subsystem</code>（子系统类，实现功能，<strong>不知道也不引用 Facade</strong>）。</li>
+<li><strong>享元</strong>：<code>Flyweight</code>（抽象享元，接受<strong>外部状态</strong>）→ <code>ConcreteFlyweight</code>（含<strong>内部状态</strong>）／ <code>UnsharedConcreteFlyweight</code>（不共享的具体享元）；<code>FlyweightFactory</code>（轻量级工厂，按 key 从池中取或新建）。</li>
+<li><strong>代理</strong>：<code>Subject</code>（抽象实体接口，为 RealSubject 与 Proxy 定义相同的接口）→ <code>RealSubject</code>（真实对象）／ <code>Proxy</code>（代理，<strong>持有 RealSubject 引用</strong>，控制访问）。</li>
+</ul>
+<p><strong>行为型（11）</strong></p>
+<ul>
+<li><strong>职责链</strong>：<code>Handler</code>（传递者接口，<strong>持有后继者引用</strong>）→ <code>ConcreteHandler</code>（能处理就处理，否则<strong>转发给后继</strong>）；<code>Client</code>。</li>
+<li><strong>命令</strong>：<code>Command</code>（抽象命令，声明执行接口）→ <code>ConcreteCommand</code>（<strong>把接收者与动作绑定</strong>）；<code>Invoker</code>（调用者，触发 <code>execute</code>）；<code>Receiver</code>（接收者，知道如何执行关联请求）；<code>Client</code>。</li>
+<li><strong>解释器</strong>：<code>AbstractExpression</code>（抽象表达式，定义 <code>Interpret(Context)</code>）→ <code>TerminalExpression</code>（终结符表达式，每个终结符一个实例）／ <code>NonTerminalExpression</code>（非终结符表达式）；<code>Context</code>（场景，含解释器的全局信息）。</li>
+<li><strong>迭代器</strong>：<code>Iterator</code>（First/Next/CurrentItem/IsDone）→ <code>ConcreteIterator</code>（遍历时跟踪聚合中的当前位置）；<code>Aggregate</code>（定义创建迭代器的接口）→ <code>ConcreteAggregate</code>。</li>
+<li><strong>中介者</strong>：<code>Mediator</code>（抽象中介者，定义同事间通信的统一接口）→ <code>ConcreteMediator</code>（<strong>掌握并维护各同事对象的引用</strong>）；<code>Colleague</code>（同事类，与别的同事通信<strong>必经中介者</strong>）。</li>
+<li><strong>备忘录</strong>：<code>Memento</code>（备忘录，保存原发器在某一时刻的状态）；<code>Originator</code>（原发器，创建备忘录并可<strong>用它恢复自己</strong>）；<code>Caretaker</code>（管理者，负责保存备忘录）。</li>
+<li><strong>观察者</strong>：<code>Subject</code>（被观察对象，提供绑定/分离观察者的接口）→ <code>ConcreteSubject</code>（具体被观察对象，状态改变时通知）；<code>Observer</code>（定义更新接口）→ <code>ConcreteObserver</code>（持 ConcreteSubject 引用）。</li>
+<li><strong>状态</strong>：<code>Context</code>（情景类，持有具体状态实例，把请求<strong>委托给状态</strong>）；<code>State</code>（抽象状态，封装与某状态相关的行为）→ <code>ConcreteState</code>（具体状态类）。</li>
+<li><strong>策略</strong>：<code>Strategy</code>（抽象策略，定义所有策略的公共接口）→ <code>ConcreteStrategy</code>（封装具体算法）；<code>Context</code>（上下文，持有 Strategy 引用）；<code>Client</code>。</li>
+<li><strong>模板方法</strong>：<code>AbstractClass</code>（抽象类，定义<strong>算法骨架</strong>并声明若干基本方法）／ <code>ConcreteClass</code>（子类实现某些步骤）。</li>
+<li><strong>访问者</strong>：<code>Visitor</code>（为每个 ConcreteElement 声明一个 Visit 操作）→ <code>ConcreteVisitor</code>；<code>Element</code>（定义 <code>Accept(Visitor)</code>）→ <code>ConcreteElement</code>；<code>ObjectStructure</code>（对象结构类，遍历元素）。</li>
+</ul>
+<p><strong>背法建议</strong>：不要死背这一长串，而是<strong>抓三个&quot;通用套路&quot;</strong>——① <strong>抽象 + 具体</strong>成对出现（抽象工厂/具体工厂、抽象产品/具体产品）；② <strong>谁持有谁</strong>决定控制权（代理持 RealSubject、装饰器持 Component、状态持 State、职责链持 successor、上下文持 State、组合持子部件列表）；③ <strong>客户只认抽象</strong>（Client 永远通过抽象接口打交道，这就是依赖倒置原则在模式里的落地）。考场上即使记不住确切名字，<strong>按&quot;抽象 X / 具体 X / 客户&quot;的命名规律写，往往也能得分</strong>。</p>
+<h3 id="h-29">4.5 易混组对照（案例题给理由时用得上）<button type="button" class="sec-status" data-status-key="4.5 易混组对照（案例题给理由时用得上）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.5 易混组对照（案例题给理由时用得上）」的学习状态"></button></h3>
 <ol>
 <li><strong>装饰器 vs 代理</strong>：都包一层对象，区别在<strong>意图</strong>——装饰器给对象<strong>加功能</strong>（层层包出不同组合），代理是<strong>控制访问</strong>（功能不变，管你能不能/何时访问）。</li>
 <li><strong>适配器 vs 外观</strong>：适配器是&quot;一个接口转成另一个接口&quot;（一对一改造）；外观是&quot;一堆子系统接口收敛成一个入口&quot;（多合一简化）。</li>
 <li><strong>桥接 vs 装饰器</strong>：桥接拆的是<strong>两个独立变化的结构维度</strong>（形状×绘制方式）；装饰器是<strong>同一维度上叠加功能</strong>。</li>
+<li><strong>策略 vs 状态</strong>：结构几乎一样（都委托给一个接口），但<strong>客户能不能选</strong>是分水岭——策略是<strong>客户主动选算法</strong>（想换就换）；状态是<strong>对象自己随条件转换</strong>，客户通常不指定（且状态之间常互相触发迁移）。</li>
+<li><strong>命令 vs 备忘录</strong>（撤销题的正主）<strong>：支持&quot;撤销&quot;的机制是</strong>命令**（把操作封装成对象，命令里存了执行所需的信息，提供 <code>undo()</code>）；备忘录是<strong>保存/恢复对象状态快照</strong>。若题目问&quot;把请求封装成对象从而支持撤销/排队/日志&quot;→ <strong>命令</strong>；问&quot;保存对象某一时刻的状态以便以后恢复&quot;→ <strong>备忘录</strong>。真题里两者常同框出现，<strong>看题干强调的是&quot;操作&quot;还是&quot;状态&quot;</strong>。</li>
+<li><strong>工厂方法 vs 抽象工厂</strong>：都造对象，区别在<strong>单一还是系列</strong>——工厂方法造<strong>一个产品</strong>（由子类决定），抽象工厂造<strong>一整个产品族</strong>（一族相关对象，如&quot;Windows 风格的按钮+滚动条&quot;）。</li>
 </ol>
-<p><strong>应试动作</strong>：① 背三分类数字&quot;5/7/11&quot; + 口诀；② 速查表每个模式的&quot;速记词&quot;必须条件反射——考试 80% 是&quot;场景/意图 → 模式名&quot;的配对；③ 三组易混对按&quot;意图&quot;区分。</p>
-<h2 id="h-13">第四节 案例题专攻：UML 建模（约 15 分）<button type="button" class="sec-status" data-status-key="第四节 案例题专攻：UML 建模（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 案例题专攻：UML 建模（约 15 分）」的学习状态"></button></h2>
-<p>案例一般是&quot;文字说明 + 用例图/类图/顺序图挖空&quot;，三种小问固定套路：</p>
-<h3 id="h-14">套路一：补用例图——参与者、用例、include/extend<button type="button" class="sec-status" data-status-key="套路一：补用例图——参与者、用例、include/extend" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：补用例图——参与者、用例、include/extend」的学习状态"></button></h3>
+<p><strong>应试动作</strong>：① 背三分类数字&quot;5/7/11&quot; + 口诀；② 速查表每个模式的&quot;速记词&quot;必须条件反射——考试 80% 是&quot;场景/意图 → 模式名&quot;的配对；③ 易混对按&quot;意图&quot;区分；④ <strong>高频模式的角色名要能默写英文</strong>（服务案例题填空）。</p>
+<h2 id="h-30">第五节 案例题专攻：UML 建模（约 15 分）<button type="button" class="sec-status" data-status-key="第五节 案例题专攻：UML 建模（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 案例题专攻：UML 建模（约 15 分）」的学习状态"></button></h2>
+<p>案例题的形态固定为「<strong>文字说明 + 挖空的图（用例图/类图/顺序图/通信图/活动图/状态图之一）</strong>」，常配 3 个小问。三个固定套路如下。</p>
+<h3 id="h-31">套路一：补用例图——参与者、用例、include/extend<button type="button" class="sec-status" data-status-key="套路一：补用例图——参与者、用例、include/extend" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：补用例图——参与者、用例、include/extend」的学习状态"></button></h3>
 <ol>
-<li><strong>参与者</strong>：名词且&quot;谁在使用系统/系统服务谁&quot;（读者、管理员、外部系统）；</li>
+<li><strong>参与者</strong>：名词且&quot;谁在使用系统/系统服务谁&quot;（读者、管理员、外部系统如支付网关）；</li>
 <li><strong>用例</strong>：系统为参与者完成的一件完整的事（动词短语：借书、还书、缴费）；</li>
 <li><strong>挖空补关系</strong>：句子里&quot;必须先/一定要&quot;→ include；&quot;如果…就/可选&quot;→ extend；两种&quot;某类参与者…&quot;→ 用例泛化。</li>
 </ol>
-<h3 id="h-15">套路二：补类图——名词变类、关系按语义套<button type="button" class="sec-status" data-status-key="套路二：补类图——名词变类、关系按语义套" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：补类图——名词变类、关系按语义套」的学习状态"></button></h3>
+<p><strong>从&quot;用例详细描述&quot;里挖答案</strong>（近真题的新形态）：题目给的往往是一段标准格式的描述——<strong>参与者 / 典型事件流（1、2、3…）/ 备选事件流（2a、4a…）</strong>。读法三条：</p>
+<ul>
+<li><strong>参与者</strong>直接抄（原文写了&quot;参与者：读者&quot;）；</li>
+<li><strong>典型事件流的每一步</strong>对应顺序图/通信图里的一条消息，<strong>步骤序号 = 消息顺序</strong>；</li>
+<li><strong>备选事件流 → extend 的来源</strong>（如&quot;4a 读者要借的书无法外借 → 告知本书无法借阅&quot;就是&quot;告知无法借阅&quot;这个扩展用例）。</li>
+</ul>
+<h3 id="h-32">套路二：补类图——名词变类、关系按语义套，方法按事件流找<button type="button" class="sec-status" data-status-key="套路二：补类图——名词变类、关系按语义套，方法按事件流找" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：补类图——名词变类、关系按语义套，方法按事件流找」的学习状态"></button></h3>
 <ol>
-<li>说明中的<strong>核心名词</strong> → 类（读者、图书、借阅记录）；<strong>数字与规则</strong> → 属性（可借数量）；</li>
-<li><strong>关联</strong>：一个读者可有多条借阅记录 → 读者 1 — 1..* 借阅记录；</li>
-<li><strong>聚合/组合</strong>：整体部分且&quot;能否独立存在&quot;判空心/实心菱形；</li>
-<li><strong>泛化</strong>：句中出现&quot;XX 分为 A、B、C&quot;或&quot;A 类读者、B 类读者都可…&quot; → 抽父类；</li>
-<li>多对多时中间挂<strong>关联类</strong>（学生—课程之间挂&quot;选课记录&quot;——与第 2 课 m:n 转关系模式同构）。</li>
+<li><strong>类名</strong>：说明中的<strong>核心名词</strong>（读者、图书、借阅记录）——注意填空题要求&quot;<strong>用图中给出的英文词汇</strong>&quot;，所以要把中文名词与英文类名对应上（读者 = Patron、图书 = Book、目录 = Catalog）；</li>
+<li><strong>属性</strong>：说明里&quot;要记录的信息&quot;（书号、书名、定价）；</li>
+<li><strong>方法（补 M1、M2…）</strong>：<strong>从事件流的动词里找</strong>，且<strong>要匹配调用者与接收者</strong>——如&quot;根据图书目录中的图书ID确认该书可以借阅&quot;这一步，主语是目录对象 → 方法就是目录提供的 <code>find(bookID)</code>／<code>getForCheckOut(id)</code>；&quot;判断读者身份&quot;→ 读者对象的 <code>isFaculty()</code>；</li>
+<li><strong>多重性</strong>：按 3.1 的&quot;<strong>逐端问</strong>&quot;法填写；</li>
+<li><strong>关联类</strong>：多对多时中间挂<strong>关联类</strong>（学生—课程之间挂&quot;选课记录&quot;——与第 2 课 m:n 转关系模式同构）。</li>
 </ol>
-<h3 id="h-16">套路三：补顺序图/状态图——消息按时间排、状态按事件转<button type="button" class="sec-status" data-status-key="套路三：补顺序图/状态图——消息按时间排、状态按事件转" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：补顺序图/状态图——消息按时间排、状态按事件转」的学习状态"></button></h3>
+<p><strong>判&quot;哪个方法属于哪个类&quot;的通用办法</strong>：看<strong>动作的宾语归谁管</strong>——&quot;查书&quot;问的是图书/目录 → 方法落在这两个类上；&quot;生成借阅记录&quot;要落到借阅记录或会话控制类上；&quot;通知读者应还日期&quot;落到读者或通知类上。</p>
+<h3 id="h-33">套路三：补顺序图/通信图/状态图/活动图——按说明的顺序与事件照搬<button type="button" class="sec-status" data-status-key="套路三：补顺序图/通信图/状态图/活动图——按说明的顺序与事件照搬" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：补顺序图/通信图/状态图/活动图——按说明的顺序与事件照搬」的学习状态"></button></h3>
 <ol>
-<li>顺序图挖消息：按说明句子的<strong>先后顺序</strong>填消息名，注意返回消息（虚线箭头）；</li>
-<li>状态图挖状态：状态 = 名词（空闲/占线），转换线上标<strong>事件</strong>；起点实心圆、终点带圈圆；</li>
-<li>模式识别小问：说明里出现&quot;多种通知方式可切换&quot;→ 策略；&quot;状态变化通知订阅者&quot;→ 观察者；&quot;创建过程复杂分步&quot;→ 构建器——套路与第三节速记词完全一致。</li>
+<li><strong>顺序图挖消息</strong>：按说明句子的<strong>先后顺序</strong>填消息名（从上到下 = 时间先后），注意返回消息（虚线箭头）也要填；</li>
+<li><strong>通信图挖序号</strong>：序号体现调用层次（<code>1</code>、<code>1.1</code>、<code>1.1.2</code>），<strong>先定第一个调用，再补嵌套</strong>；</li>
+<li><strong>状态图挖状态/事件</strong>：状态 = 名词（空闲/占线），转换线上标<strong>事件</strong>（题干会说&quot;当…时进入…&quot;）；起点实心圆、终点带圈圆；</li>
+<li><strong>活动图挖动作/条件</strong>：动作 = 动词短语，菱形出口标<strong>监护表达式</strong>（题干会说&quot;如果…则…否则…&quot;）。</li>
 </ol>
+<h3 id="h-34">套路四：设计模式小问（&quot;可以采用何种设计模式？简要说明原因&quot;）<button type="button" class="sec-status" data-status-key="套路四：设计模式小问（&amp;quot;可以采用何种设计模式？简要说明原因&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路四：设计模式小问（&quot;可以采用何种设计模式？简要说明原因&quot;）」的学习状态"></button></h3>
+<p>这是 <strong>3 分题</strong>，答题<strong>必须两段：模式名 + 原因</strong>（只写名字通常拿不满）。原因要<strong>用题目原话 + 原则名</strong>，模板如下：</p>
+<blockquote>
+<p>可以采用<strong>策略（Strategy）模式</strong>。理由：题库中的规则（制度）会不断扩充和调整，属于<strong>一族可互相替换的算法</strong>；采用策略模式把每种规则封装成独立的策略类，由上下文按需注入，<strong>新增规则时只需增加新的策略类，不必修改原有代码</strong>，符合<strong>开放-封闭原则</strong>。</p>
+</blockquote>
+<p><strong>识别抓手（题干 → 模式）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>题干出现</th>
+<th>答案模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot;可灵活扩充/调整的一系列规则、算法，可互相替换&quot;</td>
+<td><strong>策略</strong></td>
+</tr>
+<tr>
+<td>&quot;状态改变时通知所有相关对象/订阅者&quot;</td>
+<td><strong>观察者</strong></td>
+</tr>
+<tr>
+<td>&quot;创建过程复杂、分步骤，且表示可不同&quot;</td>
+<td><strong>构建器</strong></td>
+</tr>
+<tr>
+<td>&quot;系统只能有一个××（如全局配置、唯一编号生成器）&quot;</td>
+<td><strong>单例</strong></td>
+</tr>
+<tr>
+<td>&quot;要接入已有接口不兼容的第三方/旧系统&quot;</td>
+<td><strong>适配器</strong></td>
+</tr>
+<tr>
+<td>&quot;需要在不修改类的前提下增加新操作&quot;</td>
+<td><strong>访问者</strong></td>
+</tr>
+<tr>
+<td>&quot;对象行为随自身状态变化而变化&quot;</td>
+<td><strong>状态</strong></td>
+</tr>
+<tr>
+<td>&quot;需要支持撤销/重做、操作排队&quot;</td>
+<td><strong>命令</strong></td>
+</tr>
+<tr>
+<td>&quot;多步骤处理，每个处理者只处理自己管的部分，其余往下传&quot;</td>
+<td><strong>职责链</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：这一问<strong>先写模式名再写理由</strong>，理由必含「<strong>新增/变化时只需加新类、不必改原有代码</strong>」这类功能点，并<strong>点名原则</strong>（开放-封闭 / 依赖倒置 / 单一职责）。给分点是<strong>关键词</strong>，不是文采。</p>
 <hr>
-<h2 id="h-17">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h2 id="h-35">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>面向对象方法中，将属性和操作捆绑在一起、对外隐藏实现细节的特性称为（ ）。
@@ -523,7 +1190,7 @@ A. 状态图  B. 活动图  C. 部署图  D. 顺序图</p>
 A. 空心菱形  B. 实心菱形  C. 虚线箭头  D. 空心三角</p>
 </li>
 <li><p>用例&quot;借书&quot;必须先执行&quot;登录&quot;用例，两用例间的关系是（ ）。
-A. &lt;<extend>&gt;  B. &lt;<include>&gt;  C. 泛化  D. 关联</p>
+A. <code>&lt;&lt;extend&gt;&gt;</code>  B. <code>&lt;&lt;include&gt;&gt;</code>  C. 泛化  D. 关联</p>
 </li>
 <li><p>UML 顺序图中，同步消息通常用（ ）表示。
 A. 实线箭头（实心箭头头部）  B. 虚线箭头（返回）  C. 粗横线  D. 小人符号</p>
@@ -552,8 +1219,53 @@ A. 模板方法  B. 状态  C. 策略  D. 工厂方法</p>
 <li><p>&quot;保证一个类仅有一个实例，并提供一个全局访问点&quot;，这是（ ）模式。
 A. 单例  B. 原型  C. 构建器  D. 外观</p>
 </li>
+<li><p>面向对象方法中，应用最广泛、被称为&quot;最纯的多态&quot;的是（ ）。
+A. 过载多态  B. 参数多态  C. 包含多态  D. 强制多态</p>
+</li>
+<li><p>某类负责协调实体类与界面类、控制业务活动流，其类名通常以 Controller 结尾。该类的类型是（ ）。
+A. 实体类  B. 边界类  C. 控制类  D. 工具类</p>
+</li>
+<li><p>UML 构件图中，表示&quot;该构件对外提供的服务&quot;的接口符号是（ ）。
+A. 半圆  B. 整圆  C. 空心三角形  D. 空心菱形</p>
+</li>
+<li><p>关于 UML 状态图，下列说法正确的是（ ）。
+A. 一个状态图可以有多个初始状态
+B. 一个状态图只能有一个初始状态，可以有多个终态，也可以没有终态
+C. 每条转换都必须同时给出事件与监护条件
+D. 状态图用于描述多个对象之间按时间顺序的交互</p>
+</li>
+<li><p>&quot;抽象不应该依赖于细节，细节应该依赖于抽象；高层模块不应该依赖低层模块，两者都应该依赖于抽象&quot;，这体现的是（ ）。
+A. 单一职责原则  B. 里氏替换原则  C. 依赖倒置原则  D. 接口隔离原则</p>
+</li>
+<li><p>观察者模式中，专门定义&quot;更新接口&quot;、在被观察对象状态改变时接受通知的角色是（ ）。
+A. Subject  B. ConcreteSubject  C. Observer  D. ConcreteObserver</p>
+</li>
+<li><p>动态绑定（运行期确定调用哪个方法）的发生需要同时满足若干条件，下列不属于其必要条件的是（ ）。
+A. 存在继承关系  B. 子类重写了父类的方法  C. 父类引用指向子类对象  D. 方法被声明为静态方法</p>
+</li>
 </ol>
 <p><strong>二、案例题（UML 建模，模拟真题风格）</strong></p>
+<p>阅读下列说明，回答问题 1 至问题 3。</p>
+<p>【说明】某图书馆系统支持读者在线借还图书。系统采用面向对象方法开发，其类模型包含下列类（括号内为部分方法）：</p>
+<ul>
+<li><strong>Reader</strong>：读者（<code>isTeacher()</code>）；</li>
+<li><strong>Book</strong>：图书（<code>isBorrowable()</code>）；</li>
+<li><strong>Catalog</strong>：图书目录（<code>find(bookID)</code>）；</li>
+<li><strong>LoanRecord</strong>：借阅记录；</li>
+<li><strong>BorrowController</strong>：借书业务控制器（<code>startBorrow(readerID)</code>）；</li>
+<li><strong>BorrowUI</strong>：借书操作界面（<code>inputReaderID()</code>、<code>showResult()</code>）。</li>
+</ul>
+<p>用例&quot;借书（BorrowBook）&quot;的详细描述如下：</p>
+<ul>
+<li>参与者：读者（Reader）；</li>
+<li>典型事件流：① 输入读者 ID；② 确认该读者可以借阅图书，并记录读者 ID；③ 输入所借图书的图书 ID；④ 根据图书目录中的图书 ID 确认该书可借，计算归还日期，生成借阅记录；⑤ 通知读者归还日期。重复步骤 ③~⑤，直到读者结束借阅；</li>
+<li>备选事件流：2a. 若读者有超期未还图书则不能借阅：① 告知读者不能借阅并说明原因；② 本用例结束。4a. 若所借图书不可外借：① 告知读者该书不可借阅；② 回到步骤 ③；</li>
+<li>说明：归还期限与读者身份有关，教师为 60 天、学生为 30 天；读者 ID 中包含读者身份信息。</li>
+</ul>
+<p><strong>问题 1</strong>（6 分）：将上述六个类按&quot;实体类、边界类、控制类&quot;分类，并说明每一类的识别特征。</p>
+<p><strong>问题 2</strong>（6 分）：备选事件流 2a 中需要根据借阅规则判定读者能否借书。若借阅规则会不断扩充、并需要根据图书馆实际运行情况调整启用哪些规则，可以采用何种设计模式？简要说明理由。</p>
+<p><strong>问题 3</strong>（3 分）：若要描述&quot;借书&quot;过程中各对象按时间顺序的交互，应采用哪种 UML 图？它与通信图是什么关系？</p>
+<p><strong>三、案例题（用例关系与类图，模拟真题风格）</strong></p>
 <p>阅读下列说明，回答问题 1 至问题 3。</p>
 <p>【说明】某图书馆系统支持读者在线借还图书：</p>
 <ul>
@@ -566,7 +1278,7 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
 <p><strong>问题 2</strong>：画出（或文字描述）核心类图：读者、图书、借阅记录三类，标注关系与多重性。若系统还要求&quot;读者分为学生读者和教师读者&quot;，类图应如何扩展？</p>
 <p><strong>问题 3</strong>：提醒功能&quot;短信或邮件方式可由系统配置切换&quot;，最适合采用哪种设计模式？说明理由。</p>
 <hr>
-<h2 id="h-18">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
+<h2 id="h-36">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【模式分类】将下列模式归类：Singleton、Factory Method、Prototype、Adapter、Bridge、Composite、Observer、Strategy、Command、Memento。</p>
 </li>
@@ -580,6 +1292,27 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
 </li>
 <li><p>【include/extend】某系统&quot;发布文章&quot;用例必然执行&quot;保存草稿&quot;，&quot;定时发布&quot;仅当用户勾选时发生。指出关系与箭头方向。</p>
 </li>
+<li><p>【OOD 原则】某系统原来在业务类中直接 <code>new MySQLDao()</code> 访问数据库，后来改为面向 <code>IDao</code> 接口编程、由配置文件决定注入哪个实现类。这一改造主要体现了哪一条面向对象设计原则？该原则的经典表述是什么？</p>
+</li>
+<li><p>【模式角色】某 Java 程序中有如下骨架：</p>
+</li>
+</ol>
+<pre><code class="language-java">abstract class Subject {
+    private List&lt;Observer&gt; obs = new ArrayList&lt;&gt;();
+    void attach(Observer o) { obs.add(o); }
+    void detach(Observer o) { obs.remove(o); }
+    void notifyObservers() { for (Observer o : obs) o.update(); }
+}
+class Clock extends Subject { /* 时间变化时调用 notifyObservers() */ }
+interface Observer { void update(); }
+class DigitalClock implements Observer { public void update() { /* 刷新显示 */ } }
+</code></pre>
+<p>指出这是哪种设计模式，并说明 <code>Subject</code>、<code>Clock</code>、<code>Observer</code>、<code>DigitalClock</code> 各对应模式中的哪个角色。</p>
+<ol start="9">
+<li><p>【多态分类】判断下列情形各属于哪种多态：① <code>int a = 1; double b = a + 0.5;</code>；② 同一个 <code>add</code> 方法名有 <code>add(int,int)</code> 与 <code>add(String,String)</code> 两个版本；③ 用 <code>List&lt;T&gt;</code> 编写的容器既能装整数也能装字符串；④ 父类引用 <code>Shape s = new Circle();</code> 调用 <code>s.draw()</code> 执行圆的绘制。</p>
+</li>
+<li><p>【构件图/部署图】指出下列说法各对应哪种 UML 图：① 图中出现了立体长方体和 <code>&lt;&lt;Database&gt;&gt;</code> 构造型；② 图中一个构件用整圆标出对外提供的服务、用半圆标出需要的服务。</p>
+</li>
 </ol>
 <hr>
 <details class="answers" id="answers" data-toc="答案与解析">
@@ -590,7 +1323,7 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-20">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<h3 id="h-38">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong>
 封装 = 数据 + 操作捆绑、隐藏实现。继承是获得父类特征；多态是同一消息不同响应；重载是同名不同参的方法。</p>
 <p><strong>2. B</strong>
@@ -598,7 +1331,7 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
 <p><strong>3. B</strong>
 运行期按<strong>实际对象类型</strong>绑定 → 执行子类版本，这正是多态。C 错在那是重载的绑定方式（编译期看参数）。</p>
 <p><strong>4. C</strong>
-静态（结构）图：类图、对象图、构件图、部署图、包图；状态图、活动图、顺序图、用例图都是动态（行为）图。部署图虽然画的是物理节点，但描述的是<strong>结构</strong>归属 → 静态。</p>
+静态（结构）图：类图、对象图、构件图、部署图、包图（+组合结构图）；状态图、活动图、顺序图、用例图都是动态（行为）图。部署图虽然画的是物理节点，但描述的是<strong>结构</strong>归属 → 静态。</p>
 <p><strong>5. B</strong>
 鸟与翅膀<strong>同生共死</strong>（翅膀不能离开鸟独立存在）→ 组合 = 实心菱形。雁群与雁这种&quot;散了还能活&quot;才是空心菱形（聚合）。</p>
 <p><strong>6. B</strong>
@@ -621,11 +1354,36 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
 &quot;算法可运行时切换&quot; = 策略模式。模板方法是骨架在父类步骤留子类（结构固定）；状态是状态驱动的行为变化（不由客户随意切换算法）。</p>
 <p><strong>15. A</strong>
 &quot;仅一个实例 + 全局访问点&quot; = 单例速记词。</p>
-<h3 id="h-21">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<p><strong>16. B</strong>
+参数多态即<strong>泛型</strong>（类型参数化），是应用最广泛、最&quot;纯&quot;的多态——同一份代码通过类型参数适配多种类型。过载多态就是重载；包含多态靠继承（子类替换父类）；强制多态靠编译器隐式类型转换（<code>int</code> 自动转 <code>double</code>）。</p>
+<p><strong>17. C</strong>
+控制类描述业务逻辑、控制活动流、充当实体类与边界类之间的协调者，命名上常见 Controller / Manager / Session。实体类属性多、边界类方法多。</p>
+<p><strong>18. B</strong>
+<strong>整圆 = 供接口</strong>（对外提供的服务），<strong>半圆 = 需接口</strong>（需要别人提供的服务）。口诀&quot;满的给别人、缺的找别人要&quot;。C、D 是类图里的泛化与聚合符号，与接口无关。</p>
+<p><strong>19. B</strong>
+状态图<strong>只有一个初态</strong>（实心圆），终态可以有多个、也可以没有（A 错、B 对）；监护条件是可选的——只写事件不写条件也合法（C 错）；描述<strong>多个对象之间的交互</strong>是顺序图/通信图的事（D 错）。</p>
+<p><strong>20. C</strong>
+这句话是<strong>依赖倒置原则</strong>的经典表述，核心是&quot;针对接口编程，不要针对实现编程&quot;。里氏替换讲的是&quot;子类能替换父类&quot;；单一职责讲&quot;一个类只干一件事&quot;；接口隔离讲&quot;多个专门接口优于一个总接口&quot;。</p>
+<p><strong>21. C</strong>
+Observer（抽象观察者）的职责就是<strong>定义一个更新接口</strong>，在被观察对象改变时被通知；ConcreteObserver 是它的具体实现。Subject/ConcreteSubject 属于&quot;被观察&quot;的一方（通知者），不是&quot;接受通知&quot;的一方。</p>
+<p><strong>22. D</strong>
+动态绑定的三个必要条件是：① 有继承关系；② 发生了重写；③ 父类引用指向子类对象。<strong>静态方法（以及 final、private 方法）不参与动态绑定</strong>——它在编译期就确定了，属于&quot;破坏条件&quot;的因素，不是必要条件之一。</p>
+<h3 id="h-39">案例题答案（第一道：类分类 + 模式 + 图选型）<button type="button" class="sec-status" data-status-key="案例题答案（第一道：类分类 + 模式 + 图选型）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案（第一道：类分类 + 模式 + 图选型）」的学习状态"></button></h3>
 <p><strong>问题 1</strong>：</p>
 <ul>
-<li>&quot;借书&quot; → &quot;登录&quot;：<strong>&lt;<include>&gt;（包含）</strong>——说明中&quot;使用系统前必须先完成身份登录&quot;，登录是借书的必经步骤，基用例（借书）指向被包含用例（登录）。</li>
-<li>&quot;拒绝提示&quot; → &quot;借书&quot;：<strong>&lt;<extend>&gt;（扩展）</strong>——说明中&quot;若读者存在逾期未还记录，系统给出拒绝提示（没有逾期则不会有）&quot;，是条件触发的可选行为，扩展用例（拒绝提示）指向基用例（借书）。</li>
+<li><strong>实体类</strong>：Reader、Book、Catalog、LoanRecord。识别特征：表示现实世界真实存在的实体，需要保存大量数据，<strong>属性多、方法少</strong>（Catalog 虽然只看到 <code>find</code> 一个方法，但它是&quot;图书目录&quot;这一实体数据的集合，仍按&quot;存数据&quot;归实体类）；</li>
+<li><strong>边界类</strong>：BorrowUI。识别特征：为用户提供与系统交互的方式（界面、外部接口），<strong>方法多、属性少</strong>；</li>
+<li><strong>控制类</strong>：BorrowController。识别特征：描述业务逻辑、控制活动流，充当实体类与边界类之间的协调者（命名常带 Controller / Manager / Session）。</li>
+</ul>
+<p><strong>问题 2</strong>：<strong>策略（Strategy）模式</strong>。
+理由：借阅规则会不断扩充、并且需要按实际运行情况调整启用哪些规则，说明这是一族<strong>可互相替换的算法</strong>。用策略模式把每条规则封装成独立的策略类，由上下文（BorrowController）按配置注入其一；<strong>新增或调整规则时只需增加/更换策略类，不必修改原有代码</strong>，符合<strong>开放-封闭原则</strong>（也体现了依赖倒置——业务代码依赖&quot;规则&quot;抽象而非具体规则）。</p>
+<p><strong>问题 3</strong>：应采用<strong>顺序图（序列图）</strong>。
+关系：顺序图与通信图<strong>语义等价、可以互相转换</strong>，描述的是同一份交互内容，区别在侧重——顺序图突出<strong>时间顺序</strong>（每个对象一条生命线，消息自上而下排列），通信图突出<strong>对象之间的链接结构与调用层次</strong>（对象连成网状，消息标序号如 <code>1.1</code>、<code>1.1.2</code>）。</p>
+<h3 id="h-40">案例题答案（第二道：用例关系 + 类图 + 模式）<button type="button" class="sec-status" data-status-key="案例题答案（第二道：用例关系 + 类图 + 模式）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案（第二道：用例关系 + 类图 + 模式）」的学习状态"></button></h3>
+<p><strong>问题 1</strong>：</p>
+<ul>
+<li>&quot;借书&quot; → &quot;登录&quot;：<strong><code>&lt;&lt;include&gt;&gt;</code>（包含）</strong>——说明中&quot;使用系统前必须先完成身份登录&quot;，登录是借书的必经步骤，基用例（借书）指向被包含用例（登录）。</li>
+<li>&quot;拒绝提示&quot; → &quot;借书&quot;：<strong><code>&lt;&lt;extend&gt;&gt;</code>（扩展）</strong>——说明中&quot;若读者存在逾期未还记录，系统给出拒绝提示（没有逾期则不会有）&quot;，是条件触发的可选行为，扩展用例（拒绝提示）指向基用例（借书）。</li>
 </ul>
 <p><strong>问题 2</strong>：</p>
 <pre><code>读者 1 ── 1..* 借阅记录          图书 1 ── 1..* 借阅记录
@@ -638,13 +1396,17 @@ A. 单例  B. 原型  C. 构建器  D. 外观</p>
 </ul>
 <p><strong>问题 3</strong>：<strong>策略（Strategy）模式</strong>。
 理由：短信提醒、邮件提醒是<strong>一族可互换的算法</strong>，系统按配置动态选择其一——正是&quot;封装一系列算法、使它们可以互相替换&quot;的意图。实现上定义统一的提醒接口，短信/邮件各做一个具体策略，配置决定注入哪个策略；将来新增&quot;钉钉提醒&quot;只需加一个策略类，调用方不改（呼应第一节多态的动机）。</p>
-<h3 id="h-22">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-41">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. 分类</strong>：创建型——Singleton、Factory Method、Prototype；结构型——Adapter、Bridge、Composite；行为型——Observer、Strategy、Command、Memento。按口诀核对：创建 5 / 结构 7 / 行为 11。</p>
-<p><strong>2. ① 享元（Flyweight）</strong>——&quot;共享细粒度对象省内存&quot;，棋子共享、位置外提；② <strong>代理（Proxy）</strong>——图片对象作为替身控制对真实图片的访问，&quot;延迟加载&quot;是代理的典型应用；③ <strong>职责链（Chain of Responsibility）</strong>——请求沿处理者链传递直到被处理，任一环节可截住；④ <strong>命令（Command）+ 备忘录（Memento）</strong>——若考&quot;操作封装成对象支持撤销&quot;选命令；若考&quot;恢复到先前状态选快照&quot;则是备忘录。本题&quot;撤销上一步操作&quot;最标准的答案是<strong>命令模式</strong>（撤销机制由命令对象支持）。</p>
+<p><strong>2. ① 享元（Flyweight）</strong>——&quot;共享细粒度对象省内存&quot;，棋子共享、位置外提（作为外部状态）；② <strong>代理（Proxy）</strong>——图片对象作为替身控制对真实图片的访问，&quot;延迟加载&quot;是<strong>虚拟代理</strong>的典型应用；③ <strong>职责链（Chain of Responsibility）</strong>——请求沿处理者链传递直到被处理，任一环节可截住；④ <strong>命令（Command）</strong>——&quot;把请求封装成对象&quot;从而支持撤销，撤销机制由命令对象提供（若题干强调&quot;保存/恢复某一时刻的状态快照&quot;，那才是备忘录）。</p>
 <p><strong>3. ① 聚合</strong>（雁离了雁群还能活，空心菱形）；<strong>② 组合</strong>（翅膀同生共死，实心菱形）；<strong>③ 依赖</strong>（方法内临时使用，虚线箭头）；<strong>④ 实现</strong>（类—接口，空心三角虚线）。</p>
 <p><strong>4. <code>f(int)</code> 与 <code>f(String)</code> 是重载</strong>（同类、同名、参数不同、编译期按参数绑定）；<strong>子类的 <code>f(int)</code> 是重写</strong>（同签名覆盖父类版本）。多态体现：<code>父类引用 p = new 子类(); p.f(5);</code> 执行的是<strong>子类</strong>的 <code>f(int)</code>（运行期按实际对象类型绑定）；而 <code>p.f(&quot;x&quot;)</code> 编译期就绑定到 <code>f(String)</code>。若子类写的是 <code>f(double)</code>，那既没重写也没参与多态——它是子类的新重载方法，父类引用 p 无法直接调到它。</p>
 <p><strong>5. 看转换线上标的是什么</strong>：状态图的箭头上标<strong>事件</strong>（事件驱动一个对象的状态迁移，有明确的起点/终点伪状态），活动图的箭头上是<strong>动作/活动</strong>且出现<strong>泳道、分叉汇合（并发）</strong>；再问&quot;这图描述的是单个对象还是一段业务流程&quot;——单对象用状态图，流程用活动图。</p>
-<p><strong>6. &quot;发布文章&quot;与&quot;保存草稿&quot;是 &lt;<include>&gt;</strong>（必经步骤，箭头从发布文章指向保存草稿）；<strong>&quot;定时发布&quot;是 &lt;<extend>&gt;</strong>（勾选才发生，箭头从定时发布指向发布文章）。口诀：必经 include、可选 extend；include 从基用例指出去，extend 从扩展用例指回来。</p>
+<p><strong>6. &quot;发布文章&quot;与&quot;保存草稿&quot;是 <code>&lt;&lt;include&gt;&gt;</code></strong>（必经步骤，箭头从发布文章指向保存草稿）；<strong>&quot;定时发布&quot;是 <code>&lt;&lt;extend&gt;&gt;</code></strong>（勾选才发生，箭头从定时发布指向发布文章）。口诀：必经 include、可选 extend；include 从基用例指出去，extend 从扩展用例指回来。</p>
+<p><strong>7. 依赖倒置原则（Dependence Inversion Principle）</strong>。经典表述：&quot;<strong>抽象不应该依赖于细节，细节应该依赖于抽象</strong>；高层模块不应该依赖低层模块，两者都应该依赖于抽象。&quot;本题中&quot;面向 <code>IDao</code> 接口编程、由配置决定注入哪个实现类&quot;正是&quot;针对接口编程，不要针对实现编程&quot;，也让新增数据库实现无需改动业务类（呼应开放-封闭原则）。注意别答成&quot;里氏替换&quot;——里氏替换说的是<strong>子类能替换父类</strong>，本题场景里并不涉及父类/子类的替换。</p>
+<p><strong>8. 观察者模式</strong>。角色对应：<code>Subject</code> = <strong>抽象被观察对象（主题）</strong>，提供 <code>attach/detach/notifyObservers</code> 接口用于绑定与分离观察者；<code>Clock</code> = <strong>ConcreteSubject（具体被观察对象）</strong>，维护观察者列表，自身状态改变时发送通知；<code>Observer</code> = <strong>抽象观察者</strong>，定义 <code>update()</code> 更新接口；<code>DigitalClock</code> = <strong>ConcreteObserver（具体观察者）</strong>，实现 <code>update()</code>，并在需要时向具体主题取状态。答题易错点：别把 <code>Subject</code> 和 <code>Clock</code> 的角色写反——<strong>抽象角色是接口/抽象类，具体角色是真正 new 出来干活的那个</strong>。</p>
+<p><strong>9. ① 强制多态</strong>（编译程序通过语义操作把 <code>int</code> 强行变换为 <code>double</code>）；<strong>② 过载多态</strong>（同一个名字在不同上下文中含义不同，即重载）；<strong>③ 参数多态</strong>（类型作为参数，泛型）；<strong>④ 包含多态</strong>（同样的操作可用于一个类型及其子类型，一般需要运行时的类型检查）。判别顺序：<strong>看有没有&quot;类型当参数&quot;（参数多态）、有没有隐式类型转换（强制多态）、有没有同名不同参（过载多态）、有没有继承与子类替换（包含多态）</strong>。</p>
+<p><strong>10. ① 部署图</strong>——立体长方体（有厚度的立方体）是<strong>节点</strong>符号，<code>&lt;&lt;Database&gt;&gt;</code>、<code>&lt;&lt;Storage&gt;&gt;</code> 是节点的构造型，节点之间的实线可标协议（如 TCP/IP）；<strong>② 构件图</strong>——构件符号（带两个小凸起）+ <strong>整圆表示供接口、半圆表示需接口</strong>，这是构件图的独有特征。</p>
 </div>
 </details>
 <hr>

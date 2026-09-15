@@ -467,7 +467,7 @@ C. 保证不会产生读脏数据
 D. 要求事务在任何时刻都可以先加锁再解锁交替进行</p>
 </li>
 <li><p>系统故障恢复时，对尚未完成的事务应执行（ ）。
-A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK 只对已提交事务执行</p>
+A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK</p>
 </li>
 </ol>
 <p><strong>二、案例题（数据库设计，模拟真题风格）</strong></p>
@@ -597,8 +597,9 @@ WHERE 参赛.成绩 &gt;= 95;
 <p><strong>3. R 最高属于 2NF</strong>
 候选键 = 仓库号（单属性）→ 无部分依赖 → 满足 2NF；仓库号→城市→地区编号是传递依赖 → 不到 3NF。
 分解到 3NF：仓库(<strong>仓库号</strong>, 仓库面积, 城市) 和 城市(<strong>城市</strong>, 地区编号)。</p>
-<p><strong>4. 候选键 = AE</strong>
-右部出现过的属性：B、D、A、C；从未出现在右部的只有 <strong>E</strong>。试 E：E→A，A→B，B→C，C→D → 闭包 = ABCDE，全部推出 → E 单属性即候选键。（验证：E→A→B→C→D，链式全推。）</p>
+<p><strong>4. 候选键 = E</strong>
+右部出现过的属性：B、D、A、C；从未出现在右部的只有 <strong>E</strong>。试 E：E→A，A→B，B→C，C→D → 闭包 = ABCDE，全部推出 → <strong>E 单属性即候选键</strong>。（验证：E→A→B→C→D，链式全推。）</p>
+<p><strong>易错点：答案不是 &quot;AE&quot;</strong>。AE 也能推出全部属性（A→B→C→D，再加 E），但它<strong>含冗余属性</strong>——E 一个人就够了，A 是多余的。候选键的定义是<strong>不含冗余属性的最小超键</strong>，能少一个就少一个，多出来的那个只能叫超键。反向也要查一遍：A 行不行？A→B→C→D 只能推出 A、B、C、D，<strong>推不出 E</strong>，所以 A 不是候选键。本题<strong>唯一候选键 = E</strong>。</p>
 <p><strong>5. 发生丢失修改时，A 的错误终值可能是 100 或 70；正确终值应为 120 或 140（取决于串行顺序）</strong>
 错误终值举例：T1 读 A=50 → T2 读 A=50 → T1 写回 70 → T2 写回 50×2=100，T1 的 +20 被覆盖丢失；另一交错 T2 先写 100、T1 再写 70，则 T2 的结果丢失。正确终值：先 T1 后 T2 串行 = (50+20)×2 = <strong>140</strong>；先 T2 后 T1 = 50×2+20 = <strong>120</strong>——两种都符合事务语义，但丢失修改哪种都得不到。此题演示&quot;丢失修改 = 一个事务的写被另一个事务的写覆盖&quot;。</p>
 <p><strong>6. SQL 答案</strong>：</p>
