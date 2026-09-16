@@ -298,9 +298,32 @@ C: P(S2); 执行; V(S4);
 D: P(S3); P(S4); 执行;
 </code></pre>
 <p><strong>反例演示（易错）</strong>：把 V 写在弧的终点、P 写在起点——顺序反了：变成&quot;后继先 V 报信、前趋再 P 等待&quot;，而信号量初值是 0，前趋 P 时会永远阻塞，整张图谁都跑不起来。记住口诀：<strong>&quot;V 在前驱末，P 在后继初&quot;</strong>。另一易错点：同步信号量与互斥信号量混用初值——同步（前趋图）初值 0，互斥初值 = 资源数，二者不能抄混。</p>
+<h3 id="h-16">生产者-消费者：互斥 + 同步组合题<button type="button" class="sec-status" data-status-key="生产者-消费者：互斥 + 同步组合题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「生产者-消费者：互斥 + 同步组合题」的学习状态"></button></h3>
+<p><strong>动机</strong>：一个进程往缓冲区放数据（生产者），一个进程从缓冲区取（消费者）。缓冲区格子是<strong>临界资源</strong>（同一时刻只容一个放/取），同时还有两条先后关系：缓冲区<strong>满</strong>时生产者要等消费者取走，缓冲区<strong>空</strong>时消费者要等生产者放入。因此至少三类信号量：</p>
+<ul>
+<li>互斥 <code>mutex</code>，初值 1，保护&quot;进出缓冲区（放/取）&quot;这段临界区；</li>
+<li>同步 <code>empty</code>，初值 = 缓冲区格数（还剩几个空位）；</li>
+<li>同步 <code>full</code>，初值 0（已放入几格数据）。</li>
+</ul>
+<p><strong>同步为什么&quot;先 P 后 V&quot;（核心，必背）</strong>：同步信号量记的是&quot;资源余量&quot;，<strong>用前先 P（检查、不够就等），用后 V（归还）</strong>——这与互斥只在初值上不同。而且<strong>同步的 P 必须放在互斥的 P 之前</strong>：若反了，缓冲区满时生产者占着 <code>mutex</code> 去等 <code>empty</code>，消费者却要 <code>mutex</code> 才能取出、腾出空位 → 互相等 = 死锁。</p>
+<p><strong>代入算例</strong>：缓冲区可放 5 格，初态全空。</p>
+<pre><code>semaphore mutex=1, empty=5, full=0;
+生产者：P(empty);   // 先申请空位，满则等
+        P(mutex);   // 再进临界区
+        放入数据;
+        V(mutex);
+        V(full);    // 通知多了一格数据
+消费者：P(full);    // 有数据才取，空则等
+        P(mutex);
+        取出数据;
+        V(mutex);
+        V(empty);   // 归还一个空位
+</code></pre>
+<p><strong>口诀：&quot;同步 P 在前、互斥 P 在后，V 成对跟各自操作后&quot;</strong>。</p>
+<p><strong>反例演示（易错）</strong>：① 把 <code>P(mutex)</code> 提到 <code>P(empty)</code> 之前（见上&quot;为什么&quot;），缓冲区满即死锁；② <code>empty</code> 初值误设 0（空位应是缓冲区容量 5，不是 0）；③ 生产者也写 <code>P(full)</code>/<code>V(empty)</code>（把消费者的同步抄反，会在空缓冲时误等）。</p>
 <p><strong>应试动作</strong>：① 互斥 → 初值 = 资源数；同步/前趋 → 初值 0；② 取值范围 = [初值−进程数， 初值]；③ 前趋图按&quot;弧数 = 信号量数、V 起点末、P 终点初&quot;机械填写，填完逐弧检查一遍&quot;每条弧恰好一个 V 和一个 P&quot;。这种题若以小问嵌在案例大题里（历史上考过整道大题），按同一套路做。并发互斥的思想与数据库的锁机制同源，可对照 <a href="02-数据库系统.html">02-数据库系统.html</a> 的并发控制一节。</p>
-<h2 id="h-16">第五节 死锁 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 死锁 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 死锁 ★★★」的学习状态"></button></h2>
-<h3 id="h-17">死锁是什么、为什么会发生<button type="button" class="sec-status" data-status-key="死锁是什么、为什么会发生" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁是什么、为什么会发生」的学习状态"></button></h3>
+<h2 id="h-17">第五节 死锁 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 死锁 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 死锁 ★★★」的学习状态"></button></h2>
+<h3 id="h-18">死锁是什么、为什么会发生<button type="button" class="sec-status" data-status-key="死锁是什么、为什么会发生" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁是什么、为什么会发生」的学习状态"></button></h3>
 <p>若干进程互相要对方手里的资源，谁都拿不齐、谁都不放手，全体卡死——这就是死锁。发生死锁必须<strong>同时</strong>满足四个必要条件（背名称+含义，选择题考配对）：</p>
 <div class="table-wrap">
 <table>
@@ -334,7 +357,7 @@ D: P(S3); P(S4); 执行;
 </tbody></table>
 </div>
 <p>处理策略四层次：<strong>死锁预防</strong>（破坏四条件之一）→ <strong>死锁避免</strong>（银行家算法，动态判断分配后是否安全）→ <strong>死锁检测与解除</strong>（资源图化简）。破坏&quot;互斥&quot;做不到，破坏其余三个都能预防。</p>
-<h3 id="h-18">死锁资源数公式（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="死锁资源数公式（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁资源数公式（★★★ 必考计算）」的学习状态"></button></h3>
+<h3 id="h-19">死锁资源数公式（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="死锁资源数公式（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁资源数公式（★★★ 必考计算）」的学习状态"></button></h3>
 <ul>
 <li><strong>通用形式</strong>：m 个进程、每个进程最多需要 w 个同类资源、系统共有 n 个资源——<ul>
 <li><strong>不可能发生死锁的最小资源数</strong>：n = <strong>m×(w−1) + 1</strong>（等价条件：n ≥ m(w−1)+1 时必不死锁）；</li>
@@ -346,9 +369,23 @@ D: P(S3); P(S4); 执行;
 <li><strong>手算口诀</strong>：<strong>&quot;每进程先扣 1，乘完再加 1&quot;</strong>。</li>
 </ul>
 <p>反向题型（给 n 求 w）：3 个进程共享 10 个资源，每个进程最多申请 i 个，问&quot;可能发生死锁的最小 i&quot;——令 3×(i−1) ≥ 10，i−1 ≥ 3.34，i ≥ 4.34，取整数 <strong>i = 5</strong>。（i = 4 时 3×3 = 9 &lt; 10，按鸽笼原理必有一个进程能拿到 4 个而完成，不死锁。）</p>
-<h3 id="h-19">进程资源图与&quot;化简&quot;（了解即可）<button type="button" class="sec-status" data-status-key="进程资源图与&amp;quot;化简&amp;quot;（了解即可）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「进程资源图与&quot;化简&quot;（了解即可）」的学习状态"></button></h3>
-<p>题目给出&quot;进程—资源&quot;请求分配图：<strong>阻塞结点</strong> = 当前申请无法满足的进程；<strong>非阻塞结点</strong> = 能满足、可执行完并释放资源的进程。判断法：反复找非阻塞结点、让它执行完并回收资源——<strong>能全部化简 → 非死锁；无法化简 → 死锁</strong>。目前软考的可化简图通常是非死锁的。</p>
-<h3 id="h-20">银行家算法（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="银行家算法（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「银行家算法（★★★）」的学习状态"></button></h3>
+<h3 id="h-20">进程资源图与&quot;化简&quot;（<span class="stars">★★</span>）<button type="button" class="sec-status" data-status-key="进程资源图与&amp;quot;化简&amp;quot;（★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「进程资源图与&quot;化简&quot;（★★）」的学习状态"></button></h3>
+<p><strong>动机</strong>：死锁检测要回答&quot;当前这批进程是否已死锁&quot;。进程资源图用圆圈表示进程、方块表示资源：<strong>进程→资源</strong>的有向边 = 申请，<strong>资源→进程</strong>的边 = 已分配。化简 = 模拟&quot;让能跑完的进程跑完并归还资源&quot;，看能否全清空。</p>
+<p><strong>判定四步模板（背下来直接套）</strong>：</p>
+<ol>
+<li><strong>列剩余</strong>：每种资源空闲量 = 总量 − Σ各进程已占该资源；</li>
+<li><strong>判阻塞</strong>：申请量 &gt; 空闲量的进程是<strong>阻塞结点</strong>，先放一边；</li>
+<li><strong>执行归还</strong>：找申请量 ≤ 空闲量的进程（非阻塞），模拟它跑完并把它占用的<strong>全部</strong>资源交还空闲池，标记已化简；</li>
+<li><strong>循环 / 下结论</strong>：重复 2–3 步直到全化简 → <strong>非死锁</strong>；某轮再也找不到可化简进程而仍有未化简者 → <strong>死锁</strong>。</li>
+</ol>
+<p><strong>代入算例</strong>：R1 总量 2、R2 总量 2。P1 占 R1×1、还申请 R1×1；P2 占 R1×1、R2×1、还申请 R2×1。</p>
+<ul>
+<li>剩余：R1 空闲 = 2 − (P1 占1 + P2 占1) = 0；R2 空闲 = 2 − (P2 占1) = 1；</li>
+<li>P1 申请 R1 需 1、空闲 0 → 阻塞；P2 申请 R2 需 1、空闲 1 → 可化简；</li>
+<li>P2 跑完归还 R1×1、R2×1 → 空闲 R1 = 1、R2 = 2；此时 P1 申请 R1 需 1 ≤ 空闲 1 → 化简。全部化简 → <strong>非死锁</strong>。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：① 有环<strong>未必</strong>死锁——要把环和&quot;申请是否卡死&quot;合起来看，能化简就不是死锁；② 一次化简会改变空闲量，<strong>每一步都要重刷剩余再判阻塞</strong>，不能拿最初的状态一路判到底。</p>
+<h3 id="h-21">银行家算法（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="银行家算法（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「银行家算法（★★★）」的学习状态"></button></h3>
 <p><strong>动机</strong>：预防策略太死板（一次性分配浪费资源），银行家算法更聪明——每次分配前<strong>先假装分出去，看看能不能找到一个让所有进程都跑完的顺序（安全序列）</strong>：找得到就真分，找不到就不分。银行放贷同理：放钱前先算&quot;这笔放出去后，是否还能让所有贷款人最终都还上钱&quot;。</p>
 <p><strong>判定步骤（五步模板，背下来直接套）</strong>：</p>
 <ol>
@@ -365,10 +402,10 @@ D: P(S3); P(S4); 执行;
 </ul>
 <p><strong>反例演示（易错）</strong>：① 只要<strong>找到一条</strong>安全序列就算安全，不要求唯一（但做题时若四个选项里三条都不通，剩下的那条就是答案）；② &quot;不安全&quot; ≠ &quot;已死锁&quot;，只是&quot;可能死锁&quot;，银行家算法宁可错杀不肯冒险；③ 算 Available 时忘了用&quot;总量减已分配&quot;，直接拿 Need 求和比较——必错。</p>
 <p><strong>应试动作</strong>：① 死锁资源数公式&quot;每进程先扣 1 乘完再加 1&quot;正反两个方向都要会算；② 四条件与破坏策略配对（一次性分配→破坏请求和保持；有序分配→破坏环路等待）；③ 银行家五步模板背熟，安全序列判定题在草稿上列表（Need / Available 两列）逐步推，每步检查&quot;Need ≤ Available&quot;。</p>
-<h2 id="h-21">第六节 存储管理：页式、段式、段页式 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 存储管理：页式、段式、段页式 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 存储管理：页式、段式、段页式 ★★★」的学习状态"></button></h2>
-<h3 id="h-22">为什么要&quot;分页&quot;<button type="button" class="sec-status" data-status-key="为什么要&amp;quot;分页&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要&quot;分页&quot;」的学习状态"></button></h3>
+<h2 id="h-22">第六节 存储管理：页式、段式、段页式 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 存储管理：页式、段式、段页式 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 存储管理：页式、段式、段页式 ★★★」的学习状态"></button></h2>
+<h3 id="h-23">为什么要&quot;分页&quot;<button type="button" class="sec-status" data-status-key="为什么要&amp;quot;分页&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要&quot;分页&quot;」的学习状态"></button></h3>
 <p>程序比内存大、或内存碎片零散装不下完整程序怎么办？<strong>页式存储</strong>把程序和内存都切成同样大小的块：程序的块叫<strong>页</strong>，内存的块叫<strong>页帧（物理块）</strong>，以页为单位离散装入内存——零散小空隙也能利用起来，利用率高、碎片小（缺点：查页表增加开销，页进出频繁时产生&quot;抖动&quot;）。</p>
-<h3 id="h-23">页式地址变换（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="页式地址变换（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「页式地址变换（★★★ 必考计算）」的学习状态"></button></h3>
+<h3 id="h-24">页式地址变换（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="页式地址变换（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「页式地址变换（★★★ 必考计算）」的学习状态"></button></h3>
 <p>高级语言用的是<strong>逻辑地址</strong>，进内存要换成<strong>物理地址</strong>。逻辑地址结构 = <strong>页号 + 页内地址</strong>；物理地址 = <strong>页帧号 + 页内地址</strong>。</p>
 <ul>
 <li><strong>通用形式</strong>：页大小 = 2^k，则逻辑地址的<strong>低 k 位就是页内地址（变换前后不变）</strong>；高位是页号 → 查页表得页帧号 → 物理地址 = 页帧号 × 页大小 + 页内地址。</li>
@@ -376,7 +413,7 @@ D: P(S3); P(S4); 执行;
 <li><strong>手算口诀</strong>：<strong>&quot;页内地址不动，页号查表换页帧&quot;</strong>。十六进制题先看页大小定拆分位数：4KB = 2^12 = 1000H → 低 3 位十六进制是页内地址；2KB = 2^11 → 十六进制不足 3 位对应，先转二进制拆低 11 位更稳；1KB = 2^10 → 低 10 位二进制是页内地址。</li>
 </ul>
 <p><strong>反例演示（易错）</strong>：① 忘了查页表，直接把逻辑地址当物理地址（1F48H → 1F48H 是错的）；② 把&quot;页号 × 页大小&quot;当成物理地址（只换了页号没加页内地址）；③ 页号页内地址拆分位 Number 弄错——<strong>页大小决定页内地址位数</strong>：4KB→12 位（低 3 位十六进制），1KB→10 位，2KB→11 位。</p>
-<h3 id="h-24">段式与段页式<button type="button" class="sec-status" data-status-key="段式与段页式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「段式与段页式」的学习状态"></button></h3>
+<h3 id="h-25">段式与段页式<button type="button" class="sec-status" data-status-key="段式与段页式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「段式与段页式」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -413,9 +450,17 @@ D: P(S3); P(S4); 执行;
 <li>代入算例：段 0 段长 30K 基址 40K → (0, 25K) 合法（25K &lt; 30K），物理地址 = 40K + 25K = 65K；(0, 35K) 非法（35K ≥ 30K，越界）。</li>
 <li>口诀：<strong>&quot;偏移必须小于段长，物理地址 = 基址加偏移&quot;</strong>。</li>
 </ul>
+<p><strong>段页式地址结构位数反推（真题型，公式三件套）</strong>：</p>
+<ul>
+<li>动机：段页式地址 = 段号 + 页号 + 页内地址 三字段。题目不给具体值，只给&quot;段号占 10 位、页号占 10 位、页内地址占 12 位&quot;，反推最多几段、每段几页、页多大。</li>
+<li>通用形式：<strong>某字段占 k 位 ⇒ 该字段最多能表示 2^k 种取值</strong>。段号位数 → 段数 = 2^k；页号位数 → 每段页数 = 2^k；页内位数 → 页大小 = 2^k（字节）。</li>
+<li>代入算例：段号 10 位 → 最多 <strong>1024 段</strong>（2^10）；页号 10 位 → 每段最多 <strong>1024 页</strong>；页内 12 位 → 页大小 = 2^12 = <strong>4KB</strong>。</li>
+<li>手算口诀：<strong>&quot;几位就是 2 的几次方&quot;</strong>；常用换算记 2^10 = 1KB、2^11 = 2KB、2^12 = 4KB、2^20 = 1MB。</li>
+<li>反例演示（易错）：页内 12 位被算成 2^10 = 1KB（把 12 当成 10）——<strong>位数对应二进制 2^n</strong>，2^12 = 4096 = 4KB；&quot;几段／几页／页多大&quot;是三个独立式子，各自算 2^k，只有题目改问&quot;地址结构总共多少位&quot;才把三段位数相加。</li>
+</ul>
 <p><strong>应试动作</strong>：① 页式计算背&quot;页内地址不变，页号查表换页帧&quot;，先把页大小化成 2 的幂定拆分位数；② 段式判断只看一条：偏移 &lt; 段长？③ 三种方式按&quot;等分/自然段/先段后页&quot;配对，段页式缺点（开销大、速度降）考过。</p>
-<h2 id="h-25">第七节 页面置换：LRU / FIFO / OPT <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 页面置换：LRU / FIFO / OPT ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 页面置换：LRU / FIFO / OPT ★★」的学习状态"></button></h2>
-<h3 id="h-26">为什么需要置换<button type="button" class="sec-status" data-status-key="为什么需要置换" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要置换」的学习状态"></button></h3>
+<h2 id="h-26">第七节 页面置换：LRU / FIFO / OPT <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 页面置换：LRU / FIFO / OPT ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 页面置换：LRU / FIFO / OPT ★★」的学习状态"></button></h2>
+<h3 id="h-27">为什么需要置换<button type="button" class="sec-status" data-status-key="为什么需要置换" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要置换」的学习状态"></button></h3>
 <p>内存块比页数少，缺页时要把某页请出去腾位置——请谁走？置换算法决定。选错对象 → 刚换出的页马上又要用 → 缺页率飙升，极端情况 CPU 大部分时间忙着换页而不是干活，称<strong>抖动（颠簸）</strong>。</p>
 <div class="table-wrap">
 <table>
@@ -589,8 +634,8 @@ D: P(S3); P(S4); 执行;
 <p><strong>交叉验算（第二种方法）</strong>：缺页数 = 串长 − 命中数。FIFO 命中仅位3 → 8−1 = 7 ✓；LRU 命中位3、位6 → 8−2 = 6 ✓；OPT 命中位3、位6、位7 → 8−3 = 5 ✓。三种算法缺页数 7 ≥ 6 ≥ 5，与&quot;OPT 最优、LRU 次之、FIFO 最差&quot;的理论一致 ✓。</p>
 <p><strong>反例演示（易错）</strong>：① 命中时<strong>不淘汰、不装入</strong>，只在心里更新&quot;最近使用&quot;——把命中当缺页是最常见失分点；② LRU 比的是&quot;<strong>最后一次被访问</strong>距今多久&quot;，不是&quot;进入内存多久&quot;（那是 FIFO）；③ OPT 往<strong>后</strong>看，LRU 往<strong>前</strong>看，别弄反方向。</p>
 <p><strong>应试动作</strong>：① 考场上直接画表逐位模拟，做完用&quot;串长 − 命中数 = 缺页数&quot;验算；② 背结论&quot;缺页率 OPT &lt; LRU &lt; FIFO（一般情况）&quot;；③ 认题特征词：&quot;最近最久未使用&quot;→ LRU，&quot;先进先出/最先进入&quot;→ FIFO，&quot;最长时间不被使用（未来）&quot;→ OPT。</p>
-<h2 id="h-27">第八节 文件管理 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第八节 文件管理 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 文件管理 ★★」的学习状态"></button></h2>
-<h3 id="h-28">索引文件计算（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="索引文件计算（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「索引文件计算（★★★）」的学习状态"></button></h3>
+<h2 id="h-28">第八节 文件管理 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第八节 文件管理 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 文件管理 ★★」的学习状态"></button></h2>
+<h3 id="h-29">索引文件计算（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="索引文件计算（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「索引文件计算（★★★）」的学习状态"></button></h3>
 <p><strong>动机</strong>：文件占很多离散的磁盘块，怎么记录&quot;这个文件都放在哪些块&quot;？——给文件建一张&quot;块号清单&quot;（索引表），清单本身也占块。索引表放不下怎么办？搞<strong>多级索引</strong>：一级索引块里存的不再是数据块号，而是&quot;二级索引块的块号&quot;，二级里才存数据块号。</p>
 <ul>
 <li><strong>通用形式</strong>（UNIX 式索引节点）：设磁盘块大小 B、每个地址项占 A 字节，则一个索引块能存 <strong>B/A</strong> 个块号。若索引节点含 d 个<strong>直接地址</strong>（直接指向数据块）、1 个<strong>一级间接</strong>（指向的块里全是数据块号）、1 个<strong>二级间接</strong>（指向的块里全是&quot;一级间接块&quot;号），则文件最大长度 = (d + B/A + (B/A)²) × B。</li>
@@ -603,7 +648,23 @@ D: P(S3); P(S4); 执行;
 <li><strong>手算口诀</strong>：<strong>&quot;直接乘，一级乘一次，二级平方乘&quot;</strong>——先算每块能装几个地址项（B/A），直接地址管 d 块，一级管 B/A 块，二级管 (B/A)² 块。</li>
 </ul>
 <p><strong>反例演示（易错）</strong>：二级间接的块数是 <strong>(B/A)²</strong> 不是 2×(B/A)——&quot;二级&quot;是嵌套两层，一层 256 个指向下一层，下一层每块再 256 个，256×256 = 65536，不是 512。</p>
-<h3 id="h-29">位示图计算（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="位示图计算（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「位示图计算（★★★）」的学习状态"></button></h3>
+<p><strong>索引文件逻辑块号落级定位（真题型，公式三件套）</strong>：</p>
+<ul>
+<li>动机：给文件某一<strong>逻辑块号</strong>，问它落在直接 / 一级 / 二级哪一级、访问要读几次盘。</li>
+<li>通用形式：设 d 个直接地址、每索引块装 q 个块号（q = 块大小 ÷ 地址项大小）。则
+直接段 = 逻辑块号 0 ~ d−1；
+一级段 = 逻辑块号 d ~ d+q−1；
+二级段 = 逻辑块号 d+q 起（最多到 d+q+q²−1）。
+访问次数：直接 1 次、一级 2 次、二级 3 次（每升一级多读一个索引块）。</li>
+<li>代入算例：块 1KB、地址项 4B → q = 256；10 直接 + 1 一级 + 1 二级。<ul>
+<li>范围表：直接 0<del>9；一级 10</del>265；二级 266 起。</li>
+<li>逻辑块号 5 → 直接 → 读 <strong>1</strong> 次；70 → 一级 → 读 <strong>2</strong> 次；300 → 二级 → 读 <strong>3</strong> 次。</li>
+</ul>
+</li>
+<li>手算口诀：<strong>&quot;直接从 0 数 d 块，一级接 q 块，再往后全两级&quot;</strong>；访问次数&quot;几级几读&quot;（直接不用读索引块所以 1 次，一级、二级分别 2、3 次）。</li>
+<li>反例演示（易错）：一级起点写成 d+1（第 11 块）——直接段含 0~9 共 10 块，一级应从**第 10 块（逻辑块号 10）**开始；访问直接段块时误加&quot;读索引块&quot;的次数。</li>
+</ul>
+<h3 id="h-30">位示图计算（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="位示图计算（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「位示图计算（★★★）」的学习状态"></button></h3>
 <p><strong>动机</strong>：磁盘上哪些块空着、哪些被占？给全盘每个物理块安排 1 个比特：0 空闲、1 占用——这张比特表就是<strong>位示图（bitmap）</strong>。机器按&quot;字&quot;存取，一个字长 w 位能管 w 个块。</p>
 <ul>
 <li><strong>通用形式</strong>：物理块号 b、字长 w、<strong>均从 0 开始编号</strong>：字号 = <strong>⌊b / w⌋</strong>，位号 = <strong>b mod w</strong>；位示图总字数 = ⌈总块数 / w⌉，其中总块数 = 磁盘容量 ÷ 物理块大小。</li>
@@ -612,17 +673,77 @@ D: P(S3); P(S4); 执行;
 </ul>
 <p>容量型算例：磁盘 160GB、物理块 1MB、字长 32 位：总块数 = 160×1024 ÷ 1 = 163840 块；字数 = 163840 ÷ 32 = <strong>5120 字</strong>。验算：160GB = 163840MB，除以 1MB/块得 163840 块，除以 32 位/字得 5120 ✓。</p>
 <p><strong>反例演示（易错）</strong>：① 题干会说明块号、字号&quot;从 0&quot;还是&quot;从 1&quot;编号——从 0 换算成第几个时要 +1（从 1 计数时 1000 号块在第 32 个字）；② 忘了 GB→MB 的 1024 进制换算（160GB = 160×1024MB，不是 160×1000）。</p>
-<h3 id="h-30">目录与路径（<span class="stars">★</span>）<button type="button" class="sec-status" data-status-key="目录与路径（★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「目录与路径（★）」的学习状态"></button></h3>
+<p><strong>从 0 还是从 1 编号（必背对照）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>起点</th>
+<th>求字号 / 位号</th>
+<th>换算成&quot;第几个字 / 第几位&quot;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>从 0 编号</td>
+<td>字号 = ⌊b/w⌋，位号 = b mod w</td>
+<td>第（字号+1）字、第（位号+1）位</td>
+</tr>
+<tr>
+<td>从 1 编号</td>
+<td>字 = ⌊(b−1)/w⌋+1，位 = (b−1) mod w + 1</td>
+<td>就写&quot;第该字、第该位&quot;（验算：(字−1)×w+(位−1) = b−1）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>代入算例（从 1 编号）</strong>：字长 32 位，块号、字号、位号均从 1 编号，物理块 1000 记录在哪？字 = ⌊(1000−1)/32⌋+1 = ⌊999/32⌋+1 = 31+1 = <strong>32</strong>；位 = (999 mod 32)+1 = 7+1 = <strong>8</strong>。验算：(32−1)×32 + (8−1) = 31×32 + 7 = 999 = 1000−1 ✓。</p>
+<p><strong>口诀</strong>：<strong>&quot;从 0 直接除；从 1 先减 1、商加 1&quot;</strong>。</p>
+<h3 id="h-31">目录、路径与文件控制块（<span class="stars">★</span>）<button type="button" class="sec-status" data-status-key="目录、路径与文件控制块（★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「目录、路径与文件控制块（★）」的学习状态"></button></h3>
+<p><strong>文件控制块 FCB</strong>：目录里每个文件都有登记项，记文件名、类型、物理位置、长度、存取权限等，这一登记项就是 <strong>FCB</strong>。目录是 FCB 的集合，两级作用：<strong>文件名 → FCB → 物理地址</strong>。注意 FCB 只是登记信息，<strong>不含文件内容本身</strong>。</p>
+<p><strong>多级（树形）目录对比</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>目录结构</th>
+<th>特点</th>
+<th>是否允许重名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一级（单级）目录</td>
+<td>全盘一张表</td>
+<td><strong>不允许</strong>同名</td>
+</tr>
+<tr>
+<td>二级目录</td>
+<td>主目录 + 各用户子目录</td>
+<td>不同用户可同名</td>
+</tr>
+<tr>
+<td>树形（多级）目录</td>
+<td>从主目录任意分层</td>
+<td><strong>不同目录下允许</strong>同名</td>
+</tr>
+</tbody></table>
+</div>
 <ul>
-<li>树形（多级）目录：<strong>不同目录下允许同名文件</strong>；一级目录不允许重名。</li>
-<li><strong>绝对路径</strong>：从<strong>根（盘符）<strong>开始；<strong>相对路径</strong>：从</strong>当前目录</strong>开始。考法：给目录树和当前目录，写出某文件的两种路径，或问&quot;从当前目录出发少走了哪一段&quot;。</li>
+<li><strong>绝对路径</strong>：从<strong>根（盘符）<strong>开始写全；<strong>相对路径</strong>：从</strong>当前目录</strong>开始。考法：给目录树和当前目录，写某文件的两条路径，或问&quot;从当前目录出发少走了哪一段&quot;。</li>
+<li><strong>Linux 权限数值（<span class="stars">★★</span>）</strong>：三组权限 rwx（属主 Owner / 同组 Group / 其他 Others），每组 r=4、w=2、x=1 相加成一位数字，三位即如 <code>chmod 754</code>。<code>754</code>：属主 7 = rwx、同组 5 = r-x、其他 4 = r--。口诀：<strong>&quot;r=4、w=2、x=1，数字是三者和&quot;</strong>。</li>
+<li><strong>反例演示（易错）</strong>：把 <code>755</code> 的&quot;5&quot;当成 rwx——5 = r-x，<strong>缺 w</strong>；绝对/相对路径写反根起点，按&quot;从根 / 从当前目录&quot;逐级写即对齐。</li>
 </ul>
 <p><strong>应试动作</strong>：① 索引文件公式背&quot;每块地址数 = 块大小 ÷ 地址项大小&quot;，二级平方；② 位示图两套小题（定位、容量）套口诀；③ 注意题目给的是 KB/MB/GB 混合单位，先统一成同一单位再除。</p>
-<h2 id="h-31">第九节 设备管理：磁盘调度与虚拟设备 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 设备管理：磁盘调度与虚拟设备 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 设备管理：磁盘调度与虚拟设备 ★★」的学习状态"></button></h2>
-<h3 id="h-32">磁盘的结构与存取时间<button type="button" class="sec-status" data-status-key="磁盘的结构与存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘的结构与存取时间」的学习状态"></button></h3>
+<h2 id="h-32">第九节 设备管理：磁盘调度与虚拟设备 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 设备管理：磁盘调度与虚拟设备 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 设备管理：磁盘调度与虚拟设备 ★★」的学习状态"></button></h2>
+<h3 id="h-33">磁盘的结构与存取时间<button type="button" class="sec-status" data-status-key="磁盘的结构与存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘的结构与存取时间」的学习状态"></button></h3>
 <p>磁盘由多个盘面组成，每个盘面划分成一圈圈<strong>磁道</strong>（从外向里 0,1,2,…编号），每个磁道按角度分成<strong>扇区</strong>；多个盘面的同一号磁道构成<strong>柱面</strong>（所以磁道号也叫柱面号）。</p>
 <p><strong>存取时间 = 寻道时间 + 旋转延迟（等待时间）+ 传输时间</strong>：寻道 = 磁头移到目标磁道（<strong>最耗时，有调度算法可优化</strong>）；旋转延迟 = 等目标扇区转到磁头下（盘匀速转，无算法可言）；传输 = 读写数据。选择题直接考&quot;三段构成&quot;与&quot;寻道时间最值得优化&quot;。</p>
-<h3 id="h-33">磁盘调度算法（<span class="stars">★★★</span> 计算）<button type="button" class="sec-status" data-status-key="磁盘调度算法（★★★ 计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘调度算法（★★★ 计算）」的学习状态"></button></h3>
+<p><strong>存取时间算例（公式三件套）</strong>：</p>
+<ul>
+<li>通用形式：读一个数据块的时间 = 寻道 + 旋转延迟 + 传输；含 N 个<strong>分散</strong>数据块的文件总时间 ≈ N × 单块时间。</li>
+<li>代入算例：读一个数据块需寻道 5ms、平均旋转延迟 10ms、传输 1ms；文件分散放在 100 个数据块。单块 = 5+10+1 = 16ms，整个文件 = 100 × 16 = <strong>1600ms = 1.6s</strong>。</li>
+<li>手算口诀：<strong>&quot;先算一块，再乘块数&quot;</strong>。</li>
+<li>反例演示（易错）：若题干说&quot;文件在<strong>同一磁道连续</strong>存放&quot;，寻道只发生<strong>一次</strong>（磁头移过去后停在原磁道连续读），总时间 = 寻道 + N×(旋转+传输)，不能每块都算寻道；旋转延迟给&quot;平均（半圈）&quot;还是&quot;整一圈&quot;，以题干为准，不要自行取平均。</li>
+</ul>
+<h3 id="h-34">磁盘调度算法（<span class="stars">★★★</span> 计算）<button type="button" class="sec-status" data-status-key="磁盘调度算法（★★★ 计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘调度算法（★★★ 计算）」的学习状态"></button></h3>
 <p>磁头一次只在一个位置，多个磁道访问请求排队，按什么顺序服务？目标：<strong>平均寻道距离最短</strong>。</p>
 <div class="table-wrap">
 <table>
@@ -662,10 +783,56 @@ D: P(S3); P(S4); 执行;
 <li><strong>SCAN</strong>（题干设定：磁头朝磁道号增大方向移动，移动到最外侧磁道 199 才折返）：60→65→70→90→199→40→25→10。总移动 = (199−60) + (199−10) = 139 + 189 = <strong>328 道</strong>。验算逐段：5+5+20+109+159+15+15 = 5+5=10，+20=30，+109=139，+159=298，+15=313，+15=328 ✓。</li>
 </ul>
 <p><strong>反例演示（易错）</strong>：① SCAN 是否&quot;必须扫到磁盘端头再折返&quot;，<strong>不同题干设定不同</strong>——有的按&quot;到该方向最后一个请求即折返&quot;处理。务必先读题干：本题明确说&quot;到 199 号磁道才折返&quot;，就必须走到 199，不能在 90 就回头（若在 90 折返则总移动 = (90−60)+(90−10) = 110）；② SSTF 每一步都要<strong>重新</strong>找最近，不是全局排序一次。</p>
-<h3 id="h-34">Spooling 与虚拟设备<button type="button" class="sec-status" data-status-key="Spooling 与虚拟设备" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Spooling 与虚拟设备」的学习状态"></button></h3>
+<h3 id="h-35">I/O 软件的四层结构与缓冲（<span class="stars">★★</span>）<button type="button" class="sec-status" data-status-key="I/O 软件的四层结构与缓冲（★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「I/O 软件的四层结构与缓冲（★★）」的学习状态"></button></h3>
+<p><strong>四层结构</strong>（从上层到下层）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>职责</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户层软件</td>
+<td>面向应用封装 I/O 库函数</td>
+<td>printf、read 系统调用封装</td>
+</tr>
+<tr>
+<td>设备独立性软件</td>
+<td>与具体设备无关的公共逻辑：命名、缓冲、设备分配</td>
+<td>缓冲管理、分配设备</td>
+</tr>
+<tr>
+<td>设备驱动程序</td>
+<td>与具体设备相关，把上层动作翻译成该设备命令</td>
+<td>向打印机控制器发指令</td>
+</tr>
+<tr>
+<td>中断处理程序</td>
+<td>设备完成后中断、唤醒等待进程</td>
+<td>传输完毕收尾</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：&quot;缓冲归哪层管&quot; → 设备独立性软件；&quot;与具体设备相关、翻译成指令&quot; → 设备驱动程序；&quot;最贴近硬件的两级&quot; → 设备驱动 + 中断处理。</p>
+<p><strong>单缓冲 / 双缓冲时间（<span class="stars">★</span> 计算）</strong>：</p>
+<ul>
+<li>动机：CPU 与外设速度差几个数量级，不能干等，于是设缓冲。核心差异在<strong>重叠</strong>：单缓冲只有一个格子，处理当前块时下一块<strong>不能开始传</strong>（串行）；双缓冲有两个格子，处理 A 的同时可以传 B（并行）。</li>
+<li>通用形式：设传一块 t、处理一块 c、共 N 块——<ul>
+<li>单缓冲（传/处串行）：总时间 = <strong>N·(t+c)</strong>；</li>
+<li>双缓冲（传与处可并行）：瓶颈是较慢者，总时间 = <strong>N·max(t,c) + min(t,c)</strong>。</li>
+</ul>
+</li>
+<li>代入算例：t = 2ms、c = 6ms、N = 10：单缓冲 = 10×(2+6) = <strong>80ms</strong>；双缓冲 = 10×6 + 2 = <strong>62ms</strong>（处理 c 是瓶颈，10 次处理 60ms，加上开头一次传输 2ms）。</li>
+<li>手算口诀：<strong>&quot;单缓冲串着加，双缓冲看瓶颈（大的乘 N、小的只在尾巴加一次）&quot;</strong>。</li>
+<li>反例演示（易错）：把单缓冲也按双缓冲的&quot;瓶颈×N + min&quot;算（会少算——单缓冲中间的传输与处理完全串行）；双缓冲里把小的也乘 N（双缓冲中传输与处理重叠，只多出开头那一次，不逐块叠加）。</li>
+</ul>
+<h3 id="h-36">Spooling 与虚拟设备<button type="button" class="sec-status" data-status-key="Spooling 与虚拟设备" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Spooling 与虚拟设备」的学习状态"></button></h3>
 <p>打印机是<strong>独占设备</strong>，一人占用整台机器别人只能干等。<strong>Spooling（假脱机）技术</strong>用磁盘当中转站：打印请求先排队写进磁盘上的输出井，打印进程慢慢取——用户感觉&quot;随时都能提交打印&quot;，仿佛打印机人人可共享。这种由独占设备改造出来的、逻辑上可共享的设备叫<strong>虚拟设备</strong>。特征词：<strong>&quot;独占设备改造成共享设备&quot;→ Spooling → 虚拟设备</strong>，三者一条链。</p>
 <p><strong>应试动作</strong>：① 存取时间三段构成背下来，&quot;寻道可优化、旋转无算法&quot;考过判断；② SSTF/SCAN 老老实实列表逐段相加，SCAN 先看题干折返规则；③ 认题：看到&quot;假脱机/输入井输出井&quot;选 Spooling，看到&quot;虚拟设备&quot;想&quot;独占→共享&quot;。</p>
-<h2 id="h-35">第十节 高频计算题型专攻（应试模板汇总）<button type="button" class="sec-status" data-status-key="第十节 高频计算题型专攻（应试模板汇总）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 高频计算题型专攻（应试模板汇总）」的学习状态"></button></h2>
+<h2 id="h-37">第十节 高频计算题型专攻（应试模板汇总）<button type="button" class="sec-status" data-status-key="第十节 高频计算题型专攻（应试模板汇总）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 高频计算题型专攻（应试模板汇总）」的学习状态"></button></h2>
 <p>本课所有计算题的考场流水线，考前把这张表过一遍：</p>
 <div class="table-wrap">
 <table>
@@ -741,7 +908,7 @@ D: P(S3); P(S4); 执行;
 </div>
 <p><strong>考场提示</strong>：这类题是&quot;送分题里最费草稿的&quot;——一定画表，不心算；算完用表里最后一列的验算法快速复核，30 秒能拦住绝大多数失分。</p>
 <hr>
-<h2 id="h-36">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h2 id="h-38">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>进程存在的唯一标志是（ ）。
@@ -840,7 +1007,7 @@ D. 减少磁盘的寻道时间</p>
 问题 2：当前状态是否安全？若安全，写出安全序列（说明：若安全序列存在多条，写出题目要求的即可，并判断本题安全序列是否唯一）。
 问题 3：若此时 P3 提出再申请 2 个资源，系统能否满足？请用银行家算法判定并说明理由。</p>
 <hr>
-<h2 id="h-37">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
+<h2 id="h-39">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【页面置换】某系统 3 个物理块，引用串为 1、3、1、2、4、3、1、4。分别求 FIFO、LRU、OPT 的缺页次数与缺页率，并用&quot;串长 − 命中数&quot;验算。</p>
 </li>
@@ -858,6 +1025,48 @@ D. 减少磁盘的寻道时间</p>
 </li>
 </ol>
 <hr>
+<h2 id="h-40">补充题（扩充考点专项，不破坏原题编号）<button type="button" class="sec-status" data-status-key="补充题（扩充考点专项，不破坏原题编号）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题（扩充考点专项，不破坏原题编号）」的学习状态"></button></h2>
+<ol>
+<li><p>【段页式位数】某段页式存储，地址结构为段号 10 位、页号 10 位、页内地址 12 位。该系统最多支持的段数、每段内最多页数、每页大小分别约为（ ）。
+A. 1024 段、1024 页、4KB  B. 10 段、10 页、12KB
+C. 1024 段、4096 页、1KB  D. 100 段、100 页、4KB</p>
+</li>
+<li><p>【磁盘存取时间】读一个数据块需寻道 5ms、平均旋转延迟 10ms、传输 1ms。一个文件分散存放在 100 个数据块，读取该文件大致需要（ ）。
+A. 1600ms  B. 160ms  C. 100ms  D. 16000ms</p>
+</li>
+<li><p>【索引定位】磁盘块 1KB、地址项 4B，索引节点含 10 个直接、1 个一级间接、1 个二级间接。文件逻辑块号 300，访问该块需读磁盘（ ）次。
+A. 1  B. 2  C. 3  D. 4</p>
+</li>
+<li><p>【位示图从 1 编号】字长 32 位，块号、字号、位号均从 1 编号，物理块 1000 记录在位示图的（ ）。
+A. 第 32 字、第 8 位  B. 第 31 字、第 8 位
+C. 第 32 字、第 7 位  D. 第 31 字、第 9 位</p>
+</li>
+<li><p>【生产者-消费者】缓冲区容量 5，用 mutex=1、empty=5、full=0 实现，生产者正确的操作顺序是（ ）。
+A. P(empty); P(mutex); 放入; V(mutex); V(full);
+B. P(mutex); P(empty); 放入; V(mutex); V(full);
+C. P(empty); 放入; P(mutex); V(full); V(mutex);
+D. P(full); P(mutex); 放入; V(mutex); V(empty);</p>
+</li>
+<li><p>【进程资源图】化简进程资源图时，某轮判断某进程可否化简，正确依据是（ ）。
+A. 申请量 ≤ 该资源当前空闲量，即该进程为非阻塞进程
+B. 优先让申请量最大的进程先运行
+C. 优先让持有资源最少的进程先运行
+D. 只要图中存在环就一定是死锁</p>
+</li>
+<li><p>【单双缓冲】读一块 t=2ms、处理一块 c=6ms。对 10 块数据，单缓冲总耗时为（ ），双缓冲为（ ）。
+A. 80ms / 62ms  B. 62ms / 80ms  C. 80ms / 80ms  D. 20ms / 20ms</p>
+</li>
+<li><p>【FCB】文件控制块（FCB）中通常<strong>不</strong>包含（ ）。
+A. 文件名  B. 文件在磁盘上的物理位置  C. 文件内容  D. 存取权限</p>
+</li>
+<li><p>【Linux 权限】执行 <code>chmod 754</code> 后，同组用户对该文件的权限是（ ）。
+A. rwx  B. r-x  C. r--  D. -wx</p>
+</li>
+<li><p>【页大小换算】页内地址占 12 位，页大小为（ ）。
+A. 1KB  B. 2KB  C. 4KB  D. 8KB</p>
+</li>
+</ol>
+<hr>
 <details class="answers" id="answers" data-toc="答案与解析">
   <summary>
     <span class="chev" aria-hidden="true"></span>
@@ -866,7 +1075,7 @@ D. 减少磁盘的寻道时间</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-39">课后考题答案（选择题）<button type="button" class="sec-status" data-status-key="课后考题答案（选择题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（选择题）」的学习状态"></button></h3>
+<h3 id="h-42">课后考题答案（选择题）<button type="button" class="sec-status" data-status-key="课后考题答案（选择题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（选择题）」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 PCB 记录进程的标识、状态、现场等全部管理信息，系统靠它感知进程的存在——&quot;PCB 是进程存在的唯一标志&quot;。程序和数据只是进程的组成部分，进程撤销后它们仍可能存在。</p>
 <p><strong>2. C</strong>
@@ -902,7 +1111,7 @@ SSTF：70→65（5）→82（17）→95（13）→110（15）→40（70），总
 逐位验算&quot;最近&quot;：70 处距 65 为 5 最近 ✓；65 处距 82 为 17（95 为 30、40 为 25）✓；82 处距 95 为 13（110 为 28、40 为 42）✓；95 处距 110 为 15 ✓；最后只剩 40，移动 70 ✓。</p>
 <p><strong>15. B</strong>
 Spooling 用磁盘输入井/输出井做中转，把打印机这类独占设备改造成逻辑上可共享的<strong>虚拟设备</strong>。它不改变磁盘转速（C）、不优化寻道（D），A 把方向说反了。</p>
-<h3 id="h-40">课后考题答案（案例题）<button type="button" class="sec-status" data-status-key="课后考题答案（案例题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（案例题）」的学习状态"></button></h3>
+<h3 id="h-43">课后考题答案（案例题）<button type="button" class="sec-status" data-status-key="课后考题答案（案例题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（案例题）」的学习状态"></button></h3>
 <p><strong>案例 1</strong></p>
 <p>问题 1（逐弧配对：每条弧起点末 V、终点初 P）：</p>
 <div class="table-wrap">
@@ -980,7 +1189,7 @@ Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4
 </div>
 <p>唯一性验证：Available = 2 时 P1、P3 都无法启动，第一步只能是 P2；P2 完成后 Available = 6，P3 需 7 &gt; 6 仍无法启动，第二步只能是 P1——每一步都别无选择，故安全序列唯一 ✓。</p>
 <p>问题 3：<strong>不能满足</strong>。试探性分配：Available = 2 − 2 = 0，P3 已分配 = 4、Need = 5。此时 P1 Need 4 &gt; 0、P2 Need 1 &gt; 0、P3 Need 5 &gt; 0——没有任何进程的需求能被满足，找不到安全序列，该状态不安全（可能死锁），系统应<strong>拒绝本次申请</strong>、回滚试探分配。</p>
-<h3 id="h-41">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-44">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1.</strong></p>
 <ul>
 <li><strong>FIFO</strong>（淘汰最先进内存的页）：1缺、3缺、1命中、2缺[1,3,2]、4缺淘汰1[3,2,4]、3命中、1缺淘汰3[2,4,1]、4命中 → 缺页 <strong>5 次</strong>，缺页率 5/8 = 62.5%。</li>
@@ -1017,6 +1226,24 @@ Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4
 <li>最大文件 = 12KB + 1MB + 512MB ≈ <strong>513MB + 12KB</strong>。
 验算：512×512 = 262144 ✓；262144 块 × 2KB = 524288KB ÷ 1024 = 512MB ✓；三部分相加 524288 + 1024 + 12 = 525324KB ≈ 513.01MB ✓。</li>
 </ul>
+<h3 id="h-45">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>1. A</strong>。段数 = 2^10 = 1024；每段页数 = 2^10 = 1024；页大小 = 2^12 = 4096B = 4KB。B、C、D 把位数直接当十进制（10、12），或把 2^10 与 2^12 混用。
+验算：2^10 = 1024、2^12 = 4096 ✓。</p>
+<p><strong>2. A</strong>。单块 = 5+10+1 = 16ms；整文件 = 100×16 = 1600ms = 1.6s。B（160）漏算旋转/单位；C（100）只算传输；D 把 ms 再放大了 10 倍。
+验算：100×16 = 1600ms ✓。</p>
+<p><strong>3. C</strong>。q = 1KB÷4B = 256。直接段 0<del>9、一级段 10</del>265、二级段 266 起；300 ⇒ 二级，读二级索引块 + 一级索引块 + 数据块 = 3 次。A（1 次）当成直接段；B（2 次）当成一级段；D 多读一次。
+验算：一级段止于 9+256 = 265 &lt; 300 &lt; 10+256+65536 ⇒ 二级 ✓。</p>
+<p><strong>4. A</strong>。从 1 编号：字 = ⌊(1000−1)/32⌋+1 = ⌊999/32⌋+1 = 31+1 = 32；位 = (999 mod 32)+1 = 7+1 = 8。
+验算：(32−1)×32 + (8−1) = 31×32 + 7 = 999 = 1000−1 ✓。B 直接 ⌊1000/32⌋（把&quot;从 0&quot;当成&quot;从 1&quot;）；C 位号少 1；D 字、位都混口径。</p>
+<p><strong>5. A</strong>。同步的 P 须在互斥的 P 之前，且&quot;放入&quot;要在临界区内并成对 V。B、C 把 <code>P(mutex)</code> 放到同步 P 之前（缓冲区满时占着 mutex 等空位，与消费者互相等 → 死锁），且 C 的&quot;放入&quot;未受 mutex 保护、V 也不配平；D 用错信号量（生产者的同步应是 <code>empty</code>，用 <code>full</code> 会在空缓冲时误等）。
+逐条核对：A 的 P 顺序、临界区、成对 V 全部正确 ✓。</p>
+<p><strong>6. A</strong>。可化简判据是&quot;申请量 ≤ 当前空闲量&quot;（非阻塞）。B、C 与化简规则无关；D 错——有环未必死锁，要看能否化简。</p>
+<p><strong>7. A</strong>。单缓冲传/处串行：10×(2+6) = 80ms；双缓冲瓶颈是处理 c=6：10×6 + min(2,6)=2 → 62ms。B 反；C 把双缓冲错算成串行（80/80）；D 只算传输。
+验算双缓冲按时间轴：处理从 2ms 连续占据到 62ms（10 次 × 6ms），开头再传一块 2ms，总 62ms ✓。</p>
+<p><strong>8. C</strong>。FCB 是目录里的登记信息（文件名、位置、长度、权限等），<strong>不含文件内容本身</strong>。</p>
+<p><strong>9. B</strong>。754：同组 = 5 = 4+1 = r-x（读+执行，无写）。A（rwx = 7）是属主；C（r-- = 4）是其他用户；D 把 w、x 次序弄反。</p>
+<p><strong>10. C</strong>。页内 12 位 ⇒ 页大小 = 2^12 = 4096B = 4KB。A（2^10）、B（2^11）、D（2^13）都不是 12 位对应的 2^12。
+验算：2^12 = 4096 ✓。</p>
 </div>
 </details>
 <hr>
