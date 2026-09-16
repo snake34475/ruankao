@@ -30,7 +30,11 @@
 │   ├── 12-数学与多媒体.md        ← 第 12 课
 │   └── 99-考前全真模拟卷.md      ← 75 道选择题 + 5 道案例题
 ├── package.json / tools/        ← HTML 构建链（npm run build）+ 阅读版样式与脚本源码
-├── design/styleguide.html       ← 设计组件样张（设计确认用，不参与构建）
+├── interactive/                 ← 讲义配套的交互式演示源码（遍历轮廓等，构建时拷入 docs/）
+│   └── traversal-contour/       ← 二叉树遍历的交互演示（app.js / index.html / style.css）
+├── design/                      ← 设计组件样张与原型（设计确认用，不参与构建，不进 docs/）
+│   ├── styleguide.html          ← 设计组件样张
+│   └── traversal-contour/       ← 遍历演示的原型预览（preview.html）
 └── docs/                        ← 生成的网页阅读版（构建产物，可直接浏览器打开）
 ```
 
