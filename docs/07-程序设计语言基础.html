@@ -86,7 +86,7 @@
   </header>
   <blockquote class="lead">
 <p><strong class="k">分值地位</strong>：选择题约 3–5 题（第二梯队稳定得分点）。本课一般不对应独立案例大题，但<strong>正规式与有限自动机、传值/传址调用</strong>是选择题里的高频题，套路固定、练熟即送分；编译阶段顺序几乎每年都碰。</p>
-<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 背下编译六个阶段的顺序与各阶段产物；② 给正规式快速判串、给状态图写正规式；③ 逐步追踪传值/传址调用后变量的最终值；④ 秒答各语言特点分类与静态/动态错误归类。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 说清程序设计语言的数据、运算、控制、传输四类基本成分；② 背下编译六个阶段的顺序、可选阶段与各阶段产物；③ 在语法树、前中后缀表达式之间互换，并完成最左/最右推导；④ 给正规式快速判串、用子集法理解 NFA 确定化；⑤ 逐步追踪传值/传址、别名参数和静态/动态作用域；⑥ 秒答各语言特点与错误分类。</p>
 </blockquote>
 <hr>
 <h2 id="h-2">第一节 语言处理程序：编译与解释 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一节 语言处理程序：编译与解释 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 语言处理程序：编译与解释 ★★★」的学习状态"></button></h2>
@@ -137,7 +137,124 @@
 <p><strong>Java / C# 是特殊流派（选择题爱考）</strong>：它们<strong>先编译成中间代码</strong>（Java 字节码 / .NET 中间语言），<strong>再由虚拟机（JVM / CLR）解释或即时编译执行</strong>——&quot;先编译后解释&quot;。正因为中间代码与平台无关、各平台各有虚拟机，Java 才能&quot;一次编写，到处运行&quot;。</p>
 <p><strong>反例演示</strong>：判断题「解释方式也会生成与源程序等价的目标程序」——<strong>错</strong>。这是本考点最常见的陷阱选项；解释器从头到尾不产出可独立执行的目标程序。反向陷阱「编译方式执行效率比解释方式低」——错，编译是&quot;先翻完再念&quot;，运行时零翻译开销，效率更高。</p>
 <p><strong>应试动作</strong>：背对比表的三行——①是否生成目标程序（编译生成、解释不生成）②执行效率（编译高）③可移植性（解释好）。考场上题干不会出现&quot;流派&quot;这种词，直接给&quot;某语言程序需先翻译成目标程序后执行&quot;&quot;逐句翻译执行&quot;等描述让你归类。</p>
-<h2 id="h-3">第二节 编译的六个阶段 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 编译的六个阶段 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 编译的六个阶段 ★★★」的学习状态"></button></h2>
+<h2 id="h-3">第二节 程序设计语言的基本成分 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 程序设计语言的基本成分 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 程序设计语言的基本成分 ★★★」的学习状态"></button></h2>
+<p><strong>动机</strong>：不同语言的写法看起来差别很大，但任何程序都绕不开四个问题：<strong>数据长什么样、数据怎么算、执行顺序怎么走、数据怎样进出程序</strong>。教材把这四件事概括为数据、运算、控制和传输成分。选择题常把其中一个换成“语法/编译/存储”等干扰词。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>基本成分</th>
+<th>解决的问题</th>
+<th>常见内容</th>
+<th>最小例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>数据成分</strong></td>
+<td>程序处理什么</td>
+<td>数据类型、变量、常量、数据结构</td>
+<td><code>int age</code>、Python 列表</td>
+</tr>
+<tr>
+<td><strong>运算成分</strong></td>
+<td>数据怎样变化</td>
+<td>算术、关系、逻辑、位、赋值运算</td>
+<td><code>total = price * count</code></td>
+</tr>
+<tr>
+<td><strong>控制成分</strong></td>
+<td>语句按什么顺序执行</td>
+<td>顺序、选择、循环</td>
+<td><code>if</code>、<code>for</code>、<code>while</code></td>
+</tr>
+<tr>
+<td><strong>传输成分</strong></td>
+<td>数据怎样进入、离开或跨过程传递</td>
+<td>输入/输出、参数、返回值、文件与网络读写</td>
+<td><code>read()</code>、<code>print()</code>、<code>return</code></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：“整数、字符、布尔”属于数据成分，不是运算成分；<code>if</code> 决定走哪条路径，属于控制成分；<code>+</code>、<code>&amp;&amp;</code>、赋值号描述数据上的操作，才属于运算成分。题目问“可计算问题的程序都能由哪三种控制结构描述”，答<strong>顺序、选择、循环</strong>，不要把函数调用当第四种基本控制结构。</p>
+<h3 id="h-4">2.1 数据成分：类型决定“能存什么、能做什么”<button type="button" class="sec-status" data-status-key="2.1 数据成分：类型决定“能存什么、能做什么”" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 数据成分：类型决定“能存什么、能做什么”」的学习状态"></button></h3>
+<p>数据类型不只是规定占多少空间，还规定<strong>取值范围和允许的运算</strong>。例如布尔值可以做逻辑运算，整数可以做取模；字符串能拼接，却不能直接参与数值除法。第三节编译知识中的“类型不合法”之所以能在语义分析阶段发现，就是因为类型带着运算规则。</p>
+<p>C/C++ 常见基本类型有整数、浮点、字符、布尔、枚举和指针。Python 高频容器要按两个维度分：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th align="right">是否有序</th>
+<th align="right">是否可变</th>
+<th align="right">是否允许重复</th>
+<th>取元素方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>list</code> 列表</td>
+<td align="right">是</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>tuple</code> 元组</td>
+<td align="right">是</td>
+<td align="right"><strong>不可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>str</code> 字符串</td>
+<td align="right">是</td>
+<td align="right"><strong>不可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>set</code> 集合</td>
+<td align="right">否</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right"><strong>否</strong></td>
+<td>不能按位置下标</td>
+</tr>
+<tr>
+<td><code>dict</code> 字典</td>
+<td align="right">按插入次序保存键值对</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right">键不可重复</td>
+<td>键</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示</strong>：<code>tuple</code> 不可变，表示不能把其中某个位置重新赋值，不等于“元组里引用的可变对象永远不会变化”；考试只考第一层结论，记作“字符串、元组不可变；列表、集合、字典可变”。集合去重且不靠位置取值，不能因为打印时看见某个顺序就把它当列表。</p>
+<h3 id="h-5">2.2 运算成分：同一个符号要结合类型理解<button type="button" class="sec-status" data-status-key="2.2 运算成分：同一个符号要结合类型理解" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 运算成分：同一个符号要结合类型理解」的学习状态"></button></h3>
+<ul>
+<li>算术运算：<code>+ - * / %</code>；</li>
+<li>关系运算：<code>&lt; &lt;= == != &gt;= &gt;</code>，结果通常是布尔值；</li>
+<li>逻辑运算：<code>and/or/not</code> 或 <code>&amp;&amp;/||/!</code>；</li>
+<li>位运算：按二进制位与、或、异或、移位；</li>
+<li>赋值运算：把计算结果写回变量。</li>
+</ul>
+<p>Python 中 <code>+</code> 对数字表示相加，对字符串或列表表示拼接；<code>*</code> 对数字表示乘法，对字符串或列表可表示重复。例如 <code>[1,2]+[3]=[1,2,3]</code>，<code>&#39;ab&#39;*2=&#39;abab&#39;</code>。这不是符号“随便变义”，而是运算符根据操作数类型选择对应操作。</p>
+<h3 id="h-6">2.3 控制成分：所有流程都能拆成三种结构<button type="button" class="sec-status" data-status-key="2.3 控制成分：所有流程都能拆成三种结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 控制成分：所有流程都能拆成三种结构」的学习状态"></button></h3>
+<ol>
+<li><strong>顺序</strong>：从上到下依次执行；</li>
+<li><strong>选择</strong>：条件为真走一支，为假走另一支；</li>
+<li><strong>循环</strong>：条件满足时重复一段操作。</li>
+</ol>
+<pre><code class="language-text">顺序：A → B → C
+选择：条件 ─真→ A
+           └假→ B
+循环：条件 ─真→ A ─┐
+           ↑       │
+           └───────┘；假→ 离开
+</code></pre>
+<h3 id="h-7">2.4 传输成分：不只是键盘输入和屏幕输出<button type="button" class="sec-status" data-status-key="2.4 传输成分：不只是键盘输入和屏幕输出" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 传输成分：不只是键盘输入和屏幕输出」的学习状态"></button></h3>
+<p>传输成分负责数据在不同边界之间移动：用户与程序之间有输入/输出，文件与程序之间有读/写，调用者与函数之间有参数和返回值，网络两端之间有发送/接收。例如 <code>x=read()</code> 把外部数据送入程序，<code>return result</code> 把函数结果送回调用者。</p>
+<p><strong>反例演示（易错）</strong>：赋值 <code>x=x+1</code> 是运算成分，因为数据只在程序内部被计算并写回变量；<code>return x</code> 才是把结果跨越函数边界传回调用者。不要看到“数据发生变化”就一律选传输，关键看是否跨越输入输出或过程边界。</p>
+<p><strong>应试动作</strong>：背“四成分 = 数据、运算、控制、传输”和“三结构 = 顺序、选择、循环”。题干给 Python 类型时按“是否可变、是否有序、是否去重、怎样取值”四问排除；题干给 <code>+、*</code> 时先看操作数类型，再判断实际运算。</p>
+<h2 id="h-8">第三节 编译的六个阶段 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第三节 编译的六个阶段 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 编译的六个阶段 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：为什么翻译不一步到位，要分六个阶段？因为&quot;读懂一段话&quot;本身就是分层的：先认字（词法），再看句子通不通（语法），再理解意思对不对（语义），最后才落笔翻译（中间代码→优化→目标代码）。分层后每个阶段只管一件事，出错也好定位——你在第 2 阶段就发现&quot;句子结构不对&quot;，不必等到最后生成机器码才发现。</p>
 <div class="table-wrap">
 <table>
@@ -194,6 +311,14 @@
 </tr>
 </tbody></table>
 </div>
+<p>六阶段不是每个编译器都必须逐项拥有：<strong>词法、语法、语义分析和目标代码生成是基本阶段；中间代码生成与代码优化可以省略</strong>。省略优化只会使目标程序可能不够快，不代表不能正确运行。</p>
+<p>目标程序常见三种形式：</p>
+<ul>
+<li><strong>绝对指令代码</strong>：地址已经确定，可直接装入固定位置执行；</li>
+<li><strong>可重定位指令代码</strong>：地址尚可调整，装入或链接时再确定实际位置；</li>
+<li><strong>汇编指令代码</strong>：还需汇编程序进一步翻译成机器指令。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：“代码优化是必需阶段”错误；优化服务于效率，不决定源程序语义是否正确。“汇编代码属于中间代码”也错误，教材把它列作目标代码形式之一；常见中间代码是后缀式、语法树、三地址码和四元式。</p>
 <p><strong>顺序口诀</strong>：<strong>词法 → 语法 → 语义 → 中间 → 优化 → 目标</strong>（&quot;认字 → 组句 → 懂意 → 打草稿 → 改稿 → 定稿&quot;）。另外<strong>符号表</strong>贯穿编译全程，记录各符号（变量、函数）的信息，辅助语义检查和代码生成。</p>
 <p><strong>中间代码举例</strong>（四元式）：对 <code>x := y + z * 60</code>：</p>
 <pre><code>(*, z, 60, t1)   ← 先算乘法，结果放临时变量 t1
@@ -235,7 +360,7 @@
 </div>
 <p><strong>反例演示（最易混的两组）</strong>：①「拼写错误 vs 缺分号」——单词拼错、用了中文标点属于<strong>词法</strong>错误；缺分号、缺括号、缺操作数属于<strong>语法</strong>错误（涉及语言结构）。②「编译时 vs 运行时」——除零、下标越界编译器查不出来（它不知道运行时下标是多少），所以叫<strong>动态</strong>错误；死循环也是运行时才暴露。</p>
 <p><strong>应试动作</strong>：① 背死六阶段顺序和三个&quot;输入→输出&quot;（字符流→记号流→语法树→中间代码→目标程序）；② 错误四分类给例子能归类——判断窍门先问&quot;编译时能发现吗&quot;，再按词法（字符级）/语法（结构级）/静态语义（类型级）定位；③ 记住自顶向下=递归下降/预测分析，自底向上=移进-归约。</p>
-<h2 id="h-4">第三节 表达式：前缀、中缀、后缀 <span class="stars">★★</span>（与第 1 课联动）<button type="button" class="sec-status" data-status-key="第三节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）」的学习状态"></button></h2>
+<h2 id="h-9">第四节 表达式：前缀、中缀、后缀 <span class="stars">★★</span>（与第 1 课联动）<button type="button" class="sec-status" data-status-key="第四节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 表达式：前缀、中缀、后缀 ★★（与第 1 课联动）」的学习状态"></button></h2>
 <p>这一节第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a> 第一节 1.2）已详细讲过中缀转后缀的&quot;傻瓜法&quot;（按优先级加满括号，运算符搬到自己那对括号的右边）。这里给速查表和<strong>前缀</strong>补全：</p>
 <div class="table-wrap">
 <table>
@@ -267,6 +392,48 @@
 </tr>
 </tbody></table>
 </div>
+<h3 id="h-10">4.1 语法树遍历与三种表达式<button type="button" class="sec-status" data-status-key="4.1 语法树遍历与三种表达式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 语法树遍历与三种表达式」的学习状态"></button></h3>
+<p>表达式树把“谁先算”直接画成父子关系：内部结点是运算符，叶子是操作数。对 <code>(a+b)*c</code>：</p>
+<pre><code class="language-text">        *
+       / \
+      +   c
+     / \
+    a   b
+</code></pre>
+<p>同一棵树用不同遍历顺序读，就得到三种等价写法：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>遍历</th>
+<th>访问次序</th>
+<th>结果</th>
+<th>表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>先序</td>
+<td>根—左—右</td>
+<td><code>* + a b c</code></td>
+<td>前缀 <code>*+abc</code></td>
+</tr>
+<tr>
+<td>中序</td>
+<td>左—根—右</td>
+<td><code>a + b * c</code>，按树补括号</td>
+<td>中缀 <code>(a+b)*c</code></td>
+</tr>
+<tr>
+<td>后序</td>
+<td>左—右—根</td>
+<td><code>a b + c *</code></td>
+<td>后缀 <code>ab+c*</code></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>为什么中序必须按树补括号</strong>：若只把中序字符机械写成 <code>a+b*c</code>，常规优先级会先算 <code>b*c</code>，与树中“先算 a+b”矛盾。树已经规定运算结构，中缀式必须用括号把这层结构保留下来。</p>
+<p><strong>反例演示（易错）</strong>：有人把这棵树的后缀写成 <code>bc+a*</code>。按后缀规则还原：<code>bc+</code> 先得到 <code>(b+c)</code>，再与 a 相乘，实际是 <code>(b+c)*a</code>，不是 <code>(a+b)*c</code>。错误版本不是“顺序差一点”，而是换了一棵树、改变了运算含义。</p>
+<p><strong>应试动作</strong>：见“给语法树求表达式”直接套：先序=前缀，中序=中缀，后序=后缀；中序读完按树补括号。写完把后缀用栈还原一次，确认每个运算符吃到的左右子树正确。</p>
 <p><strong>转前缀的傻瓜法</strong>：同样先加满括号，把运算符搬到自己那对括号的<strong>左边</strong>。例：<code>(a+b)*c−d</code> → <code>(((a+b)*c)−d)</code> → <code>+ab</code> 变 <code>+ab</code>，<code>(+ab)c</code> 变 <code>*+abc</code>，整体减 d → <code>−*+abcd</code>。</p>
 <p><strong>后缀求值（必考，完整步骤）</strong>：从左到右扫，<strong>操作数进栈；遇运算符弹出栈顶两个数计算——先弹出的是右操作数——结果再进栈</strong>。例：后缀 <code>8 2 3 * − 4 +</code>：</p>
 <div class="table-wrap">
@@ -306,10 +473,10 @@
 </tbody></table>
 </div>
 <p>结果 6。<strong>反向验证</strong>：该后缀对应中缀 <code>8−2*3+4</code> = 8−6+4 = <strong>6</strong> ✓。</p>
-<p><strong>为什么编译器爱用后缀做中间代码</strong>：第二节说过中间代码常用形式里就有&quot;后缀式&quot;——扫后缀式时每个运算符出现时它的操作数一定已在栈里，一遍扫完，不需要优先级表和括号。</p>
+<p><strong>为什么编译器爱用后缀做中间代码</strong>：第三节说过中间代码常用形式里就有&quot;后缀式&quot;——扫后缀式时每个运算符出现时它的操作数一定已在栈里，一遍扫完，不需要优先级表和括号。</p>
 <p><strong>反例演示</strong>：后缀求值时<strong>先弹的是右操作数</strong>，减法除法顺序不能反。<code>8 6 −</code> 是 8−6=2；若先弹的当左操作数就算成 6−8=−2，错。</p>
 <p><strong>应试动作</strong>：① 中缀转后缀用&quot;加满括号搬右边&quot;，转前缀&quot;搬左边&quot;；② 求值时先弹的当<strong>右</strong>操作数；③ 考题给后缀式求值，用栈表逐步算，算完还原成中缀验一遍。</p>
-<h2 id="h-5">第四节 文法与语法树 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第四节 文法与语法树 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 文法与语法树 ★」的学习状态"></button></h2>
+<h2 id="h-11">第五节 文法与语法树 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第五节 文法与语法树 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 文法与语法树 ★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：语法分析&quot;按语法规则组句&quot;，这条规则的形式化描述就是<strong>文法</strong>。</p>
 <p>一个形式文法是四元组 <strong>G = (V, T, S, P)</strong>：</p>
 <div class="table-wrap">
@@ -343,19 +510,52 @@
 </tr>
 </tbody></table>
 </div>
-<p>例：文法 S → aSb | ε。从 S 出发反复推导：S → aSb → aaSbb → … → aⁿbⁿ。它描述的语言是 {aⁿbⁿ | n≥0}——非终结符 S 像&quot;待填的坑&quot;，终结符 a、b 才是最终结果。</p>
+<p>例：文法 S → aSb | ε。从 S 出发反复推导：S ⇒ aSb ⇒ aaSbb ⇒ aabb。它描述的语言是 {aⁿbⁿ | n≥0}——非终结符 S 像&quot;待填的坑&quot;，终结符 a、b 才是最终结果。</p>
+<h3 id="h-12">5.1 推导、句型与句子<button type="button" class="sec-status" data-status-key="5.1 推导、句型与句子" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 推导、句型与句子」的学习状态"></button></h3>
+<ul>
+<li><code>α ⇒ β</code>：使用一次产生式，把 α 中某个非终结符替换后得到 β，称为<strong>直接推导</strong>；</li>
+<li><code>α ⇒* β</code>：经过零次或多次推导得到；</li>
+<li><strong>句型</strong>：从起始符 S 能推导出的符号串，可以同时含终结符和非终结符；</li>
+<li><strong>句子</strong>：不再含非终结符的句型，即全部由终结符组成；</li>
+<li><strong>语言 L(G)</strong>：文法 G 能生成的全部句子的集合。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：在文法 <code>S→aSb|ε</code> 中，<code>aaSbb</code> 是句型，但不是句子，因为 S 这个“待填坑”还没消失；<code>aabb</code> 才是句子。判断时不要看它“像不像单词”，只看是否还含非终结符。</p>
+<h3 id="h-13">5.2 最左推导与最右推导：只改变替换顺序<button type="button" class="sec-status" data-status-key="5.2 最左推导与最右推导：只改变替换顺序" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 最左推导与最右推导：只改变替换顺序」的学习状态"></button></h3>
+<p>设文法：</p>
+<pre><code class="language-text">S → AB
+A → aA | a
+B → bB | b
+</code></pre>
+<p>目标串 <code>aabb</code> 的<strong>最左推导</strong>（每一步只替换最左边的非终结符）：</p>
+<pre><code class="language-text">S ⇒ AB ⇒ aAB ⇒ aaB ⇒ aabB ⇒ aabb
+</code></pre>
+<p>目标串的<strong>最右推导</strong>（每一步只替换最右边的非终结符）：</p>
+<pre><code class="language-text">S ⇒ AB ⇒ AbB ⇒ Abb ⇒ aAbb ⇒ aabb
+</code></pre>
+<p>两条推导的中间句型不同，但终点都是 <code>aabb</code>。反向核对：A 只能生成一个或多个 a，B 只能生成一个或多个 b，因此任何句子都应是“若干 a 后接若干 b”；<code>aabb</code> 符合，而 <code>abab</code> 不可能由该文法生成。</p>
+<p><strong>判串三步法</strong>：① 从 S 开始；② 每一步明确写出使用哪条产生式，不允许凭空换字符；③ 最终必须消掉全部非终结符并恰好得到目标串。若目标串的开头、结尾已经违反产生式结构，可先快速排除。</p>
 <p><strong>闭包与正则闭包（公式三件套）</strong>：</p>
 <ul>
 <li><strong>通用形式</strong>：正则闭包 A⁺ = A¹ ∪ A² ∪ …（<strong>1 个或多个</strong> A 连接）；闭包 A* = A⁰ ∪ A⁺（在正则闭包基础上<strong>加上 A⁰ = {ε}</strong>，ε 是空串）。</li>
 <li><strong>代入算例</strong>：A = {ab} 时，A⁺ = {ab, abab, ababab, …}；A* = {ε, ab, abab, …}——只多一个空串 ε。</li>
 <li><strong>手算口诀</strong>：<strong>&quot;加 1 乘 0&quot;</strong>——<code>+</code> 表示 1<del>n 个（不含空串），<code>*</code> 表示 0</del>n 个（含空串）。</li>
 </ul>
-<p><strong>语法推导树</strong>：从起始符 S 出发按产生式展开画出的树——根是 S，内部节点是非终结符，叶子从左到右拼起来就是推导出的句子。语法分析阶段输出&quot;语法树&quot;用的就是它。</p>
+<h3 id="h-14">5.3 语法推导树<button type="button" class="sec-status" data-status-key="5.3 语法推导树" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 语法推导树」的学习状态"></button></h3>
+<p>从起始符 S 出发按产生式展开：根是 S，内部结点是非终结符，叶子从左到右拼起来就是句子。上例 <code>aabb</code> 的树可写成：</p>
+<pre><code class="language-text">          S
+        /   \
+       A     B
+      / \   / \
+     a   A b   B
+         |     |
+         a     b
+</code></pre>
+<p>叶子从左到右为 <code>a a b b</code>，与目标串一致；树的左、右子树也分别满足 A、B 的产生式。<strong>教学图反向检查</strong>：每个内部结点展开出的孩子必须恰好等于某条产生式右部，不能为了凑目标串随意添叶子。</p>
 <p><strong>重要结论</strong>：常见的程序设计语言（C、Java 等）的语法规则通常是<strong>上下文无关文法</strong>——选择题直接考这个结论。</p>
-<p><strong>应试动作</strong>：① 四元组各成分一句话定义；② 背&quot;加 1 乘 0&quot;；③ 背&quot;程序语言通常用上下文无关文法&quot;这一句。</p>
-<h2 id="h-6">第五节 正规式与正规集 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 正规式与正规集 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 正规式与正规集 ★★★」的学习状态"></button></h2>
+<p><strong>应试动作</strong>：① 四元组各成分一句话定义；② 能区分“仍含非终结符的句型”与“只含终结符的句子”；③ 题目指定最左/最右推导时，每步只换对应一侧的非终结符；④ 背“程序语言通常用上下文无关文法”。闭包公式放在本节是为了服务正规式，口诀仍是“加 1 乘 0”。</p>
+<h2 id="h-15">第六节 正规式与正规集 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 正规式与正规集 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 正规式与正规集 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：词法分析阶段要识别&quot;什么样的字符串算一个标识符、什么样的算一个整数&quot;——这种<strong>单词的模式</strong>就用正规式（正则表达式）描述。它是描述字符串集合的最简工具。</p>
-<h3 id="h-7">5.1 三种运算与优先级<button type="button" class="sec-status" data-status-key="5.1 三种运算与优先级" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 三种运算与优先级」的学习状态"></button></h3>
+<h3 id="h-16">6.1 三种运算与优先级<button type="button" class="sec-status" data-status-key="6.1 三种运算与优先级" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 三种运算与优先级」的学习状态"></button></h3>
 <p>正规式只有三种基本运算（按优先级从高到低）：</p>
 <div class="table-wrap">
 <table>
@@ -433,7 +633,7 @@
 <li><code>a|b*</code> ≠ <code>(a|b)*</code>。<code>a|b*</code> = {a} ∪ {ε, b, bb, …}——<strong>单个 a，或若干个 b</strong>；绝没有 ab、ba 这种混合串。</li>
 <li>「以 abb 结尾」≠「含有 abb」。<code>(a|b)*abb</code> 要求串<strong>最后三个字符</strong>恰好是 abb；若多写一段成 <code>(a|b)*abb(a|b)*</code>，就放宽成&quot;中间只要出现过 abb&quot;——此时 <code>abba</code>（以 a 结尾）也会被匹配。边界条件差一段闭包，集合就完全不同。</li>
 </ol>
-<h3 id="h-8">5.2 专题：给正规式判串（完整判定步骤）<button type="button" class="sec-status" data-status-key="5.2 专题：给正规式判串（完整判定步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 专题：给正规式判串（完整判定步骤）」的学习状态"></button></h3>
+<h3 id="h-17">6.2 专题：给正规式判串（完整判定步骤）<button type="button" class="sec-status" data-status-key="6.2 专题：给正规式判串（完整判定步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 专题：给正规式判串（完整判定步骤）」的学习状态"></button></h3>
 <p><strong>考场四步法</strong>：</p>
 <ol>
 <li><strong>翻译</strong>：把正规式翻译成大白话——&quot;以什么开头 / 以什么结尾 / 中间任意 / 至少含什么&quot;。</li>
@@ -455,11 +655,27 @@
 <li>反向验证：<code>baab</code> = <code>(a|b)*</code> 取 b ＋ <code>aa</code> ＋ <code>(a|b)*</code> 取 b，三块拼回恰好是 baab，无剩余字符 ✓。</li>
 </ol>
 <p><strong>结论：只有 baab 属于 L(r)</strong>。注意第 3 步找&quot;连续 aa&quot;是看<strong>相邻</strong>两个字符，别隔位看。</p>
-<p><strong>给串选正规式</strong>（反过来问）同样用四步法：先看待匹配串的结构特征（开头/结尾/含什么），再逐个选项检查——特别警惕&quot;形似但范围不同&quot;的选项，用上面第 5.1 节的反例 1、2 的切分法排除。</p>
-<p><strong>应试动作</strong>：背熟速查表 + 三组反例。考场上题干给一个正规式四个串，30 秒流程：翻译成大白话 → 首尾筛 → 存活者分块回代 → 反向拼回验证。哪些考法套这套流程：给正规式选串、给串选正规式都是；&quot;给状态图写正规式&quot;用第六节的方法。</p>
-<h2 id="h-9">第六节 有限自动机：DFA 与 NFA <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 有限自动机：DFA 与 NFA ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 有限自动机：DFA 与 NFA ★★★」的学习状态"></button></h2>
+<p><strong>给串选正规式</strong>（反过来问）同样用四步法：先看待匹配串的结构特征（开头/结尾/含什么），再逐个选项检查——特别警惕&quot;形似但范围不同&quot;的选项，用上面第 6.1 节的反例 1、2 的切分法排除。</p>
+<h3 id="h-18">6.3 两类真题变体：由式找规律、由语言选式<button type="button" class="sec-status" data-status-key="6.3 两类真题变体：由式找规律、由语言选式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.3 两类真题变体：由式找规律、由语言选式」的学习状态"></button></h3>
+<p><strong>变体一：给正规式，问整个集合的共同特征。</strong></p>
+<p>例：<code>0*(10*1)*0*</code> 表示什么？</p>
+<ol>
+<li>最外两段 <code>0*</code> 允许开头、结尾出现任意多个 0；</li>
+<li>中间每个 <code>10*1</code> 块固定贡献 <strong>两个 1</strong>，两者之间可夹任意多个 0；</li>
+<li>整块再取 <code>*</code>，可以重复 0 次、1 次、2 次……；</li>
+<li>因而 1 的总数只能是 0、2、4、6……，即<strong>1 出现偶数次的所有 0、1 串</strong>。</li>
+</ol>
+<p>代串验证：<code>000</code> 取中间块 0 次，属于；<code>101</code> 有两个 1，属于；<code>11001</code> 有三个 1，不属于。反例：不能把它误读成“长度为偶数”，<code>101</code> 长度 3，却有两个 1，仍属于该语言。</p>
+<p><strong>变体二：给语言定义，选择正规式。</strong></p>
+<p>“所有至少含一个 1 的 0、1 串”可写成：</p>
+<pre><code class="language-text">0*1(0|1)*
+</code></pre>
+<p>第一个固定 <code>1</code> 保证“至少一个”；它前面只能是 0，所以由 <code>0*</code> 承担；第一个 1 之后可以再出现任意 0/1，由 <code>(0|1)*</code> 承担。也可写成 <code>(0|1)*1(0|1)*</code>，两者都描述“某处至少出现一个 1”，但选择题以选项实际给法为准。</p>
+<p><strong>排除法</strong>：为每个候选式各找一个“应当接受的串”和“应当拒绝的串”。例如“至少一个 1”必须接受 <code>1、001、1010</code>，必须拒绝 <code>ε、0、000</code>；一个选项只要在这几条上出错即可淘汰，不必穷举整个语言。</p>
+<p><strong>应试动作</strong>：背熟速查表 + 三组反例。考场上题干给一个正规式四个串，30 秒流程：翻译成大白话 → 首尾筛 → 存活者分块回代 → 反向拼回验证。若问集合规律，就数每个重复块固定贡献几个字符；若给语言选式，就用“应接收/应拒绝”的最小测试串排除。&quot;给状态图写正规式&quot;用第七节的方法。</p>
+<h2 id="h-19">第七节 有限自动机：DFA 与 NFA <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第七节 有限自动机：DFA 与 NFA ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 有限自动机：DFA 与 NFA ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：正规式描述了单词的&quot;模式&quot;，但程序怎么<strong>执行</strong>这个模式？有限自动机（FA）就是正规式的&quot;可执行版本&quot;——词法分析器内部就是一台有限自动机在逐字符扫描。正规式和自动机<strong>描述能力等价</strong>，可互相转换。</p>
-<h3 id="h-10">6.1 定义与五元组<button type="button" class="sec-status" data-status-key="6.1 定义与五元组" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 定义与五元组」的学习状态"></button></h3>
+<h3 id="h-20">7.1 定义与五元组<button type="button" class="sec-status" data-status-key="7.1 定义与五元组" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 定义与五元组」的学习状态"></button></h3>
 <p>自动机 M = (S, Σ, δ, s₀, Z)：</p>
 <div class="table-wrap">
 <table>
@@ -493,6 +709,8 @@
 </div>
 <p>状态转换图：圆圈是状态，箭头标输入字符表示转移，双圈（或打星）是终态。</p>
 <p><strong>识别规则</strong>：从初态出发，逐个读入字符串的字符沿箭头走；<strong>读完整个串恰好停在终态</strong>，则该串被自动机接受（识别）；中途走不动或读完不在终态，则不接受。</p>
+<p><strong>含 ε 的快判</strong>：如果初态本身也是终态，那么即使一个字符都不读，空串 ε 也已经停在终态，因此自动机接受 ε。若初态上还有能回到终态的循环，则通常识别“0 个或多个”某类片段；看到“初态=终态”先检查选项是否漏掉空串。</p>
+<p>反例：不能因为状态图里“有一条 a 边”就断言最短串一定是 <code>a</code>。若初态画成双圈，长度为 0 的 ε 已经被接受，<code>a</code> 只是另一个可能的串。</p>
 <p><strong>DFA vs NFA（必考区别）</strong>：</p>
 <div class="table-wrap">
 <table>
@@ -516,7 +734,7 @@
 </tbody></table>
 </div>
 <p>注：DFA 是 NFA 的特例；两者识别的语言类相同（都恰好是正规式能描述的语言）。这与第 1 课（<a href="01-数据结构与算法.html">01-数据结构与算法.html</a>）里算法的&quot;确定性&quot;是同一种思想——DFA 每一步走向唯一，模拟它就是照表走。</p>
-<h3 id="h-11">6.2 专题：判定自动机接受哪些串（完整步骤）<button type="button" class="sec-status" data-status-key="6.2 专题：判定自动机接受哪些串（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 专题：判定自动机接受哪些串（完整步骤）」的学习状态"></button></h3>
+<h3 id="h-21">7.2 专题：判定自动机接受哪些串（完整步骤）<button type="button" class="sec-status" data-status-key="7.2 专题：判定自动机接受哪些串（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 专题：判定自动机接受哪些串（完整步骤）」的学习状态"></button></h3>
 <p><strong>考场三步法</strong>：</p>
 <ol>
 <li><strong>列转移表</strong>：把每个状态对每个输入字符的走向列成表（题干给状态图就照图抄表）。</li>
@@ -553,9 +771,46 @@
 <p><strong>先归纳语言</strong>：观察——只有&quot;连续读入两个 1&quot;才能从 q₀ 经 q₁ 到达 q₂；到了 q₂ 之后读 1 停在 q₂、读 0 回 q₀。所以接受的是<strong>以 11 结尾</strong>的 0、1 串（等价正规式 <code>(0|1)*11</code>）。</p>
 <p><strong>逐步走串</strong>（判 <code>1011</code>）：q₀ --1--&gt; q₁ --0--&gt; q₀ --1--&gt; q₁ --1--&gt; q₂。读完停在终态 q₂ → <strong>接受</strong> ✓。</p>
 <p><strong>反向验证</strong>：<code>1011</code> 以 &quot;11&quot; 结尾，与归纳的语言特征一致 ✓。再判 <code>1101</code>：q₀ --1--&gt; q₁ --1--&gt; q₂ --0--&gt; q₀ --1--&gt; q₁，读完停在 q₁ 非终态 → 拒绝；反向看 <code>1101</code> 以 &quot;01&quot; 结尾，不一致才对（它确实不以 11 结尾）✓。两条路结论吻合。</p>
-<p><strong>给状态图写正规式</strong>：先<strong>归纳语言</strong>（看什么路径能从初态走到终态、走终态前必须经过什么），再用速查表（第五节）把特征写成正规式——以&quot;以 11 结尾&quot;为例：前面任意 <code>(0|1)*</code> ＋ 结尾固定 <code>11</code>，得 <code>(0|1)*11</code>。写完拿一个被接受的串和一个被拒绝的串各回代验一次。</p>
-<p><strong>应试动作</strong>：① 背 DFA/NFA 区别一句话——&quot;DFA 单值、NFA 多值（可含 ε），能力等价&quot;；② 判串题老老实实逐字符查表走，别心算跳步；③ 归纳语言看&quot;到达终态前最后一段路径&quot;的形状。给图写正规式、给串判接受，都靠&quot;逐字符走 + 归纳语言&quot;两把刀。</p>
-<h2 id="h-12">第七节 函数调用：传值 vs 传址（引用）<span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第七节 函数调用：传值 vs 传址（引用）★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 函数调用：传值 vs 传址（引用）★★★」的学习状态"></button></h2>
+<p><strong>给状态图写正规式</strong>：先<strong>归纳语言</strong>（看什么路径能从初态走到终态、走终态前必须经过什么），再用速查表（第六节）把特征写成正规式——以&quot;以 11 结尾&quot;为例：前面任意 <code>(0|1)*</code> ＋ 结尾固定 <code>11</code>，得 <code>(0|1)*11</code>。写完拿一个被接受的串和一个被拒绝的串各回代验一次。</p>
+<h3 id="h-22">7.3 子集法：把 NFA 的“一次多路”变成 DFA 的“集合状态”<button type="button" class="sec-status" data-status-key="7.3 子集法：把 NFA 的“一次多路”变成 DFA 的“集合状态”" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 子集法：把 NFA 的“一次多路”变成 DFA 的“集合状态”」的学习状态"></button></h3>
+<p>NFA 面对一个输入可以同时走向多个状态；DFA 不允许多选。子集法的核心不是丢掉某条路，而是把“NFA 此刻所有可能状态的集合”当成 DFA 的一个新状态。</p>
+<p><strong>通用步骤</strong>：</p>
+<ol>
+<li>取 NFA 初态的 <strong>ε-闭包</strong>（只走 ε 边能到达的全部状态）作为 DFA 初态；</li>
+<li>对一个集合状态和输入字符 x，让集合中每个 NFA 状态都走一次 x，把所有结果取并集；</li>
+<li>再对结果取 ε-闭包，得到下一个 DFA 集合状态；</li>
+<li>遇到新集合就加入表中，反复处理，直到不再出现新集合；</li>
+<li>集合中只要含 NFA 的任一终态，该集合就是 DFA 终态。</li>
+</ol>
+<p><strong>最小演算</strong>：NFA 状态为 <code>{q0,q1}</code>，q0 是初态、q1 是终态，字母表 <code>{a}</code>；转移为 <code>δ(q0,a)={q0,q1}</code>、<code>δ(q1,a)=∅</code>，且没有 ε 边。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>DFA 集合状态</th>
+<th>输入 a 后各状态的去向</th>
+<th>并集结果</th>
+<th>是否终态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>{q0}</code>（初态）</td>
+<td>q0→{q0,q1}</td>
+<td><code>{q0,q1}</code></td>
+<td>否</td>
+</tr>
+<tr>
+<td><code>{q0,q1}</code></td>
+<td>q0→{q0,q1}，q1→∅</td>
+<td><code>{q0,q1}</code></td>
+<td><strong>是</strong>（含 q1）</td>
+</tr>
+</tbody></table>
+</div>
+<p>得到的 DFA 有两个集合状态：读入第一个 a 后进入终态，以后每读 a 都留在终态，所以识别 <code>a+</code>（一个或多个 a）。反向验证：ε 停在 <code>{q0}</code> 非终态，不接受；<code>a、aa、aaa</code> 都进入或留在 <code>{q0,q1}</code>，接受。</p>
+<p><strong>反例演示（易错）</strong>：不能从 <code>{q0,q1}</code> 随便挑 q0 的去向当结果，必须把集合内<strong>所有状态</strong>的去向取并集；也不能把“含终态”误写成“集合必须只剩终态”，只要包含 q1 就是接受状态。</p>
+<p><strong>应试动作</strong>：① 背 DFA/NFA 区别一句话——&quot;DFA 单值、NFA 多值（可含 ε），能力等价&quot;；② 初态也是终态时立刻检查 ε；③ 判串逐字符走，子集法逐集合取并集，集合含任一原终态就标终态；④ 给图写正规式时用“逐字符走 + 归纳语言”双重验证。</p>
+<h2 id="h-23">第八节 函数调用、作用域与闭包 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第八节 函数调用、作用域与闭包 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 函数调用、作用域与闭包 ★★★」的学习状态"></button></h2>
 <p><strong>动机</strong>：函数想用主调方的数据，有两条路——把<strong>值复印一份</strong>带过去（传值），或把<strong>地址/引用</strong>（钥匙）递过去直接操作原件（传址/引用）。复印本改坏了不影响原件；钥匙能真改房子。</p>
 <div class="table-wrap">
 <table>
@@ -585,8 +840,7 @@
 </div>
 <p><strong>记忆口诀</strong>：<strong>传值复印本，改了不还乡；传址寄钥匙，改屋真变样</strong>。另一条判断规则：传值的实参随意（常量、表达式都行），传址的实参必须是变量。</p>
 <p><strong>反例演示</strong>：① 传值调用下 <code>f(a)</code> 里把形参改成 100，函数返回后 a 纹丝不动——想通过参数&quot;带出&quot;结果却用了传值，是初学者最常见 bug；② 引用调用写 <code>f(a+1, b)</code> 直接编译报错/无意义——<code>a+1</code> 是表达式，没有地址可传。</p>
-<p><strong>关于作用域与闭包（大纲提及，考得浅，知道概念即可）</strong>：<strong>作用域</strong>决定一个名字在程序哪些位置可见。多数语言（C、Java）采用<strong>静态作用域</strong>（词法作用域）——名字属于哪一层，看程序文本的嵌套结构，<strong>编译时</strong>就能确定；动态作用域则按<strong>运行时的调用链</strong>确定（少数早期语言）。<strong>闭包</strong>指函数与其所引用的外部变量捆绑在一起（如 Python/JS 的嵌套函数把外层变量&quot;记住了&quot;），选择题了解词义即可。</p>
-<h3 id="h-13">7.1 专题：传值/传址追踪（完整步骤）<button type="button" class="sec-status" data-status-key="7.1 专题：传值/传址追踪（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 专题：传值/传址追踪（完整步骤）」的学习状态"></button></h3>
+<h3 id="h-24">8.1 专题：传值/传址追踪（完整步骤）<button type="button" class="sec-status" data-status-key="8.1 专题：传值/传址追踪（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 专题：传值/传址追踪（完整步骤）」的学习状态"></button></h3>
 <p><strong>考场四步法</strong>：</p>
 <ol>
 <li><strong>标记身份</strong>：传值参数在旁边标&quot;副本&quot;，传址参数直接标&quot;= 实参&quot;（形实一体）。</li>
@@ -628,8 +882,59 @@
 <li>传址：a = 2+5 = <strong>7</strong>；接着 y = x+y 用的是<strong>新 x</strong>：b = 7+5 = <strong>12</strong>。</li>
 </ul>
 <p>反向验证（传址版）：换名后即 <code>a = a+b; b = a+b</code> → a=7, b=7+5=12 ✓。<strong>易错点</strong>：第二句若拿旧值算成 b=2+5=7 就错了——传址下第一句已经把 a 改成 7，后续语句必须用新值。</p>
-<p><strong>应试动作</strong>：① 背两条性质——传值单向、实参可任意；传址双向、实参必须变量；② 追踪题按四步法列表逐句算，传址参数&quot;每句用新值、同步回写实参&quot;；③ 用&quot;换名原地执行&quot;反向验证。这是纯送分题，唯一失分方式就是跳步。</p>
-<h2 id="h-14">第八节 各语言特点与分类 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第八节 各语言特点与分类 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 各语言特点与分类 ★」的学习状态"></button></h2>
+<p><strong>例 3（一值一引用）</strong>：<code>procedure mix(value x, ref y) { x=x+1; y=x+y; }</code>，调用 <code>mix(a,b)</code>，初始 a=2、b=5。</p>
+<ul>
+<li>x 是副本：<code>x=2+1=3</code>，a 仍为 2；</li>
+<li>y 与 b 是同一变量：<code>y=x+y=3+5=8</code>，所以 b 变为 8；</li>
+<li>返回后 <strong>a=2、b=8</strong>。</li>
+</ul>
+<p>反向验证：把值参数 x 换成临时副本 <code>x_copy=2</code>，引用参数 y 换成 b，函数体成为 <code>x_copy=x_copy+1; b=x_copy+b</code>，仍得 a=2、b=8。</p>
+<p><strong>例 4（别名陷阱 <code>f(a,a)</code>）</strong>：<code>procedure f(ref x, ref y) { x=x+1; y=x+y; }</code>，初始 a=2，调用 <code>f(a,a)</code>。</p>
+<p>此时 x、y 不是两个独立格子，而是同一个 a 的两个别名：</p>
+<ol>
+<li><code>x=x+1</code> → a=3；</li>
+<li><code>y=x+y</code> → 等价于 <code>a=a+a</code>，两边读到的都是当前值 3 → a=6。</li>
+</ol>
+<p>若误把 x、y 当成独立副本，会算出 x=3、y=5，这既没有反映引用调用，也漏掉二者指向同一地址。<strong>别名题的最稳方法就是形参全部替换成实参名</strong>：<code>a=a+1; a=a+a</code>。</p>
+<h3 id="h-25">8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同<button type="button" class="sec-status" data-status-key="8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同」的学习状态"></button></h3>
+<p><strong>作用域</strong>决定某个名字在什么位置可见；当内外层有同名变量时，还要决定一次引用究竟绑定哪一个声明。</p>
+<pre><code class="language-text">x = 1
+
+procedure P() {
+    print(x)
+}
+
+procedure Q() {
+    local x = 2
+    P()
+}
+
+Q()
+</code></pre>
+<ul>
+<li><strong>静态作用域（词法作用域）</strong>：看程序文本中 P <strong>定义在哪里</strong>。P 定义在全局层，附近的 x 是全局 x=1，所以输出 <strong>1</strong>。C、C++、Java、Python 等主流语言采用此思路；</li>
+<li><strong>动态作用域</strong>：看运行时 P <strong>由谁调用</strong>。调用链是 <code>Q→P</code>，沿链先遇到 Q 的局部 x=2，所以输出 <strong>2</strong>。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：静态作用域不是“永远找全局变量”，而是从引用位置按<strong>文本嵌套层次由内向外</strong>找最近声明；本例恰好 P 的定义层外侧只有全局 x。动态作用域也不是“运行时再看变量类型”，它看的是调用链，别与动态类型混淆。</p>
+<h3 id="h-26">8.3 闭包：函数离开定义现场后仍带着外部变量<button type="button" class="sec-status" data-status-key="8.3 闭包：函数离开定义现场后仍带着外部变量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.3 闭包：函数离开定义现场后仍带着外部变量」的学习状态"></button></h3>
+<p>闭包可以理解成“函数代码 + 它引用的词法环境”。例如：</p>
+<pre><code class="language-text">function makeCounter() {
+    n = 0
+    function next() {
+        n = n + 1
+        return n
+    }
+    return next
+}
+
+c = makeCounter()
+c()  // 1
+c()  // 2
+</code></pre>
+<p><code>makeCounter</code> 已经返回，但 <code>next</code> 仍能访问并更新外层 n；第一次调用后 n 变 1，第二次在同一个变量基础上变 2。它保存的是外部变量的<strong>绑定与环境</strong>，不是每次调用都重新拿一张“n=0 的照片”。</p>
+<p><strong>反例演示（易错）</strong>：若把闭包误解成“保存初始值快照”，就会认为两次 <code>c()</code> 都返回 1；实际同一个闭包保留状态，依次返回 1、2。若再次执行 <code>d=makeCounter()</code>，d 拥有另一套独立的 n，第一次 <code>d()</code> 仍返回 1。</p>
+<p><strong>应试动作</strong>：① 传值标“副本”，传址直接换成实参名；同一实参传给多个引用形参时先标“别名”；② 静态作用域看定义处的文本嵌套，动态作用域看运行时调用链；③ 闭包认准“函数 + 外部词法环境”，连续调用可保留状态。追踪题必须逐句使用最新值，再用换名法重算。</p>
+<h2 id="h-27">第九节 各语言特点与分类 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第九节 各语言特点与分类 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 各语言特点与分类 ★」的学习状态"></button></h2>
 <p><strong>动机</strong>：选择题常给一个应用场景（&quot;人工智能符号处理&quot;&quot;科学计算&quot;）问选什么语言，或给一个语言问它的分类。这纯是背诵题，一张表解决。</p>
 <p><strong>按翻译方式分类</strong>：</p>
 <div class="table-wrap">
@@ -708,8 +1013,8 @@
 </div>
 <p><strong>应试动作</strong>：重点背两个&quot;最容易和别的搞混&quot;的——<strong>Lisp=函数式/AI</strong>、<strong>Prolog=逻辑推理/专家系统</strong>（两者都沾 AI，别互换）；再背 Java 跨平台靠&quot;字节码 + JVM&quot;这条机制描述。其余扫一眼有印象即可。</p>
 <hr>
-<h2 id="h-15">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
-<h3 id="h-16">选择题<button type="button" class="sec-status" data-status-key="选择题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择题」的学习状态"></button></h3>
+<h2 id="h-28">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h3 id="h-29">选择题<button type="button" class="sec-status" data-status-key="选择题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择题」的学习状态"></button></h3>
 <p><strong>1.</strong> 关于编译方式和解释方式，下列叙述正确的是（ ）。
 A. 编译方式的执行效率通常低于解释方式
 B. 解释方式会生成与源程序等价的目标程序
@@ -817,7 +1122,7 @@ A. Prolog——面向对象程序设计语言
 B. Lisp——函数式语言，常用于符号处理与人工智能
 C. Fortran——科学计算，执行效率高
 D. Java——编译为字节码，由 JVM 执行，跨平台</p>
-<h3 id="h-17">案例题风格题<button type="button" class="sec-status" data-status-key="案例题风格题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题风格题」的学习状态"></button></h3>
+<h3 id="h-30">案例题风格题<button type="button" class="sec-status" data-status-key="案例题风格题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题风格题」的学习状态"></button></h3>
 <p><strong>案例 1</strong>　某程序片段如下：</p>
 <pre><code>function calc(p, q) {
     q = q - p;
@@ -859,7 +1164,7 @@ D. Java——编译为字节码，由 JVM 执行，跨平台</p>
 <p>问题 1：该自动机识别的字符串有什么共同特征？写出与之等价的正规式。
 问题 2：判断 <code>aab</code>、<code>abb</code>、<code>abab</code>、<code>baab</code> 中哪些被该自动机接受（逐步列出状态轨迹）。
 问题 3：若把 q₁ 对输入 a 的转移改为&quot;q₁ 或 q₂ 均可&quot;，该自动机变成了什么类型？说明判断依据。</p>
-<h2 id="h-18">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
+<h2 id="h-31">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <p><strong>1.</strong> 关于编译各阶段的叙述，正确的是（ ）。
 A. 语义分析阶段的输出是记号流
 B. 中间代码与具体的机器无关
@@ -923,6 +1228,41 @@ B. Java 是纯解释执行的语言，不经过任何编译
 C. Java 编译生成与平台无关的中间代码（字节码），由各平台的 JVM 执行
 D. Java 程序不需要任何翻译程序即可在机器上直接运行</p>
 <hr>
+<h2 id="h-32">补充题（扩充考点专项，不破坏原题编号）<button type="button" class="sec-status" data-status-key="补充题（扩充考点专项，不破坏原题编号）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题（扩充考点专项，不破坏原题编号）」的学习状态"></button></h2>
+<p><strong>1. 【语言基本成分】</strong> <code>if (score &gt;= 60) print(&quot;pass&quot;)</code> 中，关系运算 <code>&gt;=</code>、<code>if</code>、<code>print</code> 分别主要属于（ ）。
+A. 数据、运算、控制
+B. 运算、控制、传输
+C. 控制、数据、运算
+D. 运算、传输、控制</p>
+<p><strong>2. 【Python 容器】</strong> 下列说法正确的是（ ）。
+A. <code>tuple</code> 和 <code>str</code> 都可按下标修改元素
+B. <code>set</code> 有固定位置顺序且允许重复元素
+C. <code>list、set、dict</code> 可变，<code>tuple、str</code> 不可变
+D. <code>dict</code> 只能用整数下标取值</p>
+<p><strong>3. 【编译阶段】</strong> 下列关于编译过程的说法正确的是（ ）。
+A. 中间代码生成和代码优化在任何编译器中都不可省略
+B. 代码优化可以省略，省略后程序一定无法正确运行
+C. 汇编指令代码可作为目标程序的一种形式
+D. 目标代码生成与具体机器无关</p>
+<p><strong>4. 【语法树遍历】</strong> 表达式 <code>(a-b)/(c+d)</code> 的语法树以 <code>/</code> 为根，左右子树的根分别为 <code>-</code> 和 <code>+</code>。写出其前缀式和后缀式，并用中缀式反向验证。</p>
+<p><strong>5. 【句型与句子】</strong> 对文法 <code>S→aSb | ε</code>，下列说法正确的是（ ）。
+A. <code>aaSbb</code> 是句子，因为它可由 S 推导得到
+B. <code>aabb</code> 是句型也是句子
+C. <code>aSb</code> 既不是句型也不是句子
+D. 只要含终结符就是句子</p>
+<p><strong>6. 【最左推导】</strong> 对文法 <code>S→AB，A→aA|a，B→bB|b</code>，写出句子 <code>aabb</code> 的一条最左推导，并说明为什么 <code>abab</code> 不能由该文法生成。</p>
+<p><strong>7. 【正规式规律】</strong> 正规式 <code>0*(10*1)*0*</code> 表示（ ）。
+A. 1 出现奇数次的所有 0、1 串
+B. 1 出现偶数次的所有 0、1 串
+C. 长度为偶数的所有 0、1 串
+D. 只由 0 组成的串</p>
+<p><strong>8. 【自动机快判】</strong> 某 DFA 的初态 q0 同时也是终态，且 q0 读入字符 <code>a</code> 后仍回到 q0。它识别的语言是（ ）。
+A. <code>a+</code>  B. <code>a*</code>  C. 仅 <code>{a}</code>  D. 空集</p>
+<p><strong>9. 【子集法】</strong> NFA 有状态 <code>{q0,q1}</code>，q0 为初态、q1 为终态，<code>δ(q0,a)={q0,q1}</code>、<code>δ(q1,a)=∅</code>，无 ε 边。用子集法写出可达的 DFA 集合状态、终态，并说明它识别的语言。</p>
+<p><strong>10. 【作用域与别名】</strong> 回答两问：</p>
+<p>（1）全局 <code>x=1</code>；过程 P 定义在全局并输出 x；过程 Q 内有局部 <code>x=2</code>，Q 调用 P。静态作用域和动态作用域下 P 分别输出多少？</p>
+<p>（2）<code>procedure f(ref x, ref y) { x=x+1; y=x+y; }</code>，a 初值为 2，执行 <code>f(a,a)</code> 后 a 是多少？写出逐句过程。</p>
+<hr>
 <details class="answers" id="answers" data-toc="答案与解析">
   <summary>
     <span class="chev" aria-hidden="true"></span>
@@ -931,7 +1271,7 @@ D. Java 程序不需要任何翻译程序即可在机器上直接运行</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-20">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<h3 id="h-34">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong>
 编译是&quot;先整本翻译成目标程序，再直接运行目标程序&quot;，执行时编译器不参与，效率高（A 反了）；解释器逐句翻译执行、<strong>不生成</strong>目标程序（B 反了）；两种方式都要做词法、语法、语义分析（D 反了）。易错点：B 是最常见陷阱——&quot;解释也要分析，但不产出目标程序&quot;。</p>
 <p><strong>2. B</strong>
@@ -964,7 +1304,7 @@ NFA 的定义特征：一个状态面对同一输入符号可转移到<strong>�
 <li>B <code>0110</code>：q₀ --0--&gt; q₀ --1--&gt; q₁ --1--&gt; q₂ --0--&gt; q₀，停在 q₀ ✗</li>
 <li>C <code>1011</code>：q₀ --1--&gt; q₁ --0--&gt; q₀ --1--&gt; q₁ --1--&gt; q₂，<strong>停在终态 q₂ ✓</strong></li>
 <li>D <code>1110</code>：q₀ --1--&gt; q₁ --1--&gt; q₂ --1--&gt; q₂ --0--&gt; q₀，停在 q₀ ✗
-反向验证：该 DFA 的语言是&quot;以 11 结尾的 0、1 串&quot;（见第六节例题）；C <code>1011</code> 以 11 结尾 ✓，A 以 01 结尾、B 以 10 结尾、D 以 10 结尾，均不符。两条路结论一致。</li>
+反向验证：该 DFA 的语言是&quot;以 11 结尾的 0、1 串&quot;（见第七节例题）；C <code>1011</code> 以 11 结尾 ✓，A 以 01 结尾、B 以 10 结尾、D 以 10 结尾，均不符。两条路结论一致。</li>
 </ul>
 <p><strong>13. B</strong>
 ②④正确：传值传的是副本，实参给常量表达式都行，但形参改动<strong>不会</strong>影响实参（①错，单向）；引用调用双向传递（④对），但实参必须是<strong>变量</strong>——常量和表达式没有地址可传（③错）。记忆口诀：传值复印本（单向、实参随意），传址寄钥匙（双向、实参须变量）。</p>
@@ -979,7 +1319,7 @@ A 是传值调用的结果（原件不动）；C 错在第二句没用新 x；D 
 </ul>
 <p><strong>15. A</strong>
 Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据库），不是面向对象语言——A 的对应关系错误，选它。B、C、D 均为正确对应。易错点：Lisp（函数式/AI）与 Prolog（逻辑推理）都沾&quot;人工智能&quot;，但&quot;函数式&quot;标签专属 Lisp，&quot;逻辑推理&quot;标签专属 Prolog，别互换。</p>
-<h3 id="h-21">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<h3 id="h-35">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>案例 1</strong></p>
 <p><strong>问题 1</strong>（p 传值 = 副本；q 引用 = y 本身）：</p>
 <div class="table-wrap">
@@ -1117,7 +1457,31 @@ Prolog 是<strong>逻辑推理型</strong>语言（用于专家系统、数据�
 </div>
 <p>反向验证：aab、abab、baab 都以 ab 结尾，abb 以 bb 结尾——与&quot;以 ab 结尾&quot;的语言特征一致 ✓。</p>
 <p><strong>问题 3</strong>：变成了 <strong>NFA（不确定有限自动机）</strong>。依据：DFA 要求转移函数是<strong>单值对照</strong>——一个状态面对一个输入符号只有唯一后继；改成&quot;q₁ 或 q₂ 均可&quot;后，同一状态同一输入对应一个<strong>状态集合</strong>，这正是 NFA 的定义特征。（NFA 与 DFA 识别能力等价，可用子集法把这台 NFA 确定化。）</p>
-<h3 id="h-22">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-36">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong></p>
+<p><code>&gt;=</code> 对数据进行关系比较，属于运算成分；<code>if</code> 决定执行路径，属于控制成分；<code>print</code> 把数据送到程序外部，属于传输成分。判断时看它解决的是“怎么算、怎么走、怎么进出”哪一个问题。</p>
+<p><strong>2. C</strong></p>
+<p>列表、集合、字典可修改；元组和字符串不可按位置改写。集合不允许重复，也不能依赖位置下标取元素；字典按键取值，键不限定为整数。反例验证：<code>s={1,1,2}</code> 的有效元素只有 1、2，不会保留两个 1。</p>
+<p><strong>3. C</strong></p>
+<p>目标程序可以是绝对指令代码、可重定位指令代码或汇编指令代码。中间代码生成和代码优化可省略；省略优化只可能影响效率，不必然影响正确性。目标代码生成要考虑指令集、寄存器等硬件细节，与具体机器密切相关。</p>
+<p><strong>4. 前缀式 <code>/ - a b + c d</code>，写紧凑形式为 <code>/-ab+cd</code>；后缀式 <code>a b - c d + /</code>，写紧凑形式为 <code>ab-cd+/</code>。</strong></p>
+<p>前序按“根—左—右”先读 <code>/</code>，再读左子树 <code>-ab</code>，再读右子树 <code>+cd</code>；后序按“左—右—根”得到 <code>ab-</code>、<code>cd+</code>，最后放 <code>/</code>。按后缀还原：<code>ab-</code> 是 <code>(a-b)</code>，<code>cd+</code> 是 <code>(c+d)</code>，最后 <code>/</code> 合成 <code>(a-b)/(c+d)</code>，与题面一致。</p>
+<p><strong>5. B</strong></p>
+<p><code>aabb</code> 可由 S 推导且已不含非终结符，因此既是句型也是句子。<code>aaSbb</code>、<code>aSb</code> 都可推导得到，所以是句型；但仍含 S，不是句子。句子的判据不是“含有终结符”，而是“只含终结符”。</p>
+<p><strong>6. 最左推导：</strong></p>
+<pre><code class="language-text">S ⇒ AB ⇒ aAB ⇒ aaB ⇒ aabB ⇒ aabb
+</code></pre>
+<p>每一步都替换当前最左边的非终结符。A 只能生成一个或多个连续的 a，B 只能生成一个或多个连续的 b，所以语言结构必为 <code>a+b+</code>；<code>abab</code> 在出现 b 后又出现 a，不符合“所有 a 在前、所有 b 在后”，无法生成。用产生式逐步尝试也会发现 B 阶段只能继续产生 b。</p>
+<p><strong>7. B</strong></p>
+<p>每个 <code>10*1</code> 块贡献两个 1，整块重复任意次，因此 1 的总数是 0、2、4……。外侧 <code>0*</code> 允许任意前后零。反例：<code>101</code> 长度为 3 但有两个 1，属于该语言，故“长度为偶数”的 C 错。</p>
+<p><strong>8. B</strong></p>
+<p>初态同时是终态，所以一个字符都不读的 ε 被接受；每读一个 a 又回到 q0，因此 <code>a、aa、aaa……</code> 也全部接受，语言为 <code>a*</code>。A <code>a+</code> 漏掉了 ε。</p>
+<p><strong>9. 可达集合状态为 <code>{q0}</code> 和 <code>{q0,q1}</code>；初态是 <code>{q0}</code>，终态是 <code>{q0,q1}</code>；语言为 <code>a+</code>。</strong></p>
+<p>从 <code>{q0}</code> 读 a 得 <code>{q0,q1}</code>；从 <code>{q0,q1}</code> 读 a，要把 q0 的 <code>{q0,q1}</code> 与 q1 的空集取并，仍为 <code>{q0,q1}</code>。集合含 q1 即标为终态。ε 停在非终态 <code>{q0}</code>，不接受；读至少一个 a 后进入终态并一直自环，所以恰为一个或多个 a。</p>
+<p><strong>10.（1）静态作用域输出 1，动态作用域输出 2。（2）a 最终为 6。</strong></p>
+<p>静态作用域看 P 的定义处：P 定义在全局层，绑定全局 x=1；动态作用域沿调用链 <code>Q→P</code> 查找，先遇到 Q 的局部 x=2。</p>
+<p><code>f(a,a)</code> 中 x、y 都是 a 的别名：第一句 <code>x=x+1</code> 使 a 从 2 变 3；第二句 <code>y=x+y</code> 等价于 <code>a=a+a</code>，左右读到的当前值均为 3，所以 a 变 6。用形参换名法得到 <code>a=a+1; a=a+a</code>，反向计算仍为 6。</p>
+<h3 id="h-37">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 中间代码的定义特征就是<strong>与具体机器无关</strong>（后缀式、三地址码、四元式都不绑定硬件）✓。A 反了——语义分析的输入是语法树，输出记号流的是词法分析；C 反了——目标代码生成恰恰要考虑硬件系统结构（寄存器分配等）；D 说的是语法分析的任务，词法分析是逐字符识别单词（依据正规式/有限自动机）。</p>
 <p><strong>2. A</strong>

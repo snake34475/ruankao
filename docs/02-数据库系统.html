@@ -86,7 +86,7 @@
   </header>
   <blockquote class="lead">
 <p><strong class="k">分值地位</strong>：选择题约 5–6 题（稳定第二大块）+ 案例题「数据库设计」一道大题（补 E-R 图/写 SQL，约 15 分）。与数据结构并列第一梯队，范式判定和 SQL 是选择题 + 案例题双考点。</p>
-<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 画出三级模式两级映像并判断&quot;独立性&quot;考题；② 给业务场景画 E-R 图、判断联系类型、转成关系模式；③ 手算候选键、判定 1NF–BCNF 并做分解；④ 独立写建表/查询/视图 SQL；⑤ 说清 ACID、三类并发错误、两段锁协议和 REDO/UNDO。</p>
+<p><strong class="k">学习目标</strong>：读完讲义后，你能——① 画出三级模式两级映像并判断&quot;独立性&quot;考题；② 给业务场景画 E-R 图、判断联系类型、转成关系模式；③ 用属性闭包手算候选键、判定 1NF–BCNF 并检查分解；④ 独立写建表/增删改查/视图 SQL；⑤ 说清 ACID、四类并发错误、两段锁协议和三类故障恢复。</p>
 </blockquote>
 <h2 id="h-2">第一节 三级模式与两级映像 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="第一节 三级模式与两级映像 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一节 三级模式与两级映像 ★」的学习状态"></button></h2>
 <h3 id="h-3">为什么需要&quot;三级模式&quot;<button type="button" class="sec-status" data-status-key="为什么需要&amp;quot;三级模式&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要&quot;三级模式&quot;」的学习状态"></button></h3>
@@ -192,13 +192,14 @@
 <h2 id="h-9">第三节 关系代数 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 关系代数 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 关系代数 ★★」的学习状态"></button></h2>
 <p>关系代数就是&quot;对表做运算&quot;。考三种：</p>
 <h3 id="h-10">选择 σ：挑行<button type="button" class="sec-status" data-status-key="选择 σ：挑行" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择 σ：挑行」的学习状态"></button></h3>
-<p>σ(系别=&#39;计算机&#39;)(学生) = 从学生表里<strong>抽出满足条件的行</strong>（水平方向切）。</p>
+<p>σ<sub>系别=&#39;计算机&#39;</sub>(学生) = 从学生表里<strong>抽出满足条件的行</strong>（水平方向切）。条件写在 σ 的下标位置；手写时把条件写在 σ 右下方即可。</p>
 <h3 id="h-11">投影 π：挑列<button type="button" class="sec-status" data-status-key="投影 π：挑列" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「投影 π：挑列」的学习状态"></button></h3>
 <p>π(姓名,系别)(学生) = 只保留指定<strong>列</strong>（垂直方向切）。<strong>注意：投影会自动去掉重复行</strong>（只剩两列后原本不同的行可能变得相同）。</p>
 <h3 id="h-12">连接 ⋈：两张表拼起来<button type="button" class="sec-status" data-status-key="连接 ⋈：两张表拼起来" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「连接 ⋈：两张表拼起来」的学习状态"></button></h3>
 <ul>
-<li><strong>θ 连接</strong>：按&quot;某列 vs 某列&quot;的比较条件拼接。</li>
-<li><strong>自然连接</strong>：按<strong>所有同名属性</strong>相等来拼接，<strong>结果去掉重复列</strong>。</li>
+<li><strong>θ 连接</strong>：从笛卡尔积中保留满足一般比较条件（<code>=、&gt;、&lt;、≥、≤、≠</code>）的组合。</li>
+<li><strong>等值连接</strong>：θ 连接的条件只使用 <code>=</code>，但参与比较的两列仍都保留。</li>
+<li><strong>自然连接</strong>：按<strong>所有同名属性</strong>相等来拼接，并把同名列<strong>只保留一份</strong>。因此自然连接是特殊的等值连接。</li>
 </ul>
 <p><strong>公式三件套（考数字计算）</strong>：</p>
 <ul>
@@ -206,6 +207,43 @@
 <li>自然连接结果的<strong>列数 = s + u − 公共属性个数</strong>（重复列只留一份）。</li>
 <li>例：R(A,B,C) 有 3 行，S(C,D,E) 有 4 行，公共列 1 个（C）→ 自然连接列数 = 3+3−1 = <strong>5</strong>。</li>
 </ul>
+<p>自然连接的<strong>行数不能只看两表各有几行</strong>，要看公共属性的值能配成多少对。通用计数式为：</p>
+<blockquote>
+<p>连接行数 = 对每个公共属性值 v，分别计算 <code>R 中 v 的行数 × S 中 v 的行数</code>，再把各项相加。</p>
+</blockquote>
+<p>例如：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>R(A,B)</th>
+<th></th>
+<th>S(B,C)</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r1</td>
+<td>x</td>
+<td>x</td>
+<td>s1</td>
+</tr>
+<tr>
+<td>r2</td>
+<td>x</td>
+<td>x</td>
+<td>s2</td>
+</tr>
+<tr>
+<td>r3</td>
+<td>y</td>
+<td>z</td>
+<td>s3</td>
+</tr>
+</tbody></table>
+</div>
+<p>公共值 <code>x</code> 在 R 中有 2 行、在 S 中有 2 行，贡献 <code>2×2=4</code> 行；<code>y</code> 和 <code>z</code> 对不上，贡献 0 行，所以自然连接共 <strong>4 行</strong>。反向核对：实际组合正是 <code>(r1,x,s1)</code>、<code>(r1,x,s2)</code>、<code>(r2,x,s1)</code>、<code>(r2,x,s2)</code> 四行。</p>
+<p><strong>边界检查</strong>：若完全配不上，行数可为 0；若两表每行的公共属性值都相同，最多可达 <code>r×t</code> 行。故只给出两表行数而不给数据值时，只能回答“行数不确定，范围为 0～r×t”。</p>
 <p><strong>反例演示（易错）</strong>：自然连接 ≠ 笛卡尔积再挑同名相等的行之后还保留两份 C 列——重复列必须<strong>去掉一份</strong>；选项里列数算成 s+u 的是陷阱。另外投影和选择的别记反：<strong>选择管行（横向内容）、投影管列（纵向结构）</strong>，σ 的 σ 像&quot;筛子&quot;筛行，π 的两条竖线像切列的刀。</p>
 <p><strong>应试动作</strong>：背&quot;σ 行、π 列、⋈ 拼表去重列&quot;；行数列数计算用上面公式代数字。</p>
 <h2 id="h-13">第四节 关系规范化 <span class="stars">★★★</span>（选择题 + 案例题双考）<button type="button" class="sec-status" data-status-key="第四节 关系规范化 ★★★（选择题 + 案例题双考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 关系规范化 ★★★（选择题 + 案例题双考）」的学习状态"></button></h2>
@@ -218,6 +256,15 @@
 <li><strong>部分依赖</strong>：Y 依赖 K 的<strong>一部分</strong>就够了。例：(学号, 课程号)→姓名，其实学号→姓名——<strong>部分依赖是病</strong>。</li>
 <li><strong>传递依赖</strong>：X→Y、Y→Z 且 Y 不决定 X，则 Z 传递依赖 X。例：学号→系名→系主任——<strong>传递依赖是病</strong>。</li>
 </ul>
+<p>先把几个容易混的“键”分清：</p>
+<ul>
+<li><strong>超键</strong>：能决定全部属性的属性集，可以含多余属性；</li>
+<li><strong>候选键</strong>：不含多余属性的最小超键，可能不止一个；</li>
+<li><strong>主键</strong>：人为从候选键中选一个作为主要标识；</li>
+<li><strong>主属性</strong>：出现在<strong>任一候选键</strong>中的属性；其余是非主属性；</li>
+<li><strong>全码</strong>：整个关系模式的全部属性合在一起才构成候选键，即所有属性都是主属性且缺一不可。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：若候选键有 <code>AB</code> 和 <code>AC</code>，主属性是 <code>A、B、C</code> 的并集，不是只看被选作主键的 <code>AB</code> 而把 C 误判为非主属性。范式判断看的是<strong>所有候选键</strong>，不是只看主键。</p>
 <h3 id="h-16">范式判定：一级一级&quot;消病&quot;<button type="button" class="sec-status" data-status-key="范式判定：一级一级&amp;quot;消病&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「范式判定：一级一级&quot;消病&quot;」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
@@ -257,13 +304,85 @@
 <li>看有没有<strong>非主属性只依赖候选键一部分</strong> → 有则最高 1NF；</li>
 <li>再看有没有<strong>非主属性靠别的非主属性中转</strong> → 有则最高 2NF；都没有 → 3NF；若还有主属性被非主属性决定 → 不到 BCNF。</li>
 </ol>
+<p>把判定压成一张“谁依赖谁”表：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>观察到的依赖</th>
+<th>造成什么问题</th>
+<th>最高可能停在哪</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非主属性依赖组合候选键的一部分</td>
+<td>部分依赖</td>
+<td>1NF</td>
+</tr>
+<tr>
+<td>非主属性经另一个非主属性间接依赖候选键</td>
+<td>传递依赖</td>
+<td>2NF</td>
+</tr>
+<tr>
+<td>决定因素不是超键，但右部是主属性</td>
+<td>允许满足 3NF，不满足 BCNF</td>
+<td>3NF</td>
+</tr>
+<tr>
+<td>每个非平凡依赖的决定因素都是超键</td>
+<td>无上述问题</td>
+<td>BCNF</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>快判 1</strong>：候选键只有一个属性时，不可能存在“对候选键一部分”的依赖，因此只要满足 1NF 就自动满足 2NF。</p>
+<p><strong>快判 2</strong>：如果所有属性都是主属性，就没有“非主属性的部分依赖或传递依赖”，因此至少满足 3NF；但决定因素若不是超键，仍可能不到 BCNF。</p>
+<p>例：R(A,B,C)，F={AB→C，C→B}。候选键有 <code>AB</code> 和 <code>AC</code>，所以 A、B、C 全是主属性，R 满足 3NF；但 <code>C→B</code> 的决定因素 C 不是超键，因此不满足 BCNF，最高为 <strong>3NF</strong>。</p>
+<p><strong>主属性也会部分依赖，但不会把关系打回 1NF</strong>：上例候选键 <code>AC</code> 中，主属性 B 由 C 单独决定，即 B 对候选键 AC 存在部分依赖。2NF 的检查对象是<strong>非主属性</strong>，所以该依赖不违反 2NF；它真正违反的是更严格的 BCNF 条件。不要见到“部分依赖”四个字就机械判 1NF，先看被决定者是不是非主属性。</p>
 <p><strong>反例演示（易错）</strong>：R(学号, 姓名, 系, 系主任)，学号→姓名、学号→系、系→系主任。候选键是学号（单属性），<strong>不可能有部分依赖</strong>（键只有一个属性，&quot;一部分&quot;还是它自己），所以它<strong>直接就是 2NF</strong>；但学号→系→系主任是传递依赖，所以<strong>最高 2NF，不是 3NF</strong>。最常见的错误就是把&quot;有冗余&quot;当成&quot;不是 2NF&quot;——单属性键的表不存在部分依赖，第一步就能跳过。</p>
 <h3 id="h-17">候选键怎么求（案例题必考）<button type="button" class="sec-status" data-status-key="候选键怎么求（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「候选键怎么求（案例题必考）」的学习状态"></button></h3>
-<p><strong>口诀：只在依赖集右部出现过的属性，必在候选键里</strong>（它不被任何人决定，只能靠自己去决定别人）。从这些属性出发，看能否推出全部属性，不够就再拼上别的属性。</p>
+<p>候选键的严格工具是<strong>属性闭包</strong>。属性集 X 在函数依赖集 F 下能推出的全部属性，记作 <code>X⁺</code>。若 <code>X⁺</code> 等于关系的全部属性，则 X 是超键；再逐个删除 X 中属性，删谁都不能推全，X 才是候选键。</p>
+<p><strong>闭包算法（通用形式）</strong>：</p>
+<ol>
+<li>初始化 <code>X⁺ = X</code>；</li>
+<li>反复扫描每条函数依赖 <code>Y→Z</code>：若 <code>Y ⊆ X⁺</code>，就把 Z 加入 <code>X⁺</code>；</li>
+<li>一轮扫描后不再增加属性时停止；</li>
+<li>与属性全集比较，再做“逐个删除”最小性检查。</li>
+</ol>
+<p><strong>手算口诀：先把自己圈进去；左边已齐，就收右边；一轮没新增，才算停。</strong></p>
+<p><strong>Armstrong 三条公理</strong>是闭包推导的依据：</p>
+<ul>
+<li><strong>自反律</strong>：若 Y⊆X，则 X→Y；</li>
+<li><strong>增广律</strong>：若 X→Y，则 XZ→YZ；</li>
+<li><strong>传递律</strong>：若 X→Y 且 Y→Z，则 X→Z。</li>
+</ul>
+<p>考试常直接使用三条派生规则：<strong>分解</strong>（X→YZ 可推出 X→Y、X→Z）、<strong>合并</strong>（X→Y 且 X→Z 可推出 X→YZ）、<strong>伪传递</strong>（X→Y 且 WY→Z，可推出 WX→Z）。</p>
+<p><strong>完整演算</strong>：R(A1,A2,A3,A4,A5,A6)，F={A1→A3，A1A2→A4，A5A6→A1，A3A5→A6，A2A5→A6}，求一个候选键。</p>
+<ol>
+<li>从未出现在任何依赖右部的属性是 <code>A2、A5</code>，它们无法由其他属性推出，必须进入每个候选键；</li>
+<li>初始化 <code>(A2A5)⁺={A2,A5}</code>；</li>
+<li>用 <code>A2A5→A6</code>，加入 A6；</li>
+<li>用 <code>A5A6→A1</code>，加入 A1；</li>
+<li>用 <code>A1→A3</code>，加入 A3；</li>
+<li>用 <code>A1A2→A4</code>，加入 A4；</li>
+<li>闭包已是 <code>{A1,A2,A3,A4,A5,A6}</code>，故 A2A5 是超键；去掉 A2 或 A5 都无法推全，因此 <strong>A2A5 是候选键</strong>。</li>
+</ol>
+<p>反向验证：只用 A2 时没有任何依赖可启动；只用 A5 也无法启动，两个属性都不可删除，最小性成立。</p>
+<p>**启发式口诀：从未在依赖右部出现的属性，必在每个候选键里。**但这只是起点，不是答案；必须继续算闭包并检查最小性。</p>
 <p>例：R(A,B,C,D)，F = {A→B, B→C, D→B}。右部出现过的：B、C。从未出现在右部的：<strong>A、D</strong>。验证 AD：A→B，B→C，D→B → 可推出 A、B、C、D 全部 → <strong>候选键 = AD</strong>（ABD 虽也能决定全部，但含多余属性，是超键不是候选键）。</p>
-<p><strong>分解保持性</strong>：拆表后要求&quot;无损连接&quot;（能自然连接回原表，不丢信息也不多出假行）；3NF 分解还能保持函数依赖。案例题小问爱考&quot;分解后最高达到几范式&quot;。</p>
+<h3 id="h-18">分解后怎么检查：无损连接与保持函数依赖<button type="button" class="sec-status" data-status-key="分解后怎么检查：无损连接与保持函数依赖" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「分解后怎么检查：无损连接与保持函数依赖」的学习状态"></button></h3>
+<p>规范化不是“拆得越碎越好”。拆完必须过两道门：</p>
+<ol>
+<li><strong>无损连接</strong>：分表自然连接后能准确还原原关系，不丢行，也不产生原来不存在的假行；</li>
+<li><strong>保持函数依赖</strong>：原来的约束能在各分表内部检查，不必把表连接起来才能验证。</li>
+</ol>
+<p>二元分解 <code>R→R1、R2</code> 的常用无损快判是：公共属性 <code>R1∩R2</code> 能否函数决定 R1 或 R2 的全部属性，即检查 <code>(R1∩R2)→R1</code> 或 <code>(R1∩R2)→R2</code> 是否成立。</p>
+<p>例：R(A,B,C)，F={A→B}，分为 R1(A,B) 与 R2(A,C)。公共属性是 A，且 <code>A→AB</code> 成立，所以分解<strong>无损</strong>。</p>
+<p>反例：仍是 R(A,B,C)，若分为 R1(A,B) 与 R2(B,C)，公共属性是 B，但由 F 只能知道 A→B，推不出 <code>B→AB</code> 或 <code>B→BC</code>，因此不能判为无损，实际可能连接出假行。</p>
+<p><strong>保持依赖不等于无损</strong>：两者是不同检查项。3NF 综合算法通常可以兼顾无损和保持依赖；BCNF 分解保证无损，但可能牺牲某些依赖保持。案例题若只问“能否还原原表”，答无损；若问“能否分别在单表内检查全部约束”，答保持函数依赖。</p>
 <p><strong>应试动作</strong>：背四步判定法 + &quot;右部不出现的属性进候选键&quot;；考&quot;最高属于第几范式&quot;时<strong>从低往高验</strong>，卡在哪级就答前一级。</p>
-<h2 id="h-18">第五节 SQL <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第五节 SQL ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 SQL ★★★（案例题必考）」的学习状态"></button></h2>
+<h2 id="h-19">第五节 SQL <span class="stars">★★★</span>（案例题必考）<button type="button" class="sec-status" data-status-key="第五节 SQL ★★★（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 SQL ★★★（案例题必考）」的学习状态"></button></h2>
 <p>SQL 分四类语句，案例题主要考前两类：</p>
 <div class="table-wrap">
 <table>
@@ -289,9 +408,14 @@
 <td>GRANT / REVOKE</td>
 <td>授权、收权（选择题常考）</td>
 </tr>
+<tr>
+<td>TCL 事务控制</td>
+<td>COMMIT / ROLLBACK</td>
+<td>提交事务、回滚事务</td>
+</tr>
 </tbody></table>
 </div>
-<h3 id="h-19">SELECT 完整骨架（背顺序）<button type="button" class="sec-status" data-status-key="SELECT 完整骨架（背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「SELECT 完整骨架（背顺序）」的学习状态"></button></h3>
+<h3 id="h-20">SELECT 完整骨架（背顺序）<button type="button" class="sec-status" data-status-key="SELECT 完整骨架（背顺序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「SELECT 完整骨架（背顺序）」的学习状态"></button></h3>
 <pre><code class="language-sql">SELECT   列名或函数            -- ⑤ 挑列
 FROM     表                    -- ① 数据从哪来（可 JOIN ... ON）
 WHERE    行条件                -- ② 先筛行
@@ -300,7 +424,7 @@ HAVING   组条件                -- ④ 筛组（条件里通常带聚合函数
 ORDER BY 排序列 [ASC|DESC];    -- ⑥ 最后排序
 </code></pre>
 <p><strong>为什么 HAVING 和 WHERE 要分家</strong>：WHERE 在分组<strong>前</strong>筛原始行，此时还没有算出平均分这类聚合值；HAVING 在分组<strong>后</strong>筛&quot;每组&quot;。所以&quot;查询平均分大于 80 的课程&quot;必须写 <code>HAVING AVG(成绩)&gt;80</code>，写进 WHERE 直接报错——这是最常见的案例扣分点。</p>
-<h3 id="h-20">建表与完整性（案例题第 1 小问模板）<button type="button" class="sec-status" data-status-key="建表与完整性（案例题第 1 小问模板）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「建表与完整性（案例题第 1 小问模板）」的学习状态"></button></h3>
+<h3 id="h-21">建表与完整性（案例题第 1 小问模板）<button type="button" class="sec-status" data-status-key="建表与完整性（案例题第 1 小问模板）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「建表与完整性（案例题第 1 小问模板）」的学习状态"></button></h3>
 <pre><code class="language-sql">CREATE TABLE SC (
     Sno   CHAR(8),
     Cno   CHAR(6),
@@ -312,7 +436,28 @@ ORDER BY 排序列 [ASC|DESC];    -- ⑥ 最后排序
 );
 </code></pre>
 <p>三种完整性对应关系：主键 → 实体完整性；外键 → 参照完整性；CHECK/取值范围 → 用户定义完整性。<strong>选择题爱考对应关系，案例题爱考写外键子句</strong>。</p>
-<h3 id="h-21">视图与授权<button type="button" class="sec-status" data-status-key="视图与授权" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「视图与授权」的学习状态"></button></h3>
+<h3 id="h-22">数据增、删、改与修改表结构<button type="button" class="sec-status" data-status-key="数据增、删、改与修改表结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数据增、删、改与修改表结构」的学习状态"></button></h3>
+<p>只会 <code>SELECT</code> 不够，题目若出现“新增一条记录、批量涨价、删除不及格记录、给旧表加列”，分别认下面四个模板：</p>
+<pre><code class="language-sql">-- INSERT：列名和值按位置一一对应
+INSERT INTO Student(Sno, Sname, Dept)
+VALUES (&#39;20260001&#39;, &#39;李明&#39;, &#39;计算机&#39;);
+
+-- UPDATE：一定先写 WHERE，防止误改整表
+UPDATE SC
+SET Grade = Grade + 5
+WHERE Cno = &#39;C02&#39; AND Grade &lt; 60;
+
+-- DELETE：删除满足条件的行，不删除表结构
+DELETE FROM SC
+WHERE Grade IS NULL;
+
+-- ALTER：修改表结构，这里是给 Student 加一列
+ALTER TABLE Student
+ADD Email VARCHAR(50);
+</code></pre>
+<p><strong>反例演示（易错）</strong>：<code>DELETE SC WHERE ...</code> 少了 <code>FROM</code>；<code>UPDATE SC SET Grade=0</code> 若忘写 WHERE，会把整张表全部改成 0；<code>DROP TABLE SC</code> 则连表结构和数据一起删除，绝不是“删除几行”。</p>
+<p><strong>应试动作</strong>：看到“记录/元组”想到 <code>INSERT、UPDATE、DELETE</code>；看到“列/表结构”想到 <code>ALTER</code>；看到“整个对象”才考虑 <code>DROP</code>。</p>
+<h3 id="h-23">视图与授权<button type="button" class="sec-status" data-status-key="视图与授权" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「视图与授权」的学习状态"></button></h3>
 <pre><code class="language-sql">CREATE VIEW 计算机系学生 AS
     SELECT Sno, Sname FROM Student WHERE Dept = &#39;计算机&#39;;
 
@@ -320,14 +465,26 @@ GRANT SELECT, INSERT ON SC TO 用户1 WITH GRANT OPTION;  -- 授权（可转授�
 REVOKE SELECT ON SC FROM 用户1;                          -- 收回权限
 </code></pre>
 <p><strong>视图的动机</strong>：视图是一张<strong>虚表</strong>（只存定义不存数据），作用有二——① 简化常用查询；② <strong>提供逻辑独立性/安全隔离</strong>（用户只见视图字段，表结构改了只需改视图定义）。考题问&quot;视图的作用/提高了什么独立性&quot;→ 答<strong>逻辑独立性</strong>（视图是外模式级的东西，正好呼应第一节）。</p>
-<h3 id="h-22">嵌套查询（选择题常考）<button type="button" class="sec-status" data-status-key="嵌套查询（选择题常考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「嵌套查询（选择题常考）」的学习状态"></button></h3>
+<h3 id="h-24">嵌套查询（选择题常考）<button type="button" class="sec-status" data-status-key="嵌套查询（选择题常考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「嵌套查询（选择题常考）」的学习状态"></button></h3>
 <pre><code class="language-sql">SELECT Sname FROM Student
 WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 </code></pre>
 <p>IN 后面跟子查询结果集合；EXISTS 写法是&quot;存在即保留&quot;，选择题考&quot;IN 与 EXISTS 等价改写&quot;。</p>
+<p>把同一查询改写为 <code>EXISTS</code>：</p>
+<pre><code class="language-sql">SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE SC.Sno = S.Sno
+      AND SC.Cno = &#39;C02&#39;
+);
+</code></pre>
+<p>读法是：对外层每个学生 S，去 SC 表中寻找一行，使“学号等于当前学生学号且课程号为 C02”；只要找到一行，<code>EXISTS</code> 就为真，保留该学生。<code>SELECT 1</code> 中的 1 没有特殊数据含义，<code>EXISTS</code> 只关心“有没有行”，不关心子查询选出什么列。</p>
+<p><strong>反例演示（易错）</strong>：若漏掉关联条件 <code>SC.Sno = S.Sno</code>，只要全校有任何人选了 C02，子查询对每个学生都为真，最终会错误地返回全校学生。</p>
 <p><strong>应试动作</strong>：SELECT 骨架六个子句的<strong>执行顺序</strong>（FROM→WHERE→GROUP→HAVING→SELECT→ORDER）必须背熟，它是所有 SQL 题的做题导航。</p>
-<h2 id="h-23">第六节 事务、并发控制与故障恢复 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第六节 事务、并发控制与故障恢复 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 事务、并发控制与故障恢复 ★★」的学习状态"></button></h2>
-<h3 id="h-24">事务与 ACID<button type="button" class="sec-status" data-status-key="事务与 ACID" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「事务与 ACID」的学习状态"></button></h3>
+<h2 id="h-25">第六节 事务、并发控制与故障恢复 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第六节 事务、并发控制与故障恢复 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 事务、并发控制与故障恢复 ★★」的学习状态"></button></h2>
+<h3 id="h-26">事务与 ACID<button type="button" class="sec-status" data-status-key="事务与 ACID" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「事务与 ACID」的学习状态"></button></h3>
 <p>事务是&quot;要么全做、要么全不做&quot;的一组操作。经典例子：转账 = A 扣 100 + B 加 100，两个 UPDATE 必须同生共死。</p>
 <div class="table-wrap">
 <table>
@@ -361,52 +518,171 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 </tbody></table>
 </div>
 <p>考法：&quot;转账中途断电，钱不能凭空消失&quot;体现<strong>原子性</strong>；&quot;提交后断电重启数据仍在&quot;体现<strong>持久性</strong>。</p>
-<h3 id="h-25">并发带来的三类错误（反例各背一个）<button type="button" class="sec-status" data-status-key="并发带来的三类错误（反例各背一个）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「并发带来的三类错误（反例各背一个）」的学习状态"></button></h3>
+<h3 id="h-27">并发带来的四类错误（反例各背一个）<button type="button" class="sec-status" data-status-key="并发带来的四类错误（反例各背一个）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「并发带来的四类错误（反例各背一个）」的学习状态"></button></h3>
 <p>两个事务 T1、T2 同时操作 A=100：</p>
 <ol>
 <li><strong>丢失修改</strong>：T1 和 T2 都读 A=100，T1 加 10 写回 110，T2 减 5 写回 95——T1 的修改被<strong>覆盖丢了</strong>（应是 105）。</li>
 <li><strong>不可重复读</strong>：T1 读 A=100，T2 把 A 改成 200 并提交，T1 再读 A 变 200——<strong>同一事务内两次读结果不同</strong>。</li>
 <li><strong>读脏数据</strong>：T1 把 A 改成 200（还没提交），T2 读到 200；T1 随后<strong>回滚</strong>，A 恢复 100——T2 读到的 200 是&quot;脏&quot;的，根本没生效过。</li>
+<li><strong>幻读</strong>：T1 第一次查询“成绩≥90 的学生”得到 3 行；T2 插入一名 95 分学生并提交；T1 用同一条件再查得到 4 行——像凭空多出一行“幻影”。</li>
 </ol>
-<p>区分口诀：<strong>丢改是&quot;写丢了&quot;，不可重复读是&quot;读两次不一样&quot;，脏读是&quot;读到了没提交的&quot;</strong>。</p>
-<h3 id="h-26">封锁与两段锁协议<button type="button" class="sec-status" data-status-key="封锁与两段锁协议" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「封锁与两段锁协议」的学习状态"></button></h3>
+<p>不可重复读与幻读都表现为“两次查询不同”，区别在对象：前者是<strong>已有同一行的字段值变了</strong>，后者是<strong>满足条件的行数增减了</strong>。口诀：<strong>丢改是写被盖，脏读是读未交，不可重复是同一行变，幻读是结果集增减行。</strong></p>
+<h3 id="h-28">封锁与两段锁协议<button type="button" class="sec-status" data-status-key="封锁与两段锁协议" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「封锁与两段锁协议」的学习状态"></button></h3>
 <ul>
-<li><strong>S 锁（共享锁/读锁）</strong>：加锁后别人只能读不能写。S 与 S <strong>相容</strong>（都能读）。</li>
-<li><strong>X 锁（排他锁/写锁）</strong>：加锁后别人读写都不行。X 与任何锁都<strong>不相容</strong>。</li>
-<li><strong>两段锁协议</strong>：事务分两阶段——先<strong>扩展阶段</strong>（只加锁不放锁），后<strong>收缩阶段</strong>（只放锁不加锁）。遵守两段锁协议 → 调度<strong>可串行化</strong>（并发结果等价于某个串行执行），但<strong>不能避免死锁</strong>（反例：T1 锁了 A 等 B，T2 锁了 B 等 A）。这是经典选择题：&quot;两段锁协议保证可串行化、不保证不死锁&quot;。</li>
+<li><strong>S 锁（共享锁/读锁）</strong>：持锁事务可以读，其他事务还可加 S 锁一起读，但不能加 X 锁写。</li>
+<li><strong>X 锁（排他锁/写锁）</strong>：持锁事务可以读写，其他事务不能再加 S 或 X 锁。</li>
 </ul>
-<h3 id="h-27">故障恢复：REDO 与 UNDO<button type="button" class="sec-status" data-status-key="故障恢复：REDO 与 UNDO" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「故障恢复：REDO 与 UNDO」的学习状态"></button></h3>
+<p>相容矩阵必须会看：行表示“已有锁”，列表示“新申请锁”。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>已有锁 \ 新申请</th>
+<th align="right">S 锁</th>
+<th align="right">X 锁</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S 锁</td>
+<td align="right">相容</td>
+<td align="right">不相容</td>
+</tr>
+<tr>
+<td>X 锁</td>
+<td align="right">不相容</td>
+<td align="right">不相容</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li><strong>两段锁协议</strong>：事务分两阶段——先<strong>扩展阶段</strong>（只加锁不放锁），后<strong>收缩阶段</strong>（只放锁不加锁）。一旦释放了第一把锁，就不能再申请新锁。</li>
+<li>遵守两段锁协议 → 调度<strong>可串行化</strong>，即并发结果等价于某一种串行顺序执行；但它<strong>不能避免死锁</strong>。</li>
+</ul>
+<p>反例：T1 先锁 A 再等 B，T2 先锁 B 再等 A，两者都处于扩展阶段、都可能符合两段锁，却形成循环等待。因此固定结论是：<strong>两段锁保证可串行化，不保证不死锁。</strong></p>
+<p>选择题若给出调度并问是否可串行化，简化做法是尝试把所有冲突操作的先后关系画成“事务箭头”：若 T1 必须在 T2 前，同时又推出 T2 必须在 T1 前，形成环，就不能等价为串行调度；无环则可按拓扑顺序串行化。</p>
+<h3 id="h-29">故障恢复：先分故障，再定 REDO/UNDO<button type="button" class="sec-status" data-status-key="故障恢复：先分故障，再定 REDO/UNDO" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「故障恢复：先分故障，再定 REDO/UNDO」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>故障类型</th>
+<th>题干识别词</th>
+<th>影响范围</th>
+<th>主要恢复手段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务故障</td>
+<td>单个事务越界、死锁被撤销、逻辑错误</td>
+<td>某个事务</td>
+<td>利用日志 UNDO 该事务</td>
+</tr>
+<tr>
+<td>系统故障</td>
+<td>断电、操作系统崩溃、数据库进程崩溃</td>
+<td>内存内容丢失，磁盘通常未坏</td>
+<td>从检查点和日志执行 REDO/UNDO</td>
+</tr>
+<tr>
+<td>介质故障</td>
+<td>磁盘损坏、盘块不可读、数据库文件毁坏</td>
+<td>持久化数据受损</td>
+<td>装入备份，再用归档日志 REDO</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：断电通常属于系统故障，不等于磁盘介质已经损坏；“磁盘磁头损坏导致数据文件不可读”才是介质故障。系统故障靠日志即可恢复，介质故障必须先有备份作底。</p>
 <p>依靠<strong>日志</strong>（先写日志、后写数据库）+ <strong>检查点</strong>。系统重启后扫描日志：</p>
 <ul>
-<li>事务<strong>已提交</strong>（BEGIN 后有 COMMIT）→ <strong>REDO 重做</strong>（结果已该生效，重放保证落盘）；</li>
+<li>事务<strong>已提交</strong>（BEGIN 后有 COMMIT）→ <strong>REDO 重做</strong>（结果应该生效，重放保证落盘）；</li>
 <li>事务<strong>未提交</strong>（只有 BEGIN 没有 COMMIT）→ <strong>UNDO 撤销</strong>（做了一半的必须抹掉）。</li>
 </ul>
-<p>口诀：<strong>提交了就重做（REDO），没提交就撤销（UNDO）</strong>。检查点的作用：缩小扫描范围，检查点之前已落盘的不用管。</p>
-<h3 id="h-28">分布式数据库的透明性（选择题 0–1 题，背四个名词）<button type="button" class="sec-status" data-status-key="分布式数据库的透明性（选择题 0–1 题，背四个名词）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「分布式数据库的透明性（选择题 0–1 题，背四个名词）」的学习状态"></button></h3>
-<ul>
-<li><strong>分片透明</strong>（最高层）：用户不必知道数据怎么<strong>分块</strong>；</li>
-<li><strong>复制透明</strong>：不必知道数据在各节点<strong>复制</strong>了几份；</li>
-<li><strong>位置透明</strong>：不必知道数据存在<strong>哪个站点</strong>；</li>
-<li><strong>逻辑透明</strong>（最低层）：不必知道局部场地用什么数据模型。</li>
-</ul>
-<p><strong>应试动作</strong>：ACID 四个词背全称；三类并发错误能看描述对号入座；&quot;两段锁 → 可串行化但可能死锁&quot;背成一句；REDO/UNDO 口诀背死。</p>
-<h2 id="h-29">第七节 案例题专攻：数据库设计大题（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：数据库设计大题（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：数据库设计大题（约 15 分）」的学习状态"></button></h2>
+<p>口诀：<strong>提交了就重做（REDO），没提交就撤销（UNDO）</strong>。检查点的作用是记录当时的恢复起点和活跃事务，使恢复时不必从日志开头全量扫描；不能机械理解为“检查点之前的一切都不用管”，跨越检查点但尚未结束的事务仍要结合日志处理。</p>
+<p>日志片段若显示 T1 有 <code>COMMIT</code>、T2 只有 <code>BEGIN</code> 和若干写操作，那么恢复动作就是 <strong>REDO T1、UNDO T2</strong>。反向核对语义：提交的结果必须保持，未提交的半成品必须消失。</p>
+<h3 id="h-30">分布式数据库：四特性与四种透明性<button type="button" class="sec-status" data-status-key="分布式数据库：四特性与四种透明性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「分布式数据库：四特性与四种透明性」的学习状态"></button></h3>
+<p>先分清两类问题：“系统本身有什么特点”问<strong>特性</strong>；“用户不必知道什么细节”问<strong>透明性</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>白话含义</th>
+<th>题干识别词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>共享性</td>
+<td>各站点的数据能被全局用户共享</td>
+<td>跨节点共同访问数据</td>
+</tr>
+<tr>
+<td>自治性</td>
+<td>每个站点能独立管理本地数据库</td>
+<td>本地独立控制、独立运行</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>某站点故障时可使用其他站点或副本继续服务</td>
+<td>单点故障后系统仍可用</td>
+</tr>
+<tr>
+<td>分布性</td>
+<td>数据物理存放在网络中的多个场地</td>
+<td>多节点、不同地域存储</td>
+</tr>
+</tbody></table>
+</div>
+<p>四种透明性则按“用户被屏蔽的细节”识别：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>透明性</th>
+<th>用户不必知道</th>
+<th>关键词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分片透明（最高层）</td>
+<td>一张全局表如何横向或纵向分块</td>
+<td>分片、分块规则</td>
+</tr>
+<tr>
+<td>复制透明</td>
+<td>同一数据复制了几份、更新哪些副本</td>
+<td>副本、复制份数</td>
+</tr>
+<tr>
+<td>位置透明</td>
+<td>数据或副本位于哪个站点</td>
+<td>地址、节点、场地位置</td>
+</tr>
+<tr>
+<td>局部映像透明/逻辑透明（最低层）</td>
+<td>局部 DBMS 的数据模型和操作语言</td>
+<td>异构数据库、模型转换</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错对比</strong>：“表被怎样切成几块”是分片透明；“某一块放在哪座机房”是位置透明；“同一块存了三份”是复制透明。不要把“分片”误当成物理位置。</p>
+<p><strong>应试动作</strong>：ACID 四个词背全称；四类并发错误能看描述对号入座；S/X 锁只记住“S-S 唯一相容”；“两段锁 → 可串行化但可能死锁”背成一句；故障题先分事务/系统/介质，再套 REDO/UNDO；分布式题先判断问的是“特性”还是“透明性”。</p>
+<h2 id="h-31">第七节 案例题专攻：数据库设计大题（约 15 分）<button type="button" class="sec-status" data-status-key="第七节 案例题专攻：数据库设计大题（约 15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 案例题专攻：数据库设计大题（约 15 分）」的学习状态"></button></h2>
 <p>案例第 2 题一般是&quot;业务说明 + 不完整 E-R 图 + 关系模式 + SQL 填空&quot;，三小问固定套路：</p>
-<h3 id="h-30">套路一：E-R 图补全——读句子找联系<button type="button" class="sec-status" data-status-key="套路一：E-R 图补全——读句子找联系" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：E-R 图补全——读句子找联系」的学习状态"></button></h3>
+<h3 id="h-32">套路一：E-R 图补全——读句子找联系<button type="button" class="sec-status" data-status-key="套路一：E-R 图补全——读句子找联系" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路一：E-R 图补全——读句子找联系」的学习状态"></button></h3>
 <p>题干每个动词都暗示一条联系：&quot;学生<strong>选修</strong>课程&quot;&quot;教师<strong>讲授</strong>课程&quot;&quot;部门<strong>聘用</strong>员工&quot;。补空时：</p>
 <ol>
 <li>先数图中已有几实几联系，句子里的名词 = 实体、动词 = 联系；</li>
 <li>联系类型用业务常识判：&quot;一个 X 对应几个 Y&quot;，两边都可多个才是 m:n；</li>
 <li>m:n 联系上若有自己的属性（如&quot;成绩&quot;属于选课联系而非学生或课程），标在菱形上。</li>
 </ol>
-<h3 id="h-31">套路二：关系模式填空——主键外键往哪放<button type="button" class="sec-status" data-status-key="套路二：关系模式填空——主键外键往哪放" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：关系模式填空——主键外键往哪放」的学习状态"></button></h3>
+<h3 id="h-33">套路二：关系模式填空——主键外键往哪放<button type="button" class="sec-status" data-status-key="套路二：关系模式填空——主键外键往哪放" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路二：关系模式填空——主键外键往哪放」的学习状态"></button></h3>
 <ol>
 <li>每个实体一张表，主键 = 实体的码；</li>
 <li>1:n 联系：把 1 端主键放进 <strong>n 端表</strong>作外键；</li>
 <li>m:n 联系：单独建表，主键 = <strong>两端主键组合</strong>，联系的属性（成绩）也放这张表；</li>
 <li>小问问&quot;XX 表的主键是什么&quot;：先想清它是实体表还是联系表，联系表的主键几乎总是组合键。</li>
 </ol>
-<h3 id="h-32">套路三：SQL 填空——按 SELECT 骨架对号入座<button type="button" class="sec-status" data-status-key="套路三：SQL 填空——按 SELECT 骨架对号入座" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：SQL 填空——按 SELECT 骨架对号入座」的学习状态"></button></h3>
+<h3 id="h-34">套路三：SQL 填空——按 SELECT 骨架对号入座<button type="button" class="sec-status" data-status-key="套路三：SQL 填空——按 SELECT 骨架对号入座" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路三：SQL 填空——按 SELECT 骨架对号入座」的学习状态"></button></h3>
 <ol>
 <li>空 FROM：看 SELECT 和 WHERE 里用了哪些列，缺哪张表补哪张，多表加 <code>JOIN ... ON 连接条件</code>；</li>
 <li>空 WHERE：对应题干&quot;查询<strong>满足某条件</strong>的行&quot;，日期/字符串加引号；</li>
@@ -414,8 +690,19 @@ WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
 <li>空在 CREATE TABLE：主键 <code>PRIMARY KEY(...)</code>、外键 <code>FOREIGN KEY(...) REFERENCES 表(列)</code>；</li>
 <li>填完代入一条具体数据心里跑一遍（同第一课算法填空的自检法）。</li>
 </ol>
+<h3 id="h-35">套路四：题目要求“增加实体”时怎么改<button type="button" class="sec-status" data-status-key="套路四：题目要求“增加实体”时怎么改" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「套路四：题目要求“增加实体”时怎么改」的学习状态"></button></h3>
+<p>这类小问不是只在图上多画一个矩形，而是要完成“业务句子 → E-R 图 → 关系模式”整条链。</p>
+<p>例：在运动会业务中新增规则：“记录教练，教练属性包括教练编号、姓名；每名运动员恰由一名教练指导，一名教练可指导多名运动员。”</p>
+<ol>
+<li>名词“教练”有独立编号和属性 → 新增实体 <strong>教练</strong>；</li>
+<li>动词“指导”连接教练与运动员；</li>
+<li>一名教练对多名运动员、每名运动员只对一名教练 → 教练:运动员 = <strong>1:n</strong>；</li>
+<li>转关系模式：新增 <code>教练(教练编号, 姓名)</code>；把 1 端的教练编号放到 n 端，因此运动员表改为 <code>运动员(运动员编号, 姓名, 团编号, 教练编号)</code>，教练编号是外键。</li>
+</ol>
+<p><strong>反例演示（易错）</strong>：把“指导”单独建成 <code>指导(教练编号, 运动员编号)</code> 并非一定语法错误，但对没有自身属性的 1:n 联系属于多余拆表；标准答法是把 1 端主键并入 n 端。若题干改成“运动员可由多名教练共同指导”，两边都可多，才应单独建立联系表。</p>
+<p>范式小问的答题模板：<strong>“候选键为……；非主属性对候选键存在/不存在部分依赖，所以满足/不满足 2NF；存在/不存在传递依赖……，所以最高为……；建议分解为……，公共属性……能决定其中一表，故无损。”</strong> 按这条链写，结论和理由都有分。</p>
 <hr>
-<h2 id="h-33">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
+<h2 id="h-36">课后考题（请合上讲义作答）<button type="button" class="sec-status" data-status-key="课后考题（请合上讲义作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题（请合上讲义作答）」的学习状态"></button></h2>
 <p><strong>一、选择题</strong></p>
 <ol>
 <li><p>数据库系统中，用户可见的那部分数据的逻辑描述属于（ ）。
@@ -485,7 +772,7 @@ A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK</p>
 (2) 查询每个代表团的团名及该团运动员所获成绩的总和，只保留总分 300 分（含）以上的代表团；
 (3) 建立视图 vHighScore，显示成绩在 95 分（含）以上的运动员编号、姓名和项目名称。</p>
 <hr>
-<h2 id="h-34">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
+<h2 id="h-37">精华题（历年必考风格，考前必刷）<button type="button" class="sec-status" data-status-key="精华题（历年必考风格，考前必刷）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题（历年必考风格，考前必刷）」的学习状态"></button></h2>
 <ol>
 <li><p>【三级模式】视图属于三级模式结构中的（ ）；在数据库中存储索引的组织方式属于（ ）。</p>
 </li>
@@ -506,6 +793,31 @@ A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK</p>
 </li>
 </ol>
 <hr>
+<h2 id="h-38">补充题（扩充考点专项，不破坏原题编号）<button type="button" class="sec-status" data-status-key="补充题（扩充考点专项，不破坏原题编号）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题（扩充考点专项，不破坏原题编号）」的学习状态"></button></h2>
+<ol>
+<li><p>【属性闭包】关系模式 R(A,B,C,D,E)，F={A→BC，B→D，CD→E，E→A}。分别求 A⁺ 与 C⁺，并判断 A、C 是否为候选键。</p>
+</li>
+<li><p>【多个候选键与范式】关系模式 R(A,B,C)，F={AB→C，C→B}。求全部候选键、主属性，并判断最高范式。</p>
+</li>
+<li><p>【无损连接】R(A,B,C)，F={A→B}。下列哪个二元分解可用“公共属性决定其中一表”直接判为无损？
+A. R1(A,B)、R2(A,C)  B. R1(A,B)、R2(B,C)  C. 两者都可以  D. 两者都不可以</p>
+</li>
+<li><p>【自然连接行数】R(A,B) 的三行是 <code>(r1,x)、(r2,x)、(r3,y)</code>；S(B,C) 的三行是 <code>(x,s1)、(x,s2)、(z,s3)</code>。R⋈S 有多少行、多少列？</p>
+</li>
+<li><p>【EXISTS】把“查询选修 C02 的学生姓名”写成相关 <code>EXISTS</code> 子查询，并说明关联条件为何不能省略。</p>
+</li>
+<li><p>【锁相容】事务 T1 已对数据 A 加 S 锁。此时 T2 对 A 的哪种申请可以立即获准？
+A. 只可申请 S 锁  B. 只可申请 X 锁  C. S、X 都可  D. S、X 都不可</p>
+</li>
+<li><p>【幻读】T1 两次执行相同的范围查询，期间 T2 插入一条满足条件的记录并提交，导致第二次多出一行。这属于（ ）。
+A. 丢失修改  B. 读脏数据  C. 不可重复读  D. 幻读</p>
+</li>
+<li><p>【故障恢复】系统日志中 T1 已出现 COMMIT，T2 只有 BEGIN 和更新记录；随后主机断电，但磁盘未损坏。故障类型及恢复动作是什么？</p>
+</li>
+<li><p>【分布式数据库】“用户不必知道一张全局关系被水平切成哪些片段”属于哪种透明性？“某站点故障后仍可从其他副本提供服务”体现哪种特性？</p>
+</li>
+</ol>
+<hr>
 <details class="answers" id="answers" data-toc="答案与解析">
   <summary>
     <span class="chev" aria-hidden="true"></span>
@@ -514,7 +826,7 @@ A. REDO  B. UNDO  C. COMMIT  D. ROLLBACK</p>
   </summary>
   <div class="answers-body">
 
-<h3 id="h-36">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<h3 id="h-40">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
 <p><strong>1. B</strong>
 外模式就是某类用户看到的局部数据逻辑（典型实现即视图）。概念模式是全体逻辑，内模式/存储模式是物理层。<span class="stars">★</span> 对应关系直接背。</p>
 <p><strong>2. B</strong>
@@ -545,7 +857,7 @@ GRANT 授予、REVOKE 收回。DROP 是删除对象（DDL），DENY 不是软考
 两段锁协议：先统一加锁、后统一放锁 → 保证可串行化；但两个事务可能互相持有对方要的锁（T1 锁 A 等 B，T2 锁 B 等 A）→ <strong>不能避免死锁</strong>。A、C、D 均为典型错误表述。</p>
 <p><strong>15. B</strong>
 故障恢复口诀：<strong>已提交 REDO（重做），未提交 UNDO（撤销）</strong>。未完成的事务做了一半，必须撤销抹掉。ROLLBACK 是事务运行期间的主动回滚操作，不是恢复策略本身。</p>
-<h3 id="h-37">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<h3 id="h-41">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
 <p><strong>问题 1（E-R 图描述）</strong>：
 实体三个：代表团、运动员、比赛项目。</p>
 <ul>
@@ -589,7 +901,35 @@ JOIN 参赛 ON 运动员.运动员编号 = 参赛.运动员编号
 JOIN 比赛项目 ON 参赛.项目编号 = 比赛项目.项目编号
 WHERE 参赛.成绩 &gt;= 95;
 </code></pre>
-<h3 id="h-38">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-42">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>1. A⁺={A,B,C,D,E}，A 是候选键；C⁺={C}，C 不是候选键。</strong></p>
+<p>演算 A⁺：初始 <code>{A}</code>；A→BC，加入 B、C；B→D，加入 D；已有 C、D，可用 CD→E，加入 E；闭包达到全集。A 是单属性，无法再删，故为候选键。反向验证 C⁺：只有 C 时，CD→E 缺 D，其余依赖左部也不满足，没有新属性可加入，故停在 <code>{C}</code>。</p>
+<p><strong>2. 候选键为 AB、AC；主属性为 A、B、C；最高为 3NF。</strong></p>
+<p><code>(AB)⁺=ABC</code>，且 A⁺、B⁺都推不全，所以 AB 是候选键。<code>(AC)⁺</code> 中由 C→B 得到 B，故为 ABC；A⁺、C⁺都推不全，所以 AC 也是候选键。全部属性都出现在某个候选键中，都是主属性，因此至少满足 3NF；但依赖 C→B 中，C 不是超键，违反 BCNF，故最高 <strong>3NF</strong>。这也反向验证了“全属性皆主属性不代表一定是 BCNF”。</p>
+<p><strong>3. A。</strong></p>
+<p>分解 A 的公共属性是 A，且 A→AB，所以公共属性能决定 R1，分解无损。分解 B 的公共属性是 B，而由 F={A→B} 推不出 B→AB 或 B→BC，不能用该条件判为无损。</p>
+<p><strong>4. 4 行、3 列。</strong></p>
+<p>公共值 x 在 R 中出现 2 行，在 S 中出现 2 行，产生 <code>2×2=4</code> 个组合；y、z 互相配不上。列数为 <code>2+2−1=3</code>，属性是 A、B、C。用实际枚举四个组合可反向核对行数。</p>
+<p><strong>5. SQL 如下：</strong></p>
+<pre><code class="language-sql">SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE SC.Sno = S.Sno
+      AND SC.Cno = &#39;C02&#39;
+);
+</code></pre>
+<p><code>SC.Sno = S.Sno</code> 把内层记录与“当前外层学生”绑定。若省略，只要全校任意一人选了 C02，子查询对每个学生都为真，会错误返回全校学生。</p>
+<p><strong>6. A。</strong></p>
+<p>S 与 S 相容，所以 T2 可再申请 S 锁；S 与 X 不相容，X 锁必须等待。矩阵中唯一的“相容”格就是 S-S。</p>
+<p><strong>7. D。</strong></p>
+<p>同一范围查询的结果集新增了满足条件的行，属于幻读。不可重复读通常指已存在的同一行字段值改变；脏读必须涉及未提交数据。</p>
+<p><strong>8. 系统故障；REDO T1、UNDO T2。</strong></p>
+<p>断电但磁盘未损坏属于系统故障。T1 已提交，其结果必须保留，故 REDO；T2 未提交，半成品必须消失，故 UNDO。反向检查：恢复后数据库只应体现已提交事务。</p>
+<p><strong>9. 分片透明；可用性。</strong></p>
+<p>“怎样水平切块”描述分片规则，属于分片透明；站点失效后仍能借助其他副本服务，描述系统抗单点故障，体现可用性。后者问的是特性，不是复制透明。</p>
+<h3 id="h-43">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. 视图属于外模式；索引属于内模式</strong>
 视图是用户局部视图（外模式级，典型实现）；索引是物理存储组织（内模式级）。这题考&quot;具体事物 → 归哪一层&quot;：用户看到的逻辑 = 外模式，磁盘组织细节 = 内模式。</p>
 <p><strong>2. 列数 = 3 + 2 − 1 = 4 列</strong>（R 的 A、B、C 三列加 S 的 D 列，公共属性 B 只留一份）。

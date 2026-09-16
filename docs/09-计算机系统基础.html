@@ -198,9 +198,44 @@
 <li>−18 补码：反码 + 1 → <code>11101110</code>；</li>
 <li>−18 移码：补码符号位取反 → <code>01101110</code>。</li>
 </ol>
+<h3 id="h-6">1.2 移码为什么要“翻符号位”<button type="button" class="sec-status" data-status-key="1.2 移码为什么要“翻符号位”" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 移码为什么要“翻符号位”」的学习状态"></button></h3>
+<p>补码适合做加减，但直接按无符号数比较时，负数编码反而排在正数后面。浮点数经常要先比较阶码大小，如果每次都先解释正负再比较，硬件会更绕。<strong>移码把整个有符号范围平移到非负编码区间</strong>，使同字长、同偏置的阶码可以按无符号数顺序比较。</p>
+<p>以 4 位为例，补码范围是 −8～7；把补码符号位翻转后，移码恰好按数值从小到大排列：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">真值</th>
+<th>4 位补码</th>
+<th>4 位移码</th>
+<th align="right">按无符号解释移码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">−3</td>
+<td><code>1101</code></td>
+<td><code>0101</code></td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>0000</code></td>
+<td><code>1000</code></td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">+2</td>
+<td><code>0010</code></td>
+<td><code>1010</code></td>
+<td align="right">10</td>
+</tr>
+</tbody></table>
+</div>
+<p>于是 −3＜0＜2，对应移码无符号值也是 5＜8＜10。这里的“翻符号位”与“加偏置 2^(n−1)”效果相同：4 位时偏置为 8，−3+8=5，编码就是 <code>0101</code>。</p>
+<p><strong>反例</strong>：“移码就是所有位取反”——错。只翻补码的<strong>最高符号位</strong>，其余位保持不变。还要注意：只有字长和偏置相同的移码才能直接比较，不能拿 4 位移码和 8 位移码硬比。</p>
 <p><strong>反例前置</strong>：不能把原码 <code>10010010</code> 整体取反再加 1 得到补码；整体取反会把符号位也翻掉。正确做法是“<strong>原码符号位不变，数值位取反，再加 1</strong>”。另一个更快的方法是：从原码最低位向左找到第一个 1，这个 1 及其右边不变，左边数值位取反，符号位仍为 1。</p>
 <p>为什么日常运算用补码？因为补码能让减法变成加法，并把 +0、−0 合成一个。例如 4 位补码：<code>0011</code>（3）+ <code>1110</code>（−2）=<code>1 0001</code>，丢弃最高进位后是 <code>0001</code>（1）。同一套加法器即可做加减。</p>
-<h3 id="h-6">1.2 范围与溢出<button type="button" class="sec-status" data-status-key="1.2 范围与溢出" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 范围与溢出」的学习状态"></button></h3>
+<h3 id="h-7">1.3 范围与溢出<button type="button" class="sec-status" data-status-key="1.3 范围与溢出" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 范围与溢出」的学习状态"></button></h3>
 <p>8 位补码范围的公式代入：</p>
 <ul>
 <li>最小值 = −2^(8−1) = <strong>−128</strong>；</li>
@@ -214,8 +249,8 @@
 </ul>
 <p><strong>应试动作</strong>：背“负数原码 → 数值位取反 → +1 得补码；移码只翻补码符号位；n 位补码范围 −2^(n−1)～2^(n−1)−1”。题目给二进制最高位为 1 时，先确认它问的是原码还是补码，不能见 1 就只写负号。</p>
 <hr>
-<h2 id="h-7">第二节 浮点数：用有限位数装下极大与极小的数 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 浮点数：用有限位数装下极大与极小的数 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 浮点数：用有限位数装下极大与极小的数 ★★」的学习状态"></button></h2>
-<h3 id="h-8">2.1 通用形式与分工<button type="button" class="sec-status" data-status-key="2.1 通用形式与分工" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 通用形式与分工」的学习状态"></button></h3>
+<h2 id="h-8">第二节 浮点数：用有限位数装下极大与极小的数 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 浮点数：用有限位数装下极大与极小的数 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 浮点数：用有限位数装下极大与极小的数 ★★」的学习状态"></button></h2>
+<h3 id="h-9">2.1 通用形式与分工<button type="button" class="sec-status" data-status-key="2.1 通用形式与分工" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 通用形式与分工」的学习状态"></button></h3>
 <p>浮点数类似科学计数法：</p>
 <p><strong>N = M × R^E</strong></p>
 <ul>
@@ -226,7 +261,7 @@
 <p>例如二进制 <code>101.101₂</code>：</p>
 <p><code>101.101₂ = 0.101101₂ × 2^3</code>。</p>
 <p>一般题目约定尾数用补码、阶码用移码；若题面另有约定，以题面为准。</p>
-<h3 id="h-9">2.2 规格化<button type="button" class="sec-status" data-status-key="2.2 规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 规格化」的学习状态"></button></h3>
+<h3 id="h-10">2.2 规格化<button type="button" class="sec-status" data-status-key="2.2 规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 规格化」的学习状态"></button></h3>
 <p>同一个数可写成很多形式：<code>0.1011×2^3</code>、<code>0.01011×2^4</code> 数值相同，但后者浪费了一位有效精度。<strong>规格化</strong>就是让尾数的最高有效位尽快出现。</p>
 <p>对二进制补码尾数，常用判断：</p>
 <ul>
@@ -235,7 +270,7 @@
 <li>即尾数符号位与其后第一位<strong>不同</strong>。</li>
 </ul>
 <p><strong>反例</strong>：把 <code>0.001101×2^5</code> 当作规格化数是错的，它前面有两个无效 0。左移两位、阶码减 2，得到 <code>0.1101×2^3</code>，数值不变，因为尾数乘了 2²，同时指数除以 2²。</p>
-<h3 id="h-10">2.3 浮点加减：先对阶，再运算，再规格化<button type="button" class="sec-status" data-status-key="2.3 浮点加减：先对阶，再运算，再规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 浮点加减：先对阶，再运算，再规格化」的学习状态"></button></h3>
+<h3 id="h-11">2.3 浮点加减：先对阶，再运算，再规格化<button type="button" class="sec-status" data-status-key="2.3 浮点加减：先对阶，再运算，再规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 浮点加减：先对阶，再运算，再规格化」的学习状态"></button></h3>
 <p>机械步骤的动机：两把尺子的刻度不同不能直接相加，必须先把指数统一。</p>
 <p>计算 <code>0.1100×2^5 + 0.1010×2^3</code>：</p>
 <ol>
@@ -245,10 +280,42 @@
 <li>结果：<code>0.111010×2^5</code>，已规格化。</li>
 </ol>
 <p>为什么只让小阶向大阶看齐？若把大阶尾数左移，可能迅速越出尾数字段；小阶尾数右移虽然可能损失低位精度，但不会把整数部分挤爆。</p>
+<h4 id="h-12">运算后右规：尾数产生进位</h4>
+<p>计算：</p>
+<p><code>0.1100×2^3 + 0.1100×2^3</code></p>
+<ol>
+<li>两数阶码相同，不用对阶；</li>
+<li>尾数相加：<code>0.1100+0.1100=1.1000</code>；</li>
+<li>尾数超过 <code>0.xxxx</code> 形式，右移 1 位并把阶码加 1：</li>
+</ol>
+<blockquote>
+<p><code>1.1000×2^3 = 0.1100×2^4</code></p>
+</blockquote>
+<p>数值反验：<code>1.1000₂=1.5</code>，<code>1.5×8=12</code>；<code>0.1100₂=0.75</code>，<code>0.75×16=12</code>，左右相等。口诀是：<strong>尾数右移一位，阶码加一</strong>。</p>
+<h4 id="h-13">运算后左规：相减出现前导 0</h4>
+<p>计算：</p>
+<p><code>0.1011×2^4 − 0.1001×2^4</code></p>
+<ol>
+<li>尾数相减得 <code>0.0010×2^4</code>；</li>
+<li>正尾数应形如 <code>0.1xxx</code>，当前有两个无效前导 0；</li>
+<li>尾数左移 2 位、阶码减 2：</li>
+</ol>
+<blockquote>
+<p><code>0.0010×2^4 = 0.1000×2^2</code></p>
+</blockquote>
+<p>数值反验：<code>0.0010₂×16=2</code>，<code>0.1000₂×4=2</code>。口诀是：<strong>尾数左移几位，阶码就减几</strong>。</p>
+<h4 id="h-14">舍入：被移走的低位并非永远直接丢弃</h4>
+<p>若尾数字段只能保留 4 个小数位，计算中得到 <code>0.101011…</code>：</p>
+<ul>
+<li>直接截断得到 <code>0.1010</code>；</li>
+<li>若题目规定“就近舍入”，观察下一位及后续位，本例被舍部分大于半个最低保留单位，应进 1，得到 <code>0.1011</code>。</li>
+</ul>
+<p>具体采用截断、就近舍入还是其他规则，以题面为准。舍入后若再次产生进位，还要再做一次规格化。</p>
+<p><strong>对阶方向反例</strong>：把 <code>0.1010×2^3</code> 的尾数左移两位去迁就 <code>2^5</code>，会写成 <code>10.10×2^5</code>，数值被放大了 16 倍。正确等值变换是尾数<strong>右移</strong>两位：<code>0.001010×2^5</code>。小阶向大阶靠拢时，“阶码加多少，尾数就右移多少”。</p>
 <p>浮点异常：阶码超过上限是<strong>上溢</strong>；太小而无法表示是<strong>下溢</strong>。尾数右移时被舍弃的低位会造成精度损失。</p>
 <p><strong>应试动作</strong>：背“<strong>阶码定范围，尾数定精度；小阶向大阶看齐；对阶—尾数运算—规格化—舍入</strong>”。题目比较两种格式时，只看谁的阶码长、谁的尾数长即可。</p>
 <hr>
-<h2 id="h-11">第三节 CPU：谁计算，谁指挥 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 CPU：谁计算，谁指挥 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 CPU：谁计算，谁指挥 ★★」的学习状态"></button></h2>
+<h2 id="h-15">第三节 CPU：谁计算，谁指挥 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三节 CPU：谁计算，谁指挥 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三节 CPU：谁计算，谁指挥 ★★」的学习状态"></button></h2>
 <p>CPU 主要由<strong>运算器、控制器、寄存器组和内部总线</strong>组成。</p>
 <div class="table-wrap">
 <table>
@@ -308,7 +375,7 @@
 </div>
 <p>指令周期通常经历：<strong>取指 → 分析/译码 → 执行</strong>。冯·诺依曼机的指令和数据都以二进制存入同一存储器，CPU 不是靠“长相”区分它们，而是靠<strong>所处的指令周期阶段</strong>：取指阶段读到的是指令，执行阶段按指令要求读到的是数据。</p>
 <p><strong>反例</strong>：“PC 保存当前指令”是错的。当前指令在 IR，PC 通常已经指向下一条指令。“地址寄存器保存数据”也错，MAR 保存地址，MDR 保存数据。</p>
-<h3 id="h-12">3.1 常见性能指标<button type="button" class="sec-status" data-status-key="3.1 常见性能指标" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 常见性能指标」的学习状态"></button></h3>
+<h3 id="h-16">3.1 常见性能指标<button type="button" class="sec-status" data-status-key="3.1 常见性能指标" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 常见性能指标」的学习状态"></button></h3>
 <ul>
 <li>时钟周期 T = 1 / 主频 f；</li>
 <li>CPI = 总时钟周期数 / 指令条数；</li>
@@ -321,8 +388,8 @@
 <p>反向验算：2 GHz 在 1 秒内给出 2×10^9 个周期；5×10^8 条×4 周期/条也正好是 2×10^9 个周期。</p>
 <p><strong>应试动作</strong>：看到“下一条地址”选 PC，“当前指令”选 IR，“算术逻辑”选 ALU，“主存地址”选 MAR，“主存数据”选 MDR。性能计算先统一 Hz、秒、Byte/bit。</p>
 <hr>
-<h2 id="h-13">第四节 存储体系与主存编址 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第四节 存储体系与主存编址 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 存储体系与主存编址 ★★★」的学习状态"></button></h2>
-<h3 id="h-14">4.1 为什么分层<button type="button" class="sec-status" data-status-key="4.1 为什么分层" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 为什么分层」的学习状态"></button></h3>
+<h2 id="h-17">第四节 存储体系与主存编址 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第四节 存储体系与主存编址 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 存储体系与主存编址 ★★★」的学习状态"></button></h2>
+<h3 id="h-18">4.1 为什么分层<button type="button" class="sec-status" data-status-key="4.1 为什么分层" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 为什么分层」的学习状态"></button></h3>
 <p>理想存储器要又快、又大、又便宜，但现实中三者不能同时满足，所以按层次组合：</p>
 <p><strong>寄存器 → Cache → 主存 → 外存</strong></p>
 <p>从左到右：速度变慢、容量变大、每位成本降低。分层能奏效，是因为程序具有<strong>局部性</strong>：</p>
@@ -330,7 +397,7 @@
 <li>时间局部性：刚访问过的内容很快又访问，如循环中的指令；</li>
 <li>空间局部性：访问某地址后很快访问邻近地址，如顺序扫描数组。</li>
 </ul>
-<h3 id="h-15">4.2 常见存储器<button type="button" class="sec-status" data-status-key="4.2 常见存储器" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 常见存储器」的学习状态"></button></h3>
+<h3 id="h-19">4.2 常见存储器<button type="button" class="sec-status" data-status-key="4.2 常见存储器" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 常见存储器」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -373,7 +440,7 @@
 </tbody></table>
 </div>
 <p><strong>反例</strong>：RAM 的“随机”不是说数据随机，而是任一地址的访问时间近似相同。磁盘是直接存取，不是严格随机存取；磁带才是典型顺序存取。</p>
-<h3 id="h-16">4.3 主存编址与芯片扩展<button type="button" class="sec-status" data-status-key="4.3 主存编址与芯片扩展" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 主存编址与芯片扩展」的学习状态"></button></h3>
+<h3 id="h-20">4.3 主存编址与芯片扩展<button type="button" class="sec-status" data-status-key="4.3 主存编址与芯片扩展" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 主存编址与芯片扩展」的学习状态"></button></h3>
 <p>通用形式：</p>
 <ul>
 <li>存储单元数 = 最大地址 − 最小地址 + 1；</li>
@@ -390,13 +457,33 @@
 <li>总片数：4×2=<strong>8 片</strong>。</li>
 </ul>
 <p>反向验证：8×4K×8 bit = 256 Kbit；目标 16K×16 bit = 256 Kbit，容量相等。</p>
+<h4 id="h-21">非整齐边界的十六进制容量</h4>
+<p>真题不一定把首尾地址放在 <code>0000H</code>、<code>FFFFH</code> 这类整齐边界。例：地址范围 <code>B3000H～DABFFH</code>，按字节编址，求容量。</p>
+<pre><code class="language-text">  DABFFH
+− B3000H
+---------
+  27BFFH
++      1
+---------
+  27C00H
+</code></pre>
+<p>所以单元数为 <code>27C00H</code>。换成 KiB 时可先转十进制：</p>
+<p><code>27C00H = 2×16^4 + 7×16^3 + 12×16^2 = 162816 B = 159 KiB</code>。</p>
+<p>再用分段法交叉验证：</p>
+<ul>
+<li><code>B3000H～BFFFFH</code>：<code>D000H = 52 KiB</code>；</li>
+<li><code>C0000H～CFFFFH</code>：64 KiB；</li>
+<li><code>D0000H～DABFFH</code>：<code>AC00H = 43 KiB</code>；</li>
+<li>合计 <code>52+64+43=159 KiB</code>，一致。</li>
+</ul>
+<p><strong>反例</strong>：直接算“末地址−首地址”会少 1 个单元；本题若忘记 <code>+1</code>，就得到 <code>27BFFH</code>，无法整除成正确容量。</p>
 <p><strong>应试动作</strong>：地址范围一定写“末−首+1”；先看“按字节还是按字编址”；芯片题分别算字数倍数和位宽倍数，不能只拿总 bit 相除后就结束——虽然片数可能相同，但连接方式还要分组。</p>
 <hr>
-<h2 id="h-17">第五节 Cache：用小而快的存储器挡住慢主存 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 Cache：用小而快的存储器挡住慢主存 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 Cache：用小而快的存储器挡住慢主存 ★★★」的学习状态"></button></h2>
-<h3 id="h-18">5.1 原理与命中率<button type="button" class="sec-status" data-status-key="5.1 原理与命中率" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 原理与命中率」的学习状态"></button></h3>
+<h2 id="h-22">第五节 Cache：用小而快的存储器挡住慢主存 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第五节 Cache：用小而快的存储器挡住慢主存 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 Cache：用小而快的存储器挡住慢主存 ★★★」的学习状态"></button></h2>
+<h3 id="h-23">5.1 原理与命中率<button type="button" class="sec-status" data-status-key="5.1 原理与命中率" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 原理与命中率」的学习状态"></button></h3>
 <p>Cache 保存近期最可能再次使用的主存块。CPU 要数据时先查 Cache：找到叫<strong>命中</strong>，找不到叫<strong>未命中</strong>，再访问主存。主存与 Cache 的地址映射由<strong>硬件自动完成</strong>。</p>
 <p>命中率 h = 命中次数 / 总访问次数；未命中率 = 1−h。</p>
-<h3 id="h-19">5.2 平均访问时间：先判断题目的时间定义<button type="button" class="sec-status" data-status-key="5.2 平均访问时间：先判断题目的时间定义" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 平均访问时间：先判断题目的时间定义」的学习状态"></button></h3>
+<h3 id="h-24">5.2 平均访问时间：先判断题目的时间定义<button type="button" class="sec-status" data-status-key="5.2 平均访问时间：先判断题目的时间定义" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 平均访问时间：先判断题目的时间定义」的学习状态"></button></h3>
 <p>考试常见两种模型，差别在“未命中时是否已花过一次查 Cache 的时间”。</p>
 <p><strong>模型 A：题目直接给命中时间 tC、未命中访问时间 tM</strong></p>
 <p>Tavg = h×tC + (1−h)×tM</p>
@@ -408,49 +495,67 @@
 <p>Tavg = 10 + 0.05×100 = <strong>15 ns</strong>。</p>
 <p>两者为何不同？模型 A 的“100 ns”已被题目定义为未命中的完整时间；模型 B 的“100 ns”只是追加的主存时间。<strong>不要脱离题干死背一种公式。</strong></p>
 <p>反向范围检查：平均时间必须落在快路径与慢路径之间。模型 A 的 14.5 ns 在 10～100 ns 之间；若算出 4.5 ns，必错。</p>
-<h3 id="h-20">5.3 三种映射<button type="button" class="sec-status" data-status-key="5.3 三种映射" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 三种映射」的学习状态"></button></h3>
+<h3 id="h-25">5.3 三种映射<button type="button" class="sec-status" data-status-key="5.3 三种映射" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 三种映射」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
 <tr>
 <th>映射方式</th>
 <th>一个主存块可放哪里</th>
-<th>冲突率</th>
-<th>硬件复杂度</th>
+<th>地址中的选择字段</th>
+<th>替换范围</th>
+<th>冲突/复杂度</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>直接映射</td>
 <td>唯一固定行</td>
-<td>高</td>
-<td>低</td>
+<td>行号</td>
+<td>无需选择替换行</td>
+<td>冲突高、硬件简单</td>
 </tr>
 <tr>
 <td>全相联映射</td>
 <td>任意一行</td>
-<td>低</td>
-<td>高</td>
+<td>无行号/组号</td>
+<td>整个 Cache</td>
+<td>冲突低、硬件复杂</td>
 </tr>
 <tr>
 <td>组相联映射</td>
 <td>固定组内任意一行</td>
-<td>中</td>
-<td>中</td>
+<td>组号</td>
+<td>目标组内部</td>
+<td>两者折中</td>
 </tr>
 </tbody></table>
 </div>
-<p>口诀：<strong>直接最死板，全相联最自由，组相联折中</strong>。全相联自由度高，但必须同时比较多个标记，硬件复杂。</p>
+<p>三种地址结构可用下面的“切字段”记忆：</p>
+<pre><code class="language-text">直接映射：  标记 Tag | 行号 Line | 块内偏移 Offset
+全相联：    标记 Tag             | 块内偏移 Offset
+组相联：    标记 Tag | 组号 Set   | 块内偏移 Offset
+</code></pre>
+<ul>
+<li><strong>块内偏移</strong>回答“块里的第几个字节”，三种映射都有；</li>
+<li><strong>行号/组号</strong>回答“先去哪一行或哪一组找”；</li>
+<li><strong>标记</strong>回答“当前行里装的是不是我要的那个主存块”。</li>
+</ul>
+<p>直接映射的位置唯一，被占就直接覆盖，不需要选择算法；全相联要在整个 Cache 中选牺牲行，组相联只在指定组内选。常见替换算法有 <strong>LRU（最近最少使用）</strong>、FIFO 和随机替换。</p>
+<p>口诀：<strong>直接最死板，全相联最自由，组相联折中</strong>。全相联自由度高，但必须同时比较更多标记，硬件复杂。</p>
 <p><strong>应试动作</strong>：Cache 题先圈出“命中时间/主存时间/未命中总时间”字样再选模型；答案必须做范围检查。映射题背“冲突率：直接＞组相联＞全相联；复杂度反过来”。</p>
 <hr>
-<h2 id="h-21">第六节 磁盘：容量与时间是两套公式 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 磁盘：容量与时间是两套公式 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 磁盘：容量与时间是两套公式 ★★★」的学习状态"></button></h2>
-<h3 id="h-22">6.1 容量计算<button type="button" class="sec-status" data-status-key="6.1 容量计算" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 容量计算」的学习状态"></button></h3>
+<h2 id="h-26">第六节 磁盘：容量与时间是两套公式 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第六节 磁盘：容量与时间是两套公式 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第六节 磁盘：容量与时间是两套公式 ★★★」的学习状态"></button></h2>
+<h3 id="h-27">6.1 容量计算<button type="button" class="sec-status" data-status-key="6.1 容量计算" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 容量计算」的学习状态"></button></h3>
 <p>磁盘容量的通用形式：</p>
 <p><strong>容量 = 记录面数 × 每面磁道数 × 每磁道扇区数 × 每扇区字节数</strong></p>
 <p>注意“盘片数”不一定等于“记录面数”：一个盘片通常有两个面，但题目可能说明某些面不用。以题面为准。</p>
 <p>例：磁盘有 4 个记录面，每面 2000 磁道，每磁道 100 扇区，每扇区 512 B：</p>
 <p>容量 = 4×2000×100×512 = 409,600,000 B。</p>
 <p>若按二进制 MiB 换算：409,600,000 / 2^20 = <strong>390.625 MiB</strong>。</p>
-<h3 id="h-23">6.2 平均存取时间<button type="button" class="sec-status" data-status-key="6.2 平均存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 平均存取时间」的学习状态"></button></h3>
+<p><strong>盘片数与记录面数算例</strong>：某磁盘有 3 张盘片，每张上下两面，但最上面和最下面两个外侧面不用来记录，因此记录面数不是 <code>3×2=6</code>，而是 <code>6−2=4</code>。若每面 1000 道、每道 50 扇区、每扇区 512 B，则容量：</p>
+<p><code>4×1000×50×512 = 102,400,000 B</code>。</p>
+<p>题目若直接给“磁头数”，传统磁盘中通常可把有效磁头数视为记录面数；若同时给盘片数和记录面数，以明确给出的记录面数为准。</p>
+<h3 id="h-28">6.2 平均存取时间<button type="button" class="sec-status" data-status-key="6.2 平均存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 平均存取时间」的学习状态"></button></h3>
 <p><strong>磁盘存取时间 = 寻道时间 + 旋转等待时间 + 数据传输时间</strong></p>
 <ul>
 <li>寻道：磁头移动到目标磁道；</li>
@@ -471,11 +576,24 @@
 <li>平均存取 = 8+4.167+0.208 = <strong>12.375 ms</strong>。</li>
 </ol>
 <p>反向验算：3 个扇区是 1/40 圈，所以传输时间应是一圈 8.333 ms 的 1/40，即约 0.208 ms。</p>
+<h4 id="h-29">连续与非连续存放：差别在于定位成本付几次</h4>
+<p>若多个扇区连续存放，通常只在开头付一次寻道和平均旋转等待，随后连续传输；若每个块随机散落在不同磁道位置，题目常按“每块都要重新定位”计算。</p>
+<p>例：6000 RPM，平均寻道 5 ms，每道 100 个扇区，读取 4 个扇区。</p>
+<ul>
+<li>一圈时间：<code>60000/6000=10 ms</code>；</li>
+<li>平均旋转等待：<code>10/2=5 ms</code>；</li>
+<li>每扇区传输：<code>10/100=0.1 ms</code>。</li>
+</ul>
+<p>若 4 个扇区<strong>连续</strong>：</p>
+<p><code>T连续 = 5+5+4×0.1 = 10.4 ms</code>。</p>
+<p>若 4 个扇区分别随机位于不同位置，并假定每次都重新寻道、重新等待：</p>
+<p><code>T非连续 = 4×(5+5+0.1) = 40.4 ms</code>。</p>
+<p>反向检查：非连续方案重复支付了 4 次定位成本，时间应明显大于连续方案。题目若说明“同一磁道但不连续”，则是否重复寻道要按题意调整，不能机械乘块数。</p>
 <p><strong>反例</strong>：把“7200 转/分”直接代成 1/7200 秒是错的，单位还在“分钟”；必须先乘 60 秒/分。平均旋转等待不是一整圈，而是半圈。</p>
 <p><strong>应试动作</strong>：容量题画四格乘法；时间题写“寻道+半圈+传输”。看到 RPM 先算一圈毫秒数，最后统一单位。</p>
 <hr>
-<h2 id="h-24">第七节 I/O 控制、中断与总线 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 I/O 控制、中断与总线 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 I/O 控制、中断与总线 ★★」的学习状态"></button></h2>
-<h3 id="h-25">7.1 CPU 怎样与外设交换数据<button type="button" class="sec-status" data-status-key="7.1 CPU 怎样与外设交换数据" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 CPU 怎样与外设交换数据」的学习状态"></button></h3>
+<h2 id="h-30">第七节 I/O 控制、中断与总线 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 I/O 控制、中断与总线 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 I/O 控制、中断与总线 ★★」的学习状态"></button></h2>
+<h3 id="h-31">7.1 CPU 怎样与外设交换数据<button type="button" class="sec-status" data-status-key="7.1 CPU 怎样与外设交换数据" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 CPU 怎样与外设交换数据」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -513,7 +631,7 @@
 </tbody></table>
 </div>
 <p>DMA 的关键不是“完全不经过主存”，恰好相反，它让<strong>外设与主存直接成批交换数据</strong>，只是在传送期间暂时取得总线控制权，减少 CPU 逐字搬运。</p>
-<h3 id="h-26">7.2 中断过程<button type="button" class="sec-status" data-status-key="7.2 中断过程" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 中断过程」的学习状态"></button></h3>
+<h3 id="h-32">7.2 中断过程<button type="button" class="sec-status" data-status-key="7.2 中断过程" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 中断过程」的学习状态"></button></h3>
 <p>简化顺序：</p>
 <ol>
 <li>设备发出中断请求；</li>
@@ -524,7 +642,7 @@
 <li>恢复现场，返回原程序。</li>
 </ol>
 <p><strong>中断向量 = 中断服务程序的入口地址（或形成入口地址的信息）</strong>。断点是原程序被打断后应继续执行的位置，二者不是一回事。</p>
-<h3 id="h-27">7.3 总线分类<button type="button" class="sec-status" data-status-key="7.3 总线分类" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 总线分类」的学习状态"></button></h3>
+<h3 id="h-33">7.3 总线分类<button type="button" class="sec-status" data-status-key="7.3 总线分类" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 总线分类」的学习状态"></button></h3>
 <p>按传送内容：</p>
 <ul>
 <li>数据总线：传数据，通常双向；</li>
@@ -535,8 +653,8 @@
 <p>按范围可分芯片内总线、系统总线、外部/通信总线；按传送方式可分串行和并行。并行不是永远更快：线路较长、频率较高时，多根线的时序偏差和串扰会限制速度，现代高速外设常用高速串行链路。</p>
 <p><strong>应试动作</strong>：题干出现“CPU 忙等”选查询，“设备通知 CPU”选中断，“主存与高速外设批量直传”选 DMA。“中断服务入口”选中断向量；地址线 n 根、按字节编址就写 2^n B。</p>
 <hr>
-<h2 id="h-28">第八节 指令、寻址方式与 RISC/CISC <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第八节 指令、寻址方式与 RISC/CISC ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 指令、寻址方式与 RISC/CISC ★★★」的学习状态"></button></h2>
-<h3 id="h-29">8.1 寻址方式：指令里的地址字段究竟装了什么<button type="button" class="sec-status" data-status-key="8.1 寻址方式：指令里的地址字段究竟装了什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 寻址方式：指令里的地址字段究竟装了什么」的学习状态"></button></h3>
+<h2 id="h-34">第八节 指令、寻址方式与 RISC/CISC <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第八节 指令、寻址方式与 RISC/CISC ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 指令、寻址方式与 RISC/CISC ★★★」的学习状态"></button></h2>
+<h3 id="h-35">8.1 寻址方式：指令里的地址字段究竟装了什么<button type="button" class="sec-status" data-status-key="8.1 寻址方式：指令里的地址字段究竟装了什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 寻址方式：指令里的地址字段究竟装了什么」的学习状态"></button></h3>
 <p>设指令地址字段为 A，寄存器 R 的内容记为 (R)，主存单元 A 的内容记为 (A)，EA 为有效地址。</p>
 <div class="table-wrap">
 <table>
@@ -596,8 +714,19 @@
 <li>间接寻址得到 36。</li>
 </ul>
 <p><strong>反例</strong>：直接寻址不是“直接拿到操作数”，而是直接拿到操作数的地址；真正把操作数写在指令中的是立即寻址。寄存器间接寻址也不是操作数在寄存器，而是操作数的地址在寄存器。</p>
-<p>一般速度印象：立即/寄存器最快，涉及主存次数越多越慢；但具体排序要看题目的体系结构定义。</p>
-<h3 id="h-30">8.2 RISC 与 CISC<button type="button" class="sec-status" data-status-key="8.2 RISC 与 CISC" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 RISC 与 CISC」的学习状态"></button></h3>
+<h4 id="h-36">有效地址算例：相对、基址、变址别混</h4>
+<ul>
+<li><strong>相对寻址</strong>：若 <code>(PC)=1000</code>，地址字段 <code>A=40</code>，则 <code>EA=1000+40=1040</code>。程序整体搬家后 PC 随之改变，位移 40 不变，适合分支与位置无关代码。</li>
+<li><strong>基址寻址</strong>：若基址寄存器内容为 2000，位移 <code>A=120</code>，则 <code>EA=2000+120=2120</code>。基址常由系统设置，便于程序或存储区域重定位。</li>
+<li><strong>变址寻址</strong>：若数组首址 <code>A=5000</code>，变址寄存器内容为 12，则 <code>EA=5000+12=5012</code>。变址值常随循环变化，适合访问数组元素。</li>
+</ul>
+<p>三者表面都是“加法”，区别在谁是稳定基准、谁会变化：<strong>相对看 PC，基址看程序/区域起点，变址看数组下标或偏移</strong>。</p>
+<p>考试默认速度排序通常写：</p>
+<blockquote>
+<p><strong>立即寻址 ＞ 寄存器寻址 ＞ 直接寻址 ＞ 间接寻址</strong></p>
+</blockquote>
+<p>这里“＞”表示通常更快。立即数已随指令取入，寄存器寻址只访问寄存器；直接寻址要额外访问一次主存取操作数；间接寻址通常先去主存取有效地址，再去主存取操作数，额外访存最多。若题面明确给出某体系结构的周期数，应按题面数据计算。</p>
+<h3 id="h-37">8.2 RISC 与 CISC<button type="button" class="sec-status" data-status-key="8.2 RISC 与 CISC" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 RISC 与 CISC」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
 <thead>
@@ -645,10 +774,11 @@
 </tbody></table>
 </div>
 <p><strong>反例</strong>：“RISC 指令少，所以程序一定更短”是错的。完成同一复杂任务，RISC 可能需要更多条简单指令；它追求的是规则、快速、易流水化，不是源程序或机器码条数必然更少。</p>
+<p><strong>流水线辨析</strong>：CISC 并非“绝对不能使用流水线”，现代 CISC 处理器同样会采用流水、译码和内部微操作等技术；只是 RISC 的定长、规整指令和较少寻址方式让分段更均匀，<strong>更容易高效流水化</strong>。因此题目问“更适合流水线”选 RISC，问“能否使用流水线”时不能断言 CISC 完全不能。</p>
 <p>口诀：<strong>RISC：少、齐、快，多寄存器，Load/Store，硬布线，爱流水；CISC 反过来。</strong></p>
-<p><strong>应试动作</strong>：题干出现“定长、少寻址、多寄存器、Load/Store、硬布线、流水线”就锁定 RISC；“复杂指令、多寻址、可变长、微程序”锁定 CISC。</p>
+<p><strong>应试动作</strong>：题干出现“定长、少寻址、多寄存器、Load/Store、硬布线、易于流水”就锁定 RISC；“复杂指令、多寻址、可变长、微程序”锁定 CISC。注意“更适合流水线”不等于“另一类绝对不能流水”。</p>
 <hr>
-<h2 id="h-31">第九节 流水线：像工厂一样重叠执行指令 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 流水线：像工厂一样重叠执行指令 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 流水线：像工厂一样重叠执行指令 ★★」的学习状态"></button></h2>
+<h2 id="h-38">第九节 流水线：像工厂一样重叠执行指令 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 流水线：像工厂一样重叠执行指令 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 流水线：像工厂一样重叠执行指令 ★★」的学习状态"></button></h2>
 <p>若一条指令分成 k 段，各段时间为 t1、t2…tk，流水线周期 Δt = max(ti)。执行 n 条指令的理论时间：</p>
 <p><strong>T = (t1+t2+…+tk) + (n−1)×Δt</strong></p>
 <p>若题目按每段都取统一周期，实践公式：</p>
@@ -664,9 +794,9 @@
 <p><strong>反例</strong>：不能把流水线时间算成 n×最长段时间就直接结束，这漏掉了第一条指令把流水线“灌满”的建立时间。题目若明确采用统一时钟周期，才用 <code>(k+n−1)Δt</code>。</p>
 <p><strong>应试动作</strong>：先圈最长段求周期，再写“第一条完整时间+(n−1)周期”；用结果必须小于非流水时间做合理性检查。</p>
 <hr>
-<h2 id="h-32">第十节 系统可靠性：每个部件可靠，不等于组合后可靠 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★」的学习状态"></button></h2>
+<h2 id="h-39">第十节 系统可靠性：每个部件可靠，不等于组合后可靠 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★」的学习状态"></button></h2>
 <p>可靠度 R(t) 是系统在规定条件和时间内无故障运行的概率。</p>
-<h3 id="h-33">10.1 串联、并联、混联<button type="button" class="sec-status" data-status-key="10.1 串联、并联、混联" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.1 串联、并联、混联」的学习状态"></button></h3>
+<h3 id="h-40">10.1 串联、并联、混联<button type="button" class="sec-status" data-status-key="10.1 串联、并联、混联" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.1 串联、并联、混联」的学习状态"></button></h3>
 <p>串联系统必须所有部件都正常：</p>
 <p><strong>Rs = R1×R2×…×Rn</strong></p>
 <p>两个可靠度均为 0.9 的串联系统：Rs=0.9×0.9=<strong>0.81</strong>。串联环节越多，整体可靠度通常越低。</p>
@@ -677,29 +807,66 @@
 <p>混联系统先识别局部串/并联，算成一个等效模块，再向外算。例如 A（0.9）与由 B、C（各 0.8）组成的并联模块串联：</p>
 <p>RBC=1−(1−0.8)^2=0.96；总可靠度=0.9×0.96=<strong>0.864</strong>。</p>
 <p>反向检查：并联模块 0.96 应高于单件 0.8；与 A 串联后 0.864 应低于 A 的 0.9，符合直觉。</p>
-<h3 id="h-34">10.2 MTTF、MTTR、MTBF 与可用性<button type="button" class="sec-status" data-status-key="10.2 MTTF、MTTR、MTBF 与可用性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.2 MTTF、MTTR、MTBF 与可用性」的学习状态"></button></h3>
+<h3 id="h-41">10.2 MTTF、MTTR、MTBF 与可用性<button type="button" class="sec-status" data-status-key="10.2 MTTF、MTTR、MTBF 与可用性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.2 MTTF、MTTR、MTBF 与可用性」的学习状态"></button></h3>
 <ul>
-<li>MTTF：平均无故障时间；</li>
-<li>MTTR：平均修复时间；</li>
-<li>对可修复系统，一个“正常+修复”周期常写 <strong>MTBF = MTTF + MTTR</strong>；有些资料把 MTBF 近似当作相邻故障间的正常运行时间，题目若给定义应服从题面；</li>
-<li>稳态可用性：<strong>A = MTTF / (MTTF+MTTR) = MTTF/MTBF</strong>。</li>
+<li><strong>MTTF</strong>：平均无故障运行时间；</li>
+<li><strong>MTTR</strong>：平均修复时间；</li>
+<li><strong>MTBF</strong>：平均故障间隔。教材对它是否包含修复时间存在两种口径，题目若明确定义必须服从题面。</li>
 </ul>
-<p>例：MTTF=990 h，MTTR=10 h：</p>
-<p>A=990/(990+10)=<strong>0.99=99%</strong>。</p>
-<p>若恒定失效率 λ，指数可靠度模型：</p>
-<p><strong>R(t)=e^(−λt)</strong>，且 MTTF=1/λ。</p>
-<p>当 λt 很小时，可近似 R(t)≈1−λt。例如 λ=10^−5/h，t=1000 h：近似 R≈1−0.01=0.99；精确值 e^−0.01≈0.99005，二者接近。</p>
-<p><strong>应试动作</strong>：串联直接乘；并联先算“全坏”再用 1 减；混联从内到外。涉及 MTTF/MTTR 时先看题目问“可靠度”还是“可用性”，不要把 A=MTTF/(MTTF+MTTR) 当成任意时长的可靠度。</p>
+<p>最稳妥的做法是先写“运行时间 U”和“停机修复时间 D”：</p>
+<blockquote>
+<p><strong>稳态可用性 A = U / (U+D)</strong></p>
+</blockquote>
+<p>若题目把 U 称为 MTTF，则 <code>A=MTTF/(MTTF+MTTR)</code>；若把 MTBF 定义为“正常运行时间”，则 <code>A=MTBF/(MTBF+MTTR)</code>；若把 MTBF 定义为完整的“运行+修复”周期，则 <code>MTBF=MTTF+MTTR</code>，于是 <code>A=MTTF/MTBF</code>。</p>
+<p>例：平均运行 990 h 后故障，平均修复 10 h：</p>
+<p><code>A=990/(990+10)=0.99=99%</code>。</p>
+<p>反向理解：每个平均周期 1000 h 中约有 990 h 可用、10 h 停机，比例就是 99%。</p>
+<h4 id="h-42">可靠度：在指定时长内不故障的概率</h4>
+<p>若假设失效率 λ 恒定，指数可靠度模型为：</p>
+<blockquote>
+<p><strong>R(t)=e^(−λt)，MTTF=1/λ</strong></p>
+</blockquote>
+<p>当 λt 很小时，可近似 <code>R(t)≈1−λt</code>。例如 <code>λ=10^−5/h</code>，<code>t=1000 h</code>：</p>
+<ul>
+<li>精确值：<code>R(1000)=e^(−0.01)≈0.99005</code>；</li>
+<li>近似值：<code>1−0.01=0.99</code>。</li>
+</ul>
+<p>二者接近，但“可靠度”必须带观察时长 t；只给 MTTF 不能直接说某一时刻可靠度是多少。</p>
+<h4 id="h-43">从“台数、小时、故障数”反推失效率</h4>
+<p>1000 台同型设备各观察 1000 h，共发生 10 次故障。总设备小时为：</p>
+<p><code>1000×1000=1,000,000 台·h</code>。</p>
+<p>估计失效率：</p>
+<p><code>λ=故障次数/总设备小时=10/1,000,000=10^−5/h</code>。</p>
+<p>代入指数模型，单台设备连续运行 1000 h 的可靠度约为 <code>e^(−0.01)=0.99005</code>。若题目直接给“1000 台中 990 台撑过 1000 h”，经验可靠度也可算 <code>990/1000=0.99</code>，与模型结果接近。</p>
+<p><strong>易错点</strong>：分母不是“1000 小时”，而是所有设备贡献的<strong>总设备小时</strong>。漏乘设备台数会把失效率放大 1000 倍。</p>
+<h4 id="h-44">可维护性：规定时间内修好的概率</h4>
+<p>若修复率 μ 恒定，且 <code>MTTR=1/μ</code>，则在时间 t 内完成修复的概率（可维护度）为：</p>
+<blockquote>
+<p><strong>M(t)=1−e^(−μt)=1−e^(−t/MTTR)</strong></p>
+</blockquote>
+<p>例：<code>MTTR=2 h</code>，问 4 h 内修复的概率：</p>
+<p><code>M(4)=1−e^(−4/2)=1−e^(−2)≈1−0.1353=0.8647</code>。</p>
+<p>时间越充裕，修好的概率越高；这与可靠度 <code>R(t)</code> 随时间增长而下降的方向相反。</p>
+<blockquote>
+<p><strong>口径提醒</strong>：有些备考资料写“可靠性指标 = MTTF/(1+MTTF)、可用性指标 = MTBF/(1+MTBF)、可维护性指标 = 1/(1+MTTR)”。这类式子只有在时间先按某个基准单位无量纲化、且题面明确把它定义为归一化评分时才可使用；它们不是通用的可靠度函数或稳态可用性公式。普通计算题优先使用本节带时间/周期含义的公式。</p>
+</blockquote>
+<p><strong>应试动作</strong>：串联直接乘；并联先算“全坏”再用 1 减；混联从内到外。看到“在 t 时间内不坏”用 <code>R(t)</code>；看到“长期能用的时间比例”用可用性 A；看到“在 t 时间内修好”用 <code>M(t)</code>。先看 MTBF 的题面定义，再决定分母，绝不把三种概率混成一个式子。</p>
 <hr>
-<h2 id="h-35">第十一节 校验码：发现传输中的比特翻转 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十一节 校验码：发现传输中的比特翻转 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十一节 校验码：发现传输中的比特翻转 ★★★」的学习状态"></button></h2>
-<h3 id="h-36">11.1 码距与能力<button type="button" class="sec-status" data-status-key="11.1 码距与能力" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.1 码距与能力」的学习状态"></button></h3>
+<h2 id="h-45">第十一节 校验码：发现传输中的比特翻转 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十一节 校验码：发现传输中的比特翻转 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十一节 校验码：发现传输中的比特翻转 ★★★」的学习状态"></button></h2>
+<h3 id="h-46">11.1 码距与能力<button type="button" class="sec-status" data-status-key="11.1 码距与能力" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.1 码距与能力」的学习状态"></button></h3>
 <p>两个合法码字不同位的最少数量叫<strong>最小码距 dmin</strong>。</p>
 <ul>
 <li>要检测 e 位错误：dmin ≥ e+1；</li>
 <li>要纠正 t 位错误：dmin ≥ 2t+1。</li>
 </ul>
 <p>这说明“检错”和“纠错”不是一回事：发现“有人错了”比指出“具体哪位错了”容易。</p>
-<h3 id="h-37">11.2 奇偶校验<button type="button" class="sec-status" data-status-key="11.2 奇偶校验" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.2 奇偶校验」的学习状态"></button></h3>
+<p><strong>代入算例</strong>：若某编码的最小码距 <code>dmin=4</code>：</p>
+<ul>
+<li>检错能力满足 <code>4≥e+1</code>，所以最多保证检测 <code>e=3</code> 位错误；</li>
+<li>纠错能力满足 <code>4≥2t+1</code>，即 <code>2t≤3</code>，所以最多保证纠正 <code>t=1</code> 位错误。</li>
+</ul>
+<p>反向检查：若想纠正 2 位错误，至少需要 <code>dmin≥2×2+1=5</code>，码距 4 不够。口诀：<strong>检 e 要 e+1，纠 t 要 2t+1</strong>。</p>
+<h3 id="h-47">11.2 奇偶校验<button type="button" class="sec-status" data-status-key="11.2 奇偶校验" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.2 奇偶校验」的学习状态"></button></h3>
 <p>加 1 位校验位，使整个码字中 1 的数量为奇数（奇校验）或偶数（偶校验）。</p>
 <p>数据 <code>1011001</code> 有 4 个 1：</p>
 <ul>
@@ -708,7 +875,7 @@
 </ul>
 <p>奇偶校验能发现<strong>奇数个位</strong>错误，不能发现所有偶数个位错误，也不能定位纠错。</p>
 <p><strong>反例</strong>：不能说“奇校验只能发现奇数值错误”。这里的奇数指<strong>发生翻转的位数为奇数</strong>，与数据表示的数值奇偶无关。</p>
-<h3 id="h-38">11.3 CRC：用模二除法求余数<button type="button" class="sec-status" data-status-key="11.3 CRC：用模二除法求余数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.3 CRC：用模二除法求余数」的学习状态"></button></h3>
+<h3 id="h-48">11.3 CRC：用模二除法求余数<button type="button" class="sec-status" data-status-key="11.3 CRC：用模二除法求余数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.3 CRC：用模二除法求余数」的学习状态"></button></h3>
 <p>设信息位为 M，生成多项式对应二进制除数 G 有 r+1 位，则校验位有 r 位：</p>
 <ol>
 <li>在 M 后补 r 个 0；</li>
@@ -717,14 +884,27 @@
 <li>接收方用同一 G 除完整码字，余数为 0 表示“未检测到错误”。</li>
 </ol>
 <p>例：信息 <code>1101</code>，生成多项式 G=<code>1011</code>（最高次数 3，所以 r=3）：</p>
-<ul>
-<li>被除数：<code>1101 000</code>；</li>
-<li>模二除以 <code>1011</code>，余数为 <code>001</code>；</li>
-<li>发送码字：<code>1101 001</code>；</li>
-<li><code>1101001</code> 再除以 <code>1011</code>，余数为 <code>000</code>。</li>
-</ul>
+<p><strong>第 1 步：补 0。</strong> 除数 <code>1011</code> 有 4 位，最高次数 r=3，所以信息后必须补 <strong>3 个 0</strong>：</p>
+<p><code>1101 → 1101000</code>。</p>
+<p><strong>第 2 步：逐轮模二除。</strong> 每轮把当前最高位 1 与除数最高位对齐；“减法”就是 XOR，不借位。做完一轮后丢掉左侧 0，再落下下一位：</p>
+<pre><code class="language-text">1101 XOR 1011 = 0110，落下 0 → 1100
+1100 XOR 1011 = 0111，落下 0 → 1110
+1110 XOR 1011 = 0101，落下 0 → 1010
+1010 XOR 1011 = 0001
+</code></pre>
+<p>最后取 r=3 位，余数是 <strong><code>001</code></strong>。</p>
+<p><strong>第 3 步：拼发送码字。</strong> 用余数替换原来补的 3 个 0：</p>
+<p><code>C = 1101 001</code>。</p>
+<p><strong>第 4 步：反向验算。</strong> 接收方计算 <code>1101001 ÷ 1011</code>：</p>
+<pre><code class="language-text">1101 XOR 1011 = 0110，落下 0 → 1100
+1100 XOR 1011 = 0111，落下 0 → 1110
+1110 XOR 1011 = 0101，落下 1 → 1011
+1011 XOR 1011 = 0000
+</code></pre>
+<p>余数为 <code>000</code>，说明该码字能被 G 整除。</p>
+<p><strong>反例</strong>：G 有 4 位却只在信息后补 2 个 0，拿 <code>110100</code> 去除，会得到另一组余数，而且发送码字长度也少一位。校验位数永远是“生成多项式最高次数 r”，也就是“除数位数−1”，不是凭信息位长度猜。</p>
 <p>CRC 擅长检错，尤其是突发错误，但一般<strong>不能依据余数唯一定位并纠正错误</strong>。</p>
-<h3 id="h-39">11.4 海明码：让校验结果直接指出错误位置<button type="button" class="sec-status" data-status-key="11.4 海明码：让校验结果直接指出错误位置" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.4 海明码：让校验结果直接指出错误位置」的学习状态"></button></h3>
+<h3 id="h-49">11.4 海明码：让校验结果直接指出错误位置<button type="button" class="sec-status" data-status-key="11.4 海明码：让校验结果直接指出错误位置" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.4 海明码：让校验结果直接指出错误位置」的学习状态"></button></h3>
 <p>若有 m 位数据、r 位校验位，为纠正 1 位错误需满足：</p>
 <p><strong>2^r ≥ m+r+1</strong></p>
 <p>右侧的 m+r 是每个可能出错的位置，另加 1 种“无错”状态；r 个校验位能产生 2^r 种状态。</p>
@@ -762,7 +942,67 @@
 <li>p4 检查 4、5、6、7 → 已有两个 1，所以 p4=0；</li>
 <li>码字为 <code>0110011</code>。</li>
 </ul>
-<p>若第 6 位翻转，三个校验组的异常结果按 <code>s4s2s1</code> 排列为 <code>110₂=6</code>，直接指出第 6 位，翻回即可。</p>
+<p>为什么校验位必须放在 1、2、4、8…？把位置编号写成二进制就看出来了：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">位置</th>
+<th>二进制编号</th>
+<th>由哪些校验位检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td>001</td>
+<td>p1</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>010</td>
+<td>p2</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>011</td>
+<td>p2、p1</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>100</td>
+<td>p4</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>101</td>
+<td>p4、p1</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>110</td>
+<td>p4、p2</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>111</td>
+<td>p4、p2、p1</td>
+</tr>
+</tbody></table>
+</div>
+<p>p1 检查二进制最低位为 1 的位置，p2 检查中间位为 1 的位置，p4 检查最高位为 1 的位置。三个检查结果拼起来，天然就是出错位置的二进制编号。</p>
+<h4 id="h-50">第 6 位翻转后，怎样重算综合征</h4>
+<p>原码字 <code>0110011</code> 的第 6 位原为 1。翻转后收到：</p>
+<p><code>0110001</code>。</p>
+<p>采用偶校验，逐组把校验位本身也算进去：</p>
+<ul>
+<li><strong>s1</strong> 检查位置 1、3、5、7：<code>0、1、0、1</code>，共 2 个 1，仍为偶数，所以 <code>s1=0</code>；</li>
+<li><strong>s2</strong> 检查位置 2、3、6、7：<code>1、1、0、1</code>，共 3 个 1，奇数异常，所以 <code>s2=1</code>；</li>
+<li><strong>s4</strong> 检查位置 4、5、6、7：<code>0、0、0、1</code>，共 1 个 1，奇数异常，所以 <code>s4=1</code>。</li>
+</ul>
+<p>按 <code>s4s2s1</code> 排列得到：</p>
+<p><code>110₂ = 6</code>。</p>
+<p>因此第 6 位出错，把收到码字的第 6 位从 0 翻回 1，恢复为 <code>0110011</code>。再次重算三组都为偶数，综合征变成 <code>000</code>，完成反向验证。</p>
+<p><strong>反例</strong>：若把校验位随意放在 3、5、6 位，三个校验组就不再分别代表位置编号的 1、2、4 三个二进制权值；即使发现某些组异常，也不能把 <code>s4s2s1</code> 直接解释成错误位置。放在 2 的幂位置不是排版习惯，而是定位机制本身。</p>
 <div class="table-wrap">
 <table>
 <thead>
@@ -795,11 +1035,11 @@
 </div>
 <p><strong>应试动作</strong>：看到“模二除法”选 CRC；“校验位插在 1、2、4、8 位、能定位”选海明码；海明位数从 r=1 往上试，等号满足也算够。</p>
 <hr>
-<h2 id="h-40">第三部分 课后考题<button type="button" class="sec-status" data-status-key="第三部分 课后考题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三部分 课后考题」的学习状态"></button></h2>
+<h2 id="h-51">第三部分 课后考题<button type="button" class="sec-status" data-status-key="第三部分 课后考题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三部分 课后考题」的学习状态"></button></h2>
 <blockquote>
 <p>建议先独立完成，再翻到文件末尾核对答案。</p>
 </blockquote>
-<h3 id="h-41">一、选择题（15 题）<button type="button" class="sec-status" data-status-key="一、选择题（15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、选择题（15 题）」的学习状态"></button></h3>
+<h3 id="h-52">一、选择题（15 题）<button type="button" class="sec-status" data-status-key="一、选择题（15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、选择题（15 题）」的学习状态"></button></h3>
 <p><strong>1.</strong> 8 位补码 <code>1110 1100</code> 表示的十进制数是（ ）。</p>
 <p>A. −20<br>B. −19<br>C. 236<br>D. −108</p>
 <p><strong>2.</strong> 对长度相同的两种浮点格式，格式甲的阶码比格式乙长、尾数比格式乙短。在其他约定相同的情况下，正确的是（ ）。</p>
@@ -830,7 +1070,7 @@
 <p>A. 0.64<br>B. 0.80<br>C. 0.96<br>D. 1.60</p>
 <p><strong>15.</strong> 4 位数据采用能纠正一位错误的海明码，至少需要的校验位数是（ ）。</p>
 <p>A. 2<br>B. 3<br>C. 4<br>D. 5</p>
-<h3 id="h-42">二、综合计算题（2 题）<button type="button" class="sec-status" data-status-key="二、综合计算题（2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、综合计算题（2 题）」的学习状态"></button></h3>
+<h3 id="h-53">二、综合计算题（2 题）<button type="button" class="sec-status" data-status-key="二、综合计算题（2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、综合计算题（2 题）」的学习状态"></button></h3>
 <p><strong>16. Cache 与磁盘综合题</strong></p>
 <p>某系统先访问 Cache，Cache 查询时间为 8 ns，命中率为 96%；若未命中，再追加 92 ns 访问主存。</p>
 <p>（1）求一次访存的平均时间。<br>（2）某磁盘有 6 个记录面，每面 4000 个磁道，每磁道 200 个扇区，每扇区 512 B，求磁盘格式化容量（以 B 和 MiB 表示）。<br>（3）该磁盘转速 10000 RPM，平均寻道时间 4 ms，读取连续 5 个扇区，忽略控制器额外开销，求平均存取时间。</p>
@@ -838,7 +1078,7 @@
 <p>系统由模块 A 与一个冗余模块串联。A 的可靠度为 0.95；冗余模块由 B、C 并联，B、C 的可靠度均为 0.9，各部件故障相互独立。</p>
 <p>（1）求整个系统可靠度。<br>（2）若某可修复设备 MTTF=1990 h、MTTR=10 h，求稳态可用性。<br>（3）信息位为 <code>1010</code>，生成多项式对应除数为 <code>1101</code>，求 CRC 校验位和发送码字。</p>
 <hr>
-<h2 id="h-43">第四部分 精华题<button type="button" class="sec-status" data-status-key="第四部分 精华题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四部分 精华题」的学习状态"></button></h2>
+<h2 id="h-54">第四部分 精华题<button type="button" class="sec-status" data-status-key="第四部分 精华题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四部分 精华题」的学习状态"></button></h2>
 <p><strong>1.</strong> 8 位补码可表示的最小整数及其编码分别是（ ）。</p>
 <p>A. −127，<code>11111111</code><br>B. −127，<code>10000001</code><br>C. −128，<code>10000000</code><br>D. −128，<code>11111111</code></p>
 <p><strong>2.</strong> 若先查 Cache 需 6 ns，未命中后追加访问主存需 94 ns，Cache 命中率为 98%，平均访问时间为（ ）。</p>
@@ -854,6 +1094,68 @@
 <p><strong>7.</strong> 某流水线有 4 段，每段统一为 5 ns，连续执行 20 个任务。流水时间和最大吞吐率分别是（ ）。</p>
 <p>A. 100 ns，2×10^8 个/秒<br>B. 115 ns，2×10^8 个/秒<br>C. 115 ns，5×10^9 个/秒<br>D. 400 ns，5×10^7 个/秒</p>
 <hr>
+<h2 id="h-55">扩充专项题（本轮新增）<button type="button" class="sec-status" data-status-key="扩充专项题（本轮新增）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「扩充专项题（本轮新增）」的学习状态"></button></h2>
+<p><strong>1.</strong> 4 位补码表示的 −3 为 <code>1101</code>，对应的移码是（ ）。</p>
+<p>A. <code>0010</code></p>
+<p>B. <code>0101</code></p>
+<p>C. <code>1010</code></p>
+<p>D. <code>1101</code></p>
+<p><strong>2.</strong> 二进制浮点数 <code>0.1100×2^3 + 0.1100×2^3</code> 相加后，规格化结果是（ ）。</p>
+<p>A. <code>0.1100×2^3</code></p>
+<p>B. <code>0.1100×2^4</code></p>
+<p>C. <code>0.0110×2^4</code></p>
+<p>D. <code>1.1000×2^4</code></p>
+<p><strong>3.</strong> 地址范围为 <code>B3000H～DABFFH</code>，按字节编址，其容量是（ ）。</p>
+<p>A. 158 KiB</p>
+<p>B. 159 KiB</p>
+<p>C. 160 KiB</p>
+<p>D. 162816 KiB</p>
+<p><strong>4.</strong> 直接映射 Cache 的主存地址通常划分为（ ）。</p>
+<p>A. 标记、块内偏移</p>
+<p>B. 标记、组号、块内偏移</p>
+<p>C. 标记、行号、块内偏移</p>
+<p>D. 行号、组号、替换算法</p>
+<p><strong>5.</strong> 某磁盘转速为 6000 RPM，平均寻道时间 5 ms，每道 100 个扇区。现读取 4 个随机散落的扇区，假定每个扇区都重新寻道并经历平均旋转等待，则总时间约为（ ）。</p>
+<p>A. 10.1 ms</p>
+<p>B. 10.4 ms</p>
+<p>C. 25.4 ms</p>
+<p>D. 40.4 ms</p>
+<p><strong>6.</strong> 采用相对寻址，若 <code>(PC)=1000</code>，地址字段为 −20，则有效地址 EA 为（ ）。</p>
+<p>A. −20</p>
+<p>B. 980</p>
+<p>C. 1000</p>
+<p>D. 1020</p>
+<p><strong>7.</strong> 关于 RISC、CISC 与流水线，下列说法正确的是（ ）。</p>
+<p>A. 只有 RISC 才能使用流水线，CISC 绝对不能</p>
+<p>B. 只有 CISC 才能使用流水线</p>
+<p>C. 两者都可采用流水线，但 RISC 的规整指令通常更容易高效流水化</p>
+<p>D. 是否适合流水线只取决于寄存器数量</p>
+<p><strong>8.</strong> 500 台同型设备各观察 2000 h，共发生 5 次故障。估计恒定失效率 λ 为（ ）。</p>
+<p>A. <code>5×10^−3/h</code></p>
+<p>B. <code>5×10^−5/h</code></p>
+<p>C. <code>5×10^−6/h</code></p>
+<p>D. <code>2×10^5/h</code></p>
+<p><strong>9.</strong> 某设备修复时间服从指数分布，MTTR=2 h。其在 4 h 内修复的概率约为（ ）。</p>
+<p>A. 0.1353</p>
+<p>B. 0.5000</p>
+<p>C. 0.6321</p>
+<p>D. 0.8647</p>
+<p><strong>10.</strong> 某编码的最小码距为 5，它最多能保证检测 e 位错误、纠正 t 位错误。正确的是（ ）。</p>
+<p>A. e=4，t=2</p>
+<p>B. e=5，t=2</p>
+<p>C. e=4，t=3</p>
+<p>D. e=2，t=4</p>
+<p><strong>11.</strong> 信息位 <code>1101</code>，CRC 除数为 <code>1011</code>，则应补的 0 的个数和最终余数分别是（ ）。</p>
+<p>A. 2 个，<code>01</code></p>
+<p>B. 3 个，<code>001</code></p>
+<p>C. 3 个，<code>101</code></p>
+<p>D. 4 个，<code>0001</code></p>
+<p><strong>12.</strong> 4 位数据 <code>1011</code> 按本课规则生成偶校验海明码 <code>0110011</code>。若收到 <code>0110001</code>，综合征 <code>s4s2s1</code> 和错误位置分别是（ ）。</p>
+<p>A. <code>011</code>，第 3 位</p>
+<p>B. <code>101</code>，第 5 位</p>
+<p>C. <code>110</code>，第 6 位</p>
+<p>D. <code>111</code>，第 7 位</p>
+<hr>
 <details class="answers" id="answers" data-toc="第五部分 答案与解析">
   <summary>
     <span class="chev" aria-hidden="true"></span>
@@ -862,7 +1164,7 @@
   </summary>
   <div class="answers-body">
 
-<h3 id="h-45">课后选择题答案<button type="button" class="sec-status" data-status-key="课后选择题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后选择题答案」的学习状态"></button></h3>
+<h3 id="h-57">课后选择题答案<button type="button" class="sec-status" data-status-key="课后选择题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后选择题答案」的学习状态"></button></h3>
 <p><strong>1. A</strong></p>
 <p><code>11101100</code> 是负数补码。求绝对值：整体按位取反得 <code>00010011</code>，再加 1 得 <code>00010100</code>=20，所以原数为 <strong>−20</strong>。反向验证：+20=<code>00010100</code>，取反加 1 得 <code>11101100</code>。B 少加/多减了 1；C 把无符号数 236 当答案；D 误把后 7 位直接当绝对值。</p>
 <p><strong>2. A</strong></p>
@@ -893,7 +1195,7 @@
 <p>并联系统可靠度=<code>1−(1−0.8)^2=1−0.04=0.96</code>。A 是误用串联；D 直接相加导致概率超过 1。</p>
 <p><strong>15. B</strong></p>
 <p>公式 <code>2^r≥m+r+1</code>，m=4。r=2 时 4＜7，不够；r=3 时 8≥8，刚好，所以至少 3 位。</p>
-<h3 id="h-46">综合计算题答案<button type="button" class="sec-status" data-status-key="综合计算题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合计算题答案」的学习状态"></button></h3>
+<h3 id="h-58">综合计算题答案<button type="button" class="sec-status" data-status-key="综合计算题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合计算题答案」的学习状态"></button></h3>
 <p><strong>16. Cache 与磁盘综合题</strong></p>
 <p>（1）题目说先查 Cache，未命中再<strong>追加</strong> 92 ns，使用串行追加模型：</p>
 <p><code>Tavg=8+(1−0.96)×92=8+3.68=11.68 ns</code>。</p>
@@ -923,7 +1225,46 @@
 <li>发送码字：<code>1010001</code>。</li>
 </ul>
 <p>反向验证：<code>1010001</code> 模二除以 <code>1101</code>，余数为 <code>000</code>。</p>
-<h3 id="h-47">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<h3 id="h-59">扩充专项题答案<button type="button" class="sec-status" data-status-key="扩充专项题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「扩充专项题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong></p>
+<p>移码由补码只翻转最高符号位得到：<code>1101 → 0101</code>。也可用偏置法验证：4 位偏置为 8，<code>−3+8=5</code>，5 的 4 位编码为 <code>0101</code>。A 是 +2 的普通二进制，C 是 +2 的移码，D 没有翻符号位。</p>
+<p><strong>2. B</strong></p>
+<p>尾数相加得 <code>1.1000×2^3</code>。右规时尾数右移 1 位、阶码加 1，得到 <code>0.1100×2^4</code>。数值复核：<code>1.5×8=12</code>，<code>0.75×16=12</code>。D 的尾数和阶码同时放大，数值翻倍。</p>
+<p><strong>3. B</strong></p>
+<p>单元数必须“末−首+1”：</p>
+<p><code>DABFFH−B3000H+1=27C00H</code>。</p>
+<p><code>27C00H=162816 B</code>，再除以 1024 得 <strong>159 KiB</strong>。D 把字节数错写成 KiB；A 通常来自漏算边界或十六进制借位错误。</p>
+<p><strong>4. C</strong></p>
+<p>直接映射先用<strong>行号</strong>锁定唯一 Cache 行，再比较标记，块内偏移选择块中具体字节，因此结构是“标记｜行号｜块内偏移”。A 是全相联的典型结构，B 是组相联。</p>
+<p><strong>5. D</strong></p>
+<p>6000 RPM 一圈 <code>60000/6000=10 ms</code>，平均旋转等待 5 ms，每扇区传输 <code>10/100=0.1 ms</code>。每个随机扇区耗时 <code>5+5+0.1=10.1 ms</code>，4 个共 <code>4×10.1=40.4 ms</code>。B 是把 4 个扇区误当连续存放，只付一次定位成本。</p>
+<p><strong>6. B</strong></p>
+<p>相对寻址 <code>EA=(PC)+A=1000+(−20)=980</code>。A 只取了位移，C 忽略位移，D 把负位移误当正 20。</p>
+<p><strong>7. C</strong></p>
+<p>RISC 与 CISC 都可以采用流水线。RISC 的指令常定长、格式规整、寻址方式少，各阶段时间更容易均衡，所以通常更适合高效流水化。“更适合”不能偷换成“只有它能”。</p>
+<p><strong>8. C</strong></p>
+<p>总设备小时为 <code>500×2000=1,000,000 台·h</code>。失效率：</p>
+<p><code>λ=5/1,000,000=5×10^−6/h</code>。</p>
+<p>B 漏掉了一个数量级；A 没有用总设备小时作分母。</p>
+<p><strong>9. D</strong></p>
+<p>恒定修复率下 <code>M(t)=1−e^(−t/MTTR)</code>。代入：</p>
+<p><code>M(4)=1−e^(−4/2)=1−e^(−2)≈1−0.1353=0.8647</code>。</p>
+<p>A 是“4 小时后仍未修好”的概率，不是已修好的概率。</p>
+<p><strong>10. A</strong></p>
+<p>检测 e 位需 <code>dmin≥e+1</code>，所以 <code>e≤4</code>；纠正 t 位需 <code>dmin≥2t+1</code>，所以 <code>5≥2t+1</code>，得 <code>t≤2</code>。因此最多保证检测 4 位、纠正 2 位。B 检测 5 位需码距至少 6；C 纠正 3 位需码距至少 7。</p>
+<p><strong>11. B</strong></p>
+<p>除数 <code>1011</code> 有 4 位，最高次数 r=3，所以信息后补 3 个 0。按模二除法：</p>
+<p><code>1101 XOR 1011 → 1100 XOR 1011 → 1110 XOR 1011 → 1010 XOR 1011</code>，</p>
+<p>最终 3 位余数为 <code>001</code>。发送码字为 <code>1101001</code>，反除余数为 <code>000</code>。</p>
+<p><strong>12. C</strong></p>
+<p>收到 <code>0110001</code> 后：</p>
+<ul>
+<li>1、3、5、7 位共有 2 个 1，<code>s1=0</code>；</li>
+<li>2、3、6、7 位共有 3 个 1，<code>s2=1</code>；</li>
+<li>4、5、6、7 位共有 1 个 1，<code>s4=1</code>。</li>
+</ul>
+<p>综合征 <code>s4s2s1=110₂=6</code>，指出第 6 位出错。翻回后得到原码字 <code>0110011</code>，三组校验均恢复为偶数。</p>
+<h3 id="h-60">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
 <p><strong>1. C</strong></p>
 <p>8 位补码范围为 <code>−2^7～2^7−1</code>，即 −128～127；最小值编码为 <code>10000000</code>。<code>11111111</code> 是 −1，不是最小值。补码负边比正边多一个数。</p>
 <p><strong>2. B</strong></p>
@@ -943,7 +1284,7 @@
 </div>
 </details>
 <hr>
-<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成第 11 课《专业英语》并更新进度表。</p>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，继续学习 <a href="10-标准化与知识产权.html">10-标准化与知识产权.html</a>。</p>
 
   <footer class="status-bar" data-status-page="09-计算机系统基础">
     <span class="sb-label">本页学习状态</span>
