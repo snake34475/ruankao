@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>99.4 下午卷：案例一至三</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a><ul class="chapter-nav"><li><a href="01-上午卷上.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/01-上午卷上" aria-hidden="true"></i><span class="n">01</span><span class="t">上午卷（上）：计算机系统至设计模式</span></a></li><li><a href="02-上午卷下.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/02-上午卷下" aria-hidden="true"></i><span class="n">02</span><span class="t">上午卷（下）：数据库至专业英语</span></a></li><li><a href="03-上午卷补充题.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/03-上午卷补充题" aria-hidden="true"></i><span class="n">03</span><span class="t">上午卷补充题</span></a></li><li><a href="04-下午卷案例一至三.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/04-下午卷案例一至三" aria-hidden="true"></i><span class="n">04</span><span class="t">下午卷：案例一至三</span></a></li><li><a href="05-下午卷案例四至五.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/05-下午卷案例四至五" aria-hidden="true"></i><span class="n">05</span><span class="t">下午卷：案例四至五</span></a></li><li><a href="90-上午卷答案与解析.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/90-上午卷答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">上午卷答案与解析</span></a></li><li><a href="91-下午卷答案与评分点.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/91-下午卷答案与评分点" aria-hidden="true"></i><span class="n">07</span><span class="t">下午卷答案与评分点</span></a></li><li><a href="99-成绩诊断.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/99-成绩诊断" aria-hidden="true"></i><span class="n">08</span><span class="t">成绩诊断</span></a></li></ul></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 99 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">99.4 下午卷：案例一至三</h1>
+  </header>
+  <h2 id="h-2">案例一 数据流图（15 分）<button type="button" class="sec-status" data-status-key="案例一 数据流图（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例一 数据流图（15 分）」的学习状态"></button></h2>
+<p>某社区维修平台的业务如下：</p>
+<ol>
+<li>居民提交报修请求，内容包括居民编号、设备类型、故障描述和上门地址。系统读取居民文件核验居民状态，生成维修订单并写入订单文件，同时向居民返回受理结果。</li>
+<li>系统读取待分派订单和维修人员文件，根据技能与可用状态选择维修人员，向维修人员发送工单，并把分派结果写回订单文件。</li>
+<li>维修人员完成服务后提交完工报告。系统更新订单状态，并向第三方支付平台发送支付请求。</li>
+<li>支付平台返回支付结果。支付成功后，系统把结算结果写入订单文件，并向居民发送电子回执。</li>
+</ol>
+<p>顶层图中已有外部实体：居民、维修人员、支付平台；已有数据流包括“居民→系统：报修请求”“系统→居民：受理结果/电子回执”“系统→维修人员：工单”“维修人员→系统：完工报告”“系统→支付平台：支付请求”“支付平台→系统：支付结果”。</p>
+<p>分层图包含：加工 1“受理报修”、加工 2“匹配派单”、加工 3“结算归档”；数据存储 D1“居民文件”、D2“订单文件”、D3“维修人员文件”。图中已经画出以下数据流：</p>
+<ul>
+<li>居民→加工1：报修请求；加工1→居民：受理结果；</li>
+<li>D1→加工1：居民信息；加工1→D2：新订单；</li>
+<li>D2→加工2：待分派订单；D3→加工2：维修人员信息；</li>
+<li>维修人员→加工3：完工报告；加工3→支付平台：支付请求；</li>
+<li>支付平台→加工3：支付结果；加工3→居民：电子回执。</li>
+</ul>
+<p><strong>问题 1（6 分）</strong>：根据说明，指出分层图中缺失的 3 条数据流，写出起点、终点和数据流名称。每条 2 分。注意：说明第 3 条&quot;更新订单状态&quot;与第 4 条&quot;写入结算结果&quot;都由加工 3 写回 D2，起点、终点相同，合并计为 1 条数据流。</p>
+<p><strong>问题 2（4 分）</strong>：说明加工 2 为什么既要读取 D2，又要读取 D3；加工 2 完成后必须修改哪个数据存储，写入什么信息？</p>
+<p><strong>问题 3（3 分）</strong>：用数据字典符号补全：</p>
+<p><code>维修订单 = 订单编号 + 居民编号 + （1） + （2） + 上门地址 + 订单状态 + [维修人员编号]</code></p>
+<p>其中 <code>[ ]</code> 表示可选项。</p>
+<p><strong>问题 4（2 分）</strong>：若分层图额外出现“加工 2→居民：广告信息”，但顶层图没有任何对应数据流，这违反了什么原则？应如何处理？</p>
+<h2 id="h-3">案例二 数据库设计与 SQL（15 分）<button type="button" class="sec-status" data-status-key="案例二 数据库设计与 SQL（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例二 数据库设计与 SQL（15 分）」的学习状态"></button></h2>
+<p>某在线培训系统保存以下信息：</p>
+<ul>
+<li>学员：学员号、姓名、所属部门；</li>
+<li>教师：教师号、姓名；</li>
+<li>课程：课程号、课程名、学分。每门课程由一名教师负责，一名教师可负责多门课程；</li>
+<li>学员可以选修多门课程，一门课程也可被多名学员选修。每次选课记录选课时间和成绩，同一学员对同一课程最多有一条有效选课记录。</li>
+</ul>
+<p><strong>问题 1（4 分）</strong>：指出“教师—课程”“学员—课程”的联系类型，并说明“选课时间、成绩”应放在哪里。</p>
+<p><strong>问题 2（4 分）</strong>：补全关系模式中的主键和外键：</p>
+<ul>
+<li>学员（学员号，姓名，所属部门）</li>
+<li>教师（教师号，姓名）</li>
+<li>课程（课程号，课程名，学分，教师号）</li>
+<li>选课（学员号，课程号，选课时间，成绩）</li>
+</ul>
+<p><strong>问题 3（3 分）</strong>：写出创建“选课”表的 SQL，要求定义组合主键，并定义两个外键。</p>
+<p><strong>问题 4（4 分）</strong>：查询“至少选修 3 门课程且平均成绩不低于 80 分”的学员号、姓名和平均成绩，写出 SQL。</p>
+<h2 id="h-4">案例三 UML 与设计模式（15 分）<button type="button" class="sec-status" data-status-key="案例三 UML 与设计模式（15 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例三 UML 与设计模式（15 分）」的学习状态"></button></h2>
+<p>某在线学习系统有如下需求：</p>
+<ol>
+<li>学员使用“查看课程”和“提交作业”前都必须先“身份登录”；</li>
+<li>“申请结业证书”只在学员完成课程且主动申请时发生，是“完成课程”的可选扩展行为；</li>
+<li>一个课程由若干课时组成，课时不能脱离课程独立存在；</li>
+<li>学员可选修多门课程，课程也可有多名学员，系统用“选课记录”保存选课时间和学习进度；</li>
+<li>视频、图文、直播是三种可互换的课程内容展示方式，运行时根据课程配置选择，未来还可能增加新方式。</li>
+</ol>
+<p><strong>问题 1（4 分）</strong>：给出“查看课程—身份登录”“提交作业—身份登录”“申请结业证书—完成课程”的用例关系及箭头方向。</p>
+<p><strong>问题 2（5 分）</strong>：给出课程与课时的 UML 关系、菱形位置及多重度；再说明学员与课程的多对多关系如何通过“选课记录”表示。</p>
+<p><strong>问题 3（4 分）</strong>：第 5 条需求最适合采用什么设计模式？说明 Context、抽象角色和具体角色分别对应什么。</p>
+<p><strong>问题 4（2 分）</strong>：若要描述一次“学员提交作业→系统校验→保存作业→返回结果”的对象消息时序，应使用哪种 UML 图？</p>
+
+
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷/04-下午卷案例一至三">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-上午卷补充题.html">
+      <span class="k">上一页</span>
+      <span class="t">99.3 上午卷补充题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-下午卷案例四至五.html">
+      <span class="k">下一页</span>
+      <span class="t">99.5 下午卷：案例四至五</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>05.4 存储管理与页面置换 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a><ul class="chapter-nav"><li><a href="01-进程线程与状态.html"><i class="sb-dot" data-status-page-dot="05-操作系统/01-进程线程与状态" aria-hidden="true"></i><span class="n">01</span><span class="t">进程、线程与状态转换 ★★★</span></a></li><li><a href="02-进程调度与PV操作.html"><i class="sb-dot" data-status-page-dot="05-操作系统/02-进程调度与PV操作" aria-hidden="true"></i><span class="n">02</span><span class="t">进程调度与 PV 操作 ★★★</span></a></li><li><a href="03-死锁.html"><i class="sb-dot" data-status-page-dot="05-操作系统/03-死锁" aria-hidden="true"></i><span class="n">03</span><span class="t">死锁 ★★★</span></a></li><li><a href="04-存储管理与页面置换.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="05-操作系统/04-存储管理与页面置换" aria-hidden="true"></i><span class="n">04</span><span class="t">存储管理与页面置换 ★★★</span></a></li><li><a href="05-文件管理.html"><i class="sb-dot" data-status-page-dot="05-操作系统/05-文件管理" aria-hidden="true"></i><span class="n">05</span><span class="t">文件管理 ★★</span></a></li><li><a href="06-设备管理与计算专题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/06-设备管理与计算专题" aria-hidden="true"></i><span class="n">06</span><span class="t">设备管理与高频计算专题 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="05-操作系统/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05.4 存储管理与页面置换 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">为什么要&quot;分页&quot;<button type="button" class="sec-status" data-status-key="为什么要&amp;quot;分页&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要&quot;分页&quot;」的学习状态"></button></h3>
+<p>程序比内存大、或内存碎片零散装不下完整程序怎么办？<strong>页式存储</strong>把程序和内存都切成同样大小的块：程序的块叫<strong>页</strong>，内存的块叫<strong>页帧（物理块）</strong>，以页为单位离散装入内存——零散小空隙也能利用起来，利用率高、碎片小（缺点：查页表增加开销，页进出频繁时产生&quot;抖动&quot;）。</p>
+<h3 id="h-3">页式地址变换（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="页式地址变换（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「页式地址变换（★★★ 必考计算）」的学习状态"></button></h3>
+<p>高级语言用的是<strong>逻辑地址</strong>，进内存要换成<strong>物理地址</strong>。逻辑地址结构 = <strong>页号 + 页内地址</strong>；物理地址 = <strong>页帧号 + 页内地址</strong>。</p>
+<ul>
+<li><strong>通用形式</strong>：页大小 = 2^k，则逻辑地址的<strong>低 k 位就是页内地址（变换前后不变）</strong>；高位是页号 → 查页表得页帧号 → 物理地址 = 页帧号 × 页大小 + 页内地址。</li>
+<li><strong>代入算例</strong>：页大小 4KB，页表&quot;页 0→帧 5、页 1→帧 8、页 2→帧 3&quot;。逻辑地址 1F48H：4KB = 2^12 = 1000H，低 3 位十六进制 F48H 是页内地址，高位 1H 是页号 → 查表页 1 → 帧 8 → 物理地址 = <strong>8F48H</strong>。验算（十进制走一遍）：0x1F48 = 8008，8008 = 1×4096 + 3912，页内偏移 3912；物理地址 = 8×4096 + 3912 = 36680 = 0x8F48 ✓。</li>
+<li><strong>手算口诀</strong>：<strong>&quot;页内地址不动，页号查表换页帧&quot;</strong>。十六进制题先看页大小定拆分位数：4KB = 2^12 = 1000H → 低 3 位十六进制是页内地址；2KB = 2^11 → 十六进制不足 3 位对应，先转二进制拆低 11 位更稳；1KB = 2^10 → 低 10 位二进制是页内地址。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：① 忘了查页表，直接把逻辑地址当物理地址（1F48H → 1F48H 是错的）；② 把&quot;页号 × 页大小&quot;当成物理地址（只换了页号没加页内地址）；③ 页号页内地址拆分位 Number 弄错——<strong>页大小决定页内地址位数</strong>：4KB→12 位（低 3 位十六进制），1KB→10 位，2KB→11 位。</p>
+<h3 id="h-4">段式与段页式<button type="button" class="sec-status" data-status-key="段式与段页式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「段式与段页式」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>划分</th>
+<th>地址结构</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>页式</strong></td>
+<td>等大小分页（物理需要）</td>
+<td>页号+页内地址</td>
+<td>利用率高、碎片小；无外部碎片，有页内零头</td>
+</tr>
+<tr>
+<td><strong>段式</strong></td>
+<td>按<strong>自然段</strong>分（逻辑需要），段长不等</td>
+<td>段号+段内偏移</td>
+<td>便于共享保护；碎片大、利用率低</td>
+</tr>
+<tr>
+<td><strong>段页式</strong></td>
+<td><strong>先分段，段内再分页</strong></td>
+<td>段号+页号+页内地址</td>
+<td>兼两者之长；开销最大、速度下降</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>段式合法地址判定（公式三件套）</strong>：</p>
+<ul>
+<li>通用形式：逻辑地址 (段号 s, 段内偏移 d) 合法 ⇔ s 在段表内 <strong>且 d &lt; 段 s 的段长</strong>；物理地址 = 该段基址 + d。</li>
+<li>代入算例：段 0 段长 30K 基址 40K → (0, 25K) 合法（25K &lt; 30K），物理地址 = 40K + 25K = 65K；(0, 35K) 非法（35K ≥ 30K，越界）。</li>
+<li>口诀：<strong>&quot;偏移必须小于段长，物理地址 = 基址加偏移&quot;</strong>。</li>
+</ul>
+<p><strong>段页式地址结构位数反推（真题型，公式三件套）</strong>：</p>
+<ul>
+<li>动机：段页式地址 = 段号 + 页号 + 页内地址 三字段。题目不给具体值，只给&quot;段号占 10 位、页号占 10 位、页内地址占 12 位&quot;，反推最多几段、每段几页、页多大。</li>
+<li>通用形式：<strong>某字段占 k 位 ⇒ 该字段最多能表示 2^k 种取值</strong>。段号位数 → 段数 = 2^k；页号位数 → 每段页数 = 2^k；页内位数 → 页大小 = 2^k（字节）。</li>
+<li>代入算例：段号 10 位 → 最多 <strong>1024 段</strong>（2^10）；页号 10 位 → 每段最多 <strong>1024 页</strong>；页内 12 位 → 页大小 = 2^12 = <strong>4KB</strong>。</li>
+<li>手算口诀：<strong>&quot;几位就是 2 的几次方&quot;</strong>；常用换算记 2^10 = 1KB、2^11 = 2KB、2^12 = 4KB、2^20 = 1MB。</li>
+<li>反例演示（易错）：页内 12 位被算成 2^10 = 1KB（把 12 当成 10）——<strong>位数对应二进制 2^n</strong>，2^12 = 4096 = 4KB；&quot;几段／几页／页多大&quot;是三个独立式子，各自算 2^k，只有题目改问&quot;地址结构总共多少位&quot;才把三段位数相加。</li>
+</ul>
+<p><strong>应试动作</strong>：① 页式计算背&quot;页内地址不变，页号查表换页帧&quot;，先把页大小化成 2 的幂定拆分位数；② 段式判断只看一条：偏移 &lt; 段长？③ 三种方式按&quot;等分/自然段/先段后页&quot;配对，段页式缺点（开销大、速度降）考过。</p>
+<h2 id="h-5">第七节 页面置换：LRU / FIFO / OPT <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 页面置换：LRU / FIFO / OPT ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 页面置换：LRU / FIFO / OPT ★★」的学习状态"></button></h2>
+<h3 id="h-6">为什么需要置换<button type="button" class="sec-status" data-status-key="为什么需要置换" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要置换」的学习状态"></button></h3>
+<p>内存块比页数少，缺页时要把某页请出去腾位置——请谁走？置换算法决定。选错对象 → 刚换出的页马上又要用 → 缺页率飙升，极端情况 CPU 大部分时间忙着换页而不是干活，称<strong>抖动（颠簸）</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>淘汰谁</th>
+<th>评价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>FIFO</strong>（先进先出）</td>
+<td>最先进入内存的页</td>
+<td>实现简单；可能出现&quot;刚换出又要用&quot;（队列思想，见 <a href="../01-数据结构与算法/01-线性表、栈与队列.html">第 01 课「线性表、栈与队列」</a> 第 1.3 节）</td>
+</tr>
+<tr>
+<td><strong>LRU</strong>（最近最久未使用）</td>
+<td><strong>最近最长时间没被访问</strong>的页</td>
+<td>性能好；要记每页访问时间（历史用栈维护，见 01 课 1.2 节）</td>
+</tr>
+<tr>
+<td><strong>OPT</strong>（最佳置换）</td>
+<td><strong>今后最长时间不再使用</strong>的页</td>
+<td>缺页率最低，但要预知未来，无法实现，只作评价基准</td>
+</tr>
+</tbody></table>
+</div>
+<p>三种算法要靠<strong>表格模拟</strong>算缺页数——这是必考计算，模板如下。</p>
+<p><strong>解题模板（三步）</strong>：</p>
+<ol>
+<li>画表：列 = 引用串各位，行 = 3 个物理块；再记一行&quot;是否缺页&quot;；</li>
+<li>逐位走：内存中没有该页 → <strong>缺页</strong>，装入（满了按算法淘汰一页）；有 → 命中，<strong>只更新&quot;最近使用&quot;信息，不淘汰</strong>；</li>
+<li>数缺页次数 ÷ 引用串长度 = <strong>缺页率</strong>。</li>
+</ol>
+<p><strong>代入算例</strong>：3 个物理块，引用串 <code>1,2,1,3,4,1,2,3</code>（8 次）：</p>
+<p><strong>FIFO</strong>（记进入顺序，淘汰最老的）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>引用</th>
+<th>1</th>
+<th>2</th>
+<th>1</th>
+<th>3</th>
+<th>4</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>块1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>块2</td>
+<td></td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>块3</td>
+<td></td>
+<td></td>
+<td></td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>缺页</td>
+<td>✓</td>
+<td>✓</td>
+<td>命中</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody></table>
+</div>
+<p>FIFO 缺页 7 次，缺页率 7/8 = 87.5%。</p>
+<p><strong>LRU</strong>（淘汰&quot;最近最久未使用&quot;的，比较每页<strong>最后一次</strong>被访问的时间）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>引用</th>
+<th>1</th>
+<th>2</th>
+<th>1</th>
+<th>3</th>
+<th>4</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>块1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>块2</td>
+<td></td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>块3</td>
+<td></td>
+<td></td>
+<td></td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>缺页</td>
+<td>✓</td>
+<td>✓</td>
+<td>命中</td>
+<td>✓</td>
+<td>✓</td>
+<td>命中</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+</tbody></table>
+</div>
+<p>关键两步的淘汰依据：位5 引用 4 时内存 {1,2,3}，最后一次访问时间是 1@位3、3@位4、2@位2 → 最久未使用的是 <strong>2</strong>，淘汰 2；位7 引用 2 时内存 {1,4,3}，最后使用 1@位6、4@位5、3@位4 → 淘汰 <strong>3</strong>；位8 引用 3 时内存 {1,4,2}，最后使用 1@位6、2@位7、4@位5 → 淘汰 <strong>4</strong>。注意位5 时 2 和 3 都是&quot;装入后没再访问&quot;，比的是&quot;刚进来&quot;（位4）比&quot;位2&quot;更近，所以淘汰更久远的 2 而不是 3。</p>
+<p>LRU 缺页 6 次，缺页率 6/8 = 75%。</p>
+<p><strong>OPT</strong>（淘汰&quot;将来最久不用&quot;的）：</p>
+<ul>
+<li>位1 1 缺页；位2 2 缺页；位3 1 命中；位4 3 缺页 → [1,2,3]</li>
+<li>位5 引用 4 缺页：往后看 位6=1、位7=2、位8=3——1 在位6 用、2 在位7 用、3 在位8 用 → 最晚再用的是 3 → 淘汰 3 → [1,2,4]</li>
+<li>位6 1 命中；位7 2 命中</li>
+<li>位8 引用 3 缺页（内存 {1,2,4} 都不再使用，任淘汰，缺页数不受影响）</li>
+</ul>
+<p>OPT 缺页 = 位1、2、4、5、8 共 <strong>5 次</strong>，缺页率 5/8 = 62.5%。</p>
+<p><strong>交叉验算（第二种方法）</strong>：缺页数 = 串长 − 命中数。FIFO 命中仅位3 → 8−1 = 7 ✓；LRU 命中位3、位6 → 8−2 = 6 ✓；OPT 命中位3、位6、位7 → 8−3 = 5 ✓。三种算法缺页数 7 ≥ 6 ≥ 5，与&quot;OPT 最优、LRU 次之、FIFO 最差&quot;的理论一致 ✓。</p>
+<p><strong>反例演示（易错）</strong>：① 命中时<strong>不淘汰、不装入</strong>，只在心里更新&quot;最近使用&quot;——把命中当缺页是最常见失分点；② LRU 比的是&quot;<strong>最后一次被访问</strong>距今多久&quot;，不是&quot;进入内存多久&quot;（那是 FIFO）；③ OPT 往<strong>后</strong>看，LRU 往<strong>前</strong>看，别弄反方向。</p>
+<p><strong>应试动作</strong>：① 考场上直接画表逐位模拟，做完用&quot;串长 − 命中数 = 缺页数&quot;验算；② 背结论&quot;缺页率 OPT &lt; LRU &lt; FIFO（一般情况）&quot;；③ 认题特征词：&quot;最近最久未使用&quot;→ LRU，&quot;先进先出/最先进入&quot;→ FIFO，&quot;最长时间不被使用（未来）&quot;→ OPT。</p>
+
+
+  <footer class="status-bar" data-status-page="05-操作系统/04-存储管理与页面置换">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-死锁.html">
+      <span class="k">上一页</span>
+      <span class="t">05.3 死锁 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-文件管理.html">
+      <span class="k">下一页</span>
+      <span class="t">05.5 文件管理 ★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

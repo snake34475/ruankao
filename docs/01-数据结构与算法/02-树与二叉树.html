@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>01.2 树与二叉树 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a><ul class="chapter-nav"><li><a href="01-线性表、栈与队列.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/01-线性表、栈与队列" aria-hidden="true"></i><span class="n">01</span><span class="t">线性表、栈与队列</span></a></li><li><a href="02-树与二叉树.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/02-树与二叉树" aria-hidden="true"></i><span class="n">02</span><span class="t">树与二叉树 ★★★</span></a></li><li><a href="03-图.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/03-图" aria-hidden="true"></i><span class="n">03</span><span class="t">图 ★★★</span></a></li><li><a href="04-查找.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/04-查找" aria-hidden="true"></i><span class="n">04</span><span class="t">查找 ★★</span></a></li><li><a href="05-排序.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/05-排序" aria-hidden="true"></i><span class="n">05</span><span class="t">排序 ★★★</span></a></li><li><a href="06-算法设计与分析基础.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/06-算法设计与分析基础" aria-hidden="true"></i><span class="n">06</span><span class="t">算法设计与分析基础</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：算法填空解题套路</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01.2 树与二叉树 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">2.1 基本性质（选择题最爱直接考结论）<button type="button" class="sec-status" data-status-key="2.1 基本性质（选择题最爱直接考结论）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 基本性质（选择题最爱直接考结论）」的学习状态"></button></h3>
+<p>二叉树：每个节点最多两个孩子，且分左右。先在一棵具体的树上把术语认全（这棵树后面反复用）：</p>
+<pre><code>            A          ← 根节点（没有父节点）
+           / \
+          B   C       ← A 的左孩子、右孩子
+         / \  \
+        D   E  F      ← D、E、F 都没有孩子，是叶子
+</code></pre>
+<ul>
+<li><strong>根</strong>：最顶上的 A；<strong>叶（叶子节点）</strong>：没有孩子的 D、E、F。</li>
+<li><strong>度</strong>：一个节点的孩子个数。A、B 的度为 2，C 的度为 1，叶子度为 0。</li>
+<li><strong>层</strong>：根是第 1 层，往下逐层 +1（A 第 1 层，B/C 第 2 层，D/E/F 第 3 层）。</li>
+<li><strong>深度 / 高度</strong>：默认按&quot;经过的<strong>边</strong>数&quot;算——D 的深度 = A 走到 D 经 2 条边；树的高度 = 根到最深叶子的边数（上图 = 2）。个别教材按&quot;节点数&quot;算（结果差 1），题干会说明，看清即可。</li>
+</ul>
+<p><strong>性质的&quot;为什么&quot;（理解了才不用死背）：</strong></p>
+<ol>
+<li><p><strong>第 i 层最多 2^(i-1) 个节点</strong>：每往下走一层，每个节点最多分裂成 2 个，所以每层最多是上一层的 2 倍——1、2、4、8……第 i 层即 2^(i-1)。</p>
+</li>
+<li><p><strong>深度 k 最多 2^k − 1 个节点</strong>：把每层拉满求和 1+2+4+…+2^(k−1)。这个和有个特点：再加一项 2^k 就整体翻倍，所以和 = 2^k − 1（如 1+2+4=7=8−1）。</p>
+</li>
+<li><p><strong>叶子数 n0 = 度为 2 的节点数 n2 + 1</strong>（考过无数次，完整推导一遍）：</p>
+<p><strong>先认识符号</strong>：n0、n1、n2 是把树上所有节点<strong>按&quot;孩子个数&quot;分类</strong>后，每一类的<strong>实际个数</strong>（不是最大值）——</p>
+<ul>
+<li><strong>n0</strong> = 度为 0 的节点个数 = <strong>叶子数</strong>（没有孩子）；</li>
+<li><strong>n1</strong> = 度为 1 的节点个数（只有一个孩子）；</li>
+<li><strong>n2</strong> = 度为 2 的节点个数（两个孩子都齐）。</li>
+</ul>
+<p>例如 7 个节点的满二叉树：n0=4、n1=0、n2=3。</p>
+<p><strong>先破一个典型误解：&quot;n2 个节点每人生 2 个孩子，叶子不该是 n2×2 吗？&quot;——不对，孩子 ≠ 叶子。</strong> n2×2 算出的是&quot;孩子总数&quot;，但孩子自己一旦又生了孩子，就从叶子变成了内部节点。看反例：</p>
+<pre><code>          A            ← 度 2（分叉①）
+         / \
+        B   C          ← B 度 2（分叉②）；C 没孩子 → 叶子
+       / \
+      D   E            ← D、E 没孩子 → 叶子
+</code></pre>
+<ul>
+<li>A、B 度为 2 → n2=2；C、D、E 是叶子 → n0=3。检验：3 = 2+1 ✓，而 n2×2=4 ✗。</li>
+<li>n2×2=4 数的是<strong>孩子总数</strong>（B、C、D、E 共 4 个），其中 B 自己当了爸爸、不是叶子——&quot;出生人数&quot; ≠ &quot;绝后人数&quot;。</li>
+</ul>
+<p><strong>直觉推导（记住这个就不用背）</strong>：从根出发若人人只生一个孩子（整条 n1 链），走到底只有 <strong>1 个叶子</strong>（此时 n2=0，n0=1，公式成立）。每出现一个度为 2 的节点，就是把链上某个节点<strong>分岔成两支</strong>：一个潜在叶子变成两个，叶子<strong>净多 1 个</strong>。分叉 n2 次 → 叶子 = 1 + n2。口诀：<strong>分叉一次，叶子多一</strong>。n1 完全不参与——度为 1 的节点只把链拉长，叶子不多不少。</p>
+<p><strong>代数推导（掰&quot;边&quot;）</strong>：</p>
+<ul>
+<li>从&quot;人数&quot;数：n = n0 + n1 + n2（三类节点各数一遍）；</li>
+<li>从&quot;边&quot;数：每个节点头顶恰好一条边（根除外），所以边数 = n − 1；每条边都从父亲长出来，度为 1 的节点长 1 条、度为 2 的长 2 条，所以边数 = n1 + 2·n2；</li>
+<li>两式相等：n0 + n1 + n2 − 1 = n1 + 2·n2，两边消掉 n1 → <strong>n0 = n2 + 1</strong>（和 n1 无关）。</li>
+<li>用上面反例树验证：n=5，人数式 5 = 3+0+2 ✓；边数式 5−1 = 0+2×2 = 4 ✓。</li>
+</ul>
+<p><strong>应试动作</strong>：背结论 <code>n0 = n2 + 1</code>；题干给&quot;5 个度为 2 的节点&quot;问叶子数，直接 5+1=6——不需要知道 n1 和总节点数。</p>
+</li>
+<li><p>n 个节点的<strong>完全</strong>二叉树深度 = ⌈log₂(n+1)⌉。</p>
+</li>
+</ol>
+<p><strong>满二叉树 vs 完全二叉树</strong>（选择题爱考&quot;给一棵树判断是不是完全二叉树&quot;）：</p>
+<p><strong>满二叉树 = 每一层都塞满</strong>。每层节点数 1、2、4、8……，深度 k 的满二叉树<strong>恰好</strong> 2^k − 1 个节点，一层不多不少：</p>
+<pre><code>深度 3 的满二叉树（7 个节点）
+            A
+          /   \
+         B     C        ← 第 2 层：2 个，满
+        / \   / \
+       D   E F   G      ← 第 3 层：4 个，满
+</code></pre>
+<p><strong>完全二叉树 = 只有最后一层可以缺，且只能缺最右边</strong>。从上到下、从左到右数，节点必须连续不跳号；缺可以，但缺的只能是&quot;最右边几个&quot;，<strong>左边不能空</strong>：</p>
+<pre><code>完全二叉树 ✓                      不是完全二叉树 ✗
+        A（满）                        A（满）
+      /   \                          /   \
+     B     C（满）                  B     C（满）
+    / \   /                        / \     \
+   D   E F     ← 只缺右边 G、H    E   F     G   ← B 的左孩子 D 缺了，
+                                                  左边空、右边在 → 断档
+</code></pre>
+<p>判断口诀：<strong>从左往右数，只能右边缺席，左边不许空</strong>。</p>
+<p><strong>为什么要有&quot;完全二叉树&quot;这个概念</strong>：它是长得最&quot;紧凑&quot;的形状——按层序编号塞进数组<strong>不留空洞</strong>，这正是堆能用数组存的原因：</p>
+<pre><code>完全二叉树：  数组 [A][B][C][D][E][F]   ← 编号 1~6 连续，无浪费
+非完全二叉树：数组 [A][B][C][?][F][G]   ← 位置 4（D）空洞，浪费
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>满二叉树</th>
+<th>完全二叉树</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>每层都满</td>
+<td>仅最后一层可缺<strong>最右边</strong>若干</td>
+</tr>
+<tr>
+<td>节点数</td>
+<td>恰好 2^k − 1</td>
+<td>1 ～ 2^k − 1 之间任意值</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>满是完全的<strong>特例</strong>（取到最大值）</td>
+<td>完全不一定满</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点</strong>：中文教材的&quot;满二叉树&quot;（每层全满）对应英文 <strong>Perfect</strong> Binary Tree；英文 <strong>Full</strong> Binary Tree 指&quot;每个节点有 0 或 2 个孩子&quot;，和中文&quot;满&quot;不是一回事——软考按中文教材口径考。另注意题干描述&quot;叶子只出现在最下两层&quot;&quot;最后一层从左到右连续&quot;都是在暗示完全二叉树。</p>
+<p><strong><span class="stars">★</span> 完全二叉树的顺序存储下标关系（选择题直接考）</strong>：把完全二叉树按层序（从上到下、从左到右）编号存进数组，<strong>下标从 1 开始</strong>：</p>
+<pre><code>树：        A(1)
+           /   \
+          B(2)  C(3)
+         /  \  /
+        D(4) E(5)F(6)
+</code></pre>
+<ul>
+<li><strong>公式里的 i 是什么</strong>：i 指「当前节点在数组里的编号」，也就是它按层序排到了第几号（编号从 1 开始，根 A = 1）。<strong>算谁的孩子，就把谁的编号代入 i</strong>。比如算 B 的孩子们时，令 i = 2（B 是 2 号），于是左孩子 = 2×2 = 4（D）、右孩子 = 2×2+1 = 5（E）；算 C 时令 i = 3，左孩子 F = 2×3 = 6。</li>
+<li><strong>通用公式</strong>：左孩子 = <strong>2i</strong>，右孩子 = <strong>2i+1</strong>，父节点 = <strong>⌊i/2⌋</strong>。用上面的例子验证：B 是 2 号，左孩子 D 恰是 2×2=4 号、右孩子 E 是 5 号；C 是 3 号，左孩子 F 是 6 号。</li>
+<li>为什么恰好是倍数：按层序编号，每层排满时总数是 2^层 − 1，下一层从头接着编——父与长子之间正好隔开&quot;一整层的名额&quot;，编号差了一倍，所以左孩子 = 2i。</li>
+<li>i &gt; ⌊n/2⌋ 的节点全是叶子。例：n=10 个节点，最后一个非叶节点是 5，建堆从它开始。</li>
+<li>这也是堆排序&quot;用数组存树&quot;的原理（第五节建堆公式 ⌊n/2⌋ 就是从这来的）。</li>
+</ul>
+<p><strong>延伸阅读</strong>：术语与结构的更多配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_tree/">hello-algo · 二叉树</a>（在线打开可看插图；离线阅读时忽略本行即可，不影响本讲义自足）。</p>
+<h3 id="h-3">2.2 遍历 <span class="stars">★★★</span>（必考，选择题 + 案例题都会出）<button type="button" class="sec-status" data-status-key="2.2 遍历 ★★★（必考，选择题 + 案例题都会出）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 遍历 ★★★（必考，选择题 + 案例题都会出）」的学习状态"></button></h3>
+<p>三种遍历的&quot;序&quot;说的是<strong>根</strong>被访问的时机：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>遍历</th>
+<th>顺序</th>
+<th>记法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前序</td>
+<td><strong>根</strong> → 左 → 右</td>
+<td>根在前</td>
+</tr>
+<tr>
+<td>中序</td>
+<td>左 → <strong>根</strong> → 右</td>
+<td>根在中</td>
+</tr>
+<tr>
+<td>后序</td>
+<td>左 → 右 → <strong>根</strong></td>
+<td>根在后</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>别死背三种&quot;序&quot;，想象&quot;绕树走一圈&quot;就全通了。</strong></p>
+<p>从根出发，贴着树的左侧走，把整棵树的外围<strong>绕一圈</strong>回到根。你会发现每个节点都被路过<strong>三次</strong>：第一次是从上面来（经过它的上方）、第二次是走完它左边绕回来（经过它的下方）、第三次是走完它右边绕回来（经过它的上方）。约定在不同次路过时记下节点，就得到三种遍历：</p>
+<ul>
+<li><strong>第 1 次路过时记</strong> → <strong>前序</strong></li>
+<li><strong>第 2 次（下方）路过时记</strong> → <strong>中序</strong></li>
+<li><strong>第 3 次（离开）路过时记</strong> → <strong>后序</strong></li>
+</ul>
+<p>用 2.1 的那棵树实际走一圈（每步都记录，三个&quot;记录本&quot;分别得到三种序）：</p>
+<blockquote class="lead">
+<p>⚠️ <strong>别把下表读成&quot;每个节点占 3 行&quot;</strong>：它是<strong>按时间先后顺序逐行记录&quot;下一步走到哪&quot;的流水账</strong>。每个节点确实都被路过三次（进入 / 下方 / 离开），但这三次分散在整个绕圈过程里——<strong>只有叶子</strong>因为没子树、三次才会紧挨成连续三行。所以第 3/4/5 行是 D 的三次，但 A 的三次在第 1、11、16 行，并不在第 1/2/3 行。</p>
+</blockquote>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>绕树动作</th>
+<th>前序本</th>
+<th>中序本</th>
+<th>后序本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>从 A 出发往左下</td>
+<td>A</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>到 B，往左下</td>
+<td>B</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>到 D，左下没有孩子</td>
+<td>D</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>绕过 D 的下方</td>
+<td></td>
+<td>D</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>从 D 右侧离开 D，回到 B</td>
+<td></td>
+<td></td>
+<td>D</td>
+</tr>
+<tr>
+<td>6</td>
+<td>绕过 B 的下方</td>
+<td></td>
+<td>B</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>到 E，左下没有孩子</td>
+<td>E</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>绕过 E 的下方</td>
+<td></td>
+<td>E</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>从 E 右侧离开 E</td>
+<td></td>
+<td></td>
+<td>E</td>
+</tr>
+<tr>
+<td>10</td>
+<td>从 B 右侧离开 B，回到 A</td>
+<td></td>
+<td></td>
+<td>B</td>
+</tr>
+<tr>
+<td>11</td>
+<td>绕过 A 的下方</td>
+<td></td>
+<td>A</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>到 C，左下没有孩子</td>
+<td>C</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>绕过 C 的下方</td>
+<td></td>
+<td>C</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>到 F，左下没有孩子</td>
+<td>F</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>绕过 F 的下方</td>
+<td></td>
+<td>F</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>离开 F、C、A，回到根，结束</td>
+<td></td>
+<td></td>
+<td>F C A</td>
+</tr>
+</tbody></table>
+</div>
+<blockquote>
+<p>💡 想直接看「贴着节点轮廓一圈圈走」的动画？<a href="../interactive/traversal-contour/index.html">打开绕轮廓遍历交互动画</a>（独立页面：可单步 / 自动播放 / 点节点反查它的三次分别在第几步）。</p>
+</blockquote>
+<p>三本记录：<strong>前序 ABDEC</strong>、<strong>中序 DBEAC</strong>、<strong>后序 DEBFCA</strong>。同一个&quot;绕圈&quot;动作，只因记录时机不同，就得到三种序——这就是三个定义的全部秘密。</p>
+<p><strong>为什么&quot;下方&quot;那一次恰好是中序</strong>：中序 = 左 → 根 → 右。走完左子树绕回节点，正是&quot;左&quot;结束的时刻，此刻记它，结果自然是&quot;左在前、根居中&quot;。前序（一到达就记，根跑在左右前面）、后序（离开才记，根落在最后）同理。</p>
+<p>用递归的话说也相通：第 1 次到达 = <strong>递</strong>进去，第 3 次离开 = <strong>归</strong>出来；&quot;递&quot;时记是前序、&quot;归&quot;时记是后序、递归完左边回头时记是中序。</p>
+<p><strong>核心解题法（必须练熟）：</strong></p>
+<ul>
+<li><strong>前序第一个是根，后序最后一个是根，中序里根把树切成左右两半。</strong></li>
+<li>已知「前序 + 中序」或「后序 + 中序」可唯一还原二叉树；<strong>「前序 + 后序」不能唯一确定</strong>（无法分左右），这是经典陷阱题。</li>
+<li>还原步骤：从遍历序列中找根 → 中序里分左右子树 → 对左右子树递归重复。</li>
+</ul>
+<p><strong>还原例题一步步看</strong>：前序 ABDEC，中序 DBEAC。</p>
+<pre><code>第 1 步：前序第一个 A 是根；中序里 A 把序列切成 DBE | A | C
+        A
+       / \
+      ？   ？      ← 左子树 {D,B,E}，右子树 {C}
+
+第 2 步：左子树 3 个节点，它的前序是 BDE → 第一个 B 是它的根；
+        中序 DBE 里 B 的左边 D、右边 E，即 D、E 是 B 的孩子
+
+第 3 步：右子树只剩 C，直接挂上。还原完成：
+        A
+       / \
+      B   C
+     / \
+    D   E
+</code></pre>
+<p>检验：对还原出的树走一圈——前序 A B D E C ✓，中序 D B E A C ✓，与题目一致。</p>
+<p><strong>层序遍历</strong>：从上到下从左到右逐层访问，用<strong>队列</strong>实现（注意：前中后序递归用<strong>栈</strong>）。可以想成&quot;水波扩散&quot;：根先入队，处理 A 时把 B、C 排进队，处理 B 时把 D、E 排进队……队列的&quot;先进先出&quot;恰好保证了同一层先访问完才轮到下一层。</p>
+<p><strong>延伸阅读</strong>：遍历的动态过程配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_tree_traversal/">hello-algo · 二叉树遍历</a>（在线打开可看；离线不影响本讲义自足）。</p>
+<h3 id="h-4">2.3 线索二叉树<button type="button" class="sec-status" data-status-key="2.3 线索二叉树" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 线索二叉树」的学习状态"></button></h3>
+<p>利用二叉链表中的<strong>空指针</strong>（n 个节点有 n+1 个空指针，想想为什么：2n 个指针域、用了 n−1 条边）：</p>
+<ul>
+<li><strong>左孩子为空 → 左指针改为指向该节点在遍历序中的前驱</strong>；</li>
+<li><strong>右孩子为空 → 右指针改为指向该节点在遍历序中的后继</strong>；</li>
+<li>（按哪种遍历建立线索就叫&quot;X 序线索树&quot;，考试默认说清是哪种。）</li>
+</ul>
+<p><strong>例子</strong>（中序线索树）：</p>
+<pre><code>          A
+         / \
+        B   C
+       / \
+      D   E
+中序序位：D(1) → B(2) → E(3) → A(4) → C(5)
+</code></pre>
+<ul>
+<li><p><strong>E</strong>（叶子，两个指针原本都空着）：左指针改为指向<strong>前驱 B</strong>，右指针改为指向<strong>后继 A</strong>。</p>
+</li>
+<li><p><strong>D</strong>（叶子，且是中序第 1 个）：没有前驱可指，左指针保持空；右指针指向后继 B。</p>
+</li>
+<li><p><strong>C</strong>（叶子，且是中序最后一个）：没有后继可指，右指针保持空；左指针指向前驱 A。</p>
+</li>
+<li><p><strong>B</strong> 的两个孩子都在（左 D 右 E）：不加线索。</p>
+</li>
+<li><p>（按哪种遍历建立线索就叫&quot;X 序线索树&quot;，考试默认说清是哪种。）</p>
+</li>
+<li><p>目的：不借助栈/递归也能按遍历序找前驱后继。</p>
+</li>
+<li><p>考法：判断&quot;某节点在 X 序线索树中的前驱/后继指向谁&quot;——先写出该遍历序，再按定义套即可。</p>
+</li>
+<li><p>加线索后为区分&quot;指针指向孩子还是线索&quot;，节点需多存两个标志位 ltag/rtag。</p>
+</li>
+</ul>
+<h3 id="h-5">2.4 哈夫曼树与哈夫曼编码 <span class="stars">★★★</span>（几乎年年考）<button type="button" class="sec-status" data-status-key="2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 哈夫曼树与哈夫曼编码 ★★★（几乎年年考）」的学习状态"></button></h3>
+<p><strong>它解决什么问题</strong>：压缩。给文件里的字符分配二进制编码时，字符出现频率天差地别——<code>a</code> 可能出现 5000 次，<code>z</code> 只出现 3 次。如果每个字符都固定占 8 位，等于让&quot;天天用的 a&quot;和&quot;几乎不用的 z&quot;付一样的房租。<strong>朴素想法</strong>很自然：常用的给短码、少用的给长码，总位数就降下来了。但马上冒出新麻烦：码长不一，读的时候会切错位置。哈夫曼树就是那个&quot;既让常用字拿到短码、又保证读起来不歧义&quot;的标准答案。</p>
+<h4 id="h-6">先认五个关键词（丢分多半丢在这几个名词上）</h4>
+<p><strong>① 路径长度</strong>：从一个节点往下走到另一个节点，<strong>经过的边数</strong>（走一条边算 1）。根走到根，路径长度是 0。</p>
+<p><strong>② 权（weight）</strong>：贴在节点上的一个数字，表示它的&quot;分量&quot;。在哈夫曼编码里，权就是<strong>该字符出现的次数（频率）</strong>。</p>
+<p><strong>③ 带权路径长度 WPL</strong>：Σ（每个叶子的权 × 该叶子到根的路径长度）。两个限定必须记牢：<strong>只算叶子</strong>，<strong>乘的是边数不是层次号</strong>。</p>
+<pre><code>                        *            ← 根（内部节点，权 = 8 + 7 = 15）
+                      /   \
+                     (8)  *      ← 内部节点，权 = 5 + 2 = 7
+                        /   \
+                       (5) (2)
+
+  三个叶子：(8) 路径长 1    (5) 路径长 2    (2) 路径长 2
+  WPL = 8×1 + 5×2 + 2×2 = 8 + 10 + 4 = 22
+</code></pre>
+<p>图中带括号的 <strong>(8)、(5)、(2) 是带权的叶子</strong>，星号节点是合并出来的<strong>内部节点</strong>（它的权值等于两个孩子之和，只是算 WPL 时用不上）。最高频的失分点就在这儿：WPL 求和时<strong>只挑叶子</strong>，那些 7、15 写在那儿也不许乘路径长——用非叶节点求和是另一套算法（见后面结论 4），两套不能混着用。</p>
+<p><strong>④ 哈夫曼树</strong>：在所有&quot;叶子权值恰好是给定这组数&quot;的二叉树里，<strong>WPL 最小的那一棵</strong>（因此也叫最优二叉树）。</p>
+<p><strong>⑤ 前缀码</strong>：任何一个字符的编码，都不是另一个字符编码的<strong>开头</strong>。所有的二进制编码只要满足这条，就能从左往右一路读下去、不会切错。（为什么必须满足，后面有反例。）</p>
+<h4 id="h-7">构造过程：拿权 {1, 2, 3, 4} 走一遍</h4>
+<p>规则一句话：<strong>每轮从森林里挑权值最小的两棵树，合并成一棵新树（新根权值 = 两者之和），再放回森林。重复到只剩一棵。</strong></p>
+<p>下面三张图里，<strong>( ) 带括号的是原始叶子，裸写的数字是合并出来的内部节点</strong>——权值撞车时（下面就会出现两个 3）靠这个区分。</p>
+<pre><code>时刻 0   森林 = { (1)  (2)  (3)  (4) }       ← 四棵单节点树，全是叶子
+
+时刻 1   挑最小的两个（1 和 2）→ 合并，新根权 = 1 + 2 = 3
+
+              3
+             / \
+           (1) (2)                          森林 = { 3, (3), (4) }
+
+时刻 2   现在的数是 3、3、4 —— 最小的两个是&quot;两个 3&quot;（新 3 与原 3）
+
+                6
+              /   \
+             3    (3)
+            / \
+          (1) (2)                           森林 = { 6, (4) }
+
+时刻 3   只剩 4 和 6 → 合并，新根权 = 10，森林只剩一棵，结束
+
+                  10
+                /    \
+               6     (4)
+              / \
+             3  (3)
+            / \
+          (1) (2)
+</code></pre>
+<p><strong>别踩这个坑</strong>：时刻 2 森林里是 {3（刚合并的）, 3（原来的）, 4}，&quot;最小的两个&quot;是 <strong>3 和 3</strong>，不是 3 和 4。假如挑了 3 和 4，会合并出 7，森林变成 {3, 7}，时刻 3 再算 3 + 7 —— <strong>结果还是 10，看起来&quot;没差&quot;</strong>。但把它当哈夫曼树来算 WPL 就露馅了：</p>
+<pre><code>                    10
+                 /      \
+               (3)       7          ← 权 4 到了第 2 层，权 3 却还在第 1 层
+                        /   \       ← （违反&quot;权大离根近&quot;，一眼就该起疑）
+                      (4)   3
+                           / \
+                         (1) (2)
+
+WPL = 3×1 + 4×2 + 1×3 + 2×3 = 3 + 8 + 3 + 6 = 20   （非叶节点和 = 3+7+10 = 20 ✓ 自洽）
+</code></pre>
+<p><strong>教训</strong>：别拿&quot;最后总数一不一样&quot;当判据，<strong>WPL 才是唯一判据</strong>；用结论 4 自查一遍立刻就能发现。</p>
+<h4 id="h-8">从树到编码：左 0 右 1</h4>
+<p>约定<strong>左分支记 0、右分支记 1</strong>（左右互换也合法，编码变了但码长不变）。从根出发，把走过的分支依次写下来，就是这个叶子的编码：</p>
+<pre><code>                  10            ← 根
+                /    \
+               6     (4)        ← (4) 在根的右边
+              / \
+             3  (3)             ← (3) 在 6 的右边：先左后右
+            / \
+          (1) (2)              ← 1、2 在&quot;左、左&quot;之后分道
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>叶子（权）</th>
+<th>从根走的路径</th>
+<th>编码</th>
+<th>码长</th>
+<th>贡献位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td>右</td>
+<td><code>1</code></td>
+<td>1</td>
+<td>4×1 = 4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>左 → 右</td>
+<td><code>01</code></td>
+<td>2</td>
+<td>3×2 = 6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>左 → 左 → 左</td>
+<td><code>000</code></td>
+<td>3</td>
+<td>1×3 = 3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>左 → 左 → 右</td>
+<td><code>001</code></td>
+<td>3</td>
+<td>2×3 = 6</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>WPL = 4×1 + 3×2 + 1×3 + 2×3 = 19</strong>。
+<strong>第二种方法验算</strong>：WPL = 所有<strong>非叶节点</strong>权值之和 = 3 + 6 + 10 = <strong>19</strong> ✓
+<strong>它的含义</strong>：这 4 个字符一共出现 10 次（1+2+3+4），用这套编码只需要 19 位；定长编码 4 个字符要 2 位，同样 10 次要 20 位。只省 1 位——因为 {1,2,3,4} 这组权太均匀了，<strong>权值越悬殊，哈夫曼的收益越大</strong>。下一个例子正好演示这一点。</p>
+<h4 id="h-9">再看一个&quot;像真题&quot;的例子：权 {5, 9, 12, 13, 16, 45}</h4>
+<p>6 个字符、频率悬殊，这是考题的典型长相。照规则走：</p>
+<pre><code>  5 + 9   = 14   →  森林 {12, 13, 14, 16, 45}
+ 12 + 13  = 25   →  森林 {14, 16, 25, 45}
+ 14 + 16  = 30   →  森林 {25, 30, 45}
+ 25 + 30  = 55   →  森林 {45, 55}
+ 45 + 55  = 100  →  只剩一棵，结束
+</code></pre>
+<p>最终树形（裸写数字＝节点权值，内部节点的值恒等于两个孩子之和）：</p>
+<pre><code>                    100
+                 /       \
+                45      55
+                     /      \
+                    25      30
+                   /  \    /  \
+                  12 13   14 16
+                         /  \
+                         5  9
+</code></pre>
+<p>按&quot;左 0 右 1&quot;读根到每个叶子的路径，得到编码表：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>权（字符频率）</th>
+<th>编码</th>
+<th>码长</th>
+<th>贡献位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45</td>
+<td><code>0</code></td>
+<td>1</td>
+<td>45</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>100</code></td>
+<td>3</td>
+<td>36</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>101</code></td>
+<td>3</td>
+<td>39</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>111</code></td>
+<td>3</td>
+<td>48</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>1100</code></td>
+<td>4</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>1101</code></td>
+<td>4</td>
+<td>36</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>WPL = 45×1 + 12×3 + 13×3 + 16×3 + 5×4 + 9×4 = 45 + 36 + 39 + 48 + 20 + 36 = 224</strong>
+<strong>验算</strong>：非叶节点权值之和 = 14 + 25 + 30 + 55 + 100 = <strong>224</strong> ✓</p>
+<p>两个值得记住的观察：</p>
+<ul>
+<li><strong>频率越大码越短</strong>：45 只占 1 位，5 和 9 要 4 位。这就是&quot;常用字付低房租&quot;。</li>
+<li><strong>收益来自不均衡</strong>：6 个字符定长要 3 位，100 次共 300 位；哈夫曼只用 224 位，省掉 25%。</li>
+</ul>
+<h4 id="h-10">前缀码为什么必须满足，哈夫曼为什么天然满足</h4>
+<p>译码的方式是<strong>从左往右一位一位读</strong>，读到凑够某个字符的完整编码，就切一刀、认一个字。</p>
+<p><strong>反例</strong>：假设编码表是 <code>e=0、a=1、b=01、d=00</code>（随手定的、没有树在背后撑腰），收到一串 <code>0100</code>：</p>
+<ul>
+<li>按 <code>e</code>(0) 切：剩下 <code>100</code> → 没有任何字符的编码是 <code>100</code>，<strong>卡住译不下去</strong>；</li>
+<li>换个切法：<code>01</code>(b) + <code>00</code>(d) → 读出 <code>bd</code>。</li>
+</ul>
+<p>同一串二进制读出两种结果，这就是<strong>非前缀码</strong>的歧义（<code>b=01</code> 以 <code>e=0</code> 开头，读的时候分不清 0 后面还有没有内容）。</p>
+<p>哈夫曼树不会出这种事，因为<strong>所有字符都挂在叶子上</strong>，而&quot;叶子&quot;的定义就是<strong>没有孩子、路到此为止</strong>：</p>
+<blockquote>
+<p><strong>叶子 = 编码终点；中间节点不是字符，只是岔路口。</strong></p>
+</blockquote>
+<p>从根走到一个叶子的路径，绝不可能恰好是通往另一个叶子的路径的开头——只要在中间某点就&quot;认出字&quot;了，那个点下面就不会再有路，它也就不是中间节点了。所以这一条反过来说明：<strong>字符必须放在叶子上，不能放在中间节点</strong>。</p>
+<h4 id="h-11">四条必背结论（选择题原话考）</h4>
+<ol>
+<li><strong>n 个叶子的哈夫曼树，节点总数 = 2n − 1，且没有度为 1 的节点。</strong>
+为什么：每轮合并都是&quot;两棵并成一棵&quot;，新造出来的节点必然有两个孩子 → 所有非叶节点的度都是 2，<strong>不存在度为 1 的节点</strong>。n 棵单节点树要合并 n−1 次，所以非叶节点共 n−1 个，总数 n + (n−1) = 2n−1。</li>
+<li><strong>权越大的叶子离根越近</strong>（路径长度越小）——这是每轮挑最小合并的顺序决定的。</li>
+<li><strong>哈夫曼树不唯一，但 WPL 唯一。</strong> 权值相同的叶子可以左右互换、并列最小的几组可以调换合并次序，长出来的形状可能不同，但最小总长是定死的。同理：<strong>编码不唯一，但码长分布唯一</strong>。考题问&quot;编码是否唯一&quot;答<strong>不唯一</strong>，问&quot;WPL / 最短码长&quot;答<strong>唯一</strong>，两者别混。</li>
+<li><strong>WPL = 所有非叶节点权值之和</strong>（自检神器：用叶子算一遍，再用非叶节点算一遍，两个数必须相等；不等就是合并过程挑错了数）。</li>
+</ol>
+<h4 id="h-12">应试动作（手算四步，30 秒内）</h4>
+<ol>
+<li><strong>把权值抄成升序列表</strong>——避免&quot;最小两个&quot;漏挑。</li>
+<li><strong>合并 → 划掉两个 → 写下和 → 把和插回有序列表</strong>，逐轮写清楚（草稿纸上一行一轮，别跳步）。</li>
+<li><strong>树从最后一次合并往回拆着画</strong>，不要一开始就凭空画树。</li>
+<li><strong>求 WPL 用两种方法互验</strong>：叶子求和法 ↔ 非叶节点求和法；两者不等就回第 2 步重查。</li>
+</ol>
+<p><strong>补充一句读法</strong>：有些教材把&quot;第几层&quot;和&quot;路径长度&quot;混着说——层次从 1 起算时，<strong>路径长度 = 层次 − 1</strong>。本讲义一律用&quot;路径长度 = 边数&quot;，根为 0。</p>
+<h3 id="h-13">2.5 平衡二叉树（AVL 树）<span class="stars">★</span>（低频，选择题偶尔 1 题）<button type="button" class="sec-status" data-status-key="2.5 平衡二叉树（AVL 树）★（低频，选择题偶尔 1 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 平衡二叉树（AVL 树）★（低频，选择题偶尔 1 题）」的学习状态"></button></h3>
+<p><strong>先把考频说清</strong>：这一节不是重点。按考频编排的考前资料里，AVL 只剩<strong>一句话定义</strong>（&quot;任一结点的左右子树高度之差不超过 1&quot;），真题精选题库里也几乎不单独出它的题。所以别背过程，做到三件事就够：<strong>认得出</strong>一棵树是不是 AVL、<strong>判得出</strong>插入点该用哪种旋转、<strong>记得住</strong>最少节点数公式。真正要花时间的是 2.2 遍历和 2.4 哈夫曼。</p>
+<p><strong>它解决什么问题</strong>：二叉排序树的效率完全取决于树的形状——按 1、2、3、4、5 的顺序插入，树会退化成一条斜链，查找从 O(log₂n) 掉回 O(n)。AVL 的解法是给树加一条硬规矩：<strong>任何节点左右子树的高度差不许超过 1</strong>，插完发现违规就<strong>旋转</strong>修正，把最坏情况重新压回 O(log₂n)。（BST 本身的定义、插入删除、退化过程在第四节 4.4，那里讲得更细。）</p>
+<p><strong>两个词必须先认识</strong>：</p>
+<ul>
+<li><strong>AVL 树</strong>：任意节点左右子树<strong>高度差 ≤ 1</strong> 的<strong>二叉排序树</strong>。两个条件都要满足——先得是 BST，再谈平衡。</li>
+<li><strong>平衡因子（BF）</strong>：<code>BF = 左子树高度 − 右子树高度</code>，合法取值只有 <strong>−1、0、+1</strong> 三个。某个节点的 BF 一旦变成 ±2，这棵树就失衡了。（高度按<strong>层数</strong>算：只有一个节点的子树高 1，空子树高 0——这是教材算 BF 的通用口径。）</li>
+</ul>
+<pre><code>【是 AVL】每个节点的 BF 都落在 −1 ~ +1 内
+
+        5
+       / \
+      3   8
+     /   / \
+    1   7   9
+
+  BF(5) = 左高 2 − 右高 2 = 0        BF(3) = 1 − 0 = +1        BF(8) = 1 − 1 = 0
+  1、7、9 是叶子（左右都空，0 − 0 = 0），BF 也都是 0    → 全部合法 ✓
+
+【不是 AVL】节点 8 失衡
+
+        8
+       / \
+      6   25
+     / \
+    4   7
+   /
+  2
+
+  BF(8) = 左子树(6→4→2)高 3 − 右子树(25)高 1 = +2  → 越界 ✗
+  （BF(6) = 2 − 1 = +1、BF(4) = 1 − 0 = +1 都合法；整棵树只要有一个节点越界，就不是 AVL）
+</code></pre>
+<p><strong>四种旋转怎么记</strong>：LL、RR、LR、RL 的字母，第一个字母是<strong>插入点相对失衡节点的位置</strong>（L=左子树侧，R=右子树侧），第二个字母是再往里的方向。口诀：</p>
+<ul>
+<li><strong>LL 和 RR（同侧）</strong>：做一次&quot;反方向旋转&quot;。LL（全在左边）→ <strong>右旋</strong>；RR（全在右边）→ <strong>左旋</strong>。想象三个节点排成一条直线，把中间那个提起来当根，树就转平了。</li>
+<li><strong>LR 和 RL（异侧）</strong>：先对<strong>中间两个节点</strong>做一次旋转（变成 LL/RR），再按同侧规则转一次。口诀：<strong>先局部再整体，转两次</strong>。</li>
+</ul>
+<pre><code>【LL 型】插入点落在&quot;左子树的左边&quot; → 对失衡节点做一次右旋
+
+变换前（插入 0 之后，节点 5 失衡）：
+
+        5
+       / \
+      3   8
+     /
+    1
+   /
+  0
+
+变换后（3 提上来当根，5 降为它的右孩子）：
+
+        3
+       / \
+      1   5
+     /     \
+    0       8
+</code></pre>
+<pre><code>【LR 型】插入点落在&quot;左子树的右边&quot; → 先左旋、再右旋（转两次）
+
+变换前（插入 8 之后，节点 10 失衡）：
+
+        10
+       /  \
+      5    15
+     / \
+    3   7
+         \
+          8
+
+第一步：对 5 做左旋（7 提上来，5 降为它的左孩子）：
+
+        10
+       /  \
+      7    15
+     / \
+    5   8
+   /
+  3
+
+第二步：再对 10 做右旋（7 提上来当根，10 降为它的右孩子）：
+
+        7
+       / \
+      5   10
+     /   /  \
+    3   8    15
+</code></pre>
+<p><strong>最少节点数</strong>：高度为 h 的 AVL 树最少节点数 N(h) = N(h−1) + N(h−2) + 1（N(1)=1, N(2)=2）。</p>
+<ul>
+<li><strong>公式怎么来的</strong>：要&quot;节点最少&quot;，根占 1 个；一棵子树塞满（高度 h−1），另一棵只求合法（高度只能是 h−2，差 1 是 AVL 的底线，再矮就失衡了）。所以 N(h) = 1 + N(h−1) + N(h−2)。</li>
+<li><strong>代入算例</strong>：N(3)=N(2)+N(1)+1=2+1+1=4，N(4)=4+2+1=7，N(5)=7+4+1=12。考法：&quot;高度为 4 的 AVL 树最少有几个节点？&quot; → 7。</li>
+</ul>
+<p><strong>考试怎么问</strong>：① 给几棵树问&quot;哪个是 AVL&quot;——数每个节点的 BF，越界的排除；② 给一棵插入后的失衡图问&quot;应采用哪种旋转&quot;——先找<strong>离插入点最近的失衡节点</strong>，再看插入点落在它的左子树侧还是右子树侧。旋转后的树形很少要求现场画，记住&quot;谁当新根、哪棵子树改挂&quot;就够了。</p>
+<h3 id="h-14">2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）<button type="button" class="sec-status" data-status-key="2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.6 B 树与 B+ 树（每年 0–1 题，记住对比即可）」的学习状态"></button></h3>
+<p><strong>考频先说清</strong>：真题目库里几乎没有 B 树的独立题，按考频精炼的考前资料里干脆不提它。所以只做三件事：<strong>知道它为什么存在</strong>、<strong>认得出两张结构图的区别</strong>、<strong>背下那张对比表</strong>。阶数公式、插入分裂过程都不必背。</p>
+<p><strong>它解决什么问题</strong>：磁盘 I/O。二叉树查找要一层层往下走，<strong>每下一层就是一次磁盘访问</strong>——100 万条记录，二叉树高度约 20，最坏情况要读 20 次盘。把树&quot;变胖&quot;就解决了：一个节点塞几百个关键字、带几百个孩子，树高压到 3～4 层，磁盘只需读三四次。<strong>B 树是被磁盘逼出来的结构，不是为内存设计的。</strong></p>
+<p><strong>定义（m 阶 B 树）</strong>：&quot;阶&quot;就是一个节点<strong>最多能有多少个孩子</strong>。</p>
+<ul>
+<li>每个节点最多 m 个孩子、m−1 个关键字；</li>
+<li>除根外每个节点至少有 ⌈m/2⌉ 个孩子（根至少 2 个）；</li>
+<li><strong>所有叶子节点都在同一层</strong>——这一条让它天然平衡，不需要旋转。</li>
+</ul>
+<p><strong>结构图</strong>：下面是 3 阶（每个节点最多 3 个孩子、2 个关键字）的两种树。两者的拓扑长得几乎一样，差别只在<strong>数据放在哪、叶子连不连</strong>：</p>
+<pre><code>【B 树】关键字和数据存在每一个节点里，查到哪一层就在哪一层返回
+
+                  [ 8 |17 ]
+              /       |       \
+      [ 3 | 5 ]   [ 11|13 ]   [ 20|25 ]
+</code></pre>
+<pre><code>【B+ 树】上层只做&quot;路标&quot;，数据全压在最后一层，且横向串成链表
+（示意图，只强调&quot;数据放在哪、叶子连不连&quot;两点；节点的关键字个数与子树的严格对应关系软考不考）
+
+                  [ 8 |17 ]                 ← 内部节点：只有索引，没有数据
+              /       |       \
+      [ 3 | 5 ]   [ 11|13 ]   [ 20|25 ]     ← 叶子节点：数据都在这儿
+      +-----------+-----------+             ← 叶子串成链表，范围查询顺着扫
+</code></pre>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>B 树</th>
+<th>B+ 树</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据存放</td>
+<td>所有节点都存关键字和记录</td>
+<td><strong>只有叶子节点存记录</strong>，内部节点只存索引</td>
+</tr>
+<tr>
+<td>叶子节点</td>
+<td>不链接</td>
+<td><strong>串成链表</strong>，便于范围查询</td>
+</tr>
+<tr>
+<td>查找路径</td>
+<td>可能在半路就命中，长度不定</td>
+<td><strong>一定要走到叶子</strong>，每次查找路径长度相同</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>文件系统</td>
+<td><strong>数据库索引</strong>（MySQL）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>为什么数据库索引用 B+ 树不用 B 树</strong>（两句就够）：</p>
+<ol>
+<li>内部节点不存数据 → 同样一个磁盘块能装下更多关键字 → 树更矮 → 磁盘访问次数更少；</li>
+<li>叶子串成链表 → &quot;查 10 到 500 之间的记录&quot;顺着链表扫一段就行，B 树得反复回到上层重新往下走。</li>
+</ol>
+<p><strong>考试怎么问</strong>：给两张图问&quot;哪棵是 B+ 树&quot;（看数据是不是全在最底层、叶子有没有连线）；问&quot;B+ 树叶子节点的作用&quot;（存全部数据 + 串成链表支持范围查询）；问&quot;数据库为什么用 B+ 树&quot;（上面那两句）。都不涉及算法，背表即可。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="01-数据结构与算法/02-树与二叉树">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-线性表、栈与队列.html">
+      <span class="k">上一页</span>
+      <span class="t">01.1 线性表、栈与队列</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-图.html">
+      <span class="k">下一页</span>
+      <span class="t">01.3 图 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

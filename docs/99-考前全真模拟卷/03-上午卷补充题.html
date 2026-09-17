@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>99.3 上午卷补充题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a><ul class="chapter-nav"><li><a href="01-上午卷上.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/01-上午卷上" aria-hidden="true"></i><span class="n">01</span><span class="t">上午卷（上）：计算机系统至设计模式</span></a></li><li><a href="02-上午卷下.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/02-上午卷下" aria-hidden="true"></i><span class="n">02</span><span class="t">上午卷（下）：数据库至专业英语</span></a></li><li><a href="03-上午卷补充题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/03-上午卷补充题" aria-hidden="true"></i><span class="n">03</span><span class="t">上午卷补充题</span></a></li><li><a href="04-下午卷案例一至三.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/04-下午卷案例一至三" aria-hidden="true"></i><span class="n">04</span><span class="t">下午卷：案例一至三</span></a></li><li><a href="05-下午卷案例四至五.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/05-下午卷案例四至五" aria-hidden="true"></i><span class="n">05</span><span class="t">下午卷：案例四至五</span></a></li><li><a href="90-上午卷答案与解析.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/90-上午卷答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">上午卷答案与解析</span></a></li><li><a href="91-下午卷答案与评分点.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/91-下午卷答案与评分点" aria-hidden="true"></i><span class="n">07</span><span class="t">下午卷答案与评分点</span></a></li><li><a href="99-成绩诊断.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/99-成绩诊断" aria-hidden="true"></i><span class="n">08</span><span class="t">成绩诊断</span></a></li></ul></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 99 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">99.3 上午卷补充题</h1>
+  </header>
+  <blockquote class="lead">
+<p>这 6 道题覆盖前文 75 题没考到、但属于高频考点的三块内容：数据结构（关键路径与散列表平均查找长度）、软件工程（逻辑覆盖强弱排序）、数学与多媒体（采样定理／颜色空间／JPEG 压缩流程）。同样建议限时作答，答案在文末&quot;补充题解析&quot;。</p>
+</blockquote>
+<h3 id="h-2">第一组　数据结构：关键路径与散列表 ASL <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第一组 数据结构：关键路径与散列表 ASL ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一组 数据结构：关键路径与散列表 ASL ★★★」的学习状态"></button></h3>
+<p><strong>补充 1.</strong> 某 AOE 网（用边表示活动、顶点表示事件）中各活动持续时间为：1→2 为 4，1→3 为 3，2→4 为 5，3→4 为 6，3→5 为 2，4→5 为 3，2→5 为 4。则从起点事件 1 到终点事件 5 的关键路径长度（即工程的最短完工时间）为（ ）。</p>
+<p>A. 10<br>B. 11<br>C. 12<br>D. 13</p>
+<p><strong>补充 2.</strong> 散列表长度为 10，散列函数 H(key)=key mod 7，采用线性探测法处理冲突。依次插入关键字 8、15、1、22、13 后，查找关键字 22 所需的比较次数为（ ）。</p>
+<p>A. 2<br>B. 3<br>C. 4<br>D. 5</p>
+<h3 id="h-3">第二组　软件工程：逻辑覆盖强弱排序 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二组 软件工程：逻辑覆盖强弱排序 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二组 软件工程：逻辑覆盖强弱排序 ★★★」的学习状态"></button></h3>
+<p><strong>补充 3.</strong> 按覆盖标准的严格程度，从较弱到较强（条件覆盖认为不比判定覆盖强）排列逻辑覆盖，正确的顺序是（ ）。</p>
+<p>A. 语句覆盖 → 判定覆盖 → 条件覆盖 → 判定/条件覆盖 → 条件组合覆盖 → 路径覆盖<br>B. 路径覆盖 → 条件组合覆盖 → 判定/条件覆盖 → 条件覆盖 → 判定覆盖 → 语句覆盖<br>C. 语句覆盖 → 条件覆盖 → 判定覆盖 → 条件组合覆盖 → 判定/条件覆盖 → 路径覆盖<br>D. 判定覆盖 → 语句覆盖 → 条件覆盖 → 条件组合覆盖 → 路径覆盖 → 判定/条件覆盖</p>
+<h3 id="h-4">第三组　数学与多媒体：采样定理、颜色空间、JPEG 步骤 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第三组 数学与多媒体：采样定理、颜色空间、JPEG 步骤 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第三组 数学与多媒体：采样定理、颜色空间、JPEG 步骤 ★★」的学习状态"></button></h3>
+<p><strong>补充 4.</strong> 以 8 kHz 的采样率对一段模拟信号采样。根据采样定理，为保证能从离散样本无失真地恢复原信号，原信号的最高频率不能超过（ ）。</p>
+<p>A. 4 kHz<br>B. 8 kHz<br>C. 16 kHz<br>D. 2 kHz</p>
+<p><strong>补充 5.</strong> 视频传输与压缩中，把亮度与色度分离开（人眼对亮度更敏感），便于对色度成分进行更大程度压缩的颜色空间是（ ）。</p>
+<p>A. RGB<br>B. CMYK<br>C. YCbCr（YUV）<br>D. Lab</p>
+<p><strong>补充 6.</strong> JPEG 静态图像压缩的核心流程，正确顺序是（ ）。</p>
+<p>A. DCT 变换 → 量化 → Z 字形扫描 → 熵编码<br>B. 量化 → DCT 变换 → 熵编码 → Z 字形扫描<br>C. 熵编码 → 量化 → DCT 变换 → Z 字形扫描<br>D. DCT 变换 → 熵编码 → 量化 → Z 字形扫描</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷/03-上午卷补充题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-上午卷下.html">
+      <span class="k">上一页</span>
+      <span class="t">99.2 上午卷（下）：数据库至专业英语</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="04-下午卷案例一至三.html">
+      <span class="k">下一页</span>
+      <span class="t">99.4 下午卷：案例一至三</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

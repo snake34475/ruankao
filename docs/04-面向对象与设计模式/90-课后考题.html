@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>04.8 课后考题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a><ul class="chapter-nav"><li><a href="01-面向对象基本概念.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/01-面向对象基本概念" aria-hidden="true"></i><span class="n">01</span><span class="t">面向对象基本概念 ★</span></a></li><li><a href="02-分析与设计过程.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/02-分析与设计过程" aria-hidden="true"></i><span class="n">02</span><span class="t">面向对象分析与设计过程 ★★</span></a></li><li><a href="03-UML结构图.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/03-UML结构图" aria-hidden="true"></i><span class="n">03</span><span class="t">UML 结构图：类图、对象图与用例图 ★★★</span></a></li><li><a href="04-UML行为与交互图.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/04-UML行为与交互图" aria-hidden="true"></i><span class="n">04</span><span class="t">UML 行为图与交互图 ★★★</span></a></li><li><a href="05-设计模式框架.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/05-设计模式框架" aria-hidden="true"></i><span class="n">05</span><span class="t">设计模式分类与意图速查 ★★★</span></a></li><li><a href="06-高频设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/06-高频设计模式" aria-hidden="true"></i><span class="n">06</span><span class="t">高频设计模式与易混对照 ★★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：UML 建模</span></a></li><li><a href="90-课后考题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/91-精华题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 4 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">04.8 课后考题</h1>
+  </header>
+  <p><strong>一、选择题</strong></p>
+<ol>
+<li><p>面向对象方法中，将属性和操作捆绑在一起、对外隐藏实现细节的特性称为（ ）。
+A. 继承  B. 多态  C. 封装  D. 重载</p>
+</li>
+<li><p>下列关于重载与重写的说法，正确的是（ ）。
+A. 重写发生在同一个类中，参数列表必须不同
+B. 重载是方法名相同、参数列表不同的多个方法
+C. 重载绑定发生在运行期
+D. 重写要求子类方法参数列表与父类不同</p>
+</li>
+<li><p>父类引用指向子类对象，调用被子类重写的方法时执行的是（ ）。
+A. 父类版本  B. 子类版本  C. 编译时决定执行哪个版本  D. 随机版本</p>
+</li>
+<li><p>下列 UML 图中，属于静态图（结构图）的是（ ）。
+A. 状态图  B. 活动图  C. 部署图  D. 顺序图</p>
+</li>
+<li><p>类图中，鸟与翅膀的关系用（ ）表示最合适。
+A. 空心菱形  B. 实心菱形  C. 虚线箭头  D. 空心三角</p>
+</li>
+<li><p>用例&quot;借书&quot;必须先执行&quot;登录&quot;用例，两用例间的关系是（ ）。
+A. <code>&lt;&lt;extend&gt;&gt;</code>  B. <code>&lt;&lt;include&gt;&gt;</code>  C. 泛化  D. 关联</p>
+</li>
+<li><p>UML 顺序图中，同步消息通常用（ ）表示。
+A. 实线箭头（实心箭头头部）  B. 虚线箭头（返回）  C. 粗横线  D. 小人符号</p>
+</li>
+<li><p>下列设计模式中，属于结构型的是（ ）。
+A. 策略模式  B. 单例模式  C. 装饰器模式  D. 命令模式</p>
+</li>
+<li><p>&quot;将请求封装为对象，从而支持请求排队、日志记录和可撤销操作&quot;，这是（ ）模式。
+A. 备忘录  B. 命令  C. 职责链  D. 迭代器</p>
+</li>
+<li><p>&quot;把对象组成树形结构表示整体—部分层次，使单个对象和组合对象的使用具有一致性&quot;，这是（ ）模式。
+A. 组合  B. 桥接  C. 外观  D. 享元</p>
+</li>
+<li><p>&quot;定义对象间一对多的依赖，当一个对象状态改变时所有依赖者得到通知&quot;，这是（ ）模式。
+A. 中介者  B. 状态  C. 观察者  D. 访问者</p>
+</li>
+<li><p>&quot;将一个类的接口转换成客户希望的另一种接口，使原本不兼容的类可以协同工作&quot;，这是（ ）模式。
+A. 适配器  B. 代理  C. 装饰器  D. 桥接</p>
+</li>
+<li><p>&quot;动态地给一个对象添加一些额外的职责&quot;，这是（ ）模式。
+A. 代理  B. 装饰器  C. 享元  D. 抽象工厂</p>
+</li>
+<li><p>某文本编辑器需要支持多种排序算法且运行时可切换，最合适的模式是（ ）。
+A. 模板方法  B. 状态  C. 策略  D. 工厂方法</p>
+</li>
+<li><p>&quot;保证一个类仅有一个实例，并提供一个全局访问点&quot;，这是（ ）模式。
+A. 单例  B. 原型  C. 构建器  D. 外观</p>
+</li>
+<li><p>面向对象方法中，应用最广泛、被称为&quot;最纯的多态&quot;的是（ ）。
+A. 过载多态  B. 参数多态  C. 包含多态  D. 强制多态</p>
+</li>
+<li><p>某类负责协调实体类与界面类、控制业务活动流，其类名通常以 Controller 结尾。该类的类型是（ ）。
+A. 实体类  B. 边界类  C. 控制类  D. 工具类</p>
+</li>
+<li><p>UML 构件图中，表示&quot;该构件对外提供的服务&quot;的接口符号是（ ）。
+A. 半圆  B. 整圆  C. 空心三角形  D. 空心菱形</p>
+</li>
+<li><p>关于 UML 状态图，下列说法正确的是（ ）。
+A. 一个状态图可以有多个初始状态
+B. 一个状态图只能有一个初始状态，可以有多个终态，也可以没有终态
+C. 每条转换都必须同时给出事件与监护条件
+D. 状态图用于描述多个对象之间按时间顺序的交互</p>
+</li>
+<li><p>&quot;抽象不应该依赖于细节，细节应该依赖于抽象；高层模块不应该依赖低层模块，两者都应该依赖于抽象&quot;，这体现的是（ ）。
+A. 单一职责原则  B. 里氏替换原则  C. 依赖倒置原则  D. 接口隔离原则</p>
+</li>
+<li><p>观察者模式中，专门定义&quot;更新接口&quot;、在被观察对象状态改变时接受通知的角色是（ ）。
+A. Subject  B. ConcreteSubject  C. Observer  D. ConcreteObserver</p>
+</li>
+<li><p>动态绑定（运行期确定调用哪个方法）的发生需要同时满足若干条件，下列不属于其必要条件的是（ ）。
+A. 存在继承关系  B. 子类重写了父类的方法  C. 父类引用指向子类对象  D. 方法被声明为静态方法</p>
+</li>
+</ol>
+<p><strong>二、案例题（UML 建模，模拟真题风格）</strong></p>
+<p>阅读下列说明，回答问题 1 至问题 3。</p>
+<p>【说明】某图书馆系统支持读者在线借还图书。系统采用面向对象方法开发，其类模型包含下列类（括号内为部分方法）：</p>
+<ul>
+<li><strong>Reader</strong>：读者（<code>isTeacher()</code>）；</li>
+<li><strong>Book</strong>：图书（<code>isBorrowable()</code>）；</li>
+<li><strong>Catalog</strong>：图书目录（<code>find(bookID)</code>）；</li>
+<li><strong>LoanRecord</strong>：借阅记录；</li>
+<li><strong>BorrowController</strong>：借书业务控制器（<code>startBorrow(readerID)</code>）；</li>
+<li><strong>BorrowUI</strong>：借书操作界面（<code>inputReaderID()</code>、<code>showResult()</code>）。</li>
+</ul>
+<p>用例&quot;借书（BorrowBook）&quot;的详细描述如下：</p>
+<ul>
+<li>参与者：读者（Reader）；</li>
+<li>典型事件流：① 输入读者 ID；② 确认该读者可以借阅图书，并记录读者 ID；③ 输入所借图书的图书 ID；④ 根据图书目录中的图书 ID 确认该书可借，计算归还日期，生成借阅记录；⑤ 通知读者归还日期。重复步骤 ③～⑤，直到读者结束借阅；</li>
+<li>备选事件流：2a. 若读者有超期未还图书则不能借阅：① 告知读者不能借阅并说明原因；② 本用例结束。4a. 若所借图书不可外借：① 告知读者该书不可借阅；② 回到步骤 ③；</li>
+<li>说明：归还期限与读者身份有关，教师为 60 天、学生为 30 天；读者 ID 中包含读者身份信息。</li>
+</ul>
+<p><strong>问题 1</strong>（6 分）：将上述六个类按&quot;实体类、边界类、控制类&quot;分类，并说明每一类的识别特征。</p>
+<p><strong>问题 2</strong>（6 分）：备选事件流 2a 中需要根据借阅规则判定读者能否借书。若借阅规则会不断扩充、并需要根据图书馆实际运行情况调整启用哪些规则，可以采用何种设计模式？简要说明理由。</p>
+<p><strong>问题 3</strong>（3 分）：若要描述&quot;借书&quot;过程中各对象按时间顺序的交互，应采用哪种 UML 图？它与通信图是什么关系？</p>
+<p><strong>三、案例题（用例关系与类图，模拟真题风格）</strong></p>
+<p>阅读下列说明，回答问题 1 至问题 3。</p>
+<p>【说明】某图书馆系统支持读者在线借还图书：</p>
+<ul>
+<li>读者使用系统前必须先完成身份登录；</li>
+<li>读者可查询图书并借书；若读者存在逾期未还记录，系统给出拒绝提示（没有逾期则不会有此提示）；</li>
+<li>借书成功后生成借阅记录，系统在应还日期前通过短信或邮件提醒读者（提醒方式可由系统配置切换）；</li>
+<li>一名读者可有多条借阅记录，一本图书可对应多条借阅记录；借阅记录记录所涉图书与读者。</li>
+</ul>
+<p><strong>问题 1</strong>：用例&quot;借书&quot;与&quot;登录&quot;、&quot;拒绝提示&quot;分别是什么关系？说明理由。</p>
+<p><strong>问题 2</strong>：画出（或文字描述）核心类图：读者、图书、借阅记录三类，标注关系与多重性。若系统还要求&quot;读者分为学生读者和教师读者&quot;，类图应如何扩展？</p>
+<p><strong>问题 3</strong>：提醒功能&quot;短信或邮件方式可由系统配置切换&quot;，最适合采用哪种设计模式？说明理由。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="04-面向对象与设计模式/90-课后考题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="07-案例题专攻.html">
+      <span class="k">上一页</span>
+      <span class="t">04.7 案例题专攻：UML 建模</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="91-精华题.html">
+      <span class="k">下一页</span>
+      <span class="t">04.9 精华题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

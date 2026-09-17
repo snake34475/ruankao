@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.9 案例题专攻：数据流图</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.9 案例题专攻：数据流图</h1>
+  </header>
+  <p>案例第一题一般是「文字说明 + 顶层图或 0 层图（缺数据流）」，固定三小问：补数据流、补数据存储或补外部实体、补数据字典。<strong>全部答案都藏在说明文字里</strong>，套路如下。</p>
+<h3 id="h-2">9.0 先认全 DFD 的四种元素（认不出元素就找不到答案）<button type="button" class="sec-status" data-status-key="9.0 先认全 DFD 的四种元素（认不出元素就找不到答案）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.0 先认全 DFD 的四种元素（认不出元素就找不到答案）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>常见画法</th>
+<th>表示什么</th>
+<th>命名规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>外部实体</strong></td>
+<td>矩形</td>
+<td>系统之外的<strong>人、组织、外部系统</strong>（顾客、餐厅、银行、支付网关）</td>
+<td>名词（&quot;读者&quot;&quot;支付网关&quot;）</td>
+</tr>
+<tr>
+<td><strong>加工</strong></td>
+<td>圆角矩形 / 圆圈</td>
+<td>对数据做的<strong>变换</strong>（计算、校验、存库）</td>
+<td><strong>动词 + 名词</strong>（&quot;接收订单&quot;&quot;校验资格&quot;）</td>
+</tr>
+<tr>
+<td><strong>数据存储</strong></td>
+<td>开口矩形 / 双平行线</td>
+<td><strong>文件、表、库、清单</strong></td>
+<td>名词 + 类型（&quot;订单文件&quot;&quot;库存表&quot;）</td>
+</tr>
+<tr>
+<td><strong>数据流</strong></td>
+<td>带名字的箭头</td>
+<td>数据的流动方向</td>
+<td>名词（&quot;订单&quot;&quot;待处理订单&quot;）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>两条画法铁律（真题的判错依据）</strong>：</p>
+<ol>
+<li><strong>数据存储不能直接连外部实体</strong>。外部实体要读文件，必须通过某个加工中转——例如「配送员从配送文件取餐通知」，正确画法是 <strong>配送文件 →(配送任务)→ 加工 →(取餐通知)→ 配送员</strong>，绝不能画成「配送文件 → 配送员」。</li>
+<li><strong>DFD 不画控制流</strong>。像&quot;先判断是否逾期，再决定是否拒绝&quot;这种逻辑，DFD 里只体现为<strong>数据</strong>的走向（多了/少了哪条流），不画带条件标注的控制箭头。</li>
+</ol>
+<h3 id="h-3">9.1 套路一：分层与平衡原则（判断&quot;缺什么&quot;的唯一依据）<button type="button" class="sec-status" data-status-key="9.1 套路一：分层与平衡原则（判断&amp;quot;缺什么&amp;quot;的唯一依据）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.1 套路一：分层与平衡原则（判断&quot;缺什么&quot;的唯一依据）」的学习状态"></button></h3>
+<ul>
+<li><strong>顶层图</strong>：整个系统算<strong>一个</strong>加工，只画外部实体和进出系统的数据流，不画数据存储；</li>
+<li><strong>0 层图</strong>：把系统拆成几个主要加工，画出外部实体、加工、数据存储、数据流；</li>
+<li><strong>父子图必须平衡</strong>：子图的输入/输出数据流，必须与父图中对应加工的输入/输出<strong>一一对应</strong>。父子图对不上 = 缺流，这就是补流题的判定依据。</li>
+</ul>
+<h3 id="h-4">9.2 套路二：逐句扫描说明找缺失数据流<button type="button" class="sec-status" data-status-key="9.2 套路二：逐句扫描说明找缺失数据流" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.2 套路二：逐句扫描说明找缺失数据流」的学习状态"></button></h3>
+<p>说明里<strong>每个动词句都对应一条数据流</strong>（有些句子对应两条，见下）。做法是把它变成对账：</p>
+<p><strong>第一步，把说明拆成&quot;起点 → 终点 → 名字&quot;的三元组</strong>。以&quot;系统按订单文件中的待处理订单，向相应餐厅发送订单信息&quot;这一句为例，它藏着<strong>两个</strong>动作：</p>
+<pre><code>动作①  读文件：  订单文件  →（待处理订单）→ 加工②      ← 文件流向加工（读）
+动作②  发出去：  加工②    →（订单信息）  → 餐厅        ← 加工流向外部实体
+</code></pre>
+<p><strong>一句话对应两条流</strong>，是补流题最容易漏的地方——别以为一句只找一条。</p>
+<p><strong>第二步，把三元组清单和图上已有的箭头逐条对账</strong>，图上找不到的，就是答案。</p>
+<p><strong>第三步，名字用说明原词</strong>。题目通常明确要求&quot;采用说明中的词汇&quot;，说明写&quot;订单信息&quot;就照抄，不要改写成&quot;订单数据&quot;。</p>
+<h3 id="h-5">9.3 套路三：补流三要素与三类最易漏的流<button type="button" class="sec-status" data-status-key="9.3 套路三：补流三要素与三类最易漏的流" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.3 套路三：补流三要素与三类最易漏的流」的学习状态"></button></h3>
+<p><strong>答案必须写全三要素：起点、终点、数据流名</strong>——只写名字不给起终点，阅卷时按半分处理。</p>
+<p>真题里最常漏的就是这三类：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>例子</th>
+<th>为什么容易漏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>加工 → 外部实体的反馈类流</strong></td>
+<td>订单确认、送达通知、拒绝提示</td>
+<td>说明里写成&quot;系统向××发送…&quot;，容易被当成一句套话跳过</td>
+</tr>
+<tr>
+<td><strong>加工 ↔ 数据存储的读流</strong></td>
+<td>订单文件→加工（待处理订单）</td>
+<td>只记得&quot;存文件&quot;是流，忘了<strong>读文件同样是流</strong></td>
+</tr>
+<tr>
+<td><strong>顶层有而 0 层没有的流</strong></td>
+<td>顶层图里的&quot;订单信息→餐厅&quot;</td>
+<td>只盯着 0 层图看，没回头和顶层图对照</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>自查动作（做完必做）</strong>：图上<strong>每个加工都必须既有进入的流、又有出去的流</strong>。发现有&quot;只进不出&quot;或&quot;只出不进&quot;的加工，那里一定缺流（原理见 9.7）。</p>
+<h3 id="h-6">9.4 套路四：补外部实体<button type="button" class="sec-status" data-status-key="9.4 套路四：补外部实体" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.4 套路四：补外部实体」的学习状态"></button></h3>
+<p><strong>判据一：说明里出现在&quot;向××提交/发送/通知&quot;或&quot;由××提供&quot;位置的、系统以外的人或组织。</strong></p>
+<ul>
+<li>是外部实体：<strong>人</strong>（顾客、读者、管理员）、<strong>组织</strong>（餐厅、供应商、银行）、<strong>外部系统</strong>（支付网关、短信平台、身份认证服务）；</li>
+<li>不是外部实体：说明里的&quot;<strong>系统</strong>&quot;&quot;平台&quot;指的是<strong>正在建模的系统自身</strong>，它是加工不是实体；数据库、文件是数据存储也不是实体。</li>
+</ul>
+<p><strong>判据二：数一数说明里出现过的角色</strong>。真题常让你&quot;补出图中的外部实体&quot;，答案个数就等于说明里出现的外部角色个数——漏一个通常是因为某句里角色只当宾语出现一次（如&quot;系统向<strong>顾客</strong>发送送达通知&quot;）。</p>
+<p><strong>反例</strong>：说明写&quot;系统生成配送任务写入配送文件&quot;，若把&quot;系统&quot;填成外部实体即错——它是 0 层图的整体，被拆成了各加工。</p>
+<h3 id="h-7">9.5 套路五：补数据存储（文件名）<button type="button" class="sec-status" data-status-key="9.5 套路五：补数据存储（文件名）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.5 套路五：补数据存储（文件名）」的学习状态"></button></h3>
+<p><strong>判据：说明里的名词中含&quot;文件 / 表 / 库 / 清单 / 档案 / 日志 / 台账&quot;这类词，且数据需要被保存下来。</strong></p>
+<ul>
+<li>例：订单文件、配送文件、图书文件、读者文件、借阅记录表、库存清单；</li>
+<li><strong>反例（高频错）</strong>：题目让填&quot;数据存储&quot;时，把&quot;订单&quot;填进去——&quot;订单&quot;是<strong>数据流名</strong>，&quot;订单文件&quot;才是存储名。<strong>数据是内容、文件是容器</strong>，别混。</li>
+<li><strong>方向也要判</strong>：谁写（加工 → 文件）、谁读（文件 → 加工）。<strong>一个文件通常既有入流也有出流</strong>；只画了写没画读，就是漏流。</li>
+</ul>
+<h3 id="h-8">9.6 套路六：补加工名<button type="button" class="sec-status" data-status-key="9.6 套路六：补加工名" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.6 套路六：补加工名」的学习状态"></button></h3>
+<p>加工名 = <strong>动词 + 名词</strong>，通常 2–6 个字，且必须与图上箭头吻合。三步定名：</p>
+<p><strong>第一步，看这个加工有哪些输入流、哪些输出流</strong>（箭头就是线索）；
+<strong>第二步，回说明里找&quot;用这些输入产生这些输出&quot;的那句话</strong>；
+<strong>第三步，用说明里的动词短语命名</strong>（&quot;接收订单&quot;&quot;分派订单&quot;&quot;跟踪配送&quot;&quot;处理还书&quot;）。</p>
+<p><strong>反例</strong>：把加工名写成&quot;处理&quot;（太笼统）、&quot;订单&quot;（纯名词）、&quot;系统&quot;（不是加工名）、&quot;接收订单并分派订单并跟踪配送&quot;（一个加工干了三个加工的活）——四种都是错项。</p>
+<h3 id="h-9">9.7 DFD 的三种错误：黑洞、奇迹、灰洞（平衡的反面，选择题也考）<button type="button" class="sec-status" data-status-key="9.7 DFD 的三种错误：黑洞、奇迹、灰洞（平衡的反面，选择题也考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.7 DFD 的三种错误：黑洞、奇迹、灰洞（平衡的反面，选择题也考）」的学习状态"></button></h3>
+<p><strong>黑洞 —— 加工有输入、无输出。</strong> 成因：漏画了该加工的输出流，数据&quot;进去就没了&quot;。</p>
+<p><strong>奇迹 —— 加工有输出、无输入。</strong> 成因：漏画了该加工的输入流，数据&quot;凭空产生&quot;。</p>
+<p><strong>灰洞 —— 加工有输入也有输出，但输入不足以产生该输出。</strong> 成因：漏画了部分输入流，数据&quot;不够用&quot;。</p>
+<p><strong>口诀</strong>：<strong>黑进不出、奇出不进、灰进不够出</strong>。</p>
+<p><strong>灰洞最难认，看例子</strong>：某&quot;处理还书&quot;的加工，只画了「管理员→（还书请求）→加工」和「加工→（还书结果）→管理员」，看起来进和出都有。但&quot;更新图书在馆状态&quot;这件事<strong>必须有图书文件里的在馆数据</strong>才能做——输入不够，输出却凭空生成了，这就是灰洞。改法：补上 图书文件 →（在馆状态）→ 加工 与 加工 →（更新后的在馆状态）→ 图书文件。</p>
+<p><strong>应试动作</strong>：做补流题时，逐个数每个加工的进入流与流出流，三种错误当场就能查出来。</p>
+<h3 id="h-10">9.8 套路七：数据字典写法（五个记号背全）<button type="button" class="sec-status" data-status-key="9.8 套路七：数据字典写法（五个记号背全）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.8 套路七：数据字典写法（五个记号背全）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>=</code></td>
+<td><strong>定义</strong>为（由…组成）</td>
+<td><code>登录信息 = 学生 ID + 密码</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td><strong>与</strong>（顺序连接）</td>
+<td><code>订单 = 顾客编号 + 菜品明细 + 送餐地址</code></td>
+</tr>
+<tr>
+<td><code>{}</code></td>
+<td><strong>重复</strong>（0 次或多次）</td>
+<td><code>菜品明细 = {菜品名 + 数量}</code></td>
+</tr>
+<tr>
+<td><code>[ | ]</code></td>
+<td><strong>或</strong>（择一）</td>
+<td><code>付款方式 = [现金 | 微信 | 银行卡]</code></td>
+</tr>
+<tr>
+<td><code>( )</code></td>
+<td><strong>可选</strong>（可有可无）</td>
+<td><code>收货地址 = (省份) + 城市 + 街道</code></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>口诀</strong>：<strong>等号组成、加号连接、花括号重复、方括号择一、圆括号可选</strong>。</p>
+<p><strong>反例（两个记号一换就错）</strong>：用 <code>[]</code> 表示重复、用 <code>{}</code> 表示择一——这是最典型的写法错误。判别窍门：<strong>开花（<code>{}</code>）像&quot;一串&quot;，方括号（<code>[]</code>）像&quot;岔路&quot;</strong>——重复用花、择一用方。</p>
+<p>（说明里给出的字段名要照抄原词，字段间的连接关系按说明的语义判断：能重复多次的加 <code>{}</code>，可能没有的加 <code>()</code>。）</p>
+<h3 id="h-11">9.9 应试动作<button type="button" class="sec-status" data-status-key="9.9 应试动作" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.9 应试动作」的学习状态"></button></h3>
+<p>① <strong>先数箭头再读说明</strong>：逐个数每个加工的进入流/流出流，抓出&quot;只进不出、只出不进、进不够出&quot;的位置，那里必缺流；
+② <strong>说明逐句拆三元组</strong>（起点、终点、名字），与图上对账，剩者即答案，名字抄原词，一句话可能对应两条流；
+③ <strong>补实体看&quot;谁&quot;</strong>（人/组织/外部系统，&quot;系统&quot;自己不算）、<strong>补存储看&quot;文件/表/库&quot;</strong>（别拿数据流名冒充存储名）、<strong>补加工名用&quot;动词+名词&quot;</strong>；
+④ 数据字典五个记号会默写，能现场写出 <code>XX = A + {B} + (C)</code> 的形式</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/09-案例题专攻">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="08-CMM与CMMI.html">
+      <span class="k">上一页</span>
+      <span class="t">03.8 CMM 与 CMMI ★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">03.10 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>02.10 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a><ul class="chapter-nav"><li><a href="01-三级模式与两级映像.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/01-三级模式与两级映像" aria-hidden="true"></i><span class="n">01</span><span class="t">三级模式与两级映像 ★</span></a></li><li><a href="02-E-R模型.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/02-E-R模型" aria-hidden="true"></i><span class="n">02</span><span class="t">E-R 模型 ★★★</span></a></li><li><a href="03-关系代数.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/03-关系代数" aria-hidden="true"></i><span class="n">03</span><span class="t">关系代数 ★★</span></a></li><li><a href="04-关系规范化.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/04-关系规范化" aria-hidden="true"></i><span class="n">04</span><span class="t">关系规范化 ★★★</span></a></li><li><a href="05-SQL.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/05-SQL" aria-hidden="true"></i><span class="n">05</span><span class="t">SQL ★★★</span></a></li><li><a href="06-事务并发与故障恢复.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/06-事务并发与故障恢复" aria-hidden="true"></i><span class="n">06</span><span class="t">事务、并发控制与故障恢复 ★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：数据库设计</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="02-数据库系统/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 2 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">02.10 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong>
+外模式就是某类用户看到的局部数据逻辑（典型实现即视图）。概念模式是全体逻辑，内模式/存储模式是物理层。<span class="stars">★</span> 对应关系直接背。</p>
+<p><strong>2. B</strong>
+存储结构变化发生在内模式，靠模式/内模式映像屏蔽 → 物理独立性。易错点：把&quot;逻辑独立性&quot;跟&quot;存储&quot;联想到一起——恰好相反，逻辑独立性屏蔽的是<strong>逻辑结构</strong>（表定义）的变化。</p>
+<p><strong>3. B</strong>
+一门课只属一个教师、一个教师可授多门课 → 教师:课程 = 1:n。易错点：见到&quot;多门&quot;就选 m:n——必须<strong>两边都可多</strong>才是 m:n，这里课程一侧只能一个教师。</p>
+<p><strong>4. C</strong>
+m:n 联系必须单独建关系模式，主键 = 学生主键 + 课程主键组合，联系自身的属性（成绩）也放这里。并入任一端都会造成学号重复存储、学号失去主键资格。</p>
+<p><strong>5. D</strong>
+行数：自然连接行数取决于同名属性上相等的元组如何配对，<strong>不能确定</strong>（最少可能 0 行）；列数 = 4+6−1 = <strong>9</strong>。所以选&quot;行数不确定、9 列&quot;。易错点：列数算成 10（忘了去掉一份重复列）或行数答 15（那是笛卡尔积的行数）。</p>
+<p><strong>6. B</strong>
+选择 σ 挑行，投影 π 挑列。口诀：σ 像筛子筛行，π 两条竖线切列。</p>
+<p><strong>7. A</strong>
+能唯一标识元组且<strong>无多余属性</strong>正是候选键的定义。超键只要求&quot;能唯一标识&quot;（可含多余属性）；主属性是包含在任一候选键中的属性，不是属性集；外键是引用他表主键的属性。</p>
+<p><strong>8. A</strong>
+右部出现过的属性：B（A→B）、C（B→C）、B（D→B）——即 B、C。从未出现在右部的：<strong>A、D</strong> → 先试 AD：A→B，B→C，D→B，闭包 = A、B、C、D 全部 → 候选键 = AD。再看其余三个为何只是超键：ABD 闭包虽也是 ABCD，但 B 可由 A 推出（A→B），去掉 B 剩 AD 仍能推全 → B 是多余属性；ACD 同理，C 可由 A→B→C 推出，去掉 C 剩 AD 仍推全 → C 多余；ABCD 显然更冗余。<strong>候选键 = 无多余属性的&quot;最小&quot;超键，四个选项里只有 AD 满足</strong>。</p>
+<p><strong>9. B</strong>
+候选键 = 学号（单属性）→ 不存在部分依赖，直接满足 2NF；但学号→系→系主任是传递依赖 → 达不到 3NF。<strong>最高 2NF</strong>。易错点：因&quot;有冗余&quot;误判 1NF——单属性键的表第一步就不可能有部分依赖。</p>
+<p><strong>10. D</strong>
+范式是逐级加严的包含链：1NF ⊃ 2NF ⊃ 3NF ⊃ BCNF。BCNF ⇒ 3NF 成立（C 对），反过来 3NF 不一定到 BCNF（D 错，反例：存在主属性被非主属性决定的情况）。A、B 是标准定义。</p>
+<p><strong>11. B</strong>
+聚合条件只能写 HAVING：<code>GROUP BY 课程号 HAVING AVG(成绩)&gt;=80</code>。WHERE 在分组前执行，彼时 AVG 还没算出来，A 语法错误。D 把成绩当分组列，会把每个分数各成一组，不符合&quot;按课程&quot;。</p>
+<p><strong>12. B</strong>
+GRANT 授予、REVOKE 收回。DROP 是删除对象（DDL），DENY 不是软考教材标准关键词。</p>
+<p><strong>13. C</strong>
+读到&quot;未提交、随后被回滚&quot;的数据 = 脏数据（读脏数据）。区分：不可重复读是&quot;本事务两次读之间被<strong>别人提交</strong>的修改弄得不一致&quot;；丢失修改是两个都提交导致一个写被覆盖。</p>
+<p><strong>14. B</strong>
+两段锁协议：先统一加锁、后统一放锁 → 保证可串行化；但两个事务可能互相持有对方要的锁（T1 锁 A 等 B，T2 锁 B 等 A）→ <strong>不能避免死锁</strong>。A、C、D 均为典型错误表述。</p>
+<p><strong>15. B</strong>
+故障恢复口诀：<strong>已提交 REDO（重做），未提交 UNDO（撤销）</strong>。未完成的事务做了一半，必须撤销抹掉。ROLLBACK 是事务运行期间的主动回滚操作，不是恢复策略本身。</p>
+<h3 id="h-3">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<p><strong>问题 1（E-R 图描述）</strong>：
+实体三个：代表团、运动员、比赛项目。</p>
+<ul>
+<li>代表团—运动员：<strong>1:n</strong> 的&quot;组成&quot;联系；</li>
+<li>运动员—比赛项目：<strong>m:n</strong> 的&quot;参赛&quot;联系，联系属性：成绩。
+（画图时：三个矩形 + 两个菱形；&quot;参赛&quot;菱形上挂&quot;成绩&quot;椭圆。）</li>
+</ul>
+<p><strong>问题 2（关系模式）</strong>：</p>
+<ul>
+<li>代表团(<strong>团编号</strong>, 团名, 团所在地)</li>
+<li>运动员(<strong>运动员编号</strong>, 姓名, <strong>团编号</strong>) ← 1:n 联系，把 1 端主键&quot;团编号&quot;并入 n 端作外键</li>
+<li>比赛项目(<strong>项目编号</strong>, 项目名称)</li>
+<li>参赛(<strong>运动员编号, 项目编号</strong>, 成绩) ← m:n 联系单独建表</li>
+</ul>
+<p><strong>&quot;参赛&quot;表的主键 =（运动员编号，项目编号）组合键</strong>——单靠任何一端都无法唯一标识一行（同一运动员参加多个项目、同一项目多名运动员）。</p>
+<p><strong>问题 3（SQL）</strong>：</p>
+<pre><code class="language-sql">-- (1) 建参赛表
+CREATE TABLE 参赛 (
+    运动员编号  CHAR(8),
+    项目编号    CHAR(6),
+    成绩        SMALLINT,
+    PRIMARY KEY (运动员编号, 项目编号),
+    FOREIGN KEY (运动员编号) REFERENCES 运动员(运动员编号),
+    FOREIGN KEY (项目编号)   REFERENCES 比赛项目(项目编号)
+);
+</code></pre>
+<pre><code class="language-sql">-- (2) 各代表团总分，保留 300 分以上
+SELECT 代表团.团编号, 代表团.团名, SUM(参赛.成绩) AS 总分
+FROM 代表团
+JOIN 运动员 ON 代表团.团编号 = 运动员.团编号
+JOIN 参赛   ON 运动员.运动员编号 = 参赛.运动员编号
+GROUP BY 代表团.团编号, 代表团.团名
+HAVING SUM(参赛.成绩) &gt;= 300;
+</code></pre>
+<p>（要点：三表连接取全路径代表团→运动员→参赛；GROUP BY 带上团编号防止两个代表团重名被并成一组；聚合条件进 HAVING。）</p>
+<pre><code class="language-sql">-- (3) 建视图
+CREATE VIEW vHighScore AS
+SELECT 运动员.运动员编号, 运动员.姓名, 比赛项目.项目名称
+FROM 运动员
+JOIN 参赛 ON 运动员.运动员编号 = 参赛.运动员编号
+JOIN 比赛项目 ON 参赛.项目编号 = 比赛项目.项目编号
+WHERE 参赛.成绩 &gt;= 95;
+</code></pre>
+<h3 id="h-4">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>1. A⁺={A,B,C,D,E}，A 是候选键；C⁺={C}，C 不是候选键。</strong></p>
+<p>演算 A⁺：初始 <code>{A}</code>；A→BC，加入 B、C；B→D，加入 D；已有 C、D，可用 CD→E，加入 E；闭包达到全集。A 是单属性，无法再删，故为候选键。反向验证 C⁺：只有 C 时，CD→E 缺 D，其余依赖左部也不满足，没有新属性可加入，故停在 <code>{C}</code>。</p>
+<p><strong>2. 候选键为 AB、AC；主属性为 A、B、C；最高为 3NF。</strong></p>
+<p><code>(AB)⁺=ABC</code>，且 A⁺、B⁺都推不全，所以 AB 是候选键。<code>(AC)⁺</code> 中由 C→B 得到 B，故为 ABC；A⁺、C⁺都推不全，所以 AC 也是候选键。全部属性都出现在某个候选键中，都是主属性，因此至少满足 3NF；但依赖 C→B 中，C 不是超键，违反 BCNF，故最高 <strong>3NF</strong>。这也反向验证了“全属性皆主属性不代表一定是 BCNF”。</p>
+<p><strong>3. A。</strong></p>
+<p>分解 A 的公共属性是 A，且 A→AB，所以公共属性能决定 R1，分解无损。分解 B 的公共属性是 B，而由 F={A→B} 推不出 B→AB 或 B→BC，不能用该条件判为无损。</p>
+<p><strong>4. 4 行、3 列。</strong></p>
+<p>公共值 x 在 R 中出现 2 行，在 S 中出现 2 行，产生 <code>2×2=4</code> 个组合；y、z 互相配不上。列数为 <code>2+2−1=3</code>，属性是 A、B、C。用实际枚举四个组合可反向核对行数。</p>
+<p><strong>5. SQL 如下：</strong></p>
+<pre><code class="language-sql">SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE SC.Sno = S.Sno
+      AND SC.Cno = &#39;C02&#39;
+);
+</code></pre>
+<p><code>SC.Sno = S.Sno</code> 把内层记录与“当前外层学生”绑定。若省略，只要全校任意一人选了 C02，子查询对每个学生都为真，会错误返回全校学生。</p>
+<p><strong>6. A。</strong></p>
+<p>S 与 S 相容，所以 T2 可再申请 S 锁；S 与 X 不相容，X 锁必须等待。矩阵中唯一的“相容”格就是 S-S。</p>
+<p><strong>7. D。</strong></p>
+<p>同一范围查询的结果集新增了满足条件的行，属于幻读。不可重复读通常指已存在的同一行字段值改变；脏读必须涉及未提交数据。</p>
+<p><strong>8. 系统故障；REDO T1、UNDO T2。</strong></p>
+<p>断电但磁盘未损坏属于系统故障。T1 已提交，其结果必须保留，故 REDO；T2 未提交，半成品必须消失，故 UNDO。反向检查：恢复后数据库只应体现已提交事务。</p>
+<p><strong>9. 分片透明；可用性。</strong></p>
+<p>“怎样水平切块”描述分片规则，属于分片透明；站点失效后仍能借助其他副本服务，描述系统抗单点故障，体现可用性。后者问的是特性，不是复制透明。</p>
+<h3 id="h-5">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1. 视图属于外模式；索引属于内模式</strong>
+视图是用户局部视图（外模式级，典型实现）；索引是物理存储组织（内模式级）。这题考&quot;具体事物 → 归哪一层&quot;：用户看到的逻辑 = 外模式，磁盘组织细节 = 内模式。</p>
+<p><strong>2. 列数 = 3 + 2 − 1 = 4 列</strong>（R 的 A、B、C 三列加 S 的 D 列，公共属性 B 只留一份）。
+行数最多 = <strong>2×3 = 6 行</strong>（R 的每行 B 值恰好都能在 S 中配上时，最多达到笛卡尔积水平；若 B 值全对不上则 0 行）。</p>
+<p><strong>3. R 最高属于 2NF</strong>
+候选键 = 仓库号（单属性）→ 无部分依赖 → 满足 2NF；仓库号→城市→地区编号是传递依赖 → 不到 3NF。
+分解到 3NF：仓库(<strong>仓库号</strong>, 仓库面积, 城市) 和 城市(<strong>城市</strong>, 地区编号)。</p>
+<p><strong>4. 候选键 = E</strong>
+右部出现过的属性：B、D、A、C；从未出现在右部的只有 <strong>E</strong>。试 E：E→A，A→B，B→C，C→D → 闭包 = ABCDE，全部推出 → <strong>E 单属性即候选键</strong>。（验证：E→A→B→C→D，链式全推。）</p>
+<p><strong>易错点：答案不是 &quot;AE&quot;</strong>。AE 也能推出全部属性（A→B→C→D，再加 E），但它<strong>含冗余属性</strong>——E 一个人就够了，A 是多余的。候选键的定义是<strong>不含冗余属性的最小超键</strong>，能少一个就少一个，多出来的那个只能叫超键。反向也要查一遍：A 行不行？A→B→C→D 只能推出 A、B、C、D，<strong>推不出 E</strong>，所以 A 不是候选键。本题<strong>唯一候选键 = E</strong>。</p>
+<p><strong>5. 发生丢失修改时，A 的错误终值可能是 100 或 70；正确终值应为 120 或 140（取决于串行顺序）</strong>
+错误终值举例：T1 读 A=50 → T2 读 A=50 → T1 写回 70 → T2 写回 50×2=100，T1 的 +20 被覆盖丢失；另一交错 T2 先写 100、T1 再写 70，则 T2 的结果丢失。正确终值：先 T1 后 T2 串行 = (50+20)×2 = <strong>140</strong>；先 T2 后 T1 = 50×2+20 = <strong>120</strong>——两种都符合事务语义，但丢失修改哪种都得不到。此题演示&quot;丢失修改 = 一个事务的写被另一个事务的写覆盖&quot;。</p>
+<p><strong>6. SQL 答案</strong>：</p>
+<pre><code class="language-sql">-- (1) 嵌套查询
+SELECT Sname FROM Student
+WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = &#39;C02&#39;);
+
+-- (2) 选课超过 3 门
+SELECT Sno FROM SC
+GROUP BY Sno HAVING COUNT(Cno) &gt; 3;
+
+-- (3) 授权（可转授）
+GRANT SELECT ON SC TO U1 WITH GRANT OPTION;
+</code></pre>
+<p>要点：(2) 聚合条件进 HAVING；(3) WITH GRANT OPTION 是&quot;允许转授&quot;的固定写法。</p>
+<p><strong>7. 前者是不可重复读，后者是读脏数据</strong>
+&quot;两次读结果不同&quot;：两次读之间<strong>别的已提交事务</strong>改了数据；&quot;读到未提交&quot;：读到的事务随后可能回滚。判断窍门：看干扰事务<strong>提交没有</strong>——提交了 → 不可重复读；没提交（后回滚）→ 脏读。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="../03-软件工程基础/index.html">03-软件工程基础.html</a> 并更新进度表。</p>
+
+
+  <footer class="status-bar" data-status-page="02-数据库系统/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题与补充题.html">
+      <span class="k">上一页</span>
+      <span class="t">02.9 精华题与补充题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../03-软件工程基础/index.html">
+      <span class="k">下一页</span>
+      <span class="t">03 软件工程基础</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

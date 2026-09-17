@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>07.7 函数调用、作用域与闭包 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a><ul class="chapter-nav"><li><a href="01-编译解释与语言成分.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/01-编译解释与语言成分" aria-hidden="true"></i><span class="n">01</span><span class="t">编译、解释与语言基本成分 ★★★</span></a></li><li><a href="02-编译阶段.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/02-编译阶段" aria-hidden="true"></i><span class="n">02</span><span class="t">编译的六个阶段 ★★★</span></a></li><li><a href="03-表达式与语法树.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/03-表达式与语法树" aria-hidden="true"></i><span class="n">03</span><span class="t">前缀、中缀、后缀表达式 ★★</span></a></li><li><a href="04-文法与推导.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/04-文法与推导" aria-hidden="true"></i><span class="n">04</span><span class="t">文法、推导与语法树 ★★</span></a></li><li><a href="05-正规式.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/05-正规式" aria-hidden="true"></i><span class="n">05</span><span class="t">正规式与正规集 ★★★</span></a></li><li><a href="06-有限自动机.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/06-有限自动机" aria-hidden="true"></i><span class="n">06</span><span class="t">有限自动机：DFA 与 NFA ★★★</span></a></li><li><a href="07-函数调用作用域与闭包.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/07-函数调用作用域与闭包" aria-hidden="true"></i><span class="n">07</span><span class="t">函数调用、作用域与闭包 ★★★</span></a></li><li><a href="08-语言特点与分类.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/08-语言特点与分类" aria-hidden="true"></i><span class="n">08</span><span class="t">各语言特点与分类 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/90-课后考题" aria-hidden="true"></i><span class="n">09</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">10</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/99-答案与解析" aria-hidden="true"></i><span class="n">11</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 7 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">07.7 函数调用、作用域与闭包 <span class="stars">★★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：函数想用主调方的数据，有两条路——把<strong>值复印一份</strong>带过去（传值），或把<strong>地址/引用</strong>（钥匙）递过去直接操作原件（传址/引用）。复印本改坏了不影响原件；钥匙能真改房子。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>传值调用</th>
+<th>传址/引用调用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>形参拿到什么</td>
+<td>实参的<strong>值</strong>（副本）</td>
+<td>实参的<strong>地址</strong>（原件本身）</td>
+</tr>
+<tr>
+<td>形参改变影响实参吗</td>
+<td><strong>不影响</strong>（单向传递）</td>
+<td><strong>影响</strong>（双向传递）</td>
+</tr>
+<tr>
+<td>实参可以是</td>
+<td>变量、<strong>常量、表达式</strong>均可</td>
+<td>只能是<strong>变量</strong>（必须是地址；常量和表达式没有地址可取）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆口诀</strong>：<strong>传值复印本，改了不还乡；传址寄钥匙，改屋真变样</strong>。另一条判断规则：传值的实参随意（常量、表达式都行），传址的实参必须是变量。</p>
+<p><strong>反例演示</strong>：① 传值调用下 <code>f(a)</code> 里把形参改成 100，函数返回后 a 纹丝不动——想通过参数&quot;带出&quot;结果却用了传值，是初学者最常见 bug；② 引用调用写 <code>f(a+1, b)</code> 直接编译报错/无意义——<code>a+1</code> 是表达式，没有地址可传。</p>
+<h3 id="h-2">8.1 专题：传值/传址追踪（完整步骤）<button type="button" class="sec-status" data-status-key="8.1 专题：传值/传址追踪（完整步骤）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 专题：传值/传址追踪（完整步骤）」的学习状态"></button></h3>
+<p><strong>考场四步法</strong>：</p>
+<ol>
+<li><strong>标记身份</strong>：传值参数在旁边标&quot;副本&quot;，传址参数直接标&quot;= 实参&quot;（形实一体）。</li>
+<li><strong>逐句执行</strong>：按语句顺序更新形参；每次用到传址参数，<strong>写的就是实参的新值</strong>（前一句可能刚改过它）。</li>
+<li><strong>同步回写</strong>：传址参数每变一次，立即同步到对应实参，防止最后漏记。</li>
+<li><strong>双法验证</strong>：先按逐步追踪得出一套结果，再<strong>反向验证</strong>——传址调用整体等价于&quot;把函数体里的形参名全部替换成实参名后在主调方原地执行一遍&quot;，按这个视角重算一次，两法结果一致才定稿。</li>
+</ol>
+<p><strong>例 1（基础对比）</strong>：<code>procedure f(x, y) { x = x + 2; y = x + y; }</code>，调用 <code>f(a, b)</code>，初始 a=1, b=3。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>传值调用</th>
+<th>传址调用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行 x = x+2</td>
+<td>x 副本：1→3</td>
+<td>a = 1+2 = <strong>3</strong></td>
+</tr>
+<tr>
+<td>执行 y = x+y</td>
+<td>y 副本：3+(3)=6</td>
+<td>b = 3+3 = <strong>6</strong>（x 此刻已是 3）</td>
+</tr>
+<tr>
+<td>函数返回后</td>
+<td>a=<strong>1</strong>, b=<strong>3</strong>（原件没动）</td>
+<td>a=<strong>3</strong>, b=<strong>6</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>反向验证（传址版）：形参换名后函数体即 <code>a = a+2; b = a+b</code>，原地执行 a=3、b=3+3=6 ✓ 与追踪一致。</p>
+<p><strong>例 2（顺序陷阱）</strong>：<code>procedure g(x, y) { x = x + y; y = x + y; }</code>，调用 <code>g(a, b)</code>，初始 a=2, b=5。</p>
+<ul>
+<li>传值：副本 x=2, y=5 → x=7，y=7+5=12；返回后 <strong>a=2, b=5</strong>（不变）。</li>
+<li>传址：a = 2+5 = <strong>7</strong>；接着 y = x+y 用的是<strong>新 x</strong>：b = 7+5 = <strong>12</strong>。</li>
+</ul>
+<p>反向验证（传址版）：换名后即 <code>a = a+b; b = a+b</code> → a=7, b=7+5=12 ✓。<strong>易错点</strong>：第二句若拿旧值算成 b=2+5=7 就错了——传址下第一句已经把 a 改成 7，后续语句必须用新值。</p>
+<p><strong>例 3（一值一引用）</strong>：<code>procedure mix(value x, ref y) { x=x+1; y=x+y; }</code>，调用 <code>mix(a,b)</code>，初始 a=2、b=5。</p>
+<ul>
+<li>x 是副本：<code>x=2+1=3</code>，a 仍为 2；</li>
+<li>y 与 b 是同一变量：<code>y=x+y=3+5=8</code>，所以 b 变为 8；</li>
+<li>返回后 <strong>a=2、b=8</strong>。</li>
+</ul>
+<p>反向验证：把值参数 x 换成临时副本 <code>x_copy=2</code>，引用参数 y 换成 b，函数体成为 <code>x_copy=x_copy+1; b=x_copy+b</code>，仍得 a=2、b=8。</p>
+<p><strong>例 4（别名陷阱 <code>f(a,a)</code>）</strong>：<code>procedure f(ref x, ref y) { x=x+1; y=x+y; }</code>，初始 a=2，调用 <code>f(a,a)</code>。</p>
+<p>此时 x、y 不是两个独立格子，而是同一个 a 的两个别名：</p>
+<ol>
+<li><code>x=x+1</code> → a=3；</li>
+<li><code>y=x+y</code> → 等价于 <code>a=a+a</code>，两边读到的都是当前值 3 → a=6。</li>
+</ol>
+<p>若误把 x、y 当成独立副本，会算出 x=3、y=5，这既没有反映引用调用，也漏掉二者指向同一地址。<strong>别名题的最稳方法就是形参全部替换成实参名</strong>：<code>a=a+1; a=a+a</code>。</p>
+<h3 id="h-3">8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同<button type="button" class="sec-status" data-status-key="8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 静态作用域与动态作用域：同一段代码为什么可能输出不同」的学习状态"></button></h3>
+<p><strong>作用域</strong>决定某个名字在什么位置可见；当内外层有同名变量时，还要决定一次引用究竟绑定哪一个声明。</p>
+<pre><code class="language-text">x = 1
+
+procedure P() {
+    print(x)
+}
+
+procedure Q() {
+    local x = 2
+    P()
+}
+
+Q()
+</code></pre>
+<ul>
+<li><strong>静态作用域（词法作用域）</strong>：看程序文本中 P <strong>定义在哪里</strong>。P 定义在全局层，附近的 x 是全局 x=1，所以输出 <strong>1</strong>。C、C++、Java、Python 等主流语言采用此思路；</li>
+<li><strong>动态作用域</strong>：看运行时 P <strong>由谁调用</strong>。调用链是 <code>Q→P</code>，沿链先遇到 Q 的局部 x=2，所以输出 <strong>2</strong>。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：静态作用域不是“永远找全局变量”，而是从引用位置按<strong>文本嵌套层次由内向外</strong>找最近声明；本例恰好 P 的定义层外侧只有全局 x。动态作用域也不是“运行时再看变量类型”，它看的是调用链，别与动态类型混淆。</p>
+<h3 id="h-4">8.3 闭包：函数离开定义现场后仍带着外部变量<button type="button" class="sec-status" data-status-key="8.3 闭包：函数离开定义现场后仍带着外部变量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.3 闭包：函数离开定义现场后仍带着外部变量」的学习状态"></button></h3>
+<p>闭包可以理解成“函数代码 + 它引用的词法环境”。例如：</p>
+<pre><code class="language-text">function makeCounter() {
+    n = 0
+    function next() {
+        n = n + 1
+        return n
+    }
+    return next
+}
+
+c = makeCounter()
+c()  // 1
+c()  // 2
+</code></pre>
+<p><code>makeCounter</code> 已经返回，但 <code>next</code> 仍能访问并更新外层 n；第一次调用后 n 变 1，第二次在同一个变量基础上变 2。它保存的是外部变量的<strong>绑定与环境</strong>，不是每次调用都重新拿一张“n=0 的照片”。</p>
+<p><strong>反例演示（易错）</strong>：若把闭包误解成“保存初始值快照”，就会认为两次 <code>c()</code> 都返回 1；实际同一个闭包保留状态，依次返回 1、2。若再次执行 <code>d=makeCounter()</code>，d 拥有另一套独立的 n，第一次 <code>d()</code> 仍返回 1。</p>
+<p><strong>应试动作</strong>：① 传值标“副本”，传址直接换成实参名；同一实参传给多个引用形参时先标“别名”；② 静态作用域看定义处的文本嵌套，动态作用域看运行时调用链；③ 闭包认准“函数 + 外部词法环境”，连续调用可保留状态。追踪题必须逐句使用最新值，再用换名法重算。</p>
+
+
+  <footer class="status-bar" data-status-page="07-程序设计语言基础/07-函数调用作用域与闭包">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="06-有限自动机.html">
+      <span class="k">上一页</span>
+      <span class="t">07.6 有限自动机：DFA 与 NFA ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="08-语言特点与分类.html">
+      <span class="k">下一页</span>
+      <span class="t">07.8 各语言特点与分类 ★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

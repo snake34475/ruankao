@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.4 磁盘容量与存取时间 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.4 磁盘容量与存取时间 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">6.1 容量计算<button type="button" class="sec-status" data-status-key="6.1 容量计算" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 容量计算」的学习状态"></button></h3>
+<p>磁盘容量的通用形式：</p>
+<p><strong>容量 = 记录面数 × 每面磁道数 × 每磁道扇区数 × 每扇区字节数</strong></p>
+<p>注意“盘片数”不一定等于“记录面数”：一个盘片通常有两个面，但题目可能说明某些面不用。以题面为准。</p>
+<p>例：磁盘有 4 个记录面，每面 2000 磁道，每磁道 100 扇区，每扇区 512 B：</p>
+<p>容量 = 4×2000×100×512 = 409,600,000 B。</p>
+<p>若按二进制 MiB 换算：409,600,000 / 2^20 = <strong>390.625 MiB</strong>。</p>
+<p><strong>盘片数与记录面数算例</strong>：某磁盘有 3 张盘片，每张上下两面，但最上面和最下面两个外侧面不用来记录，因此记录面数不是 <code>3×2=6</code>，而是 <code>6−2=4</code>。若每面 1000 道、每道 50 扇区、每扇区 512 B，则容量：</p>
+<p><code>4×1000×50×512 = 102,400,000 B</code>。</p>
+<p>题目若直接给“磁头数”，传统磁盘中通常可把有效磁头数视为记录面数；若同时给盘片数和记录面数，以明确给出的记录面数为准。</p>
+<h3 id="h-3">6.2 平均存取时间<button type="button" class="sec-status" data-status-key="6.2 平均存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 平均存取时间」的学习状态"></button></h3>
+<p><strong>磁盘存取时间 = 寻道时间 + 旋转等待时间 + 数据传输时间</strong></p>
+<ul>
+<li>寻道：磁头移动到目标磁道；</li>
+<li>旋转等待：等目标扇区转到磁头下；</li>
+<li>传输：真正读写数据。</li>
+</ul>
+<p>若转速为 RPM（转/分）：</p>
+<ul>
+<li>一圈时间 = 60 / RPM 秒 = 60,000 / RPM 毫秒；</li>
+<li>平均旋转等待 = 半圈时间 = <strong>30,000 / RPM 毫秒</strong>；</li>
+<li>读 x 个连续扇区（每道 S 个扇区）的传输时间 = 一圈时间 × x/S。</li>
+</ul>
+<p>例：7200 RPM，平均寻道 8 ms，每道 120 扇区，读取连续 3 扇区：</p>
+<ol>
+<li>一圈 = 60,000/7200 = 8.333 ms；</li>
+<li>平均旋转等待 = 8.333/2 = 4.167 ms；</li>
+<li>传输 = 8.333×3/120 = 0.208 ms；</li>
+<li>平均存取 = 8+4.167+0.208 = <strong>12.375 ms</strong>。</li>
+</ol>
+<p>反向验算：3 个扇区是 1/40 圈，所以传输时间应是一圈 8.333 ms 的 1/40，即约 0.208 ms。</p>
+<h4 id="h-4">连续与非连续存放：差别在于定位成本付几次</h4>
+<p>若多个扇区连续存放，通常只在开头付一次寻道和平均旋转等待，随后连续传输；若每个块随机散落在不同磁道位置，题目常按“每块都要重新定位”计算。</p>
+<p>例：6000 RPM，平均寻道 5 ms，每道 100 个扇区，读取 4 个扇区。</p>
+<ul>
+<li>一圈时间：<code>60000/6000=10 ms</code>；</li>
+<li>平均旋转等待：<code>10/2=5 ms</code>；</li>
+<li>每扇区传输：<code>10/100=0.1 ms</code>。</li>
+</ul>
+<p>若 4 个扇区<strong>连续</strong>：</p>
+<p><code>T连续 = 5+5+4×0.1 = 10.4 ms</code>。</p>
+<p>若 4 个扇区分别随机位于不同位置，并假定每次都重新寻道、重新等待：</p>
+<p><code>T非连续 = 4×(5+5+0.1) = 40.4 ms</code>。</p>
+<p>反向检查：非连续方案重复支付了 4 次定位成本，时间应明显大于连续方案。题目若说明“同一磁道但不连续”，则是否重复寻道要按题意调整，不能机械乘块数。</p>
+<p><strong>反例</strong>：把“7200 转/分”直接代成 1/7200 秒是错的，单位还在“分钟”；必须先乘 60 秒/分。平均旋转等待不是一整圈，而是半圈。</p>
+<p><strong>应试动作</strong>：容量题画四格乘法；时间题写“寻道+半圈+传输”。看到 RPM 先算一圈毫秒数，最后统一单位。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/04-磁盘">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-Cache.html">
+      <span class="k">上一页</span>
+      <span class="t">09.3 Cache ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-IO总线与指令系统.html">
+      <span class="k">下一页</span>
+      <span class="t">09.5 I/O、总线与指令系统 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

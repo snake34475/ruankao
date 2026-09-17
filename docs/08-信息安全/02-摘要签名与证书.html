@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>08.2 信息摘要、数字签名与证书 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a><ul class="chapter-nav"><li><a href="01-安全目标与密码技术.html"><i class="sb-dot" data-status-page-dot="08-信息安全/01-安全目标与密码技术" aria-hidden="true"></i><span class="n">01</span><span class="t">安全目标与密码技术 ★★★</span></a></li><li><a href="02-摘要签名与证书.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="08-信息安全/02-摘要签名与证书" aria-hidden="true"></i><span class="n">02</span><span class="t">信息摘要、数字签名与证书 ★★★</span></a></li><li><a href="03-防火墙攻击与恶意代码.html"><i class="sb-dot" data-status-page-dot="08-信息安全/03-防火墙攻击与恶意代码" aria-hidden="true"></i><span class="n">03</span><span class="t">防火墙、常见攻击与恶意代码 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/90-课后考题" aria-hidden="true"></i><span class="n">04</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/91-精华题" aria-hidden="true"></i><span class="n">05</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="08-信息安全/99-答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 8 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">08.2 信息摘要、数字签名与证书 <span class="stars">★★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：验证一份大文件&quot;有没有被改过一个字节&quot;，把整个文件倒来倒去比对太笨。办法：用 Hash 函数给文件算出一个短短的&quot;指纹&quot;——<strong>信息摘要</strong>。指纹变了哪怕一点点，文件必然动过。</p>
+<h3 id="h-2">3.1 Hash 函数的四大特性<button type="button" class="sec-status" data-status-key="3.1 Hash 函数的四大特性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 Hash 函数的四大特性」的学习状态"></button></h3>
+<ol>
+<li><strong>定长输出</strong>：无论输入多长（1 字节还是 1GB），输出固定长度；</li>
+<li><strong>单向性</strong>：从摘要反推出原文，计算上不可行——所以也叫<strong>单向散列函数</strong>；</li>
+<li><strong>抗碰撞性</strong>：找两个不同输入对应同一摘要，计算上不可行；</li>
+<li><strong>雪崩效应</strong>：原文改动 1 个比特，摘要面目全非。</li>
+</ol>
+<p><strong>代表算法</strong>：<strong>MD5</strong>（摘要 <strong>128</strong> 位）、<strong>SHA-1</strong>（摘要 <strong>160</strong> 位）、SHA-256、国密 SM3。</p>
+<h3 id="h-3">3.2 摘要 ≠ 加密（第二易错点）<button type="button" class="sec-status" data-status-key="3.2 摘要 ≠ 加密（第二易错点）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 摘要 ≠ 加密（第二易错点）」的学习状态"></button></h3>
+<p><strong>反例演示</strong>：选项「MD5 是一种加密算法」——<strong>错</strong>。摘要有两个&quot;非加密&quot;特征：① <strong>无密钥</strong>（任何人算同一个文件得到的摘要都一样）；② <strong>不可逆</strong>（加密要求能解密还原，摘要不能）。摘要的用途是<strong>完整性验证</strong>，不是保密。</p>
+<p><strong>应试动作</strong>：背&quot;MD5-128、SHA-1-160&quot;两个数字 + 一句&quot;Hash 无密钥、不可逆、管完整性&quot;。考场上问&quot;属于信息摘要算法特性的是&quot;，挑&quot;定长输出/单向/抗碰撞&quot;；问&quot;MD5 摘要长度&quot;，答 128 位。</p>
+<hr>
+<h2 id="h-4">第四节 数字签名 <span class="stars">★★★</span>（永恒考点，必须能默写流程）<button type="button" class="sec-status" data-status-key="第四节 数字签名 ★★★（永恒考点，必须能默写流程）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 数字签名 ★★★（永恒考点，必须能默写流程）」的学习状态"></button></h2>
+<p><strong>动机</strong>：公钥体系解决了保密，但有个新漏洞——乙收到&quot;甲&quot;发来的消息，怎么确认真是甲发的、而不是别人冒名的？而且甲事后赖账说&quot;我没发过&quot;怎么办？答案：让甲用<strong>只有自己才有的私钥</strong>处理一段消息。全世界只有甲能这么干，这就是<strong>数字签名</strong>——它一举解决<strong>真实性</strong>（确是甲发）和<strong>不可否认性</strong>（甲不能赖账），顺带用摘要比对保证<strong>完整性</strong>。</p>
+<h3 id="h-5">4.1 标准签名与验证流程（四步，背到能默写）<button type="button" class="sec-status" data-status-key="4.1 标准签名与验证流程（四步，背到能默写）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 标准签名与验证流程（四步，背到能默写）」的学习状态"></button></h3>
+<p>以甲发消息给乙为例：</p>
+<ol>
+<li><strong>生成摘要</strong>：甲用<strong>单向 Hash 函数</strong>对正文算出信息摘要；</li>
+<li><strong>签名</strong>：甲用<strong>自己的私钥</strong>对摘要加密——这一步就是&quot;签名&quot;；</li>
+<li><strong>发送</strong>：甲把<strong>正文 + 已签名的摘要</strong>一起发给乙；</li>
+<li><strong>验证</strong>：乙用<strong>同一个 Hash 函数</strong>对收到的正文重新算出新摘要；再用<strong>甲的公钥</strong>解开签名得到原摘要；两者一致 → 消息确实出自甲、且中途未被改。</li>
+</ol>
+<p><strong>为什么只签&quot;摘要&quot;、不签&quot;全文&quot;？<strong>两个原因，背下来回答&quot;为什么不能对全文签名&quot;的题：① <strong>慢</strong>——签名用的是非对称（公钥）运算，天生慢，大文件全文签一遍开销巨大；② <strong>摘要短、够等价</strong>——Hash 摘要定长（如 128 位）且有雪崩效应，正文动一个字节摘要就面目全非，比对这个短摘要</strong>完全等价于</strong>比对整篇全文。所以标准做法永远是&quot;<strong>先算摘要、再签摘要</strong>&quot;——这正是 Hash 在数字签名里不可替代的位置。</p>
+<h3 id="h-6">4.2 方向速查表（考场填空就查这张）<button type="button" class="sec-status" data-status-key="4.2 方向速查表（考场填空就查这张）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 方向速查表（考场填空就查这张）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>谁的什么钥</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>甲<strong>签名</strong></td>
+<td><strong>甲的私钥</strong></td>
+<td>私钥唯一，签了就赖不掉</td>
+</tr>
+<tr>
+<td>乙<strong>验证签名</strong></td>
+<td><strong>甲的公钥</strong></td>
+<td>公钥配对私钥，能解开才证明是甲签的</td>
+</tr>
+<tr>
+<td>乙<strong>验证数字证书</strong></td>
+<td><strong>CA 的公钥</strong></td>
+<td>证书是 CA 签的名（见第五节）</td>
+</tr>
+<tr>
+<td>发密文给对方</td>
+<td><strong>对方的公钥</strong></td>
+<td>保密方向</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示</strong>：真题选项里的三大错误方向——「乙用<strong>乙的公钥</strong>验证」（错，验证必须用<strong>发方</strong>甲的公钥，乙自己的钥匙对是拆&quot;发给乙的密文&quot;用的）；「甲用<strong>甲的公钥</strong>签名」（错，公钥人人有，谁都能&quot;签&quot;，就证明不了身份）；「甲用<strong>乙的私钥</strong>签名」（错，乙的私钥甲根本拿不到）。</p>
+<h3 id="h-7">4.3 签名 + 保密，一步不乱（真题最爱组合）<button type="button" class="sec-status" data-status-key="4.3 签名 + 保密，一步不乱（真题最爱组合）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 签名 + 保密，一步不乱（真题最爱组合）」的学习状态"></button></h3>
+<p><strong>动机</strong>：签名流程里&quot;正文 + 签名摘要&quot;是<strong>明文</strong>发的——只解决了身份和完整性，<strong>没解决机密性</strong>。若既要保密又要签名，就在第 3 步外面再套一层数字信封（2.3 节）。完整流程（背诵模板）：</p>
+<blockquote class="lead">
+<p>甲：Hash 求摘要 → <strong>甲私钥</strong>签名摘要 → （正文+签名）用 <strong>乙公钥</strong> 加密发出
+乙：<strong>乙私钥</strong>解密 → <strong>甲公钥</strong>验签名 → 同一 Hash 重算摘要比对</p>
+</blockquote>
+<p>记忆口诀：&quot;<strong>先签后封，私签公验；封用收方公，拆用收方私</strong>&quot;。</p>
+<p><strong>应试动作</strong>：这是本课最高频考法。把 4.2 的速查表背熟，无论题干怎么换人名（甲乙/AB/发送接收方），第一步先问自己&quot;这个动作是<strong>保密</strong>还是<strong>认证</strong>&quot;——保密走对方公钥，认证走自己私钥。案例题风格题见本课末尾第 16 题。</p>
+<hr>
+<h2 id="h-8">第五节 数字证书与 CA <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第五节 数字证书与 CA ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第五节 数字证书与 CA ★★」的学习状态"></button></h2>
+<p><strong>动机</strong>：非对称体系还剩最后一个窟窿——<strong>公钥怎么证明是本人的</strong>？乙手里那把&quot;甲的公钥&quot;，万一是攻击者伪造的（攻击者把自己的公钥冒充成甲的发给你），后面整个签名验证都白搭。<strong>数字证书</strong>就是给公钥办的&quot;身份证&quot;：由一个大家信任的权威机构 <strong>CA（证书授权中心）</strong>，把&quot;用户身份 + 用户公钥&quot;捆在一起并盖章。</p>
+<h3 id="h-9">5.1 证书里有什么、怎么验证<button type="button" class="sec-status" data-status-key="5.1 证书里有什么、怎么验证" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 证书里有什么、怎么验证」的学习状态"></button></h3>
+<ul>
+<li><p><strong>证书内容</strong>：用户身份信息、<strong>用户的公钥</strong>、证书有效期、序列号，以及最关键的——<strong>CA 用自己的私钥对证书摘要做的数字签名</strong>。</p>
+</li>
+<li><p><strong>验证证书（三步，别只停在&quot;验签名&quot;）</strong>：拿到一张证书，除了用 <strong>CA 的公钥</strong>验 CA 的签名，还要再查两件事才算有效：</p>
+<ol>
+<li><strong>验签名</strong>：用 <strong>CA 的公钥</strong>解开证书上的 CA 签名，比对摘要 → 确认这张证书确实是 CA 签发的、不是伪造的；</li>
+<li><strong>查有效期</strong>：确认证书<strong>当前在有效期内</strong>（未过期、也未被提前撤销）；</li>
+<li><strong>查吊销</strong>：到 CA 或证书库查这张证书<strong>是否已被列入吊销列表（CRL）</strong>——私钥泄露、用户离职都可能让 CA 提前作废证书，正文却仍&quot;未过期&quot;。</li>
+</ol>
+<p>三步全过，才证明&quot;<strong>这把公钥确实属于这个人、且当前有效</strong>&quot;。</p>
+</li>
+<li><p><strong>信任链与根证书</strong>：未必每个 CA 都天生被信任。现实里是一串&quot;<strong>信任链</strong>&quot;——顶层有一个大家都信任的<strong>根证书</strong>（内置在操作系统/浏览器里），它给下层 CA 签发证书，下层 CA 再给普通用户签发；验证时逐级向上，直到找到一个你本来就信任的根证书为止。选择题若问&quot;浏览器为什么凭内置根证书就能信某个 CA 签的证书&quot;，本质就是靠这条自下而上的信任链。</p>
+</li>
+<li><p>CA 的职责：证书的签发、更新、<strong>撤销（吊销列表 CRL）</strong>、管理。</p>
+</li>
+</ul>
+<h3 id="h-10">5.2 与第 6 课联动<button type="button" class="sec-status" data-status-key="5.2 与第 6 课联动" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 与第 6 课联动」的学习状态"></button></h3>
+<p>浏览器地址栏的 <strong>HTTPS</strong>（端口 443，见 <a href="../06-计算机网络/06-应用层协议.html">06-计算机网络.html</a>）握手时就用到这一套：服务器出示<strong>数字证书</strong>，浏览器用 <strong>CA 的公钥</strong>验证书，确认服务器身份后再协商对称会话密钥加密通信——&quot;证书验身份 + 对称管数据&quot;的组合再现。</p>
+<p><strong>反例演示</strong>：选项「验证数字证书要用证书持有者的公钥」——<strong>错</strong>。证书上的签名是 <strong>CA</strong> 签的，所以要用 <strong>CA 的公钥</strong>验。持有者的公钥是证书<strong>里装的东西</strong>，不是验证工具。</p>
+<p><strong>应试动作</strong>：背两句——&quot;证书 = 身份 + 公钥 + CA 签名&quot;；&quot;验证书用 CA 的公钥，验证普通签名用发送者的公钥&quot;。考场给场景问&quot;浏览器如何确认某网站公钥的真实性&quot;，答&quot;用 CA 公钥验证网站的数字证书&quot;。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="08-信息安全/02-摘要签名与证书">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-安全目标与密码技术.html">
+      <span class="k">上一页</span>
+      <span class="t">08.1 安全目标与密码技术 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-防火墙攻击与恶意代码.html">
+      <span class="k">下一页</span>
+      <span class="t">08.3 防火墙、常见攻击与恶意代码 ★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

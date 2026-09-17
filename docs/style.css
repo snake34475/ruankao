@@ -353,6 +353,36 @@ main {
 
 .tier a.is-current .n { color: var(--accent); }
 
+/* 当前课程展开二级章节；其他课程保持一行，避免左栏被全部章节淹没 */
+.tier a.is-course-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.tier .chapter-nav {
+  margin: .2rem 0 .45rem .95rem;
+  padding-left: .45rem;
+  border-left: 1px solid var(--line);
+}
+
+.tier .chapter-nav a {
+  gap: .35rem;
+  padding: .24rem .45rem;
+  font-size: .77rem;
+}
+
+.tier .chapter-nav a .n {
+  flex-basis: 1.8em;
+  font-size: .72em;
+}
+
+.tier .chapter-nav a .t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* --------------------------------------------------------------------------
    3b. 右栏：本页大纲（宽屏 sticky；窄屏由 JS 移回左侧总纲下方）
    -------------------------------------------------------------------------- */
@@ -968,6 +998,39 @@ input[type="checkbox"]:checked {
 
 .chip.gold { border-color: color-mix(in srgb, var(--gold) 35%, var(--line)); background: var(--gold-soft); color: var(--gold); }
 
+/* 课程入口页：章节卡片由构建器根据目录内 md 自动生成 */
+.course-chapters { margin-top: 2.5rem; }
+
+.chapter-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+.chapter-cards a {
+  display: flex;
+  gap: .7rem;
+  align-items: baseline;
+  padding: .8rem .9rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.chapter-cards a:hover {
+  color: var(--accent-ink);
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+}
+
+.chapter-cards .n {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  color: var(--faint);
+}
+
 .group { margin-top: 2.5rem; }
 
 .group > header {
@@ -1125,6 +1188,8 @@ input[type="checkbox"]:checked {
 }
 
 @media (max-width: 640px) {
+  .chapter-cards { grid-template-columns: 1fr; }
+
   body { font-size: 16px; }
   .shell { padding: 0 1rem; }
   .page-head { padding-top: 1.5rem; }

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>99.1 上午卷（上）：计算机系统至设计模式</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a><ul class="chapter-nav"><li><a href="01-上午卷上.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/01-上午卷上" aria-hidden="true"></i><span class="n">01</span><span class="t">上午卷（上）：计算机系统至设计模式</span></a></li><li><a href="02-上午卷下.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/02-上午卷下" aria-hidden="true"></i><span class="n">02</span><span class="t">上午卷（下）：数据库至专业英语</span></a></li><li><a href="03-上午卷补充题.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/03-上午卷补充题" aria-hidden="true"></i><span class="n">03</span><span class="t">上午卷补充题</span></a></li><li><a href="04-下午卷案例一至三.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/04-下午卷案例一至三" aria-hidden="true"></i><span class="n">04</span><span class="t">下午卷：案例一至三</span></a></li><li><a href="05-下午卷案例四至五.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/05-下午卷案例四至五" aria-hidden="true"></i><span class="n">05</span><span class="t">下午卷：案例四至五</span></a></li><li><a href="90-上午卷答案与解析.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/90-上午卷答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">上午卷答案与解析</span></a></li><li><a href="91-下午卷答案与评分点.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/91-下午卷答案与评分点" aria-hidden="true"></i><span class="n">07</span><span class="t">下午卷答案与评分点</span></a></li><li><a href="99-成绩诊断.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/99-成绩诊断" aria-hidden="true"></i><span class="n">08</span><span class="t">成绩诊断</span></a></li></ul></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 99 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">99.1 上午卷（上）：计算机系统至设计模式</h1>
+  </header>
+  <h2 id="h-2">一、计算机系统基础（第 1–10 题）<button type="button" class="sec-status" data-status-key="一、计算机系统基础（第 1–10 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「一、计算机系统基础（第 1–10 题）」的学习状态"></button></h2>
+<p><strong>1.</strong> 8 位补码 <code>10010110</code> 表示的十进制整数是（ ）。</p>
+<p>A. −106<br>B. −105<br>C. 22<br>D. 150</p>
+<p><strong>2.</strong> 对总位数相同的两种浮点格式，甲的阶码比乙长、尾数比乙短。其他规定相同时，甲与乙相比（ ）。</p>
+<p>A. 表示范围更大，精度更低<br>B. 表示范围更小，精度更高<br>C. 表示范围和精度都更大<br>D. 表示范围和精度都更低</p>
+<p><strong>3.</strong> CPU 中保存当前正在执行指令的是（ ）。</p>
+<p>A. PC<br>B. IR<br>C. MAR<br>D. PSW</p>
+<p><strong>4.</strong> 某 Cache 命中率为 95%，命中访问时间为 10 ns；未命中时需访问主存，总耗时 100 ns（该值已包含命中查 Cache 所花的时间，未命中时不再重复计入），则平均访问时间为（ ）。</p>
+<p>A. 10 ns<br>B. 14.5 ns<br>C. 15 ns<br>D. 95.5 ns</p>
+<p><strong>5.</strong> 某磁盘转速为 6000 RPM，平均寻道时间为 8 ms。忽略数据传输时间，其平均存取时间约为（ ）。</p>
+<p>A. 5 ms<br>B. 8 ms<br>C. 13 ms<br>D. 18 ms</p>
+<p><strong>6.</strong> Cache 的三种常见映射方式中，冲突率最高、硬件最简单的是（ ）。</p>
+<p>A. 直接映射<br>B. 全相联映射<br>C. 组相联映射<br>D. 动态映射</p>
+<p><strong>7.</strong> 模块 A 与一个冗余模块串联。A 的可靠度为 0.9；冗余模块由两个可靠度均为 0.8 的部件并联。各部件独立，系统可靠度为（ ）。</p>
+<p>A. 0.576<br>B. 0.720<br>C. 0.864<br>D. 0.960</p>
+<p><strong>8.</strong> 8 位信息采用能纠正一位错误的海明码，至少需要校验位 r 满足 <code>2^r≥8+r+1</code>，因此 r 至少为（ ）。</p>
+<p>A. 3<br>B. 4<br>C. 5<br>D. 8</p>
+<p><strong>9.</strong> 下列特征最符合 RISC 的是（ ）。</p>
+<p>A. 指令多且常为变长格式<br>B. 寻址方式复杂，常用微程序控制<br>C. 只有 Load/Store 类指令访问内存，利于流水线<br>D. 单条指令完成尽可能多的复杂操作</p>
+<p><strong>10.</strong> 一条指令分为 2 ns、3 ns、4 ns 三段。按理论流水线公式执行 20 条指令，需要（ ）。</p>
+<p>A. 80 ns<br>B. 85 ns<br>C. 89 ns<br>D. 180 ns</p>
+<h2 id="h-3">二、程序设计语言基础（第 11–15 题）<button type="button" class="sec-status" data-status-key="二、程序设计语言基础（第 11–15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「二、程序设计语言基础（第 11–15 题）」的学习状态"></button></h2>
+<p><strong>11.</strong> 编译过程中，把字符序列识别成关键字、标识符、常量等 token 的阶段是（ ）。</p>
+<p>A. 词法分析<br>B. 语法分析<br>C. 语义分析<br>D. 目标代码生成</p>
+<p><strong>12.</strong> 检查括号是否匹配、表达式结构是否符合文法，主要由（ ）完成。</p>
+<p>A. 词法分析<br>B. 语法分析<br>C. 代码优化<br>D. 链接装配</p>
+<p><strong>13.</strong> 正规式 <code>(a|b)*abb</code> 描述的字符串集合中包含（ ）。</p>
+<p>A. <code>abba</code><br>B. <code>baabb</code><br>C. <code>abab</code><br>D. <code>bbb</code></p>
+<p><strong>14.</strong> 采用传值调用时，被调用函数修改形式参数后（ ）。</p>
+<p>A. 一定修改调用者对应实参变量<br>B. 一般不改变调用者对应实参变量本身<br>C. 实参与形参必须共享同一地址<br>D. 只能传递数组，不能传递整数</p>
+<p><strong>15.</strong> 关于编译与解释，正确的是（ ）。</p>
+<p>A. 解释程序通常先生成完整目标程序再执行<br>B. 编译程序只能发现运行期错误<br>C. 解释执行通常逐句翻译并执行，不必先生成完整目标程序<br>D. 同一源程序经编译后每次运行都必须重新逐句翻译</p>
+<h2 id="h-4">三、操作系统（第 16–21 题）<button type="button" class="sec-status" data-status-key="三、操作系统（第 16–21 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「三、操作系统（第 16–21 题）」的学习状态"></button></h2>
+<p><strong>16.</strong> 进程等待的 I/O 操作完成后，该进程通常从阻塞态进入（ ）。</p>
+<p>A. 运行态<br>B. 就绪态<br>C. 新建态<br>D. 终止态</p>
+<p><strong>17.</strong> 用信号量 mutex 实现互斥，mutex 初值为 1。正确的临界区结构是（ ）。</p>
+<p>A. <code>V(mutex); 临界区; P(mutex)</code><br>B. <code>P(mutex); 临界区; V(mutex)</code><br>C. <code>P(mutex); V(mutex); 临界区</code><br>D. <code>临界区; P(mutex); V(mutex)</code></p>
+<p><strong>18.</strong> 下列不属于死锁产生必要条件的是（ ）。</p>
+<p>A. 互斥<br>B. 请求并保持<br>C. 可剥夺<br>D. 循环等待</p>
+<p><strong>19.</strong> 3 个进程竞争同类资源，每个进程最多需要 4 个资源。要保证系统不会因该类资源数量不足而死锁，至少需要（ ）个该类资源。</p>
+<p>A. 9<br>B. 10<br>C. 11<br>D. 12</p>
+<p><strong>20.</strong> 页式存储中页面大小为 4 KiB，逻辑地址为 <code>5ABCH</code>，页号 5 对应物理块号 9，则物理地址为（ ）。</p>
+<p>A. <code>5ABCH</code><br>B. <code>9ABCH</code><br>C. <code>9005H</code><br>D. <code>EABCH</code></p>
+<p><strong>21.</strong> 采用 3 个物理块和 FIFO 页面置换算法，初始为空，访问序列为 <code>1,2,3,1,4</code>。访问结束后内存中的页面集合是（ ）。</p>
+<p>A. <code>{1,2,3}</code><br>B. <code>{1,3,4}</code><br>C. <code>{2,3,4}</code><br>D. <code>{1,2,4}</code></p>
+<h2 id="h-5">四、数据结构与算法（第 22–32 题）<button type="button" class="sec-status" data-status-key="四、数据结构与算法（第 22–32 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「四、数据结构与算法（第 22–32 题）」的学习状态"></button></h2>
+<p><strong>22.</strong> 后缀表达式 <code>6 2 / 3 +</code> 的值是（ ）。</p>
+<p>A. 3<br>B. 5<br>C. 6<br>D. 9</p>
+<p><strong>23.</strong> 长度为 10 的循环队列采用 <code>(rear-front+10)%10</code> 计算队列元素数。若 front=2、rear=7，则元素数为（ ）。</p>
+<p>A. 3<br>B. 5<br>C. 7<br>D. 9</p>
+<p><strong>24.</strong> 对任意非空二叉树，若叶子结点数为 n0、度为 2 的结点数为 n2，则（ ）。</p>
+<p>A. <code>n0=n2−1</code><br>B. <code>n0=n2</code><br>C. <code>n0=n2+1</code><br>D. <code>n0=2n2</code></p>
+<p><strong>25.</strong> 某二叉树前序序列为 <code>ABDCE</code>，中序序列为 <code>DBAEC</code>，其后序序列为（ ）。</p>
+<p>A. <code>DBECA</code><br>B. <code>DCEBA</code><br>C. <code>BDECA</code><br>D. <code>DEBCA</code></p>
+<p><strong>26.</strong> 以权值 2、3、7、8 构造哈夫曼树，其带权路径长度 WPL 为（ ）。</p>
+<p>A. 20<br>B. 32<br>C. 37<br>D. 40</p>
+<p><strong>27.</strong> 对无向图采用邻接矩阵存储，其邻接矩阵一定（ ）。</p>
+<p>A. 关于主对角线对称<br>B. 所有元素均为 1<br>C. 是上三角矩阵<br>D. 主对角线元素均为 1</p>
+<p><strong>28.</strong> Dijkstra 算法适用于（ ）。</p>
+<p>A. 含负权边的任意图<br>B. 边权非负的单源最短路径问题<br>C. 求无向图最小生成树<br>D. 求所有拓扑序列</p>
+<p><strong>29.</strong> 一个有向图存在拓扑序列的充要条件是该图（ ）。</p>
+<p>A. 强连通<br>B. 是无向图<br>C. 是有向无环图<br>D. 所有顶点入度相同</p>
+<p><strong>30.</strong> 对含 100 个元素的有序顺序表进行二分查找，最坏情况下比较次数为（ ）。</p>
+<p>A. 6<br>B. 7<br>C. 50<br>D. 100</p>
+<p><strong>31.</strong> 下列排序算法中稳定的是（ ）。</p>
+<p>A. 快速排序<br>B. 堆排序<br>C. 希尔排序<br>D. 归并排序</p>
+<p><strong>32.</strong> 快速排序在最坏情况下的时间复杂度是（ ）。</p>
+<p>A. <code>O(1)</code><br>B. <code>O(log n)</code><br>C. <code>O(n log n)</code><br>D. <code>O(n^2)</code></p>
+<h2 id="h-6">五、软件工程基础（第 33–40 题）<button type="button" class="sec-status" data-status-key="五、软件工程基础（第 33–40 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「五、软件工程基础（第 33–40 题）」的学习状态"></button></h2>
+<p><strong>33.</strong> 用户需求不明确，希望先看到可运行模型并通过反馈逐步澄清需求，最适合采用（ ）。</p>
+<p>A. 瀑布模型<br>B. 原型模型<br>C. V 模型<br>D. 形式化模型</p>
+<p><strong>34.</strong> 螺旋模型最突出的特点是（ ）。</p>
+<p>A. 完全取消文档<br>B. 每轮包含风险分析<br>C. 只能用于小型项目<br>D. 严格一次性线性开发</p>
+<p><strong>35.</strong> 一个模块内部所有成分共同完成一个明确且不可再分的功能，该模块属于（ ）。</p>
+<p>A. 偶然内聚<br>B. 逻辑内聚<br>C. 顺序内聚<br>D. 功能内聚</p>
+<p><strong>36.</strong> 一个模块直接访问另一个模块的内部数据和代码，属于（ ）。</p>
+<p>A. 数据耦合<br>B. 控制耦合<br>C. 公共耦合<br>D. 内容耦合</p>
+<p><strong>37.</strong> 某控制流图有 12 条边、9 个结点，其 McCabe 环路复杂度为（ ）。</p>
+<p>A. 3<br>B. 4<br>C. 5<br>D. 21</p>
+<p><strong>38.</strong> 输入合法范围为 1～100，使用边界值分析设计测试数据，最合适的一组是（ ）。</p>
+<p>A. 1、50、100<br>B. 0、1、100、101<br>C. 25、50、75<br>D. −100、0、200</p>
+<p><strong>39.</strong> 为适配新的操作系统版本而修改现有软件，属于（ ）。</p>
+<p>A. 改正性维护<br>B. 适应性维护<br>C. 完善性维护<br>D. 预防性维护</p>
+<p><strong>40.</strong> CMMI 阶段式模型中，以定量度量和控制过程为关键词的是（ ）。</p>
+<p>A. 第 2 级已管理级<br>B. 第 3 级已定义级<br>C. 第 4 级定量管理级<br>D. 第 5 级优化级</p>
+<h2 id="h-7">六、面向对象与设计模式（第 41–47 题）<button type="button" class="sec-status" data-status-key="六、面向对象与设计模式（第 41–47 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「六、面向对象与设计模式（第 41–47 题）」的学习状态"></button></h2>
+<p><strong>41.</strong> 将数据与操作封装在对象内部，并隐藏实现细节，体现了面向对象的（ ）。</p>
+<p>A. 封装<br>B. 继承<br>C. 多态<br>D. 泛化</p>
+<p><strong>42.</strong> 同一个类中存在 <code>f(int)</code> 与 <code>f(String)</code>，这称为（ ）。</p>
+<p>A. 重写<br>B. 重载<br>C. 抽象<br>D. 代理</p>
+<p><strong>43.</strong> UML 中按时间顺序描述对象之间消息交互的是（ ）。</p>
+<p>A. 类图<br>B. 顺序图<br>C. 部署图<br>D. 构件图</p>
+<p><strong>44.</strong> 描述软件构件在物理结点上的部署关系，最适合使用（ ）。</p>
+<p>A. 状态图<br>B. 活动图<br>C. 部署图<br>D. 对象图</p>
+<p><strong>45.</strong> “提交订单”每次都必须执行“身份校验”，二者在用例图中应使用（ ）。</p>
+<p>A. <code>&lt;&lt;include&gt;&gt;</code>，从提交订单指向身份校验<br>B. <code>&lt;&lt;include&gt;&gt;</code>，从身份校验指向提交订单<br>C. <code>&lt;&lt;extend&gt;&gt;</code>，从提交订单指向身份校验<br>D. 泛化，空心三角指向提交订单</p>
+<p><strong>46.</strong> 系统把多种可互换的计费算法封装起来，并可在运行时选择一种，最适合采用（ ）。</p>
+<p>A. 观察者模式<br>B. 策略模式<br>C. 适配器模式<br>D. 单例模式</p>
+<p><strong>47.</strong> 把一个已有类的接口转换成客户期望的另一种接口，应采用（ ）。</p>
+<p>A. 装饰器模式<br>B. 代理模式<br>C. 适配器模式<br>D. 备忘录模式</p>
+
+
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷/01-上午卷上">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">99 考前全真模拟卷</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-上午卷下.html">
+      <span class="k">下一页</span>
+      <span class="t">99.2 上午卷（下）：数据库至专业英语</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

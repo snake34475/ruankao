@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>12.8 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a><ul class="chapter-nav"><li><a href="01-计数与概率.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/01-计数与概率" aria-hidden="true"></i><span class="n">01</span><span class="t">计数与概率 ★★★</span></a></li><li><a href="02-逻辑图论与数值误差.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/02-逻辑图论与数值误差" aria-hidden="true"></i><span class="n">02</span><span class="t">命题逻辑、图论与数值误差 ★★★</span></a></li><li><a href="03-多媒体与图像容量.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/03-多媒体与图像容量" aria-hidden="true"></i><span class="n">03</span><span class="t">多媒体数据与图像容量 ★★★</span></a></li><li><a href="04-音视频容量与颜色空间.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/04-音视频容量与颜色空间" aria-hidden="true"></i><span class="n">04</span><span class="t">音视频容量与颜色空间 ★★★</span></a></li><li><a href="05-压缩与容量题模板.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/05-压缩与容量题模板" aria-hidden="true"></i><span class="n">05</span><span class="t">压缩与容量题统一模板 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/90-课后考题" aria-hidden="true"></i><span class="n">06</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/91-精华题" aria-hidden="true"></i><span class="n">07</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/99-答案与解析" aria-hidden="true"></i><span class="n">08</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 12 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">12.8 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后选择题答案<button type="button" class="sec-status" data-status-key="课后选择题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后选择题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong></p>
+<p>只选 3 人、不区分职位，交换顺序不产生新结果，用组合：</p>
+<p><code>C(8,3)=(8×7×6)/(3×2×1)=56</code>。</p>
+<p>C 的 336 是 <code>A(8,3)</code>，适用于三个职位不同的情形。反验：<code>336/3!=336/6=56</code>。</p>
+<p><strong>2. D</strong></p>
+<p>4 个位置，每个位置都有 10 种选择且允许重复、可从 0 开头，按乘法原理：<code>10×10×10×10=10^4=10000</code>。C 的 9000 对应首位不能为 0 的四位数，不是验证码。</p>
+<p><strong>3. B</strong></p>
+<p>蕴含是“P 发生就承诺 Q 发生”。只有 P 已为真而 Q 为假时承诺被打破。口诀：<strong>蕴含只假在前真后假</strong>。</p>
+<p><strong>4. B</strong></p>
+<p>n 个顶点的树有 n−1 条边，所以 <code>12−1=11</code>。D 的 66 是 12 个顶点完全图的边数 <code>C(12,2)</code>。</p>
+<p><strong>5. B</strong></p>
+<p>握手定理：总度数=<code>2|E|</code>，所以 <code>|E|=28/2=14</code>。每条边在两个端点各贡献 1 度，不能把 28 直接当边数。</p>
+<p><strong>6. A</strong></p>
+<p>绝对误差=<code>|20.00−19.80|=0.20</code>；相对误差=<code>0.20/20.00=0.01</code>；百分相对误差=<code>0.01×100%=1%</code>。B 把小数 0.01 又误写成 0.01%。</p>
+<p><strong>7. B</strong></p>
+<p><code>1024×768×24/8=2359296 B</code>，再除以 <code>2^20</code> 得 <code>2.25 MiB</code>。第二种方法：24 bit=3 B/像素，<code>1024×768×3=2.25 MiB</code>。C 漏了 bit→Byte 的除以 8。</p>
+<p><strong>8. C</strong></p>
+<p><code>2^8=256</code>，所以恰需 8 bit。7 bit 只能表示 128 种，4 bit 只能表示 16 种。</p>
+<p><strong>9. C</strong></p>
+<p><code>44100×16×2×10/8=1764000 B</code>。逐秒反验：每个声道每次采样 2 B，双声道每秒 <code>44100×2×2=176400 B</code>，10 秒即 1764000 B。D 是未除以 8 的 bit 数。</p>
+<p><strong>10. D</strong></p>
+<p>采样定理 <code>fs≥2fmax</code>，故最低为 <code>2×8=16 kHz</code>。实际系统还会留滤波余量，但本题问理想最低值。</p>
+<p><strong>11. A</strong></p>
+<p>RGB 是显示器等发光设备使用的加色模型。CMYK 是印刷减色模型；YUV 分离亮度和色度；MIDI 是音乐演奏指令格式，不是颜色模型。</p>
+<p><strong>12. B</strong></p>
+<p>Y 表示亮度，U/V 或 Cb/Cr 表示色度/色差。这里的 Y 不是 Yellow；黄色是 CMY 中的 Y。</p>
+<p><strong>13. B</strong></p>
+<p>JPEG 中量化会粗化并舍弃部分频率系数，是主要有损环节。Huffman 熵编码利用统计冗余，本身是可逆的无损编码。</p>
+<p><strong>14. A</strong></p>
+<p>PNG 是无损位图格式并支持 Alpha 透明，适合界面图标和截图。JPEG 有损且通常不支持 Alpha；MP3 是音频，MPEG 主要用于运动图像/音视频。</p>
+<p><strong>15. B</strong></p>
+<p>相邻视频帧往往高度相似，MPEG 用预测编码利用帧间时间冗余；同一帧内部还可利用空间冗余。其余选项不是视频压缩的对应概念。</p>
+<h3 id="h-3">综合计算题答案<button type="button" class="sec-status" data-status-key="综合计算题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合计算题答案」的学习状态"></button></h3>
+<p><strong>16. 图像与视频容量</strong></p>
+<p>（1）每幅图片：</p>
+<p><code>800×600×24/8=1440000 B</code>。</p>
+<p>10 幅总容量：</p>
+<p><code>1440000×10=14400000 B</code>；</p>
+<p><code>14400000/1048576≈13.733 MiB</code>。</p>
+<p>第二种方法：每像素 3 B，共 <code>800×600×10=4800000</code> 个像素样本；<code>4800000×3=14400000 B</code>，一致。</p>
+<p>（2）压缩比 20:1：</p>
+<p><code>14400000/20=720000 B≈0.687 MiB</code>。</p>
+<p>反验：<code>720000×20=14400000 B</code>，恢复到原始容量。</p>
+<p>（3）帧数=<code>25×8=200</code> 帧：</p>
+<p><code>800×600×24×25×8/8=288000000 B</code>；</p>
+<p><code>288000000/1048576≈274.658 MiB</code>。</p>
+<p>分层反验：每帧 1440000 B，200 帧共 <code>1440000×200=288000000 B</code>。</p>
+<p><strong>17. 组合、概率与音频容量</strong></p>
+<p>（1）不区分成员职位：</p>
+<p><code>C(8,3)=(8×7×6)/(3×2×1)=56</code> 种。</p>
+<p>（2）恰有 1 名测试人员：从 3 名测试人员中选 1 名，从 5 名开发人员中选 2 名：</p>
+<p><code>C(3,1)×C(5,2)=3×(5×4)/(2×1)=3×10=30</code> 种。</p>
+<p>概率=<code>30/56=15/28≈0.5357</code>。</p>
+<p>反向枚举总数：0、1、2、3 名测试人员的选法分别为 <code>C(3,0)C(5,3)=10</code>、30、<code>C(3,2)C(5,1)=15</code>、<code>C(3,3)C(5,0)=1</code>，总和 <code>10+30+15+1=56</code>，与全部组合数一致。</p>
+<p>（3）60 秒音频：</p>
+<p><code>48000×24×2×60/8=17280000 B</code>；</p>
+<p><code>17280000/1048576≈16.479 MiB</code>。</p>
+<p>第二种方法：24 bit=3 B，每秒双声道容量=<code>48000×3×2=288000 B</code>；60 秒=<code>288000×60=17280000 B</code>，一致。</p>
+<h3 id="h-4">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong></p>
+<p><code>LEVEL</code> 共 5 个位置，L 重复 2 次、E 重复 2 次：</p>
+<p><code>5!/(2!×2!)=120/(2×2)=30</code>。</p>
+<p>若直接算 5!=120，会把两个 L 和两个 E 的互换错误地当成新排列。</p>
+<p><strong>2. B</strong></p>
+<p>全称命题“所有都通过”的否定是“至少一个不通过”，不是“所有都不通过”。只找到一个反例，就足以推翻“所有”。</p>
+<p><strong>3. C</strong></p>
+<p>无向完全图边数=<code>C(7,2)=7×6/2=21</code>。D 的 42 是把每条无向边按两个方向重复计算，适用于相应有向完全图的弧数。</p>
+<p><strong>4. B</strong></p>
+<p>32 bit=4 B/像素：</p>
+<p><code>1920×1080×4=8294400 B</code>；</p>
+<p><code>8294400/1048576≈7.910 MiB</code>。</p>
+<p>用 bit 公式复核：<code>1920×1080×32/8</code> 结果相同。</p>
+<p><strong>5. C</strong></p>
+<p>1 分钟=60 秒：</p>
+<p><code>48000×24×2×60/8=17280000 B≈16.48 MiB</code>。</p>
+<p>D 的 172.80 把十进制 MB 数小数点放错；若按十进制 MB，实际为 17.28 MB，也不是 172.80 MB。</p>
+<p><strong>6. B</strong></p>
+<p>JPEG 面向连续色调静止图像，通常是有损压缩，量化是主要有损步骤。帧间时间冗余属于视频编码思路；需要无损反复编辑的线条图更适合 PNG 等无损格式。</p>
+<p><strong>7. C</strong></p>
+<p>B 帧可参考前后帧做双向预测。I 帧可独立解码；P 帧通常参考前面的 I/P 帧；MPEG 常采用有损编码，并非三类帧都只能无损。</p>
+<hr>
+<p><strong>下一步</strong>：第 12 课是常规课程的最后一课。完成本课并确认前面课程的学习状态后，下一阶段是生成《考前全真模拟卷》（75 道选择题 + 5 道案例题，含完整解析）。</p>
+
+
+  <footer class="status-bar" data-status-page="12-数学与多媒体/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题.html">
+      <span class="k">上一页</span>
+      <span class="t">12.7 精华题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../99-考前全真模拟卷/index.html">
+      <span class="k">下一页</span>
+      <span class="t">99 考前全真模拟卷</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

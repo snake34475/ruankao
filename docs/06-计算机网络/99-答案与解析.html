@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>06.10 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a><ul class="chapter-nav"><li><a href="01-网络分层模型.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/01-网络分层模型" aria-hidden="true"></i><span class="n">01</span><span class="t">网络分层模型 ★★★</span></a></li><li><a href="02-IP地址与网关.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/02-IP地址与网关" aria-hidden="true"></i><span class="n">02</span><span class="t">IP 地址、NAT 与默认网关 ★★</span></a></li><li><a href="03-子网划分.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/03-子网划分" aria-hidden="true"></i><span class="n">03</span><span class="t">子网划分与掩码计算 ★★★</span></a></li><li><a href="04-CIDR与路由聚合.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/04-CIDR与路由聚合" aria-hidden="true"></i><span class="n">04</span><span class="t">CIDR 与路由聚合 ★★</span></a></li><li><a href="05-TCP与UDP.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/05-TCP与UDP" aria-hidden="true"></i><span class="n">05</span><span class="t">TCP、UDP 与三次握手 ★★★</span></a></li><li><a href="06-应用层协议.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/06-应用层协议" aria-hidden="true"></i><span class="n">06</span><span class="t">应用层协议与端口 ★★★</span></a></li><li><a href="07-Web与网络命令.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/07-Web与网络命令" aria-hidden="true"></i><span class="n">07</span><span class="t">HTML、WWW 与网络命令 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="06-计算机网络/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06.10 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong>。按 IP 地址查路由表转发、连接不同网络、拦截广播帧——三条全是路由器（网络层）的职责。A/D 是物理层设备，C 二层交换机按 MAC 转发、不能隔离广播域。</p>
+<p><strong>2. A</strong>。TCP/IP 应用层 = OSI 的应用+表示+会话三层，SMTP/FTP/HTTP/DNS/DHCP 等应用协议都在此层。传输层只有 TCP/UDP，网际层是 IP/ICMP/ARP。</p>
+<p><strong>3. B</strong>。交换机（数据链路层）每端口一个冲突域，可隔离冲突域；集线器（物理层）所有端口共享一条路，隔离不了。广播域两者都隔离不了（C 错），D 错在交换机按 MAC 转发、工作在数据链路层。</p>
+<p><strong>4. B</strong>。第一字节 172 落在 128～191 → B 类；B 类私网段是 172.16.0.0～172.31.255.255，第二字节 30 恰好在 16～31 之间 → 私网。若写成 172.32.x.x 就是公网了，边界要抠准。</p>
+<p><strong>5. C</strong>。私网三段：10.x.x.x、172.16～172.31.x.x、192.168.x.x。A 的 172.32 越界（只到 172.31），B 的 192.169 越界（只有 192.168），D 的 169.254 是链路本地地址、不属于私网三段；C 的 10.255.255.1 在 10.0.0.0/8 内 ✓。</p>
+<p><strong>6. B</strong>。/28 → 主机位 32−28 = 4 → 2^4 − 2 = 16 − 2 = <strong>14</strong>。A 的 16 忘了减 2；D 的 30 是 /27 的答案；/28 一共 16 个地址，C 的 12 无依据。</p>
+<p><strong>7. B</strong>。掩码 255.255.255.<strong>240</strong> → 块大小 = 256 − 240 = <strong>16</strong>。边界：0、16、32、48…；37 落在 [32, 47] → 网络地址 <strong>192.168.10.32</strong>。二进制验证：37 = <code>00100101</code>，240 = <code>11110000</code>，按位与 = <code>00100000</code> = 32 ✓。该子网广播地址是 192.168.10.47，可用范围 .33～.46。</p>
+<p><strong>8. B</strong>。借位 s 需 2^s ≥ 6 → s = 3（2^2 = 4 不够，2^3 = 8 ≥ 6）。主机位 = 16 − 3 = 13，可用主机 2^13 − 2 = 8190 ≥ 25 ✓ 两个条件同时满足。掩码 = /19：前两字节 255.255，第三字节借 3 位 → 128+64+32 = 224 → <strong>255.255.224.0</strong>。&quot;使每个子网可用主机数尽可能多&quot;= 借位尽量少，故取满足条件的最小借位 s = 3：A（/18，借 2 位）只有 4 个子网、不满足子网数；C（/20）、D（/21）借位更多，子网数虽够但每子网主机数变少（C 为 2^12−2 = 4094，D 为 2^11−2 = 2046），均非&quot;尽可能多&quot;，排除。</p>
+<p><strong>9. A</strong>。4 个连续 /24 → 需要 2 位变化 → 前缀 24−2 = /22；起始网段 4.0，第三字节 4 是块大小 4（256−252=4）的整数倍 → 边界对齐 ✓ 聚合为 <strong>192.168.4.0/22</strong>（覆盖 4.0～7.255）。B 的 5 不是块边界（5/22 的网络地址其实是 4.0，写法非法）；C 的 /23 只能覆盖 2 个 /24；D 的 192.168.0.0/21 覆盖 0～7，范围过大、包含了题目没有的 0～3 网段，不精确。</p>
+<p><strong>10. B</strong>。UDP 三特征：无连接、不可靠（不确认不重传）、开销小速度快。A/C 是 TCP 的特征（UDP 无连接、无流量/拥塞控制），D 按序到达也是 TCP 才保证。</p>
+<p><strong>11. D</strong>。TCP 与 UDP 都用端口号区分上层应用（端口寻址）。A 连接管理、B 重传、C 流量控制都只有 TCP 提供——UDP 无连接、不重传、无流量控制。</p>
+<p><strong>12. C</strong>。三次握手：① 客户端发 <strong>SYN</strong>（进入 SYN-SENT）；② 服务器回 SYN+ACK（进入 SYN-RCVD）；③ 客户端回 ACK（双方 ESTABLISHED）。FIN 是断开连接用的，D 的 SYN+ACK 是第二步服务器发的。</p>
+<p><strong>13. C</strong>。SMTP 的默认端口是 <strong>25</strong>，110 是 <strong>POP3</strong>（收邮件）的端口——&quot;发 25、收 110&quot;是最经典的调包点。A/B/D 对应均正确（FTP 控制 21、HTTP 80、TELNET 23）。</p>
+<p><strong>14. B</strong>。DHCP = 动态主机配置协议，自动下发 IP 地址、子网掩码、默认网关、DNS 服务器等参数（UDP 67/68）。A 是 DNS，C 是 SMTP，D 是 HTTPS。</p>
+<p><strong>15. D</strong>。超链接用 <code>&lt;a href=&quot;URL&quot;&gt;</code>；<code>&lt;p&gt;</code> 段落、<code>&lt;img&gt;</code> 图片、<code>&lt;br&gt;</code> 换行。</p>
+<h3 id="h-3">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<p><strong>案例 1：</strong></p>
+<p><strong>(1) 求掩码。</strong> 每个子网最多 50 台主机 → 主机位 m 需满足 2^m − 2 ≥ 50 → m = 6（2^6−2 = 62 ≥ 50；m=5 时 2^5−2=30 &lt; 50 不够）。C 类主机位共 8 位，借 8 − 6 = 2 位做子网位 → 恰好 2^2 = <strong>4</strong> 个子网 ✓（与题意吻合）。掩码 = /26 → 255.255.255.<strong>192</strong>。
+验证：块大小 = 256 − 192 = 64，每个子网 64 个地址，可用 64 − 2 = 62 ≥ 50 ✓。</p>
+<p><strong>(2) 四个子网。</strong> 边界按 64 步进：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>网络地址</th>
+<th>可用主机范围</th>
+<th>可用主机数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>192.168.100.0/26</td>
+<td>192.168.100.1 ～ 62</td>
+<td>62</td>
+</tr>
+<tr>
+<td>2</td>
+<td>192.168.100.64/26</td>
+<td>192.168.100.65 ～ 126</td>
+<td>62</td>
+</tr>
+<tr>
+<td>3</td>
+<td>192.168.100.128/26</td>
+<td>192.168.100.129 ～ 190</td>
+<td>62</td>
+</tr>
+<tr>
+<td>4</td>
+<td>192.168.100.192/26</td>
+<td>192.168.100.193 ～ 254</td>
+<td>62</td>
+</tr>
+</tbody></table>
+</div>
+<p>每个子网可用主机数 = 2^6 − 2 = <strong>62</strong>。</p>
+<p><strong>(3) 第 3 个子网。</strong> 网络地址 192.168.100.128/26，主机位 6 位全置 1 得广播地址：128 = <code>10000000</code>，或上 <code>00111111</code> 得 <code>10111111</code> = 191 → 广播地址 <strong>192.168.100.191</strong>（即下一子网起点 192 减 1）。可用主机地址范围 <strong>192.168.100.129 ～ 192.168.100.190</strong>，共 190 − 129 + 1 = 62 个 ✓（与公式一致）。</p>
+<h3 id="h-4">扩充专项题答案<button type="button" class="sec-status" data-status-key="扩充专项题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「扩充专项题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong>。发送方自上而下封装：应用数据先加传输层首部成为段/UDP 数据报，再加 IP 首部成为分组，再加链路层首尾成为帧，最后在物理层变成比特流。A 把帧放得过早；C 把网络层与传输层颠倒；D 把帧与分组颠倒。</p>
+<p><strong>2. B</strong>。数据链路层的 PDU 是<strong>帧</strong>，随后物理层把帧编码成比特信号传输。A 是物理层的数据单位，C 是网络层，D 是 TCP 所在传输层。</p>
+<p><strong>3. C</strong>。目的 IP 10.1.1.8 与 192.168.10.20/24 不同网段，A 必须先把帧交给同网段的默认网关。因此第一跳帧的目的 MAC 是网关的 MAC；但 IP 分组的目的 IP 仍是 10.1.1.8。远程主机不在本地链路，A 无法直接查询并使用它的 MAC。</p>
+<p><strong>4. A</strong>。NAT 把内网私有地址映射到公网侧地址；配合端口转换时，多条连接可用不同公网端口共享一个公网 IPv4 地址。B 错在 NAT 不等于防火墙；C 与“共享地址”相反；D 错在 NAT 主要转换网络层地址，并可能连同传输层端口一起转换。</p>
+<p><strong>5. A</strong>。通用形式：发送窗口上限 = <code>min(rwnd, cwnd)</code>。代入得 <code>min(24 KB, 10 KB) = 10 KB</code>。接收方虽能容纳 24 KB，但当前网络拥塞控制只允许 10 KB，取较小者。</p>
+<p><strong>6. B</strong>。原窗口 <code>[1,4]</code> 含 1、2、3、4。确认 1、2 后，两个已确认位置从左侧移出，同时右侧加入两个新位置 5、6，得到 <code>[3,6]</code>。D 错误地把尚未确认的 3、4 也移出了窗口。</p>
+<p><strong>7. C</strong>。主机名位于 <code>://</code> 之后、端口号或第一个路径斜杠之前，因此是 <code>learn.example.org</code>。其中 <code>learn</code> 只是左侧主机标签，<code>https</code> 是协议，<code>/course</code> 是路径。</p>
+<p><strong>8. A</strong>。直接访问公网 IP 可行，说明网卡、链路、IP 路由大体可用；所有域名都失败，故障集中在“域名变成 IP”的 DNS 环节。若网卡损坏或链路完全中断，公网 IP 也无法访问。</p>
+<p><strong>9. C</strong>。GET 常用于获取/查询，参数常见于 URL；POST 常用于提交或改变状态，数据常放请求体。二者都不天然提供加密，机密数据传输要依赖 HTTPS。A、B 把请求方法与加密混为一谈；D 对传输内容作了不存在的限制。</p>
+<p><strong>10. B</strong>。根据用户身份、请求参数或数据库内容在运行时生成结果，是服务器端动态网页的典型特征。A 是静态资源；C 是链路层转发；D 是名称解析，都不是网页动态生成。</p>
+<h3 id="h-5">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1. C</strong>。加密/压缩/编码转换是<strong>表示层</strong>的本职（TCP/IP 模型中并入应用层实现）。应用层直接面向用户程序，会话层管会话建立与终止，传输层管端到端交付。</p>
+<p><strong>2. A</strong>。五步法：/22 → 主机位 10 位；掩码最后非 255 字节在第三字节 = 252，块大小 = 256 − 252 = <strong>4</strong>。第三字节边界：0、4、8、…、32、36…；35 落在 [32, 35] → 网络地址 130.24.32.0。广播地址 = 本块末尾：第三字节取 35、第四字节全 1 → <strong>130.24.35.255</strong>。
+二进制验证：第三字节 35 = <code>00100011</code>，掩码 252 = <code>11111100</code>，按位与 = <code>00100000</code> = 32 ✓（网络地址第三字节 32）；主机位（第三字节低 2 位 + 第四字节 8 位）全置 1：<code>00100011</code> → <code>00100011</code>（低两位本来就是 11）、第四字节 = 255 → 广播 = 130.24.35.255 ✓。C 选项的 36 已是下一块的网络地址；D 的 130.24.63.255 是把 /22 误当 /19 或 /18 算出的更大块末尾。</p>
+<p><strong>3. A</strong>。第三字节 76、77、78、79 = <code>01001100</code>～<code>01001111</code>，前 6 位相同（<code>010011</code>）→ 聚合前缀 24 − 2 = /22，地址 <strong>202.113.76.0/22</strong>（覆盖 76.0～79.255）。B 写法非法（77 不是块边界：77 对应 /22 的网络地址是 76）；C 的 /23 只覆盖 76～77 两个 /24；D 的 /21 覆盖 72～79，把不属于题目的 72～75 也包了进去。</p>
+<p><strong>4. D</strong>。服务器状态机：LISTEN →（收到 SYN，回 SYN+ACK）→ SYN-RCVD →（收到 ACK）→ <strong>ESTABLISHED</strong>。客户端是 SYN-SENT → ESTABLISHED，且 SYN-SENT 只出现在客户端一侧；C 的 SYN-SENT 是客户端发完第一个 SYN 后的状态。</p>
+<p><strong>5. B</strong>。ICMP（互联网控制报文协议，ping 的底层）与 IP、ARP 同属<strong>网际层</strong>。UDP 是传输层，FTP/SMTP 是应用层。</p>
+<p><strong>6. C</strong>。借位 s 需 2^s ≥ 12 → s = 4（2^3 = 8 &lt; 12，2^4 = 16 ≥ 12）。掩码 = /28 → 255.255.255.<strong>240</strong>。&quot;使每个子网可用主机数尽可能多&quot;= 借位尽量少，故取最小借位 s = 4；A（/26，4 个子网）、B（/27，8 个子网）不满足&quot;至少 12 个&quot;，D（/29，32 个子网）借位更多、每子网可用主机仅 2^3−2 = 6 台，均排除。C 每子网可用 2^4 − 2 = 14 台。</p>
+<p><strong>7. B</strong>。每子网最多 30 台主机 → 2^m − 2 ≥ 30 且取最小 → m = 5（2^5−2 = 30 恰好满足）。C 类 8 位主机位借出 8 − 5 = 3 位做子网位 → 子网数 2^3 = <strong>8</strong> 个，掩码 /27（255.255.255.224）。验证：块大小 256 − 224 = 32，8 个子网 × 32 地址 = 256 ✓ 恰好用满整个 C 类网段。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="../07-程序设计语言基础/index.html">07-程序设计语言基础.html</a> 并更新进度表。</p>
+
+
+  <footer class="status-bar" data-status-page="06-计算机网络/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题与专项题.html">
+      <span class="k">上一页</span>
+      <span class="t">06.9 精华题与专项题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../07-程序设计语言基础/index.html">
+      <span class="k">下一页</span>
+      <span class="t">07 程序设计语言基础</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

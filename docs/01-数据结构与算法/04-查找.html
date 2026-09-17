@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>01.4 查找 ★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a><ul class="chapter-nav"><li><a href="01-线性表、栈与队列.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/01-线性表、栈与队列" aria-hidden="true"></i><span class="n">01</span><span class="t">线性表、栈与队列</span></a></li><li><a href="02-树与二叉树.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/02-树与二叉树" aria-hidden="true"></i><span class="n">02</span><span class="t">树与二叉树 ★★★</span></a></li><li><a href="03-图.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/03-图" aria-hidden="true"></i><span class="n">03</span><span class="t">图 ★★★</span></a></li><li><a href="04-查找.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/04-查找" aria-hidden="true"></i><span class="n">04</span><span class="t">查找 ★★</span></a></li><li><a href="05-排序.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/05-排序" aria-hidden="true"></i><span class="n">05</span><span class="t">排序 ★★★</span></a></li><li><a href="06-算法设计与分析基础.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/06-算法设计与分析基础" aria-hidden="true"></i><span class="n">06</span><span class="t">算法设计与分析基础</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：算法填空解题套路</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01.4 查找 <span class="stars">★★</span></h1>
+  </header>
+  <h3 id="h-2">4.1 五种查找的定位（先看清各自的&quot;前提条件&quot;）<button type="button" class="sec-status" data-status-key="4.1 五种查找的定位（先看清各自的&amp;quot;前提条件&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 五种查找的定位（先看清各自的&quot;前提条件&quot;）」的学习状态"></button></h3>
+<p>查找这件事的难点不在算法本身，而在<strong>前提条件</strong>：你手上是一张无序表还是有序表？是顺序存储还是链式存储？数据是静态的还是要频繁插入删除？条件不同，可选的算法完全不同，<strong>软考最爱考的就是&quot;哪个方法在这个条件下不能用&quot;</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>查找方法</th>
+<th>前提条件</th>
+<th>平均时间</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>顺序查找</strong></td>
+<td>无要求（顺序/链式、有序/无序都行）</td>
+<td>O(n)</td>
+<td>一个个比过去，最笨但最万能</td>
+</tr>
+<tr>
+<td><strong>二分查找</strong></td>
+<td><strong>有序 + 顺序存储（数组）</strong></td>
+<td>O(log₂n)</td>
+<td>每次砍一半</td>
+</tr>
+<tr>
+<td><strong>分块查找</strong></td>
+<td>块间有序、块内无序</td>
+<td>O(√n) 量级</td>
+<td>先查索引再查块，二分与顺序的折中</td>
+</tr>
+<tr>
+<td><strong>二叉排序树</strong></td>
+<td>树是 BST</td>
+<td>平均 O(log₂n)，最坏 O(n)</td>
+<td>动态查找：插入删除都方便</td>
+</tr>
+<tr>
+<td><strong>散列表（Hash）</strong></td>
+<td>有哈希函数</td>
+<td><strong>O(1)</strong>（理想）</td>
+<td>直接算出地址，不比较</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点（第一条就是送分题级别的）</strong>：<strong>链表不能做二分查找</strong>。二分要靠下标跳到&quot;中间元素&quot;，而链表找中间元素只能从头走，砍一半的便宜立刻没了。所以&quot;有序链表用二分查找做 O(log n) 查询&quot;是错的。</p>
+<h3 id="h-3">4.2 顺序查找与二分查找<button type="button" class="sec-status" data-status-key="4.2 顺序查找与二分查找" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 顺序查找与二分查找」的学习状态"></button></h3>
+<ul>
+<li><strong>顺序查找</strong>：从头到尾逐个比。无序表也能用（这是它唯一的优势）。等概率下查找成功的平均查找长度 <strong>ASL = (n+1)/2</strong>（1+2+…+n 除以 n）。</li>
+<li><strong>二分查找（折半查找）</strong>：每次取中间元素比较，小就往左半区、大就往右半区，比较一次砍掉一半。<strong>O(log₂n)</strong>。<ul>
+<li><strong><span class="stars">★</span> 最多比较次数 = ⌈log₂(n+1)⌉</strong>（等于判定树的深度）。n=15 → ⌈log₂16⌉ = <strong>4 次</strong>；n=1000 → ⌈log₂1001⌉ = <strong>10 次</strong>。</li>
+<li><strong>判定树</strong>：把&quot;每次取中间元素&quot;的过程画成树——第一层的中间元素做根，左右两半各自递归。<strong>树有几层，最多就比较几次</strong>。</li>
+<li><strong>ASL（成功，等概率）≈ log₂(n+1) − 1</strong>。</li>
+<li>二分查找的&quot;找不到&quot;也不难判：最后区间为空就是失败；&quot;插入位置&quot;就是最后落幕的那个下标（案例题的二分插入代码常挖这个空）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>判定树长什么样（n=11 的例子）</strong>：中间元素是第 6 个，它做根；左边 1～5、右边 7～11 各自再取中间，得到深度 4 的树，⌈log₂12⌉ = 4 ✓</p>
+<pre><code>            6
+         /     \
+        3        9
+       / \      / \
+      1   5    7   11
+       \  /     \  /
+        2 4     8 10
+</code></pre>
+<p><strong>应试动作</strong>：看到&quot;有序 + 顺序存储 + 求最多比较次数&quot;，直接套 ⌈log₂(n+1)⌉；n 给 2^k−1（如 15、31、63）时答案就是 k，别自己算错。</p>
+<h3 id="h-4">4.3 分块查找（索引顺序查找）<button type="button" class="sec-status" data-status-key="4.3 分块查找（索引顺序查找）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 分块查找（索引顺序查找）」的学习状态"></button></h3>
+<p><strong>动机</strong>：顺序查找太慢、二分查找又要求全体有序（维护成本高）。折中方案：把表分成若干块，<strong>块间有序、块内无序</strong>。</p>
+<ul>
+<li>分块规则：第一块里所有元素都小于第二块里所有元素，第二块全小于第三块……<strong>块内不要求有序</strong>。</li>
+<li>查找分两步：① 先在<strong>索引表</strong>（每个块的最大值和块起始位置，是有序的）里确定目标在哪块；② 再在<strong>该块内顺序查找</strong>。</li>
+<li><strong>ASL = 索引查找的 ASL + 块内查找的 ASL</strong>。n 个元素分成 b 块、每块 s 个（b·s = n），两边都用顺序查找时：
+<code>ASL = (b+1)/2 + (s+1)/2 = (b+s+2)/2</code></li>
+<li><strong><span class="stars">★</span> 最优块长 s = √n</strong>（这样 b = s = √n 时 b+s 最小），此时 <strong>ASL ≈ √n + 1</strong>。<ul>
+<li>代入算例：n=100 → 取 s=10、b=10 → ASL = (10+10+2)/2 = <strong>11 = √100 + 1</strong> ✓</li>
+<li>n=100 若用顺序查找，ASL = (100+1)/2 = 50.5 → 分块把它降到 11，这就是分块的价值。</li>
+</ul>
+</li>
+</ul>
+<p><strong>应试动作</strong>：认题特征——题干出现&quot;索引表/块/分块&quot;，或给一张&quot;块内无序、块间有序&quot;的表问平均查找长度。记两条：<strong>总 ASL = 两步 ASL 相加</strong>、<strong>s=√n 时最优、ASL≈√n+1</strong>。</p>
+<h3 id="h-5">4.4 二叉排序树（BST）<span class="stars">★★</span>——动态查找的答案<button type="button" class="sec-status" data-status-key="4.4 二叉排序树（BST）★★——动态查找的答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.4 二叉排序树（BST）★★——动态查找的答案」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：顺序表插入删除要搬家（O(n)），链表查找要走路（O(n)）。有没有一种结构，<strong>查找像二分那样快，插入删除又像链表那样便宜</strong>？答案就是二叉排序树。</p>
+<p><strong>定义（也叫二叉搜索树/BST）</strong>：一棵二叉树，满足&quot;<strong>左子树上所有节点的值 &lt; 根 &lt; 右子树上所有节点的值</strong>&quot;，且左右子树各自也是二叉排序树。</p>
+<p><strong><span class="stars">★</span> 最重要的一条性质</strong>：<strong>对二叉排序树做中序遍历，得到的序列是递增有序的</strong>（因为它就是&quot;左 &lt; 根 &lt; 右&quot;）。考法：给一棵树问&quot;中序序列是什么&quot;（直接考），或&quot;这棵树是不是 BST&quot;（中序递增就是）。</p>
+<p><strong>查找</strong>：从根开始，目标比当前节点小就往左走、大就往右走——<strong>一次比较砍掉一整棵子树</strong>，同二分一个道理。</p>
+<p><strong>插入</strong>：按查找的路线一路走到 NULL，把新节点挂在那个空位置上（所以<strong>新插入的节点一定是叶子</strong>）。</p>
+<p><strong>删除（三种情况，按树的形状分）</strong>，设要删的节点为 p：</p>
+<ol>
+<li><strong>p 是叶子</strong>：直接摘掉。</li>
+<li><strong>p 只有一个孩子</strong>：让这个孩子直接顶替 p 的位置（整棵子树搬上去）。</li>
+<li><strong>p 有两个孩子</strong>：不能简单顶替（两个都得管）。做法是找一个&quot;替身&quot;来占 p 的位置——<strong>中序前驱</strong>（左子树里最大的那个，即左子树一路往右走到底）或<strong>中序后继</strong>（右子树里最小的那个），把它的值写到 p 上，然后<strong>递归地去删除那个替身节点</strong>（替身至多只有一个孩子，于是退回情况 1 或 2，好删）。</li>
+</ol>
+<p><strong>完整演算一遍</strong>（本例树后续还用来算 ASL）：</p>
+<pre><code>            45                    ← 根
+          /    \
+        24      53
+       /  \        \
+     12    37       93
+</code></pre>
+<ul>
+<li><strong>删 12</strong>（叶子）：直接摘掉，树变成 45 下左子树只剩 37 ✓</li>
+<li><strong>删 53</strong>（只有一个孩子 93）：让 93 顶替 53，成为 45 的右孩子 ✓</li>
+<li><strong>删 24</strong>（有两个孩子 12、37）：取<strong>中序前驱</strong>（左子树里最大）= <strong>37</strong>，把 37 写到 24 的位置，再去删原来的 37（它是叶子）。结果：<pre><code>          45
+        /    \
+      37      53
+     /           \
+   12             93
+（若改用&quot;中序后继&quot;= 右子树最小，本例右子树只有 37 自己，结果相同；两者都对。）
+</code></pre>
+</li>
+</ul>
+<p><strong>查找效率：完全取决于树的形状</strong>（这是本节最常考的判断）：</p>
+<ul>
+<li><strong>最好的形状是平衡</strong>（左右差不多高）→ 高度约 log₂n → 查找 O(log₂n)，和二分一样快。</li>
+<li><strong>最坏的形状是一条斜链</strong>（每个节点只有一个孩子）→ 高度 n → 查找 O(n)，退化成一个链表。</li>
+<li><strong>什么时候会退化</strong>：<strong>按有序顺序依次插入</strong>。例：依次插入 1、2、3、4、5，1 是根、2 挂右、3 再挂右……形成一条向右下斜的链，<strong>找 5 要比较 5 次</strong>。反例记住这一句话就够：&quot;<strong>BST 最坏时可退化成单支树，查找退化为 O(n)</strong>。&quot;</li>
+<li><strong>ASL 算例</strong>（用上面那棵 6 个节点的原始树，等概率）：各节点的比较次数 = 它所在的层数：
+45 第 1 层（1 次）、24 和 53 第 2 层（各 2 次）、12、37、93 第 3 层（各 3 次）
+→ <strong>ASL(成功) = (1 + 2 + 2 + 3 + 3 + 3) / 6 = 14/6 ≈ 2.33</strong>
+<strong>算法就是&quot;把每个节点的层数加起来除以节点数&quot;</strong>——层数 = 查找它的比较次数，这是算 ASL 的通用套路（顺序、二分、BST 都一样）。</li>
+</ul>
+<p><strong>和平衡二叉树的关系</strong>（联动第二节 2.5 平衡二叉树）：既然形状决定效率，那就<strong>强制它平衡</strong>——这就是 <strong>AVL 树</strong>（任意节点左右子树高度差 ≤ 1），插入失衡就旋转修正，把最坏情况从 O(n) 拉回 O(log₂n)。</p>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>认题特征：&quot;左小右大&quot;&quot;中序递增&quot;&quot;无序插入后建树&quot;→ 立刻画树，千万别只在脑子里想。</li>
+<li>必背三条：<strong>中序递增</strong>；<strong>插入的节点必是叶子</strong>；<strong>删除有两个孩子的节点要用中序前驱/后继顶替</strong>。</li>
+<li>算 ASL：<strong>数层数</strong>求平均；问最好/最坏情况就答&quot;平衡时 log₂n / 退化成单支时 n&quot;。</li>
+</ul>
+<p><strong>延伸阅读</strong>：BST 的查找/插入/删除过程与配图见 <a href="https://www.hello-algo.com/chapter_tree/binary_search_tree/">hello-algo · 二叉搜索树</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-6">4.5 散列表（Hash 表）<span class="stars">★★</span>（计算题大户）<button type="button" class="sec-status" data-status-key="4.5 散列表（Hash 表）★★（计算题大户）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.5 散列表（Hash 表）★★（计算题大户）」的学习状态"></button></h3>
+<p><strong>要解决的问题</strong>：前面几种方法最快也要 O(log₂n)，因为它们都在&quot;比较&quot;。<strong>能不能不比较？</strong> 能——用哈希函数 <code>H(key)</code> 直接<strong>算出</strong>关键字该放的位置，一次到位，理想情况查找 O(1)。</p>
+<p><strong>哈希函数怎么定</strong>：最常用<strong>除留余数法</strong> <code>H(key) = key mod p</code>，其中 <strong>p 通常取&quot;不大于表长的最大素数&quot;</strong>（取素数能让余数分布更均匀）。例：表长 13 → p = 13；表长 12 → p = 11。</p>
+<p><strong>冲突与同义词</strong>：</p>
+<ul>
+<li><strong>冲突</strong>：两个不同的关键字算出了同一个地址。</li>
+<li><strong>同义词</strong>：<code>H(key)</code> 值相同的那些关键字（比如 9 和 17 在 <code>H=k mod 8</code> 下都是 1，它们就是同义词）。</li>
+</ul>
+<p><strong>冲突处理方法</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>做法</th>
+<th>优缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>线性探测</strong>（开放定址）</td>
+<td>该位置被占了就往后挪一格、再挪一格……直到有空位</td>
+<td>实现简单；<strong>会产生&quot;堆积（聚集）&quot;</strong>：连续被占的区间越来越长，<strong>非同义词也被牵连</strong>（见下面算例）</td>
+</tr>
+<tr>
+<td><strong>平方探测</strong>（开放定址）</td>
+<td>依次试 +1²、−1²、+2²、−2²……</td>
+<td>缓解堆积，但可能漏掉空位</td>
+</tr>
+<tr>
+<td><strong>再散列（双散列）</strong></td>
+<td>冲突时换第二个哈希函数算新地址</td>
+<td>分布更好，实现稍麻烦</td>
+</tr>
+<tr>
+<td><strong>链地址法</strong></td>
+<td>每个位置挂一条链表，冲突的节点都挂在同一链上</td>
+<td><strong>无堆积</strong>（不同地址互不干扰）、<strong>删除方便</strong>；链表变长时可改成树</td>
+</tr>
+<tr>
+<td>公共溢出区</td>
+<td>冲突的一律丢进另一张表</td>
+<td>了解即可</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 装填因子</strong> <code>α = 表中元素个数 / 表长</code>。<strong>α 越大冲突越多、ASL 越大</strong>——散列表的查找效率取决于 <strong>α</strong>，而<strong>不是表的绝对长度</strong>（这句是原话考点：把表长从 100 改成 1000、元素数同比例变化时 ASL 基本不变）。</p>
+<p><strong><span class="stars">★</span> ASL 一定要动手算</strong>：<code>ASL(成功) = Σ(每个元素的比较次数) / 元素个数</code>。每个元素的比较次数 = <strong>从它的哈希地址走到它的实际位置，一路上看了几个格子</strong>。</p>
+<p><strong>算例（同时演示&quot;堆积怎么牵连别人&quot;）</strong>：表长 8，<code>H(key) = key mod 8</code>，依次插入 <strong>9、17、25、3</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>H(key)</th>
+<th>线性探测后的位置</th>
+<th>比较次数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>一次命中</td>
+</tr>
+<tr>
+<td>17</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>位置 1 被占，往后挪</td>
+</tr>
+<tr>
+<td>25</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>位置 1、2 都被占</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>注意：3 本来该待在自己家 3 号位，但 25 占了它 → 被牵连到 4 号位</strong></td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>线性探测：<strong>ASL(成功) = (1+2+3+2)/4 = 2</strong>。</li>
+<li>换<strong>链地址法</strong>：位置 1 挂链 <code>9→17→25</code>，位置 3 挂链 <code>3</code> → 各自的比较次数 1、2、3、<strong>1</strong> → <strong>ASL = (1+2+3+1)/4 = 1.75</strong>。</li>
+<li><strong>对比出的结论</strong>：25 只是一次普通冲突，却把毫不相干的 3 号位置&quot;占&quot;了，害得 3 多比一次——<strong>这就是堆积，链地址法没有这个问题</strong>，因为每个地址各自成链、互不干扰。</li>
+</ul>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>算 ASL 时<strong>别把&quot;哈希地址&quot;当&quot;存储位置&quot;</strong>，实际存放位置要按探测规则一步步推。</li>
+<li>线性探测下&quot;某元素查找成功需要比较 k+1 次&quot;里的 k 是<strong>它离自己哈希地址的格数</strong>（隔 0 格就是 1 次）。</li>
+<li>散列表的删除<strong>不能直接抹掉</strong>（线性探测下会截断别人的探测链），要用&quot;墓碑标记&quot;；链地址法没有这个烦恼——这也是&quot;链地址法删除方便&quot;的由来。</li>
+</ul>
+<p><strong>延伸阅读</strong>：四种冲突处理方式的实现与对比见 <a href="https://www.hello-algo.com/chapter_hashing/hash_collision/">hello-algo · 哈希冲突</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-7">4.6 第四节小结与应试清单<button type="button" class="sec-status" data-status-key="4.6 第四节小结与应试清单" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.6 第四节小结与应试清单」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>考点</th>
+<th>一句话抓手</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>顺序查找</td>
+<td>万能但慢：ASL=(n+1)/2</td>
+</tr>
+<tr>
+<td>二分查找</td>
+<td><strong>有序 + 顺序存储</strong>；最多比较 ⌈log₂(n+1)⌉；<strong>链表不能用</strong></td>
+</tr>
+<tr>
+<td>分块查找</td>
+<td>两步 ASL 相加；s=√n 最优，ASL≈√n+1</td>
+</tr>
+<tr>
+<td>二叉排序树</td>
+<td>中序递增；插入必在叶子；删双孩子用中序前驱/后继顶替；ASL 数层数；最坏退化 O(n)</td>
+</tr>
+<tr>
+<td>散列表</td>
+<td>除留余数法（p 取≤表长的最大素数）；线性探测有堆积、链地址无堆积；ASL 手算；效率看 α</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>跨课联动</strong>：B 树/B+ 树（第二节 2.6 B 树与 B+ 树）是&quot;磁盘上的多路平衡查找树&quot;，数据库索引用它正是因为外存查找一次 I/O 代价高、要让树尽量矮——把本节&quot;平衡 → O(log n)&quot;的直觉套到磁盘上，这个考点就通了。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="01-数据结构与算法/04-查找">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-图.html">
+      <span class="k">上一页</span>
+      <span class="t">01.3 图 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-排序.html">
+      <span class="k">下一页</span>
+      <span class="t">01.5 排序 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

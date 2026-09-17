@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>01.5 排序 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a><ul class="chapter-nav"><li><a href="01-线性表、栈与队列.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/01-线性表、栈与队列" aria-hidden="true"></i><span class="n">01</span><span class="t">线性表、栈与队列</span></a></li><li><a href="02-树与二叉树.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/02-树与二叉树" aria-hidden="true"></i><span class="n">02</span><span class="t">树与二叉树 ★★★</span></a></li><li><a href="03-图.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/03-图" aria-hidden="true"></i><span class="n">03</span><span class="t">图 ★★★</span></a></li><li><a href="04-查找.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/04-查找" aria-hidden="true"></i><span class="n">04</span><span class="t">查找 ★★</span></a></li><li><a href="05-排序.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/05-排序" aria-hidden="true"></i><span class="n">05</span><span class="t">排序 ★★★</span></a></li><li><a href="06-算法设计与分析基础.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/06-算法设计与分析基础" aria-hidden="true"></i><span class="n">06</span><span class="t">算法设计与分析基础</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：算法填空解题套路</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01.5 排序 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">5.1 八大排序总表（背下来，直接得分）<button type="button" class="sec-status" data-status-key="5.1 八大排序总表（背下来，直接得分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 八大排序总表（背下来，直接得分）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>平均时间</th>
+<th>最坏时间</th>
+<th>空间</th>
+<th>稳定性</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冒泡排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td><strong>稳定</strong></td>
+<td>相邻比较交换</td>
+</tr>
+<tr>
+<td>简单选择排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+<td>每轮选最小放前头</td>
+</tr>
+<tr>
+<td>直接插入排序</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td><strong>稳定</strong></td>
+<td>序列<strong>基本有序时效率最高</strong></td>
+</tr>
+<tr>
+<td>希尔排序</td>
+<td>O(n^1.3) 左右</td>
+<td>—</td>
+<td>O(1)</td>
+<td>不稳定</td>
+<td>分组插入</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td><strong>O(nlog₂n)</strong></td>
+<td><strong>O(n²)（本身有序时最坏）</strong></td>
+<td>O(log₂n) 递归栈</td>
+<td>不稳定</td>
+<td>平均最快；每趟确定一个元素的最终位置</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td>O(nlog₂n)</td>
+<td>O(nlog₂n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+<td>建堆 O(n)，适合<strong>只求前 k 大/小</strong></td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>O(nlog₂n)</td>
+<td>O(nlog₂n)</td>
+<td><strong>O(n)</strong></td>
+<td><strong>稳定</strong></td>
+<td>两两合并；n 个元素归并趟数 = ⌈log₂n⌉</td>
+</tr>
+<tr>
+<td>基数排序</td>
+<td>O(d(n+r))</td>
+<td>—</td>
+<td>O(r)</td>
+<td><strong>稳定</strong></td>
+<td>按位分配收集，不比较</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 稳定排序只有 4 个</strong>：直接插入、冒泡、归并、基数。口诀：「<strong>插冒归基</strong>稳定，其余都不稳」。</p>
+<p><strong><span class="stars">★</span> 稳定性含义</strong>：相等元素排序后相对次序不变。考法：&quot;待排序列中相等元素排序前后顺序颠倒了，问可能是什么排序&quot;——答不稳定的那个。</p>
+<h3 id="h-3">5.2 高频判别题：给中间过程猜算法<button type="button" class="sec-status" data-status-key="5.2 高频判别题：给中间过程猜算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 高频判别题：给中间过程猜算法」的学习状态"></button></h3>
+<p>题目给出一趟或两趟排序后的序列，问是哪种排序。识别特征：</p>
+<ul>
+<li><strong>冒泡一趟</strong>：从头两两比较，一趟结束后<strong>最大（小）元素沉到末尾</strong>。</li>
+<li><strong>选择一趟</strong>：第一个位置换成全序列最小值，其余相对位置基本不动。</li>
+<li><strong>插入一趟</strong>：前 i+1 个元素<strong>局部有序</strong>，后面原封不动。</li>
+<li><strong>快排一趟</strong>：<strong>某个元素到了最终位置</strong>，它左边全比它小、右边全比它大。</li>
+<li><strong>堆排一趟</strong>：最大元素到了末尾。</li>
+</ul>
+<h3 id="h-4">5.3 各排序补充要点<button type="button" class="sec-status" data-status-key="5.3 各排序补充要点" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 各排序补充要点」的学习状态"></button></h3>
+<ul>
+<li><strong>快排</strong>：每趟以枢轴为界划分。<strong>序列已有序（正序/逆序）时退化到 O(n²)</strong>，这是最常考的&quot;最坏情况&quot;。</li>
+<li><strong>堆</strong>：大顶堆（父 ≥ 子）用于升序排序。建堆从最后一个非叶节点 ⌊n/2⌋ 开始向前调整。</li>
+<li><strong>外部排序</strong>：数据太大放外存时用<strong>多路归并</strong>，败者树/最佳归并树（哈夫曼思想）减少 I/O，选择题考过概念。</li>
+</ul>
+<h3 id="h-5">5.4 三种过程亲手走一遍（&quot;给中间过程判算法&quot;靠它，建堆过程几乎年年考）<button type="button" class="sec-status" data-status-key="5.4 三种过程亲手走一遍（&amp;quot;给中间过程判算法&amp;quot;靠它，建堆过程几乎年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.4 三种过程亲手走一遍（&quot;给中间过程判算法&quot;靠它，建堆过程几乎年年考）」的学习状态"></button></h3>
+<p>5.2 教的是&quot;看特征认算法&quot;，这一节把三种最容易考的<strong>过程</strong>完整走一遍。考场上要么给你中间过程问算法，要么问&quot;建堆后的序列是什么&quot;，都得靠手上熟练。</p>
+<h4 id="h-6">快速排序一趟（挖坑法，枢轴取第一个元素）</h4>
+<p><strong>要解决的问题</strong>：怎么用一个元素（枢轴 pivot）把序列切成&quot;左小右大&quot;两半？</p>
+<p><strong>做法</strong>（左右双指针 + 挖坑）：枢轴先&quot;存起来&quot;，它原来的位置就成了一个<strong>空坑</strong>，然后</p>
+<ol>
+<li><strong>右指针</strong>从右往左找&quot;比枢轴<strong>小</strong>&quot;的元素，找到就<strong>填进左边的坑</strong>（它自己原来的位置变成新坑）；</li>
+<li><strong>左指针</strong>从左往右找&quot;比枢轴<strong>大</strong>&quot;的元素，找到就<strong>填进右边的坑</strong>；</li>
+<li>左右指针相遇时，把枢轴填进最后的坑——<strong>枢轴到此彻底归位</strong>，左边全比它小、右边全比它大。</li>
+</ol>
+<p>序列 <code>[52, 49, 80, 36, 14, 58, 61, 97, 23, 75]</code> 走一趟（枢轴 = 52）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步</th>
+<th>动作</th>
+<th>序列变化</th>
+<th>坑在几号位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始</td>
+<td>52 存为枢轴，1 号位成坑</td>
+<td><code>[ _ , 49, 80, 36, 14, 58, 61, 97, 23, 75]</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>右指针左移找第一个 &lt; 52 的：<strong>23</strong>（9 号位）→ 填进 1 号坑</td>
+<td><code>[23, 49, 80, 36, 14, 58, 61, 97, _ , 75]</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td>2</td>
+<td>左指针右移找第一个 &gt; 52 的：<strong>80</strong>（3 号位）→ 填进 9 号坑</td>
+<td><code>[23, 49, _ , 36, 14, 58, 61, 97, 80, 75]</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>右指针继续左移（75、97、61、58 都 &gt; 52），找到 <strong>14</strong>（5 号位）&lt; 52 → 填进 3 号坑</td>
+<td><code>[23, 49, 14, 36, _ , 58, 61, 97, 80, 75]</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>左指针右移（14、36 都 &lt; 52）走到 5 号位与右指针<strong>相遇</strong> → 把 52 填进 5 号坑，结束</td>
+<td><code>[23, 49, 14, 36, 52, 58, 61, 97, 80, 75]</code></td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>结果</strong>：<code>23 49 14 36 | 52 | 58 61 97 80 75</code> —— 52 落在<strong>第 5 位</strong>（说明原序列里比它小的恰好 4 个），左半边 4 个数全 &lt; 52 ✓、右半边 5 个数全 &gt; 52 ✓。</p>
+<p><strong><span class="stars">★</span> 判算法的唯一依据</strong>：一趟之后<strong>枢轴 52 到了它的最终位置</strong>。左半区内部谁先谁后，<strong>不同教材的交换次序不一样</strong>，不必和上表完全一致——所以 5.2 才强调&quot;判别靠枢轴归位 + 两侧大小关系，不必精确模拟每步交换&quot;。</p>
+<p><strong>反例前置</strong>：选项里若出现&quot;52 还在第 1 位附近&quot;（前面没有 4 个比它小的数），或它左边混进了 &gt; 52 的数，直接排除，不用算。</p>
+<h4 id="h-7">堆排序第一步：把任意序列建成大顶堆（最高频）</h4>
+<p>规则：把序列按<strong>层序</strong>塞进完全二叉树（下标 i 的左孩子是 2i、右孩子 2i+1，见第二节 2.1 完全二叉树顺序存储的下标关系），然后<strong>从最后一个非叶节点（第 ⌊n/2⌋ 个）开始往前</strong>，逐个做&quot;下沉调整&quot;：父亲与两个孩子里最大的那个交换，直到父 ≥ 子。</p>
+<p>序列 <code>[49, 38, 65, 97, 76, 13, 27]</code>，n = 7 → 最后一个非叶节点是 ⌊7/2⌋ = <strong>3 号</strong>：</p>
+<pre><code>原始（按层序摆好）
+        49
+      /    \
+    38      65
+   /  \    /  \
+  97  76  13  27
+
+① 调整 3 号（65）：它的孩子是 13、27，都不大于 65 → 不动
+
+② 调整 2 号（38）：它的孩子是 97、76，最大者 97 &gt; 38 → 与 97 交换
+   （38 换到 4 号位，4 号没有孩子 → 停止）
+        49
+      /    \
+    97      65
+   /  \    /  \
+  38  76  13  27
+
+③ 调整 1 号（49）：它的孩子是 97、65，最大者 97 &gt; 49 → 与 97 交换；
+   换下来后 49 到了 2 号位，它的孩子是 38、76，76 更大 → 49 再与 76 交换
+   （49 落到 5 号位，5 号没有孩子 → 停止）
+        97
+      /    \
+    76      65
+   /  \    /  \
+  38  49  13  27
+</code></pre>
+<p><strong>建堆完成</strong>，堆的层序（即数组形态）：<strong>97, 76, 65, 38, 49, 13, 27</strong>。
+自检口诀：<strong>逐个检查&quot;父 ≥ 左右孩子&quot;</strong>——97 ≥ 76、65 ✓；76 ≥ 38、49 ✓；65 ≥ 13、27 ✓，全过 → 合法大顶堆。</p>
+<p><strong>接着取堆顶（第一趟）</strong>：堆顶 97 是最大值，与<strong>最后一个元素 27 交换</strong>（97 归位到数组末尾，从此不再参与），再让 27 从堆顶往下沉：</p>
+<pre><code>交换 97 与末尾的 27：              27 下沉：先与 76 换（76 是孩子里最大的），
+        27                             49 是 27 换位后孩子们里更大的 → 再与 49 换
+      /    \                          → 最终：
+    76      65                            76
+   /  \    /                            /    \
+  38  49  13                          49      65
+                                     /  \    /
+                                    38  27  13
+</code></pre>
+<p><strong>第一趟结束</strong>：已归位的部分是 <code>97</code>（数组末位），剩下的堆是 <strong>76, 49, 65, 38, 27, 13</strong>（自检：76 ≥ 49、65 ✓；49 ≥ 38、27 ✓；65 ≥ 13 ✓）。重复&quot;换堆顶、下沉调整&quot;共 n−1 趟，就得到升序序列。</p>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>建堆是<strong>从 ⌊n/2⌋ 往前</strong>调（自下而上、从后往前），不是从根往下；顺序反了结果就不是堆。</li>
+<li>一次交换后，<strong>被换下来的小元素往往还要继续往下沉</strong>（如 ③ 里的 49、第一趟里的 27），只换一次就收工是错的。</li>
+<li><strong>大顶堆排出升序、小顶堆排出降序</strong>，别记反。</li>
+</ul>
+<h4 id="h-8">归并排序的三趟（2 路归并）</h4>
+<p>规则：把序列看成 n 个长度为 1 的有序段，<strong>两两合并</strong>成更大的有序段，段长翻倍，重复到只剩一段。</p>
+<p>序列 <code>[49, 38, 65, 97, 76, 13, 27]</code>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>趟</th>
+<th>分组情况</th>
+<th>合并后的序列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第 1 趟</td>
+<td><code>[49][38]</code>、<code>[65][97]</code>、<code>[76][13]</code>、<code>[27]</code></td>
+<td><code>38 49</code>／<code>65 97</code>／<code>13 76</code>／<code>27</code> → <strong>38 49 65 97 13 76 27</strong></td>
+</tr>
+<tr>
+<td>第 2 趟</td>
+<td><code>[38 49][65 97]</code>、<code>[13 76][27]</code></td>
+<td><code>38 49 65 97</code>／<code>13 27 76</code> → <strong>38 49 65 97 13 27 76</strong></td>
+</tr>
+<tr>
+<td>第 3 趟</td>
+<td>两段合并</td>
+<td><strong>13 27 38 49 65 76 97</strong> ✓</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li><strong>趟数 = ⌈log₂n⌉</strong>：n=7 → ⌈log₂7⌉ = <strong>3</strong> 趟 ✓（与 5.1 表里那句&quot;n 个元素归并趟数 = ⌈log₂n⌉&quot;一致）。</li>
+<li><strong>判算法的特征</strong>：中间过程&quot;<strong>有序段成对出现、段长 1→2→4 翻倍</strong>&quot;，而整体并未有序。</li>
+<li>归并过程<strong>不需要交换</strong>，只按段拷贝，但需要 n 长度的辅助数组 → 空间 O(n)，这是它空间代价最大的原因。</li>
+</ul>
+<p><strong>小结：三种过程一眼认</strong>——</p>
+<ul>
+<li><strong>快排</strong>：某个元素归位 + 左小右大；</li>
+<li><strong>堆排</strong>：先是一个<strong>合法堆</strong>（父 ≥ 子），再看到&quot;最大值跑到了末尾&quot;；</li>
+<li><strong>归并</strong>：有序段<strong>长度翻倍</strong>地两两合并。</li>
+</ul>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="01-数据结构与算法/05-排序">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="04-查找.html">
+      <span class="k">上一页</span>
+      <span class="t">01.4 查找 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="06-算法设计与分析基础.html">
+      <span class="k">下一页</span>
+      <span class="t">01.6 算法设计与分析基础</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.1 数据表示与浮点数 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.1 数据表示与浮点数 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">1.1 为什么不能把负号直接存进去<button type="button" class="sec-status" data-status-key="1.1 为什么不能把负号直接存进去" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 为什么不能把负号直接存进去」的学习状态"></button></h3>
+<p>计算机只保存 0 和 1，没有纸面上的“−”号，所以约定最高位为<strong>符号位</strong>：0 表示正，1 表示负。由此产生原码、反码和补码。</p>
+<p>设机器字长为 <strong>n 位（含 1 位符号位）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>码制</th>
+<th>正数</th>
+<th>负数</th>
+<th>n 位定点整数范围</th>
+<th>0 的表示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原码</td>
+<td>符号位 0，数值位为绝对值</td>
+<td>符号位 1，数值位为绝对值</td>
+<td>−(2^(n−1)−1)～+(2^(n−1)−1)</td>
+<td>+0、−0 两种</td>
+</tr>
+<tr>
+<td>反码</td>
+<td>与原码相同</td>
+<td>符号位不变，数值位逐位取反</td>
+<td>同原码</td>
+<td>+0、−0 两种</td>
+</tr>
+<tr>
+<td>补码</td>
+<td>与原码相同</td>
+<td>负数反码末位加 1</td>
+<td><strong>−2^(n−1)～2^(n−1)−1</strong></td>
+<td>只有一种</td>
+</tr>
+<tr>
+<td>移码</td>
+<td>补码的符号位取反</td>
+<td>补码的符号位取反</td>
+<td>数值范围同补码</td>
+<td>只有一种</td>
+</tr>
+</tbody></table>
+</div>
+<p>以 8 位机器数表示 −18：</p>
+<ol>
+<li>+18 的二进制绝对值是 <code>00010010</code>；</li>
+<li>−18 原码：<code>10010010</code>；</li>
+<li>−18 反码：符号位不动，其余取反 → <code>11101101</code>；</li>
+<li>−18 补码：反码 + 1 → <code>11101110</code>；</li>
+<li>−18 移码：补码符号位取反 → <code>01101110</code>。</li>
+</ol>
+<h3 id="h-3">1.2 移码为什么要“翻符号位”<button type="button" class="sec-status" data-status-key="1.2 移码为什么要“翻符号位”" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 移码为什么要“翻符号位”」的学习状态"></button></h3>
+<p>补码适合做加减，但直接按无符号数比较时，负数编码反而排在正数后面。浮点数经常要先比较阶码大小，如果每次都先解释正负再比较，硬件会更绕。<strong>移码把整个有符号范围平移到非负编码区间</strong>，使同字长、同偏置的阶码可以按无符号数顺序比较。</p>
+<p>以 4 位为例，补码范围是 −8～7；把补码符号位翻转后，移码恰好按数值从小到大排列：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">真值</th>
+<th>4 位补码</th>
+<th>4 位移码</th>
+<th align="right">按无符号解释移码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">−3</td>
+<td><code>1101</code></td>
+<td><code>0101</code></td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td><code>0000</code></td>
+<td><code>1000</code></td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">+2</td>
+<td><code>0010</code></td>
+<td><code>1010</code></td>
+<td align="right">10</td>
+</tr>
+</tbody></table>
+</div>
+<p>于是 −3＜0＜2，对应移码无符号值也是 5＜8＜10。这里的“翻符号位”与“加偏置 2^(n−1)”效果相同：4 位时偏置为 8，−3+8=5，编码就是 <code>0101</code>。</p>
+<p><strong>反例</strong>：“移码就是所有位取反”——错。只翻补码的<strong>最高符号位</strong>，其余位保持不变。还要注意：只有字长和偏置相同的移码才能直接比较，不能拿 4 位移码和 8 位移码硬比。</p>
+<p><strong>反例前置</strong>：不能把原码 <code>10010010</code> 整体取反再加 1 得到补码；整体取反会把符号位也翻掉。正确做法是“<strong>原码符号位不变，数值位取反，再加 1</strong>”。另一个更快的方法是：从原码最低位向左找到第一个 1，这个 1 及其右边不变，左边数值位取反，符号位仍为 1。</p>
+<p>为什么日常运算用补码？因为补码能让减法变成加法，并把 +0、−0 合成一个。例如 4 位补码：<code>0011</code>（3）+ <code>1110</code>（−2）=<code>1 0001</code>，丢弃最高进位后是 <code>0001</code>（1）。同一套加法器即可做加减。</p>
+<h3 id="h-4">1.3 范围与溢出<button type="button" class="sec-status" data-status-key="1.3 范围与溢出" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 范围与溢出」的学习状态"></button></h3>
+<p>8 位补码范围的公式代入：</p>
+<ul>
+<li>最小值 = −2^(8−1) = <strong>−128</strong>；</li>
+<li>最大值 = 2^(8−1)−1 = <strong>127</strong>。</li>
+</ul>
+<p>口诀：<strong>补码范围“负边多一个”</strong>。<code>10000000</code> 在 8 位补码中是 −128，不是“负零”。</p>
+<p>补码加法的溢出判据：<strong>同号相加，结果变号，发生溢出</strong>。</p>
+<ul>
+<li><code>01111111</code>（127）+ <code>00000001</code>（1）=<code>10000000</code>，两个正数加出负号 → 溢出；</li>
+<li>正数加负数不会因数值范围发生溢出。</li>
+</ul>
+<p><strong>应试动作</strong>：背“负数原码 → 数值位取反 → +1 得补码；移码只翻补码符号位；n 位补码范围 −2^(n−1)～2^(n−1)−1”。题目给二进制最高位为 1 时，先确认它问的是原码还是补码，不能见 1 就只写负号。</p>
+<hr>
+<h2 id="h-5">第二节 浮点数：用有限位数装下极大与极小的数 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 浮点数：用有限位数装下极大与极小的数 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 浮点数：用有限位数装下极大与极小的数 ★★」的学习状态"></button></h2>
+<h3 id="h-6">2.1 通用形式与分工<button type="button" class="sec-status" data-status-key="2.1 通用形式与分工" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 通用形式与分工」的学习状态"></button></h3>
+<p>浮点数类似科学计数法：</p>
+<p><strong>N = M × R^E</strong></p>
+<ul>
+<li>M：尾数，保存有效数字，<strong>位数决定精度</strong>；</li>
+<li>E：阶码，保存小数点移动距离，<strong>位数决定表示范围</strong>；</li>
+<li>R：基数，二进制机器通常取 2。</li>
+</ul>
+<p>例如二进制 <code>101.101₂</code>：</p>
+<p><code>101.101₂ = 0.101101₂ × 2^3</code>。</p>
+<p>一般题目约定尾数用补码、阶码用移码；若题面另有约定，以题面为准。</p>
+<h3 id="h-7">2.2 规格化<button type="button" class="sec-status" data-status-key="2.2 规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 规格化」的学习状态"></button></h3>
+<p>同一个数可写成很多形式：<code>0.1011×2^3</code>、<code>0.01011×2^4</code> 数值相同，但后者浪费了一位有效精度。<strong>规格化</strong>就是让尾数的最高有效位尽快出现。</p>
+<p>对二进制补码尾数，常用判断：</p>
+<ul>
+<li>正数规格化尾数形如 <code>0.1xxx…</code>；</li>
+<li>负数规格化尾数形如 <code>1.0xxx…</code>；</li>
+<li>即尾数符号位与其后第一位<strong>不同</strong>。</li>
+</ul>
+<p><strong>反例</strong>：把 <code>0.001101×2^5</code> 当作规格化数是错的，它前面有两个无效 0。左移两位、阶码减 2，得到 <code>0.1101×2^3</code>，数值不变，因为尾数乘了 2²，同时指数除以 2²。</p>
+<h3 id="h-8">2.3 浮点加减：先对阶，再运算，再规格化<button type="button" class="sec-status" data-status-key="2.3 浮点加减：先对阶，再运算，再规格化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 浮点加减：先对阶，再运算，再规格化」的学习状态"></button></h3>
+<p>机械步骤的动机：两把尺子的刻度不同不能直接相加，必须先把指数统一。</p>
+<p>计算 <code>0.1100×2^5 + 0.1010×2^3</code>：</p>
+<ol>
+<li>对阶：小阶向大阶看齐，阶差 5−3=2；</li>
+<li>小数尾数右移 2 位：<code>0.1010×2^3 = 0.001010×2^5</code>；</li>
+<li>尾数相加：<code>0.110000 + 0.001010 = 0.111010</code>；</li>
+<li>结果：<code>0.111010×2^5</code>，已规格化。</li>
+</ol>
+<p>为什么只让小阶向大阶看齐？若把大阶尾数左移，可能迅速越出尾数字段；小阶尾数右移虽然可能损失低位精度，但不会把整数部分挤爆。</p>
+<h4 id="h-9">运算后右规：尾数产生进位</h4>
+<p>计算：</p>
+<p><code>0.1100×2^3 + 0.1100×2^3</code></p>
+<ol>
+<li>两数阶码相同，不用对阶；</li>
+<li>尾数相加：<code>0.1100+0.1100=1.1000</code>；</li>
+<li>尾数超过 <code>0.xxxx</code> 形式，右移 1 位并把阶码加 1：</li>
+</ol>
+<blockquote class="lead">
+<p><code>1.1000×2^3 = 0.1100×2^4</code></p>
+</blockquote>
+<p>数值反验：<code>1.1000₂=1.5</code>，<code>1.5×8=12</code>；<code>0.1100₂=0.75</code>，<code>0.75×16=12</code>，左右相等。口诀是：<strong>尾数右移一位，阶码加一</strong>。</p>
+<h4 id="h-10">运算后左规：相减出现前导 0</h4>
+<p>计算：</p>
+<p><code>0.1011×2^4 − 0.1001×2^4</code></p>
+<ol>
+<li>尾数相减得 <code>0.0010×2^4</code>；</li>
+<li>正尾数应形如 <code>0.1xxx</code>，当前有两个无效前导 0；</li>
+<li>尾数左移 2 位、阶码减 2：</li>
+</ol>
+<blockquote>
+<p><code>0.0010×2^4 = 0.1000×2^2</code></p>
+</blockquote>
+<p>数值反验：<code>0.0010₂×16=2</code>，<code>0.1000₂×4=2</code>。口诀是：<strong>尾数左移几位，阶码就减几</strong>。</p>
+<h4 id="h-11">舍入：被移走的低位并非永远直接丢弃</h4>
+<p>若尾数字段只能保留 4 个小数位，计算中得到 <code>0.101011…</code>：</p>
+<ul>
+<li>直接截断得到 <code>0.1010</code>；</li>
+<li>若题目规定“就近舍入”，观察下一位及后续位，本例被舍部分大于半个最低保留单位，应进 1，得到 <code>0.1011</code>。</li>
+</ul>
+<p>具体采用截断、就近舍入还是其他规则，以题面为准。舍入后若再次产生进位，还要再做一次规格化。</p>
+<p><strong>对阶方向反例</strong>：把 <code>0.1010×2^3</code> 的尾数左移两位去迁就 <code>2^5</code>，会写成 <code>10.10×2^5</code>，数值被放大了 16 倍。正确等值变换是尾数<strong>右移</strong>两位：<code>0.001010×2^5</code>。小阶向大阶靠拢时，“阶码加多少，尾数就右移多少”。</p>
+<p>浮点异常：阶码超过上限是<strong>上溢</strong>；太小而无法表示是<strong>下溢</strong>。尾数右移时被舍弃的低位会造成精度损失。</p>
+<p><strong>应试动作</strong>：背“<strong>阶码定范围，尾数定精度；小阶向大阶看齐；对阶—尾数运算—规格化—舍入</strong>”。题目比较两种格式时，只看谁的阶码长、谁的尾数长即可。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/01-数据表示与浮点数">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">09 计算机系统基础</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-CPU与主存.html">
+      <span class="k">下一页</span>
+      <span class="t">09.2 CPU、存储体系与主存编址 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

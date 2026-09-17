@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>01.10 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a><ul class="chapter-nav"><li><a href="01-线性表、栈与队列.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/01-线性表、栈与队列" aria-hidden="true"></i><span class="n">01</span><span class="t">线性表、栈与队列</span></a></li><li><a href="02-树与二叉树.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/02-树与二叉树" aria-hidden="true"></i><span class="n">02</span><span class="t">树与二叉树 ★★★</span></a></li><li><a href="03-图.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/03-图" aria-hidden="true"></i><span class="n">03</span><span class="t">图 ★★★</span></a></li><li><a href="04-查找.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/04-查找" aria-hidden="true"></i><span class="n">04</span><span class="t">查找 ★★</span></a></li><li><a href="05-排序.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/05-排序" aria-hidden="true"></i><span class="n">05</span><span class="t">排序 ★★★</span></a></li><li><a href="06-算法设计与分析基础.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/06-算法设计与分析基础" aria-hidden="true"></i><span class="n">06</span><span class="t">算法设计与分析基础</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：算法填空解题套路</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01.10 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<p><strong>1. C</strong>
+n0 = n2 + 1 = 5 + 1 = 6。<span class="stars">★</span> 必背结论。易错点：忘了 &quot;+1&quot;，或把度数为 1 的节点扯进来（不需要）。</p>
+<p><strong>2. A（后序 DEBCA）</strong>
+前序第一个 A 是根；中序 DBE 在 A 左、C 在 A 右。左子树：前序 BDE + 中序 DBE → 根 B，中序中 D 在左 E 在右。后序 = 左(先D后E) → 右(C) → 根(A) = DEBCA。</p>
+<p><strong>3. C</strong>
+循环队列用&quot;牺牲一个单元法&quot;时，front==rear 只表示<strong>空</strong>，满用 (rear+1)%m==front 判断。如果不牺牲单元，才需要额外标志位区分。C 的说法错在&quot;既可以表示空也可以表示满&quot;（在本题默认判满方式下）。</p>
+<p><strong>4. B</strong>
+元素个数公式 (rear−front+m)%m，取模保证 front&gt;rear（绕圈）时也算对。</p>
+<p><strong>5. A</strong>
+合并：2+3=5 → {4,5,5} → 4+5=9 → {5,9} → 14。WPL = 2×3+3×3+4×2+5×1 = 6+9+8+5 = 28。
+易错点：每次必须取<strong>当前最小</strong>的两个，合并后新权值要放回集合继续比。</p>
+<p><strong>6. B</strong>
+哈夫曼树无度为 1 的节点，n0=n，n2=n0−1=n−1，总数 n+n−1=2n−1。</p>
+<p><strong>7. B</strong>
+快排本身有序（正序或逆序）时枢轴划分极度不平衡，退化为 O(n²)。归并、堆排最坏仍 O(nlog₂n)。</p>
+<p><strong>8. A</strong>
+一趟快排后，枢轴 49 必然到达<strong>最终位置</strong>：比 49 小的恰好有 3 个（38、13、27），所以 49 应落在第 4 位，且左边全是 &lt;49、右边全是 &gt;49。逐项检查：A ✓；B 中 76（&gt;49）跑到 49 左边，✗；C 中 65（&gt;49）在 49 左边，✗；D 中 49 还在第 2 位（未归位），✗。<strong>判别要点：枢轴归位 + 两侧大小关系，不必精确模拟每步交换</strong>（不同教材的一趟交换次序略有差异，但这条性质是唯一的）。</p>
+<p><strong>9. B</strong>
+稳定的四个：直接插入、冒泡、归并、基数（口诀「插冒归基」）。</p>
+<p><strong>10. A</strong>
+1000 顶点仅 10 条边 = 稀疏图，用邻接表省空间（O(n+e)）。三元组顺序表是<strong>稀疏矩阵</strong>的存储，不是图的。</p>
+<p><strong>11. C</strong>
+Dijkstra 每轮取当前距离最小者确定下来，是贪心。易混：Floyd（多源）是动态规划。</p>
+<p><strong>12. A</strong>
+拓扑排序标准做法：取入度 0 顶点输出并删其出边。B 说反了（那是逆拓扑的一种做法：取出度 0 并删入边，得到的序列是逆拓扑序，作为&quot;得到拓扑序列&quot;的表述在考题中通常判错）。D 深度优先遍历的逆序其实<strong>可以</strong>得到一种拓扑序——但本题 D 表述为&quot;不可行&quot;，错误，故选 A。<span class="stars">★</span> 这题故意做成双干扰，记住核心方法即可。</p>
+<p><strong>13. C</strong>
+最多比较 ⌈log₂(n+1)⌉ = ⌈log₂1001⌉ = 10 次。</p>
+<p><strong>14. B</strong>
+⌈log₂65⌉ = 7。易错点：别用 log₂64=6 就填 6，公式里要 n+1。（部分教材按判定树深度的定义对 n=2^k−1 型给出 k 次，64 个元素判定树深度为 7。）</p>
+<p><strong>15. C</strong>
+必须缩短<strong>所有</strong>关键路径共同经过的关键活动才能缩短工期；只压缩一条关键路径上的活动无效。A、B、D 均正确。</p>
+<h3 id="h-3">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<p><strong>问题 1：</strong></p>
+<ul>
+<li>(1) <code>dp[i] = 1</code>（每个元素自己构成长度为 1 的子序列，初始化）</li>
+<li>(2) <code>a[j] &lt; a[i]</code>（a[j] 能接在 a[i] 前面成为递增序列的前驱）</li>
+<li>(3) <code>dp[i] = dp[j] + 1</code>（状态转移）</li>
+</ul>
+<p><strong>问题 2：</strong></p>
+<ul>
+<li>时间复杂度 O(n²)（两层循环）。</li>
+<li>输入 {3, 1, 2, 4}：LIS 为 {1,2,4} 或 {3,4}，最长长度 <strong>3</strong>。</li>
+</ul>
+<p><strong>填空套路复盘</strong>：空 (1) 在初始化处填常数；空 (2) 在 if 条件处对应&quot;递增&quot;这一文字描述；空 (3) 在更新处填状态转移。与第七节套路一一对应。</p>
+<h3 id="h-4">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1. 前序 = ABCDEFGH，推导过程</strong>：
+后序最后一个是 A → 根 A；中序 BDCE | AFHG → 左子树 {BDCE}，右子树 {FHG}。
+左子树后序 DECB → 根 B；中序 BDCE 中 B 居首 → B <strong>无左孩子</strong>，右子树 {DCE}；{D,C,E} 的后序（取原后序中对应段 D、E、C）→ 根 C；中序 D|C|E → D 是 C 的左孩子、E 是右孩子。
+右子树后序 HGF → 根 F；中序 FHG 中 F 居首 → F 无左孩子，右子树 {HG}；后序 HG → 根 G，中序 H|G → H 是 G 的左孩子。
+<strong>前序：A B C D E F G H</strong>（画出树形可验证：中序 B D C E A F H G ✓、后序 D E C B H G F A ✓）。</p>
+<p><strong>2. WPL = 33，各字符编码长度：a(5)=2 位、b(2)=3 位、c(3)=2 位、d(1)=3 位、e(4)=2 位</strong>
+构造：1+2=3 → {3(新), 3(c), 4, 5} → 3+3=6 → {4, 5, 6} → 4+5=9 → {6, 9} → 15。
+树形：15 根下左 6、右 9；6 的孩子是&quot;节点(1+2)&quot;和叶子 c(3)；9 的孩子是叶子 4 和 5；节点(1+2) 的孩子是 1 和 2。深度：a、c、e 在第 2 层，b、d 在第 3 层。
+WPL = 5×2 + 2×3 + 3×2 + 1×3 + 4×2 = 10+6+6+3+8 = <strong>33</strong>。
+验算（哈夫曼树性质）：WPL = 所有<strong>非叶节点</strong>权值之和 = 3+6+9+15 = 33 ✓。易错点：合并后要永远挑<strong>当前最小</strong>的两个；本题 {3,3,4,5} 里挑的是两个 3，不是 3 和 4。</p>
+<p><strong>3. 插入过程</strong>（H(key)=key%7，线性探测）：</p>
+<ul>
+<li>15：15%7=1 → 放位置 1，比较 1 次</li>
+<li>22：22%7=1 → 冲突，探到 2 → 位置 2，比较 2 次</li>
+<li>8：8%7=1 → 冲突，2 冲突，探到 3 → 位置 3，比较 3 次</li>
+<li>29：29%7=1 → 冲突 ×3，探到 4 → 位置 4，比较 4 次</li>
+<li>36：36%7=1 → 冲突 ×4，探到 5 → 位置 5，比较 5 次
+<strong>ASL(成功) = (1+2+3+4+5)/5 = 3</strong>。
+这题展示的正是&quot;同义词堆积&quot;现象：全部 hash 到 1，线性探测让 ASL 恶化——考题常拿它对比链地址法。</li>
+</ul>
+<p><strong>4. 总工期 8，关键路径两条：V1→V2→V4→V5 和 V1→V3→V4→V5</strong></p>
+<ul>
+<li>ve（顺推取 max）：V1=0，V2=3，V3=2，V4=max(3+4, 2+5)=<strong>7</strong>（两条路径长度恰好相等），V5=7+1=<strong>8</strong>。</li>
+<li>vl（逆推取 min）：V5=8，V4=8−1=7，V3=7−5=2，V2=7−4=3，V1=min(3−3, 2−2)=0。</li>
+<li>活动（e=起点的 ve，l=终点的 vl − 工期）：a1: e=0, l=3−3=0 → 余量 0；a2: e=0, l=2−2=0 → 余量 0；a3: e=3, l=7−4=3 → 余量 0；a4: e=2, l=7−5=2 → 余量 0；a5: e=7, l=8−1=7 → 余量 0。</li>
+<li>本例<strong>所有活动都是关键活动</strong>——因为两条路径长度同为 7，全都是关键路径，每个活动都在某条关键路径上。它演示了&quot;缩短工期必须压缩<strong>所有</strong>关键路径的公共活动&quot;：两条路径的公共活动只有 a5，只压 a1 或 a2 工期纹丝不动。</li>
+<li><strong>做题教训</strong>：算 ve 时对每个入点都要取 max（这里 max(7,7) 很容易漏算成单边），每步动手验算。</li>
+</ul>
+<p><strong>5. 快速排序</strong>
+第一趟后 25 在位置 4（最终位置），左侧 {20,15,21} 全 &lt;25，右侧全 &gt;25，且 84 也恰在末尾（本轮的边界比较把它交换到最右），符合快排一趟特征。</p>
+<p><strong>6. O(n log n)</strong>
+外层 i*=2 执行 log₂n 次，内层 n 次，相乘得 O(nlog₂n)。易错点：外层不是 +1 而是 ×2，别答 O(n²)。</p>
+<p><strong>7. 共 2 种：ABCDE 和 ACBDE</strong>
+分析约束：A 是唯一入度为 0 的顶点 → 必须最先；E 入度来自 D → 必须最后；B→D 和 C→D 都指向 D → D 必须排在 B、C <strong>两者</strong>之后，而 B、C 之间无约束、可互换。于是 D 只能落在第 3 位（A 之后、B/C 之后），序列只有 A、{B,C 两种顺序}、D、E 一种骨架 → <strong>2 种</strong>。若答 4 种，是漏了 C→D 这条边对 D 的约束（只看到 B→D 就以为 D 可紧跟 B）。</p>
+<hr>
+<h3 id="h-5">补充题答案（第三节 图 专项）<button type="button" class="sec-status" data-status-key="补充题答案（第三节 图 专项）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案（第三节 图 专项）」的学习状态"></button></h3>
+<p><strong>1【最小生成树】</strong></p>
+<ul>
+<li>(1) <strong>MST 权值和 = 10</strong>，选中的边：<strong>B-C 1、C-D 2、D-E 3、A-C 4</strong>。
+Kruskal 过程（边按权从小到大排队）：B-C 1 ✔（不连通）→ C-D 2 ✔ → D-E 3 ✔ → A-C 4 ✔（A 还是孤点）→ B-D 5 ✘（B、D 已连通）→ A-B 6 ✘（A、B 已连通）→ C-E 7 ✘。
+验算：4 条边 = 5 个顶点 − 1 ✓；覆盖全部 5 个顶点 ✓；无回路 ✓。
+Prim 复核（从 A 出发）：A→C(4) → 经 C→B(1) → 经 C→D(2) → 经 D→E(3)，合计 4+1+2+3 = <strong>10</strong> ✓ 两个算法一致。</li>
+<li>(2) <strong>A-B 权值 6 一定不选</strong>：A 和 B 已经通过 A-C-B 连通（4+1=5 &lt; 6），再选 A-B 就形成了回路 A-B-C-A，而生成树不允许有回路。<strong>更本质的原因</strong>：MST 只要 n−1 条边，任何&quot;两端已连通&quot;的边都是多余的；而且就算比大小，走 A-C-B 只花 5、比 A-B 直接的 6 更省。（<strong>易错点</strong>：做题时只想着&quot;6 比 1、2、3、4 大&quot;是不够的，要养成&quot;按权排序后逐条查环&quot;的习惯。）</li>
+</ul>
+<p><strong>2【关键路径】</strong></p>
+<ul>
+<li>(1) <strong>总工期 = 13</strong>。
+顺推求 ve（取 max）：ve(V1)=0，ve(V2)=6，ve(V3)=4，ve(V4)=max(6+1=7, 4+5=9)=<strong>9</strong>，ve(V5)=max(9+3=12, 4+9=13)=<strong>13</strong>。</li>
+<li>(2) <strong>关键路径：V1 → V3 → V5</strong>，长度 4+9 = <strong>13</strong>。
+反向验算其他路线：V1→V3→V4→V5 = 4+5+3 = 12 &lt; 13 ✓；V1→V2→V4→V5 = 6+1+3 = 10 &lt; 13 ✓ → 关键路径唯一。</li>
+<li>(3) 逆推求 vl（取 min）：vl(V5)=13，vl(V4)=13−3=10，vl(V3)=min(10−5=5, 13−9=4)=<strong>4</strong>，vl(V2)=10−1=9，vl(V1)=min(9−6=3, 4−4=0)=<strong>0</strong> ✓（源点逆推为 0，自检通过）。</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>e = 起点的 ve</th>
+<th>l = 终点的 vl − 工期</th>
+<th>时间余量</th>
+<th>能否推迟</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1 V1→V2 6</td>
+<td>0</td>
+<td>9−6 = 3</td>
+<td><strong>3</strong></td>
+<td>最多推迟 3</td>
+</tr>
+<tr>
+<td>a2 V1→V3 4</td>
+<td>0</td>
+<td>4−4 = 0</td>
+<td><strong>0</strong></td>
+<td><strong>不能推迟（关键活动）</strong></td>
+</tr>
+<tr>
+<td>a3 V2→V4 1</td>
+<td>6</td>
+<td>10−1 = 9</td>
+<td><strong>3</strong></td>
+<td>最多推迟 3</td>
+</tr>
+<tr>
+<td>a4 V3→V4 5</td>
+<td>4</td>
+<td>10−5 = 5</td>
+<td><strong>1</strong></td>
+<td>最多推迟 1</td>
+</tr>
+<tr>
+<td>a5 V4→V5 3</td>
+<td>9</td>
+<td>13−3 = 10</td>
+<td><strong>1</strong></td>
+<td>最多推迟 1</td>
+</tr>
+<tr>
+<td>a6 V3→V5 9</td>
+<td>4</td>
+<td>13−9 = 4</td>
+<td><strong>0</strong></td>
+<td><strong>不能推迟（关键活动）</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p>自检：余量为 0 的 a2、a6 首尾相接，正好构成 V1→V3→V5 这条源点到汇点的通路 ✓
+（<strong>易错点</strong>：vl(V3) 必须在两条出边里取 <strong>min</strong>——(10−5)=5 与 (13−9)=4 取小的 4，取错会让后面所有余量都算歪。）</p>
+<p><strong>3【遍历与度数】</strong>
+顶点 1～5 的邻接关系（按编号升序）：1:{2,3}、2:{1,3,4}、3:{1,2,5}、4:{2,5}、5:{3,4}。</p>
+<ul>
+<li>(1) <strong>DFS 序列：1 2 3 5 4</strong>
+走法：1 → 2 →（2 的未访问邻居里编号最小的是 3）3 →（1、2 都访问过了，取 5）5 →（3 访问过，取 4）4 → 4 的邻居 2、5 都已访问 → 一路回退结束。</li>
+<li>(2) <strong>BFS 序列：1 2 3 4 5</strong>
+队列过程：<code>[1]</code> → 访问 1，2、3 入队 <code>[2,3]</code> → 访问 2，4 入队 <code>[3,4]</code>（3 已在队，不重复入队）→ 访问 3，5 入队 <code>[4,5]</code> → 访问 4（2、5 都已访问/在队）→ 访问 5（3、4 都已访问）。
+<strong>注意 BFS 与 DFS 只差最后两位</strong>：BFS 是&quot;按层&quot;，4 在第 3 层、5 在第 4 层，所以 4 先出；DFS 是一条路走到底，先顺着 3→5 钻下去再回头找 4。</li>
+<li>(3) <strong>边数 e = 6</strong>；<strong>度数之和 = 2+3+3+2+2 = 12 = 2e</strong> ✓（度数依次为 1 号 2、2 号 3、3 号 3、4 号 2、5 号 2）；该图<strong>只有 1 个连通分量</strong>（任意两点都能互相到达，是连通图）。
+<strong>易错点</strong>：别漏掉&quot;度数之和一定是偶数&quot;这条自检——若数出来是 11，说明数错了。</li>
+</ul>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="../02-数据库系统.html">02-数据库系统.html</a> 并更新进度表。</p>
+
+
+  <footer class="status-bar" data-status-page="01-数据结构与算法/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题与补充题.html">
+      <span class="k">上一页</span>
+      <span class="t">01.9 精华题与补充题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../02-数据库系统/index.html">
+      <span class="k">下一页</span>
+      <span class="t">02 数据库系统</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

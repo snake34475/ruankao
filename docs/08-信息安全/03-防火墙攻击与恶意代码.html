@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>08.3 防火墙、常见攻击与恶意代码 ★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a><ul class="chapter-nav"><li><a href="01-安全目标与密码技术.html"><i class="sb-dot" data-status-page-dot="08-信息安全/01-安全目标与密码技术" aria-hidden="true"></i><span class="n">01</span><span class="t">安全目标与密码技术 ★★★</span></a></li><li><a href="02-摘要签名与证书.html"><i class="sb-dot" data-status-page-dot="08-信息安全/02-摘要签名与证书" aria-hidden="true"></i><span class="n">02</span><span class="t">信息摘要、数字签名与证书 ★★★</span></a></li><li><a href="03-防火墙攻击与恶意代码.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="08-信息安全/03-防火墙攻击与恶意代码" aria-hidden="true"></i><span class="n">03</span><span class="t">防火墙、常见攻击与恶意代码 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/90-课后考题" aria-hidden="true"></i><span class="n">04</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/91-精华题" aria-hidden="true"></i><span class="n">05</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="08-信息安全/99-答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 8 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">08.3 防火墙、常见攻击与恶意代码 <span class="stars">★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：加密和签名保的是&quot;数据本身&quot;，而防火墙保的是&quot;网络边界&quot;——像小区门禁，控制什么人能进、什么包能过。</p>
+<h3 id="h-2">6.1 防火墙是什么<button type="button" class="sec-status" data-status-key="6.1 防火墙是什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 防火墙是什么」的学习状态"></button></h3>
+<p>位于<strong>内部网络与外部网络（Internet）之间</strong>的屏障，按规则<strong>控制进出网络的数据包与流向</strong>，是内外网之间信息流的唯一通道。</p>
+<h3 id="h-3">6.2 两种常考类型<button type="button" class="sec-status" data-status-key="6.2 两种常考类型" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 两种常考类型」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>包过滤防火墙</th>
+<th>应用代理防火墙（应用网关）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工作层次</td>
+<td><strong>网络层</strong>（有的含传输层）</td>
+<td><strong>应用层</strong></td>
+</tr>
+<tr>
+<td>检查内容</td>
+<td>数据包的<strong>源/目的 IP、端口</strong>等头部信息</td>
+<td><strong>具体应用协议的内容</strong>（如 URL、命令）</td>
+</tr>
+<tr>
+<td>是否转发原始包</td>
+<td>直接放行/丢弃，内外<strong>直通</strong></td>
+<td>内外<strong>不直通</strong>，代理替两头转接</td>
+</tr>
+<tr>
+<td>优点</td>
+<td>快、开销小、透明</td>
+<td>安全控制粒度细、能审计内容</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>看不懂应用内容，挡不住应用层攻击</td>
+<td>速度慢、每种协议要单独代理</td>
+</tr>
+</tbody></table>
+</div>
+<p>（另有&quot;状态检测&quot;防火墙，跟踪连接状态，介于两者之间，选择题见过即可。）</p>
+<h3 id="h-4">6.3 三种经典部署体系结构（补充，属认知拓宽，非真题高频）<button type="button" class="sec-status" data-status-key="6.3 三种经典部署体系结构（补充，属认知拓宽，非真题高频）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.3 三种经典部署体系结构（补充，属认知拓宽，非真题高频）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>体系结构</th>
+<th>特征</th>
+<th>一句话理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>双宿主主机（Dual-Homed Host）</strong></td>
+<td>一台主机装<strong>两块网卡</strong>，分别接内网、外网，主机上<strong>关闭 IP 路由转发</strong>，成为内外网之间的唯一&quot;闸门&quot;</td>
+<td>一台&quot;两头堵&quot;的机器，掐断内外直连、全要靠它转</td>
+</tr>
+<tr>
+<td><strong>屏蔽主机（Screened Host）</strong></td>
+<td>一台<strong>屏蔽路由器</strong>（包过滤）在外层先筛普通流量，另配一台<strong>堡垒主机</strong>负责接待必须进入内部的关键服务</td>
+<td>&quot;路由在前粗筛 + 主机在后守关键服务&quot;</td>
+</tr>
+<tr>
+<td><strong>屏蔽子网（Screened Subnet / DMZ 非军事区）</strong></td>
+<td>内外网之间再用一道路由器<strong>隔出一段子网</strong>，把对外服务（Web、Mail）放在这中间缓冲带</td>
+<td>&quot;两层路由夹一段缓冲子网，公网服务放中间的格子里&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p>直觉：这套体系是按&quot;边界防御的层次&quot;从单薄到周密排列的——一台机器当闸门（双宿主）→ 一层路由加一台主机（屏蔽主机）→ 两层路由夹一段缓冲子网（屏蔽子网/DMZ）。选择题若问&quot;把对外服务器放在内外网之间的隔离缓冲区&quot;指哪个，答<strong>屏蔽子网（DMZ）</strong>。</p>
+<h3 id="h-5">6.4 防火墙的&quot;能与不能&quot;（送分判断题）<button type="button" class="sec-status" data-status-key="6.4 防火墙的&amp;quot;能与不能&amp;quot;（送分判断题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.4 防火墙的&quot;能与不能&quot;（送分判断题）」的学习状态"></button></h3>
+<p><strong>能</strong>：控制进出数据包与流向；提供流量日志与审计；隐藏内部 IP 与网络结构细节（NAT）。</p>
+<p><strong>不能</strong>（真题三连）：</p>
+<ul>
+<li>不能防范<strong>内部</strong>人员的攻击（它在边界上，管不着墙内）；</li>
+<li>不能防范<strong>不经过它的</strong>连接（如内部拨号直连外网）；</li>
+<li><strong>不能防病毒</strong>——它按 IP/端口/规则过滤，不做代码级查毒；&quot;漏洞扫描&quot;也不是它的功能。</li>
+</ul>
+<h3 id="h-6">6.5 入侵检测系统（IDS）<button type="button" class="sec-status" data-status-key="6.5 入侵检测系统（IDS）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.5 入侵检测系统（IDS）」的学习状态"></button></h3>
+<p><strong>动机</strong>：防火墙是&quot;门禁&quot;，但进了门或绕过门的人干坏事谁盯着？<strong>入侵检测系统 IDS</strong> 监视网络/系统，发现可疑行为<strong>报警</strong>。</p>
+<ul>
+<li>定位：<strong>监测 + 告警</strong>，是防火墙之后的第二道防线；<strong>本身不负责拦截阻断</strong>（能主动阻断的是 IPS，入侵防御系统）。</li>
+<li>采集方式：从网络抓包分析（基于网络）或读主机审计日志（基于主机）。</li>
+</ul>
+<p><strong>应试动作</strong>：背&quot;包过滤=网络层看头，应用代理=应用层看内容；防火墙不防内部、不防病毒、不管绕道的；IDS 只报警不拦截&quot;。这三句覆盖本节所有真题考法。</p>
+<hr>
+<h2 id="h-7">第七节 常见攻击与恶意代码 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 常见攻击与恶意代码 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 常见攻击与恶意代码 ★★」的学习状态"></button></h2>
+<p><strong>动机</strong>：前面学的都是&quot;防御方&quot;，本节换到&quot;进攻方&quot;视角——考场上给一段场景描述，让你指出&quot;这是什么攻击&quot;，认得出才能答对。</p>
+<h3 id="h-8">7.1 攻击类型认领表<button type="button" class="sec-status" data-status-key="7.1 攻击类型认领表" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 攻击类型认领表」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>攻击</th>
+<th>场景特征（题干关键词）</th>
+<th>防御</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>重放攻击</strong></td>
+<td>截获合法报文，<strong>事后原样重发</strong>骗系统（主战场是身份认证）</td>
+<td><strong>时间戳</strong>、<strong>一次性口令/一次性令牌</strong>、挑战-应答、序列号</td>
+</tr>
+<tr>
+<td><strong>DoS/DDoS</strong></td>
+<td>海量请求<strong>淹没</strong>服务器，耗尽带宽/连接资源，<strong>合法用户进不来</strong>（破坏可用性）；DDoS = 僵尸网络里成千上万台&quot;肉鸡&quot;同时发起</td>
+<td>流量清洗、限流、CDN 分散</td>
+</tr>
+<tr>
+<td><strong>SQL 注入</strong></td>
+<td>在<strong>输入框/URL 参数</strong>里夹带 SQL 片段，骗数据库执行（如 <code>&#39; or &#39;1&#39;=&#39;1</code> 绕过登录）</td>
+<td><strong>参数化查询（预编译语句）</strong>、过滤特殊字符、最小权限（联动 <a href="../02-数据库系统/05-SQL.html">02-数据库系统.html</a>）</td>
+</tr>
+<tr>
+<td><strong>钓鱼攻击</strong></td>
+<td>仿冒官网/邮件诱骗用户主动<strong>交出</strong>账号密码</td>
+<td>核对域名、不点陌生链接</td>
+</tr>
+<tr>
+<td><strong>窃听/流量分析</strong></td>
+<td>只监听不修改（被动攻击，见第一节）</td>
+<td>加密</td>
+</tr>
+<tr>
+<td><strong>伪装/假冒</strong></td>
+<td>冒充合法用户或主机</td>
+<td>身份认证、数字签名</td>
+</tr>
+<tr>
+<td><strong>IP 欺骗</strong></td>
+<td>伪造数据包的<strong>源 IP 地址</strong>，冒充可信主机（如内网地址）骗取对方信任</td>
+<td>认证、过滤可信源地址、加密</td>
+</tr>
+<tr>
+<td><strong>会话劫持</strong></td>
+<td>中途<strong>插入/接管</strong>已建立的合法会话，冒充其中一方继续通信（常配合嗅探拿到会话标识）</td>
+<td>会话加密、会话标识随机化、超时注销</td>
+</tr>
+<tr>
+<td><strong>资源使用攻击（资源耗尽）</strong></td>
+<td>占用服务器<strong>资源</strong>（连接数、内存、CPU）让合法请求没资源可用；DDoS 是其大规模化形态</td>
+<td>限流、连接数上限、负载均衡</td>
+</tr>
+<tr>
+<td><strong>后门 / 特洛伊陷阱</strong></td>
+<td>攻击者事先在系统里<strong>留下隐蔽入口</strong>，随时绕过正常认证进入</td>
+<td>全面补丁、基线核查、最小权限、网络隔离</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>重放 vs DDoS 一句话分清</strong>：重放是&quot;把<strong>旧的</strong>合法报文再发一遍&quot;骗认证；DDoS 是&quot;发<strong>海量的</strong>垃圾报文&quot;拖垮服务。</p>
+<h3 id="h-9">7.2 恶意代码四兄弟（背区别）<button type="button" class="sec-status" data-status-key="7.2 恶意代码四兄弟（背区别）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 恶意代码四兄弟（背区别）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>定义要点</th>
+<th>区别关键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>计算机病毒</strong></td>
+<td>依附于<strong>宿主程序</strong>、能自我复制、破坏功能或数据的代码</td>
+<td><strong>必须有宿主</strong>，靠寄生的程序/文件传播</td>
+</tr>
+<tr>
+<td><strong>蠕虫</strong></td>
+<td><strong>独立程序</strong>，利用系统漏洞<strong>自我复制</strong>、主动在网络传播</td>
+<td><strong>不需要宿主、不需要人操作</strong>，自己爬</td>
+</tr>
+<tr>
+<td><strong>木马</strong></td>
+<td>伪装成正常软件，隐藏在受害机器里开&quot;后门&quot;，供攻击者<strong>远程控制</strong></td>
+<td>靠&quot;伪装+远程控制&quot;获利，<strong>不自我复制</strong></td>
+</tr>
+<tr>
+<td><strong>逻辑炸弹</strong></td>
+<td>平时潜伏，<strong>满足特定条件</strong>（日期、事件）时爆发破坏</td>
+<td><strong>条件触发</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆口诀</strong>：&quot;病毒寄生、蠕虫自爬、木马开门、炸弹看日子&quot;。四者共同点：都是恶意代码；考场上抓题干关键词——&quot;寄生在正常程序中&quot;选病毒，&quot;利用漏洞自主传播&quot;选蠕虫，&quot;远程控制/后门&quot;选木马，&quot;某日触发&quot;选逻辑炸弹。</p>
+<p><strong>补充一个相关概念（DDoS 的&quot;作案工具&quot;）——僵尸网络</strong>：攻击者先用木马/蠕虫等手段<strong>批量感染</strong>大量主机，这些被控主机被称为&quot;<strong>僵尸机/肉鸡</strong>&quot;，它们组成的受控集群就叫<strong>僵尸网络（Botnet）</strong>。发起 DDoS 攻击时，攻击者只是向网络里的肉鸡群下达&quot;同时向目标狂发请求&quot;的命令——所以 DDoS 的流量面广、难以追溯到真凶。识别特征：题干说&quot;攻击者控制了大量被入侵的计算机同时发起攻击&quot;→ 僵尸网络。</p>
+<p><strong>防毒常识</strong>（顺带背）：不打开来历不明附件、及时打补丁、升级杀毒软件<strong>特征库</strong>、重要数据备份。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="08-信息安全/03-防火墙攻击与恶意代码">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-摘要签名与证书.html">
+      <span class="k">上一页</span>
+      <span class="t">08.2 信息摘要、数字签名与证书 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">08.4 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

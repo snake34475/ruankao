@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>06.9 精华题与专项题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a><ul class="chapter-nav"><li><a href="01-网络分层模型.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/01-网络分层模型" aria-hidden="true"></i><span class="n">01</span><span class="t">网络分层模型 ★★★</span></a></li><li><a href="02-IP地址与网关.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/02-IP地址与网关" aria-hidden="true"></i><span class="n">02</span><span class="t">IP 地址、NAT 与默认网关 ★★</span></a></li><li><a href="03-子网划分.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/03-子网划分" aria-hidden="true"></i><span class="n">03</span><span class="t">子网划分与掩码计算 ★★★</span></a></li><li><a href="04-CIDR与路由聚合.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/04-CIDR与路由聚合" aria-hidden="true"></i><span class="n">04</span><span class="t">CIDR 与路由聚合 ★★</span></a></li><li><a href="05-TCP与UDP.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/05-TCP与UDP" aria-hidden="true"></i><span class="n">05</span><span class="t">TCP、UDP 与三次握手 ★★★</span></a></li><li><a href="06-应用层协议.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/06-应用层协议" aria-hidden="true"></i><span class="n">06</span><span class="t">应用层协议与端口 ★★★</span></a></li><li><a href="07-Web与网络命令.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/07-Web与网络命令" aria-hidden="true"></i><span class="n">07</span><span class="t">HTML、WWW 与网络命令 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="06-计算机网络/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06.9 精华题与专项题</h1>
+  </header>
+  <p><strong>1.</strong> 在 OSI 参考模型中，实现数据加密与压缩等格式转换功能的是（）。
+A. 应用层  B. 会话层  C. 表示层  D. 传输层</p>
+<p><strong>2.</strong> 某主机 IP 地址为 130.24.35.66/22，其所在子网的广播地址是（）。
+A. 130.24.35.255  B. 130.24.32.255  C. 130.24.36.255  D. 130.24.63.255</p>
+<p><strong>3.</strong> 将 202.113.76.0/24、202.113.77.0/24、202.113.78.0/24、202.113.79.0/24 聚合后得到的地址是（）。
+A. 202.113.76.0/22  B. 202.113.77.0/22  C. 202.113.76.0/23  D. 202.113.76.0/21</p>
+<p><strong>4.</strong> TCP 连接建立过程中，服务器在收到客户端的 ACK 报文后进入的状态是（）。
+A. LISTEN  B. SYN-RCVD  C. SYN-SENT  D. ESTABLISHED</p>
+<p><strong>5.</strong> 下列协议中，属于 TCP/IP 网际层（网络层）的是（）。
+A. UDP  B. ICMP  C. FTP  D. SMTP</p>
+<p><strong>6.</strong> 某单位分得 C 类网络 200.15.64.0/24，要求划分出至少 12 个子网，并使每个子网的可用主机数尽可能多，应选用的子网掩码是（）。
+A. 255.255.255.192  B. 255.255.255.224  C. 255.255.255.240  D. 255.255.255.248</p>
+<p><strong>7.</strong> 对网段 192.168.5.0/24 进行子网划分，要求每个子网最多接入 30 台主机，最多可划分出的子网数是（）。
+A. 4  B. 8  C. 16  D. 32</p>
+<hr>
+<h2 id="h-2">扩充专项题（本轮新增）<button type="button" class="sec-status" data-status-key="扩充专项题（本轮新增）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「扩充专项题（本轮新增）」的学习状态"></button></h2>
+<p><strong>1.</strong> 一台主机发送 HTTP 数据时，数据自上而下封装后的单位顺序正确的是（）。
+A. 数据 → 帧 → 段 → 分组 → 比特
+B. 数据 → 段 → 分组 → 帧 → 比特
+C. 数据 → 分组 → 段 → 帧 → 比特
+D. 数据 → 段 → 帧 → 分组 → 比特</p>
+<p><strong>2.</strong> 数据链路层交给物理层的数据单位是（）。
+A. 比特  B. 帧  C. 分组  D. TCP 段</p>
+<p><strong>3.</strong> 主机 A 的地址为 192.168.10.20/24，默认网关为 192.168.10.1。A 向 10.1.1.8 发送数据时，第一跳以太网帧的目的 MAC 地址应当是（）。
+A. A 自己的 MAC 地址
+B. 10.1.1.8 的 MAC 地址
+C. 默认网关 192.168.10.1 对应的 MAC 地址
+D. 受限广播地址对应的 MAC 地址</p>
+<p><strong>4.</strong> 关于 NAT 的说法，正确的是（）。
+A. NAT 能把私网地址转换为公网侧地址，并可让多台内网主机共享公网 IPv4 地址
+B. 使用 NAT 后就不再需要任何安全防护
+C. NAT 要求每台内网主机必须拥有不同的公网地址
+D. NAT 只改变数据链路层的 MAC 地址，不涉及 IP 或端口</p>
+<p><strong>5.</strong> 某 TCP 连接的接收窗口 <code>rwnd = 24 KB</code>，拥塞窗口 <code>cwnd = 10 KB</code>。忽略已发送未确认数据后，当前发送窗口上限是（）。
+A. 10 KB  B. 14 KB  C. 24 KB  D. 34 KB</p>
+<p><strong>6.</strong> 等长数据段编号为 1、2、3……，发送窗口原为 <code>[1,4]</code>。发送方已收到对 1、2 的累计确认，则窗口应滑动为（）。
+A. <code>[2,5]</code>  B. <code>[3,6]</code>  C. <code>[4,7]</code>  D. <code>[5,8]</code></p>
+<p><strong>7.</strong> 对 URL <code>https://learn.example.org:8443/course?id=6</code>，其完整主机名是（）。
+A. <code>https</code>  B. <code>learn</code>  C. <code>learn.example.org</code>  D. <code>/course</code></p>
+<p><strong>8.</strong> 某电脑可以直接访问已知公网 IP，也能正常使用已有的即时通信连接，但在浏览器中输入任何域名都无法打开网页。最可能的故障是（）。
+A. DNS 配置或解析异常  B. 网卡物理损坏  C. 本地链路完全中断  D. CPU 故障</p>
+<p><strong>9.</strong> 关于 HTTP GET 与 POST 的说法，正确的是（）。
+A. GET 天然加密，POST 使用明文
+B. POST 天然加密，GET 使用明文
+C. GET 常用于获取资源，POST 常用于提交数据；是否加密取决于是否使用 HTTPS
+D. GET 只能传输文字，POST 才能得到网页</p>
+<p><strong>10.</strong> 下列最符合“服务器端动态网页”的是（）。
+A. 服务器对所有用户直接返回同一个已保存的 HTML 文件
+B. 服务器根据登录用户和数据库中的订单记录生成页面内容
+C. 交换机依据 MAC 地址转发数据帧
+D. DNS 服务器把域名解析成 IP 地址</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="06-计算机网络/91-精华题与专项题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="90-课后考题.html">
+      <span class="k">上一页</span>
+      <span class="t">06.8 课后考题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="99-答案与解析.html">
+      <span class="k">下一页</span>
+      <span class="t">06.10 答案与解析</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

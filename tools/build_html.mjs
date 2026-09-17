@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Markdown 讲义 → 静态 HTML 构建脚本
 // 用法：npm run build（在仓库根目录执行）
-// 输入：软件设计师考点大纲.md + 软考学习/*.md（README.md / AGENTS.md 不转换）
-// 输出：docs/*.html（平级目录）+ docs/style.css + docs/app.js
+// 输入：软件设计师考点大纲.md + 软考学习/*.md + 软考学习/<课程>/*.md
+// 输出：docs/*.html + docs/<课程>/*.html + docs/style.css + docs/app.js
 //
 // v2：阅读版 UI
 //   · 每页生成「顶栏 + 左栏总纲梯队目录 + 正文 + 右栏本页大纲」骨架，
@@ -13,7 +13,7 @@
 //   · 索引页从 00-总览与进度.md 读取勾选状态与分值注解，生成分梯队卡片。
 import { marked } from 'marked';
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, existsSync, lstatSync } from 'node:fs';
-import { basename, join, dirname } from 'node:path';
+import { basename, join, dirname, relative, resolve, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,14 +22,39 @@ const OUTLINE = '软件设计师考点大纲.md';
 const STUDY_DIR = '软考学习';
 const PROGRESS_MD = join(root, STUDY_DIR, '00-总览与进度.md');
 
-// 转换顺序即页面先后顺序（用于生成上一课/下一课导航）
-const pageSources = [
-  { rel: OUTLINE, src: join(root, OUTLINE) },
-  ...readdirSync(join(root, STUDY_DIR))
-    .filter(f => f.endsWith('.md'))
-    .sort()
-    .map(f => ({ rel: `${STUDY_DIR}/${f}`, src: join(root, STUDY_DIR, f) })),
-];
+// 转换顺序即页面先后顺序。课程既可沿用单个 md，也可迁移为同名目录：
+// 目录里的 00-*.md 生成课程 index.html，其余 md 生成独立子章节页面。
+const studyRoot = join(root, STUDY_DIR);
+const pageSources = [{ rel: OUTLINE, src: join(root, OUTLINE), out: OUTLINE.replace(/\.md$/, '.html') }];
+for (const entry of readdirSync(studyRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))) {
+  if (entry.isFile() && entry.name.endsWith('.md')) {
+    pageSources.push({
+      rel: `${STUDY_DIR}/${entry.name}`,
+      src: join(studyRoot, entry.name),
+      out: entry.name.replace(/\.md$/, '.html'),
+    });
+    continue;
+  }
+  if (!entry.isDirectory() || !/^\d{2}-/.test(entry.name)) continue;
+  const courseNum = entry.name.slice(0, 2);
+  for (const file of readdirSync(join(studyRoot, entry.name)).filter(f => f.endsWith('.md')).sort()) {
+    const base = basename(file, '.md');
+    pageSources.push({
+      rel: `${STUDY_DIR}/${entry.name}/${file}`,
+      src: join(studyRoot, entry.name, file),
+      out: `${entry.name}/${base.startsWith('00-') ? 'index' : base}.html`,
+      courseDir: entry.name,
+      courseNum,
+      isChapter: !base.startsWith('00-'),
+    });
+  }
+}
+
+const sourceOut = new Map(pageSources.map(p => [normalize(p.rel), p.out]));
+// 旧单文件地址作为源链接别名：迁移后即使漏改一处 md 引用，网页仍能到课程首页。
+for (const p of pageSources.filter(p => p.courseDir && !p.isChapter)) {
+  sourceOut.set(normalize(`${STUDY_DIR}/${p.courseDir}.md`), p.out);
+}
 
 /* ------------------------------------------------------------------ 小工具 */
 function decodeSafe(s) {
@@ -48,14 +73,32 @@ function extractTitle(md, fallback) {
   return md.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? fallback;
 }
 
-// 仅重写指向仓库内 .md 的相对链接；docs/ 为平级目录，统一取目标文件名。
-// 指向尚未生成课程的链接（如 03-xxx.md）照常重写，页面暂 404 属正常。
-function rewriteMdLinks(html) {
+function relativeHref(fromOut, toOut) {
+  return relative(dirname(fromOut), toOut).replaceAll('\\', '/') || basename(toOut);
+}
+
+// 仅重写指向仓库内 .md 的相对链接；优先按源文件真实位置解析，兼容嵌套章节。
+function rewriteMdLinks(html, current) {
   return html.replace(/href="([^":#]+?\.md)(#[^"]*)?"/g, (m, path, anchor) => {
     if (/^https?:/i.test(path)) return m;
-    // marked 会对非 ASCII 路径做百分号编码，先解码统一为裸 UTF-8 文件名
-    const target = basename(decodeSafe(path)).replace(/\.md$/, '.html');
-    return `href="${target}${anchor ?? ''}"`;
+    const decoded = decodeSafe(path);
+    const abs = resolve(root, dirname(current.rel), decoded);
+    const targetRel = normalize(relative(root, abs));
+    const targetOut = sourceOut.get(targetRel) ?? basename(decoded).replace(/\.md$/, '.html');
+    return `href="${relativeHref(current.out, targetOut)}${anchor ?? ''}"`;
+  });
+}
+
+// interactive/ 会原样复制进 docs/；源 Markdown 与生成页面目录深度不同，
+// 因此这类仓库内资源也要按两端真实位置重新计算相对链接。
+function rewriteCopiedAssetLinks(html, current) {
+  return html.replace(/(href|src)="([^":#]+)"/g, (m, attr, path) => {
+    if (/^(?:https?:|mailto:|javascript:|data:)/i.test(path) || path.endsWith('.md')) return m;
+    const decoded = decodeSafe(path);
+    const abs = resolve(root, dirname(current.rel), decoded);
+    const targetRel = normalize(relative(root, abs)).replaceAll('\\', '/');
+    if (!targetRel.startsWith('interactive/')) return m;
+    return `${attr}="${relativeHref(current.out, targetRel)}"`;
   });
 }
 
@@ -193,7 +236,8 @@ function readProgress() {
 const progress = readProgress();
 
 /* ------------------------------------------------------------ 逐页渲染 */
-const pages = pageSources.map(({ rel, src }) => {
+const pages = pageSources.map(source => {
+  const { rel, src, out, courseDir = '', courseNum = '', isChapter = false } = source;
   const md = readFileSync(src, 'utf8');
   const base = basename(rel, '.md');
   const title = extractTitle(md, base);
@@ -203,24 +247,27 @@ const pages = pageSources.map(({ rel, src }) => {
   html = wrapTables(html);
   html = markStars(html);
   html = markLead(html);
-  html = rewriteLinkText(rewriteMdLinks(html));
+  html = rewriteLinkText(rewriteCopiedAssetLinks(rewriteMdLinks(html, source), source));
 
   const { head, content } = splitTitle(html);
   const { body, folded } = foldTail(content);
   // 学习状态按钮最后注入：跳过答案 h2，避免干扰上面的折叠逻辑
   const contentWithStatus = injectStatusDots(body);
 
-  const num = base.match(/^(\d{2})/)?.[1] ?? '';
+  const num = courseNum || base.match(/^(\d{2})/)?.[1] || '';
   const isOutline = rel === OUTLINE;
-  const kind = isOutline ? 'outline' : base === '学习计划' ? 'plan' : num === '00' ? 'overview' : num === '99' ? 'mock' : 'lesson';
+  const kind = isOutline ? 'outline'
+    : base === '学习计划' ? 'plan'
+      : courseDir ? (isChapter ? 'chapter' : courseNum === '99' ? 'mock' : 'lesson')
+        : num === '00' ? 'overview' : num === '99' ? 'mock' : 'lesson';
   // 只有带编号的课程在进度表里有条目，大纲页不参与勾选统计
   const info = num ? progress.get(num) ?? {} : {};
 
   return {
     rel,
-    out: `${base}.html`,
+    out,
     title,
-    short: title.replace(/^\d{2}\s+/, '').replace(/^软考软件设计师\s*·\s*/, ''),
+    short: title.replace(/^\d{2}(?:\.\d+)?\s+/, '').replace(/^软考软件设计师\s*·\s*/, ''),
     num,
     kind,
     headHtml: head,
@@ -228,10 +275,17 @@ const pages = pageSources.map(({ rel, src }) => {
     hasAnswers: folded,
     hint: info.hint ?? '',
     done: !!info.done,
+    courseDir,
+    isChapter,
+    statusKey: courseDir && !isChapter ? courseDir : out.replace(/\.html$/, ''),
   };
 });
 
-const lessonCount = pages.filter(p => p.kind === 'lesson').length;
+for (const page of pages.filter(p => p.courseDir && !p.isChapter)) {
+  page.children = pages.filter(p => p.courseDir === page.courseDir && p.isChapter);
+}
+const catalogPages = pages.filter(p => !p.isChapter);
+const lessonCount = catalogPages.filter(p => p.kind === 'lesson').length;
 
 function eyebrowOf(page) {
   const map = {
@@ -256,7 +310,7 @@ const TIERS = [
 // 左侧总纲导航：总纲 / 各梯队 / 收尾，分组常驻展开（当前页高亮、已完成打勾）
 function outlineNavHtml(current) {
   const groups = TIERS.map((t, ti) => {
-    const items = pages.filter(p =>
+    const items = catalogPages.filter(p =>
       t.kinds ? t.kinds.includes(p.kind) : t.nums.includes(p.num),
     );
     if (!items.length) return '';
@@ -268,7 +322,15 @@ function outlineNavHtml(current) {
         // 大纲页标题过长会在窄栏里折三行，导航里换用短名（索引页仍用全称）
         const text = isOutline ? '考点大纲与优先级' : p.short;
         const isCurrent = p.rel === current.rel;
-        return `          <li><a href="${p.out}"${isCurrent ? ' class="is-current" aria-current="page"' : ''}><i class="sb-dot" data-status-page-dot="${p.out.replace(/\.html$/, '')}" aria-hidden="true"></i><span class="n">${label}</span><span class="t">${escapeHtml(text)}</span>${p.done ? '<span class="ok" aria-label="已完成">✓</span>' : ''}</a></li>`;
+        const inCurrentCourse = !!p.courseDir && p.courseDir === current.courseDir;
+        const classes = [isCurrent ? 'is-current' : '', inCurrentCourse && !isCurrent ? 'is-course-current' : ''].filter(Boolean).join(' ');
+        const children = inCurrentCourse && p.children?.length
+          ? `<ul class="chapter-nav">${p.children.map((c, ci) => {
+              const childCurrent = c.rel === current.rel;
+              return `<li><a href="${relativeHref(current.out, c.out)}"${childCurrent ? ' class="is-current" aria-current="page"' : ''}><i class="sb-dot" data-status-page-dot="${c.statusKey}" aria-hidden="true"></i><span class="n">${String(ci + 1).padStart(2, '0')}</span><span class="t">${escapeHtml(c.short)}</span></a></li>`;
+            }).join('')}</ul>`
+          : '';
+        return `          <li><a href="${relativeHref(current.out, p.out)}"${classes ? ` class="${classes}"` : ''}${isCurrent ? ' aria-current="page"' : ''}><i class="sb-dot" data-status-page-dot="${p.statusKey}" aria-hidden="true"></i><span class="n">${label}</span><span class="t">${escapeHtml(text)}</span>${p.done ? '<span class="ok" aria-label="已完成">✓</span>' : ''}</a>${children}</li>`;
       })
       .join('\n');
     return `      <section class="tier tier-${ti}" title="${escapeHtml(t.note)}">
@@ -308,7 +370,7 @@ const THEME_BOOT = `<script>
   })();
 </script>`;
 
-function shellHtml({ title, bodyClass = '', sidebar = '', rail = '', mainContent }) {
+function shellHtml({ title, bodyClass = '', sidebar = '', rail = '', mainContent, rootPrefix = '' }) {
   return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -316,13 +378,13 @@ function shellHtml({ title, bodyClass = '', sidebar = '', rail = '', mainContent
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>${escapeHtml(title)}</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="${rootPrefix}style.css">
 ${THEME_BOOT}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <div class="progress" aria-hidden="true"><i></i></div>
 <header class="topbar">
-  <a class="brand" href="index.html">软考 · <span>软件设计师</span></a>
+  <a class="brand" href="${rootPrefix}index.html">软考 · <span>软件设计师</span></a>
   <span class="topbar-spacer"></span>
   <button class="btn" type="button" data-action="theme">深色</button>
   <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
@@ -336,22 +398,32 @@ ${rail}
 </div>
 <button class="to-top" type="button" aria-label="回到顶部">↑</button>
 <div class="scrim"></div>
-<script src="app.js" defer></script>
+<script src="${rootPrefix}app.js" defer></script>
 </body>
 </html>
 `;
 }
 
-function navCard(page, dir) {
+function navCard(page, dir, current) {
   if (!page) return '<span class="nav-card void"></span>';
-  const k = dir === 'prev' ? '上一课' : '下一课';
-  return `<a class="nav-card ${dir}" href="${page.out}">
+  const k = dir === 'prev' ? '上一页' : '下一页';
+  return `<a class="nav-card ${dir}" href="${relativeHref(current.out, page.out)}">
       <span class="k">${k}</span>
       <span class="t">${escapeHtml(page.title)}</span>
     </a>`;
 }
 
 mkdirSync(docsDir, { recursive: true });
+
+function courseChapterHtml(page) {
+  if (!page.children?.length) return '';
+  return `<section class="course-chapters">
+    <h2>本课章节</h2>
+    <div class="chapter-cards">
+${page.children.map((c, i) => `      <a href="${relativeHref(page.out, c.out)}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span>${escapeHtml(c.short)}</span></a>`).join('\n')}
+    </div>
+  </section>`;
+}
 
 pages.forEach((page, i) => {
   const sidebar = `  <aside class="sidebar" id="sidebar">
@@ -369,25 +441,47 @@ ${TOC_BLOCK}
     ${page.headHtml}
   </header>
   ${page.content}
-${STATUS_BAR(page.out.replace(/\.html$/, ''))}
+${courseChapterHtml(page)}
+${STATUS_BAR(page.statusKey)}
   <footer class="page-nav">
-    ${navCard(pages[i - 1], 'prev')}
-    <a class="nav-home" href="index.html">返回目录</a>
-    ${navCard(pages[i + 1], 'next')}
+    ${navCard(pages[i - 1], 'prev', page)}
+    <a class="nav-home" href="${page.courseDir ? relativeHref(page.out, `${page.courseDir}/index.html`) : relativeHref(page.out, 'index.html')}">${page.courseDir ? '返回本课' : '返回目录'}</a>
+    ${navCard(pages[i + 1], 'next', page)}
   </footer>`;
 
+  mkdirSync(dirname(join(docsDir, page.out)), { recursive: true });
   writeFileSync(
     join(docsDir, page.out),
-    shellHtml({ title: page.title, sidebar, rail, mainContent }),
+    shellHtml({ title: page.title, sidebar, rail, mainContent, rootPrefix: page.courseDir ? '../' : '' }),
   );
   console.log(`✔ ${page.rel} → docs/${page.out}（${page.title}${page.hasAnswers ? '，答案已折叠' : ''}）`);
 });
+
+// 分章课程保留旧的平级 HTML 地址，避免书签和已发布链接失效。
+for (const page of pages.filter(p => p.courseDir && !p.isChapter)) {
+  const target = `${page.courseDir}/index.html`;
+  const legacy = `${page.courseDir}.html`;
+  writeFileSync(join(docsDir, legacy), `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="0; url=${target}">
+<title>正在前往${escapeHtml(page.title)}</title>
+</head>
+<body>
+<p>课程已拆分为子章节，正在前往<a href="${target}">${escapeHtml(page.title)}</a>。</p>
+</body>
+</html>
+`);
+  console.log(`✔ 兼容入口 docs/${legacy} → ${target}`);
+}
 
 /* --------------------------------------------------------------- 索引页 */
 function cardHtml(page) {
   const label = page.kind === 'outline' ? '大纲' : page.kind === 'plan' ? '计划' : page.num;
   return `      <a class="card${page.done ? ' done' : ''}" href="${page.out}">
-        <i class="sb-dot" data-status-page-dot="${page.out.replace(/\.html$/, '')}" aria-hidden="true"></i>
+        <i class="sb-dot" data-status-page-dot="${page.statusKey}" aria-hidden="true"></i>
         <span class="n">${label}</span>
         <span class="body">
           <span class="t">${escapeHtml(page.short)}</span>
@@ -397,7 +491,7 @@ function cardHtml(page) {
 }
 
 const groups = TIERS.map(tier => {
-  const items = pages.filter(p =>
+  const items = catalogPages.filter(p =>
     tier.kinds ? tier.kinds.includes(p.kind) : tier.nums.includes(p.num),
   );
   if (!items.length) return '';
@@ -414,7 +508,7 @@ ${items.map(cardHtml).join('\n')}
   .filter(Boolean)
   .join('\n');
 
-const doneCount = pages.filter(p => p.done).length;
+const doneCount = catalogPages.filter(p => p.done).length;
 
 const indexMain = `  <div class="landing">
     <div class="hero">
@@ -424,7 +518,7 @@ const indexMain = `  <div class="landing">
       <div class="chips">
         <span class="chip">考试时间 <b>10 月 24—27 日</b>·机考</span>
         <span class="chip">两科各 <b>75 分</b>，<b>45 分</b>合格</span>
-        <span class="chip gold">进度 <b>${doneCount}/${pages.length}</b> 份</span>
+        <span class="chip gold">进度 <b>${doneCount}/${catalogPages.length}</b> 份</span>
       </div>
     </div>
 ${groups}

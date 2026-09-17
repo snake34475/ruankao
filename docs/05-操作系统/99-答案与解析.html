@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>05.9 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a><ul class="chapter-nav"><li><a href="01-进程线程与状态.html"><i class="sb-dot" data-status-page-dot="05-操作系统/01-进程线程与状态" aria-hidden="true"></i><span class="n">01</span><span class="t">进程、线程与状态转换 ★★★</span></a></li><li><a href="02-进程调度与PV操作.html"><i class="sb-dot" data-status-page-dot="05-操作系统/02-进程调度与PV操作" aria-hidden="true"></i><span class="n">02</span><span class="t">进程调度与 PV 操作 ★★★</span></a></li><li><a href="03-死锁.html"><i class="sb-dot" data-status-page-dot="05-操作系统/03-死锁" aria-hidden="true"></i><span class="n">03</span><span class="t">死锁 ★★★</span></a></li><li><a href="04-存储管理与页面置换.html"><i class="sb-dot" data-status-page-dot="05-操作系统/04-存储管理与页面置换" aria-hidden="true"></i><span class="n">04</span><span class="t">存储管理与页面置换 ★★★</span></a></li><li><a href="05-文件管理.html"><i class="sb-dot" data-status-page-dot="05-操作系统/05-文件管理" aria-hidden="true"></i><span class="n">05</span><span class="t">文件管理 ★★</span></a></li><li><a href="06-设备管理与计算专题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/06-设备管理与计算专题" aria-hidden="true"></i><span class="n">06</span><span class="t">设备管理与高频计算专题 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="05-操作系统/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05.9 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后考题答案（选择题）<button type="button" class="sec-status" data-status-key="课后考题答案（选择题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（选择题）」的学习状态"></button></h3>
+<p><strong>1. B</strong>
+PCB 记录进程的标识、状态、现场等全部管理信息，系统靠它感知进程的存在——&quot;PCB 是进程存在的唯一标志&quot;。程序和数据只是进程的组成部分，进程撤销后它们仍可能存在。</p>
+<p><strong>2. C</strong>
+线程独有栈和寄存器现场，T3 的栈是 T3 的&quot;私人工作台&quot;，T1 不能直接访问（A、B、D 均为共享内容：代码段、打开的文件、全局变量）。这是&quot;共享/独有&quot;清单的直接考法。</p>
+<p><strong>3. D</strong>
+就绪→阻塞不可能：阻塞源于&quot;运行中的进程主动等待某事件&quot;，就绪进程根本没在运行，无从发起等待。两个恒不可能的转换是&quot;就绪→阻塞&quot;与&quot;阻塞→运行&quot;，后者错在跳过了就绪排队。</p>
+<p><strong>4. B</strong>
+时间片用完 = 被剥夺 CPU 但一切资源俱备 → 回就绪队列排队。若是进程主动请求 I/O 才转阻塞态（A 错）。</p>
+<p><strong>5. A</strong>
+S 最大值 = 资源数 3（无人使用时）；最小值 = 初值 − 进程数 = 3 − 10 = −7（10 个进程全在排队）。C 项 [−3,10] 把上下界弄反了，B 项把进程数当成了下界来源且错用 10。</p>
+<p><strong>6. C</strong>
+互斥信号量初值 = 资源数量，3 台打印机 → 3。若只有 1 台才是 1；0 是同步信号量的典型初值；−3 不是初值（初值非负）。</p>
+<p><strong>7. C</strong>
+信号量个数 = 有向弧条数 = 6，前趋图（同步）信号量初值全为 0。5 是进程数不是弧数——这是最典型干扰项；初值 1 是互斥信号量的设定，与同步无关。</p>
+<p><strong>8. D</strong>
+资源全系统统一编号、按序申请，使&quot;环形等待链&quot;无法闭合 → 破坏<strong>环路等待</strong>。一次性申请全部资源才破坏&quot;请求和保持&quot;（B）。</p>
+<p><strong>9. C</strong>
+可能死锁 ⇔ n ≤ m(i−1)，即 10 ≤ 3(i−1) → i−1 ≥ 10/3 ≈ 3.34 → i ≥ 4.34 → 最小整数 i = 5。
+验算 i = 4：每进程最多占 3 个，3 进程最多共占 9 个 &lt; 10，必有资源空闲，持有 3 个的进程可补齐第 4 个而完成，不死锁 ✓；i = 5：3 个进程各持 3 个共 9 个，剩 1 个，任一进程拿走后仍差 1 个且无资源可补，人人等待 → 死锁可能 ✓。</p>
+<p><strong>10. A</strong>
+页大小 4KB = 2^12 = 1000H → 低 3 位十六进制 D30H 是页内地址（不变），高位 2H 是页号 → 查表页 2 → 物理块 3 → 物理地址 = 3D30H。
+十进制验算：0x2D30 = 11568，11568 = 2×4096 + 3376（偏移 3376 = 0xD30）；物理地址 = 3×4096 + 3376 = 12288 + 3376 = 15664 = 0x3D30 ✓。B 项是&quot;没查页表&quot;的直接照抄；C、D 是换了错误页帧号的结果。</p>
+<p><strong>11. B</strong>
+FIFO 逐位模拟（3 块）：1缺[1]、2缺[1,2]、3缺[1,2,3]、4缺淘汰1[2,3,4]、1缺淘汰2[3,4,1]、2缺淘汰3[4,1,2]、5缺淘汰4[1,2,5]、1命中、2命中、3缺淘汰1[2,5,3]。缺页 8 次，缺页率 8/10 = 80%。
+验算：命中仅第 8、9 两次，10 − 2 = 8 ✓。</p>
+<p><strong>12. A</strong>
+合法条件：段号存在 且 偏移 &lt; 段长。(0, 25K)：25K ≥ 段长 20K → 越界非法。B（20K &lt; 25K）、C（10K &lt; 15K）、D（24K &lt; 25K）均合法。</p>
+<p><strong>13. A</strong>
+字号 = ⌊5000 / 32⌋ = 156，位号 = 5000 mod 32 = 8。
+验算：156×32 = 4992，4992 + 8 = 5000 ✓。B 项位号 9 是&quot;按从 1 计数&quot;误算；C 项把&quot;除不尽向上&quot;错用在定位题；D 项取整方向错（155×32 = 4960 ≠ 5000 起）。</p>
+<p><strong>14. B</strong>
+SSTF：70→65（5）→82（17）→95（13）→110（15）→40（70），总移动 = 5+17+13+15+70 = 120 道。
+逐位验算&quot;最近&quot;：70 处距 65 为 5 最近 ✓；65 处距 82 为 17（95 为 30、40 为 25）✓；82 处距 95 为 13（110 为 28、40 为 42）✓；95 处距 110 为 15 ✓；最后只剩 40，移动 70 ✓。</p>
+<p><strong>15. B</strong>
+Spooling 用磁盘输入井/输出井做中转，把打印机这类独占设备改造成逻辑上可共享的<strong>虚拟设备</strong>。它不改变磁盘转速（C）、不优化寻道（D），A 把方向说反了。</p>
+<h3 id="h-3">课后考题答案（案例题）<button type="button" class="sec-status" data-status-key="课后考题答案（案例题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案（案例题）」的学习状态"></button></h3>
+<p><strong>案例 1</strong></p>
+<p>问题 1（逐弧配对：每条弧起点末 V、终点初 P）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>空</th>
+<th>答案</th>
+<th>对应弧</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>①</td>
+<td>V(S2)</td>
+<td>A→C（A 末尾已 V(S1) 对应 A→B，再 V(S2) 对应 A→C）</td>
+</tr>
+<tr>
+<td>②</td>
+<td>P(S1)</td>
+<td>A→B（B 开头等 A 完成）</td>
+</tr>
+<tr>
+<td>③</td>
+<td>P(S2)</td>
+<td>A→C</td>
+</tr>
+<tr>
+<td>④</td>
+<td>P(S4)</td>
+<td>C→D（D 开头需 P(S3) 与 P(S4) 各一次，对应两条入弧）</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td>P(S5)</td>
+<td>D→E</td>
+</tr>
+</tbody></table>
+</div>
+<p>注：进程 D 开头的 P(S3)、P(S4) 先后顺序可互换，两次 P 都做完才能往下执行。</p>
+<p>问题 2：增加 1 个信号量（共 6 个）——每条弧一个信号量，新增弧 B→E 即新增 1 个。E 开头需做 <strong>P(S5) 和新信号量的 P</strong> 两个 P 操作（E 有两条入弧：D→E 与 B→E，几条入弧就做几个 P）。</p>
+<p><strong>案例 2</strong></p>
+<p>问题 1：
+剩余可用 = 11 − (3+4+2) = <strong>2</strong>。
+Need = 最大需求 − 已分配：P1 = 7−3 = <strong>4</strong>；P2 = 5−4 = <strong>1</strong>；P3 = 9−2 = <strong>7</strong>。</p>
+<p>问题 2：<strong>安全，且安全序列唯一，为 P2 → P1 → P3</strong>。判定表：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>Available</th>
+<th>可满足者（Need ≤ Available）</th>
+<th>执行并归还后 Available</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2</td>
+<td>只有 P2（1 ≤ 2；P1 需 4 &gt; 2，P3 需 7 &gt; 2）</td>
+<td>2 + 4 = 6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>只有 P1（4 ≤ 6；P3 需 7 &gt; 6）</td>
+<td>6 + 3 = 9</td>
+</tr>
+<tr>
+<td>3</td>
+<td>9</td>
+<td>P3（7 ≤ 9）</td>
+<td>9 + 2 = 11（全部完成）</td>
+</tr>
+</tbody></table>
+</div>
+<p>唯一性验证：Available = 2 时 P1、P3 都无法启动，第一步只能是 P2；P2 完成后 Available = 6，P3 需 7 &gt; 6 仍无法启动，第二步只能是 P1——每一步都别无选择，故安全序列唯一 ✓。</p>
+<p>问题 3：<strong>不能满足</strong>。试探性分配：Available = 2 − 2 = 0，P3 已分配 = 4、Need = 5。此时 P1 Need 4 &gt; 0、P2 Need 1 &gt; 0、P3 Need 5 &gt; 0——没有任何进程的需求能被满足，找不到安全序列，该状态不安全（可能死锁），系统应<strong>拒绝本次申请</strong>、回滚试探分配。</p>
+<h3 id="h-4">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1.</strong></p>
+<ul>
+<li><strong>FIFO</strong>（淘汰最先进内存的页）：1缺、3缺、1命中、2缺[1,3,2]、4缺淘汰1[3,2,4]、3命中、1缺淘汰3[2,4,1]、4命中 → 缺页 <strong>5 次</strong>，缺页率 5/8 = 62.5%。</li>
+<li><strong>LRU</strong>（淘汰最近最久未使用）：1缺、3缺、1命中、2缺[1,3,2]、4缺（最后使用 1@位3、3@位2、2@位4 → 淘汰 3）[1,2,4]、3缺淘汰1[2,4,3]、1缺淘汰2[4,3,1]、4命中 → 缺页 <strong>6 次</strong>，缺页率 75%。</li>
+<li><strong>OPT</strong>（淘汰将来最久不用）：1缺、3缺、1命中、2缺[1,3,2]、4缺（往后看 3@位6、1@位7、4@位8，2 不再用 → 淘汰 2）[1,3,4]、3命中、1命中、4命中 → 缺页 <strong>4 次</strong>，缺页率 50%。</li>
+<li>验算（串长 − 命中数）：FIFO 命中位3、6、8 共 3 次 → 8−3 = 5 ✓；LRU 命中位3、8 共 2 次 → 8−2 = 6 ✓；OPT 命中位3、6、7、8 共 4 次 → 8−4 = 4 ✓。缺页数 OPT(4) &lt; LRU(6) &lt; FIFO(5)？注意本题 FIFO(5) &lt; LRU(6)——FIFO 并不总比 LRU 差，具体取决于引用串，这也是考题爱设的&quot;反直觉&quot;点 ✓。</li>
+</ul>
+<p><strong>2.</strong>
+① <strong>SSTF</strong>：100→90（10）→55（35）→30（25）→120（90）→140（20），总移动 = 10+35+25+90+20 = <strong>180 道</strong>。
+逐位验算最近：100 处 90 最近（120 为 20、55 为 45）✓；90 处 55 最近（120 为 30、30 为 60）✓；55 处 30 最近（120 为 65）✓；30 处 120 最近（140 为 110）✓；最后 140 ✓。
+② <strong>SCAN</strong>（到 0 号磁道才折返）：100→90→55→30→0→120→140。总移动 = (100−0) + (140−0) = <strong>240 道</strong>。
+逐段验算：10+35+25+30+120+20 = 240 ✓。</p>
+<p><strong>3.</strong>
+① n = m(w−1)+1 = 5×(3−1)+1 = <strong>11</strong>。最坏情形 5 个进程各持 2 个共 10 个仍各差 1 个，第 11 个资源让某进程凑齐跑完并释放 → 必不死锁。
+② 可能发生：10 ≤ m(w−1) = 5×2 = 10 → 满足&quot;可能死锁&quot;的条件（如 5 个进程各持 2 个、资源分光，人人差 1 个 → 死锁）。</p>
+<p><strong>4.</strong>
+① 总块数 = 512GB ÷ 4MB = 512×1024MB ÷ 4MB = 131072 块；字数 = 131072 ÷ 64 = <strong>2048 个字</strong>。验算：131072 = 2^17，64 = 2^6，2^17 ÷ 2^6 = 2^11 = 2048 ✓。
+② 字号 = ⌊100000 / 64⌋ = 1562，位号 = 100000 mod 64 = 32。验算：1562×64 = 99968，99968 + 32 = 100000 ✓。即第 1563 个字（按从 1 计数）的第 33 位。</p>
+<p><strong>5.</strong>
+页大小 2KB = 2048。页号 = 4500 ÷ 2048 = 2，页内偏移 = 4500 − 2×2048 = 404。查表页 2 → 物理块 7：物理地址 = 7×2048 + 404 = 14336 + 404 = <strong>14740</strong>。
+验算（反向拆分）：14740 ÷ 2048 = 7 余 404（7×2048 = 14336，14740−14336 = 404）→ 块号 7、偏移 404，与正向一致 ✓。</p>
+<p><strong>6.</strong></p>
+<ul>
+<li><strong>FCFS</strong>：J1 0–5（周转 5−0 = 5）；J2 5–7（周转 7−2 = 5）；J3 7–8（周转 8−3 = 5）。平均 = (5+5+5)/3 = <strong>5</strong>。</li>
+<li><strong>SJF（非抢占）</strong>：t=0 只有 J1 已到 → J1 0–5（周转 5）；t=5 时 J2（需 2）、J3（需 1）都已到达，挑短的 J3：5–6（周转 6−3 = 3）；再 J2：6–8（周转 8−2 = 6）。平均 = (5+3+6)/3 = 14/3 ≈ <strong>4.67</strong>。
+验算：完成时刻 FCFS 为 5、7、8，SJF 为 5、6、8，均不早于各自到达时刻 ✓；SJF 平均更短，符合理论 ✓。</li>
+</ul>
+<p><strong>7.</strong>
+每块可存地址项数 = 2KB ÷ 4B = 2048 ÷ 4 = 512 个。</p>
+<ul>
+<li>直接：6 × 2KB = 12KB；</li>
+<li>一级间接：512 × 2KB = 1024KB = 1MB；</li>
+<li>二级间接：512 × 512 × 2KB = 262144 × 2KB = 524288KB = 512MB；</li>
+<li>最大文件 = 12KB + 1MB + 512MB ≈ <strong>513MB + 12KB</strong>。
+验算：512×512 = 262144 ✓；262144 块 × 2KB = 524288KB ÷ 1024 = 512MB ✓；三部分相加 524288 + 1024 + 12 = 525324KB ≈ 513.01MB ✓。</li>
+</ul>
+<h3 id="h-5">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>1. A</strong>。段数 = 2^10 = 1024；每段页数 = 2^10 = 1024；页大小 = 2^12 = 4096B = 4KB。B、C、D 把位数直接当十进制（10、12），或把 2^10 与 2^12 混用。
+验算：2^10 = 1024、2^12 = 4096 ✓。</p>
+<p><strong>2. A</strong>。单块 = 5+10+1 = 16ms；整文件 = 100×16 = 1600ms = 1.6s。B（160）漏算旋转/单位；C（100）只算传输；D 把 ms 再放大了 10 倍。
+验算：100×16 = 1600ms ✓。</p>
+<p><strong>3. C</strong>。q = 1KB÷4B = 256。直接段 0～9、一级段 10～265、二级段 266 起；300 ⇒ 二级，读二级索引块 + 一级索引块 + 数据块 = 3 次。A（1 次）当成直接段；B（2 次）当成一级段；D 多读一次。
+验算：一级段止于 9+256 = 265 &lt; 300 &lt; 10+256+65536 ⇒ 二级 ✓。</p>
+<p><strong>4. A</strong>。从 1 编号：字 = ⌊(1000−1)/32⌋+1 = ⌊999/32⌋+1 = 31+1 = 32；位 = (999 mod 32)+1 = 7+1 = 8。
+验算：(32−1)×32 + (8−1) = 31×32 + 7 = 999 = 1000−1 ✓。B 直接 ⌊1000/32⌋（把&quot;从 0&quot;当成&quot;从 1&quot;）；C 位号少 1；D 字、位都混口径。</p>
+<p><strong>5. A</strong>。同步的 P 须在互斥的 P 之前，且&quot;放入&quot;要在临界区内并成对 V。B、C 把 <code>P(mutex)</code> 放到同步 P 之前（缓冲区满时占着 mutex 等空位，与消费者互相等 → 死锁），且 C 的&quot;放入&quot;未受 mutex 保护、V 也不配平；D 用错信号量（生产者的同步应是 <code>empty</code>，用 <code>full</code> 会在空缓冲时误等）。
+逐条核对：A 的 P 顺序、临界区、成对 V 全部正确 ✓。</p>
+<p><strong>6. A</strong>。可化简判据是&quot;申请量 ≤ 当前空闲量&quot;（非阻塞）。B、C 与化简规则无关；D 错——有环未必死锁，要看能否化简。</p>
+<p><strong>7. A</strong>。单缓冲传/处串行：10×(2+6) = 80ms；双缓冲瓶颈是处理 c=6：10×6 + min(2,6)=2 → 62ms。B 反；C 把双缓冲错算成串行（80/80）；D 只算传输。
+验算双缓冲按时间轴：处理从 2ms 连续占据到 62ms（10 次 × 6ms），开头再传一块 2ms，总 62ms ✓。</p>
+<p><strong>8. C</strong>。FCB 是目录里的登记信息（文件名、位置、长度、权限等），<strong>不含文件内容本身</strong>。</p>
+<p><strong>9. B</strong>。754：同组 = 5 = 4+1 = r-x（读+执行，无写）。A（rwx = 7）是属主；C（r-- = 4）是其他用户；D 把 w、x 次序弄反。</p>
+<p><strong>10. C</strong>。页内 12 位 ⇒ 页大小 = 2^12 = 4096B = 4KB。A（2^10）、B（2^11）、D（2^13）都不是 12 位对应的 2^12。
+验算：2^12 = 4096 ✓。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="../06-计算机网络/index.html">06-计算机网络.html</a> 并更新进度表。</p>
+
+
+  <footer class="status-bar" data-status-page="05-操作系统/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题与补充题.html">
+      <span class="k">上一页</span>
+      <span class="t">05.8 精华题与补充题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../06-计算机网络/index.html">
+      <span class="k">下一页</span>
+      <span class="t">06 计算机网络</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

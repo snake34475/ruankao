@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>01.6 算法设计与分析基础</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a><ul class="chapter-nav"><li><a href="01-线性表、栈与队列.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/01-线性表、栈与队列" aria-hidden="true"></i><span class="n">01</span><span class="t">线性表、栈与队列</span></a></li><li><a href="02-树与二叉树.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/02-树与二叉树" aria-hidden="true"></i><span class="n">02</span><span class="t">树与二叉树 ★★★</span></a></li><li><a href="03-图.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/03-图" aria-hidden="true"></i><span class="n">03</span><span class="t">图 ★★★</span></a></li><li><a href="04-查找.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/04-查找" aria-hidden="true"></i><span class="n">04</span><span class="t">查找 ★★</span></a></li><li><a href="05-排序.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/05-排序" aria-hidden="true"></i><span class="n">05</span><span class="t">排序 ★★★</span></a></li><li><a href="06-算法设计与分析基础.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/06-算法设计与分析基础" aria-hidden="true"></i><span class="n">06</span><span class="t">算法设计与分析基础</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：算法填空解题套路</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 1 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">01.6 算法设计与分析基础</h1>
+  </header>
+  <h3 id="h-2">6.0 先补两件基础：算法的五个特性、好算法的标准<button type="button" class="sec-status" data-status-key="6.0 先补两件基础：算法的五个特性、好算法的标准" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.0 先补两件基础：算法的五个特性、好算法的标准」的学习状态"></button></h3>
+<p><strong>算法的五个特性</strong>（选择题原话考，五个字要背准）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>含义</th>
+<th>反例（哪个不满足）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>有穷性</strong></td>
+<td>执行<strong>有穷步</strong>之后必须结束</td>
+<td>&quot;不断重复直到满足条件&quot;若永不满足就不算算法</td>
+</tr>
+<tr>
+<td><strong>确定性</strong></td>
+<td>每条指令含义唯一、无歧义</td>
+<td><code>x = 随机数</code> 不算（结果不确定）</td>
+</tr>
+<tr>
+<td><strong>可行性</strong></td>
+<td>每步都能用基本运算有限次实现</td>
+<td>&quot;求 π 的精确值&quot;不可行</td>
+</tr>
+<tr>
+<td><strong>输入</strong></td>
+<td>有 0 个或多个输入</td>
+<td>&quot;无输入的算法&quot;是合法的（如打印一行字）</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td><strong>至少一个输出</strong></td>
+<td>没有任何输出的不能叫算法</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>易错点</strong>：<strong>输入可以是 0 个，输出至少 1 个</strong>——这两个数字经常被互换着考。程序与算法的区别也只在这条：<strong>程序可以不满足有穷性</strong>（操作系统就是一个&quot;永不结束&quot;的程序），算法必须满足。</p>
+<p><strong>好算法的标准</strong>：正确性、可读性、<strong>健壮性</strong>（对非法输入能处理）、高效性（时间与空间）。题干问&quot;评价算法优劣主要看什么&quot;→ 正确性 + 效率。</p>
+<h3 id="h-3">6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）<button type="button" class="sec-status" data-status-key="6.1 五大算法策略（选择题常考&amp;quot;这是哪种策略&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.1 五大算法策略（选择题常考&quot;这是哪种策略&quot;）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>核心思想</th>
+<th>典型例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>分治法</strong></td>
+<td>拆成<strong>互相独立</strong>的子问题，分别解再合并</td>
+<td>二分查找、归并排序、快排、汉诺塔、大整数乘法</td>
+</tr>
+<tr>
+<td><strong>动态规划</strong></td>
+<td>子问题<strong>重叠</strong>，用表保存子问题的解（自底向上），要求<strong>最优子结构</strong></td>
+<td>矩阵连乘、最长公共子序列、0-1 背包、LIS、Fibonacci</td>
+</tr>
+<tr>
+<td><strong>贪心法</strong></td>
+<td>每步取当前最优，<strong>不回溯</strong>，<strong>不保证全局最优</strong></td>
+<td>Prim、Kruskal、Dijkstra、哈夫曼、部分背包</td>
+</tr>
+<tr>
+<td><strong>回溯法</strong></td>
+<td><strong>深搜 + 试探 + 走不通就退回来</strong>（可剪枝）</td>
+<td>N 皇后、迷宫、子集和、图着色</td>
+</tr>
+<tr>
+<td><strong>分支限界</strong></td>
+<td><strong>广搜式</strong>搜索 + 用&quot;界限&quot;剪枝</td>
+<td>旅行商问题（TSP）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 动态规划 vs 分治</strong>：分治的子问题<strong>互相独立</strong>（算左边不用管右边）；动态规划的子问题<strong>重叠</strong>（同一个子问题会被反复用到），所以要用表存下答案避免重复计算。<strong>这也是 DP 比&quot;朴素递归&quot;快的唯一原因</strong>——比如求 Fibonacci，朴素递归是 O(2ⁿ)，加了记忆表就是 O(n)。
+<strong><span class="stars">★</span> 贪心 vs 动态规划</strong>：贪心<strong>只走一条路、走了不回头</strong>；动态规划<strong>考察所有子问题</strong>再取最优。所以贪心快但可能错，DP 稳但要多花空间。</p>
+<p><strong>动态规划的四个要件</strong>（题目问&quot;能否用 DP&quot;时拿这四条对）：最优子结构（大问题的最优解由小问题的最优解拼成）、重叠子问题、状态与状态转移方程、无后效性（当前状态一旦确定，不受后面怎么决策影响）。</p>
+<p>下面把五个策略各配一个<strong>能亲手算的小例子</strong>，考试时要能&quot;给代码说策略、给策略说思路&quot;。</p>
+<h4 id="h-4">分治：汉诺塔（把&quot;分治&quot;算到底）</h4>
+<p><strong>规则</strong>：n 个盘子从 A 柱移到 C 柱，一次只能挪一个，且任何时候大盘不能压在小盘上。</p>
+<p><strong>分治三步</strong>：</p>
+<ol>
+<li><strong>分</strong>：把&quot;n 个盘子从 A 到 C&quot;拆成三件事：先把上面 n−1 个从 A 挪到 B（中转柱）；</li>
+<li><strong>治</strong>：把最大的第 n 个盘从 A 直接挪到 C（就这一下）；</li>
+<li><strong>合</strong>：再把 B 上的 n−1 个挪到 C。</li>
+</ol>
+<p>递推式：<code>T(n) = 2·T(n−1) + 1</code>，边界 <code>T(1) = 1</code>。</p>
+<ul>
+<li><strong>代入算例</strong>：T(1)=1 → T(2)=2×1+1=<strong>3</strong> → T(3)=2×3+1=<strong>7</strong> → T(4)=15……</li>
+<li><strong>通项</strong>：每次&quot;翻倍再加一&quot;，答案就是 <strong>T(n) = 2ⁿ − 1</strong>（n=3 时 7 ✓，n=4 时 15 ✓）。</li>
+<li><strong>它说明什么</strong>：n=64 时约 1.8×10¹⁹ 次——<strong>指数级增长的可怕</strong>，这就是&quot;O(2ⁿ) 不可做&quot;的直观来源。选择题问&quot;汉诺塔的时间复杂度&quot;答 <strong>O(2ⁿ)</strong>。</li>
+</ul>
+<h4 id="h-5">动态规划：0-1 背包（把表亲手填一遍）</h4>
+<p><strong>问题</strong>：背包容量 5，3 件物品（每件只能<strong>整个拿或不拿</strong>）：A 重 2 值 3、B 重 3 值 4、C 重 4 值 5。求能装的最大价值。</p>
+<p><strong>状态</strong>：<code>dp[i][j]</code> = 只考虑前 i 件物品、容量为 j 时的最大价值。
+<strong>状态转移方程</strong>（<span class="stars">★</span> 必背）：</p>
+<pre><code>dp[i][j] = max( dp[i-1][j] ,                    ← 不放第 i 件
+                dp[i-1][j - w[i]] + v[i] )      ← 放第 i 件（前提：j ≥ w[i]）
+</code></pre>
+<p><strong>含义</strong>：&quot;要么不要它（继承上一行同列），要么要它（腾出 w[i] 的容量，再加上它的价值）&quot;——两者取大。</p>
+<p><strong>填表</strong>（行 = 只考虑前 i 件，列 = 容量 j 从 0 到 5）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>j=0</th>
+<th>j=1</th>
+<th>j=2</th>
+<th>j=3</th>
+<th>j=4</th>
+<th>j=5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i=0（无物品）</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>i=1（只有 A：w2 v3）</td>
+<td>0</td>
+<td>0</td>
+<td><strong>3</strong></td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>i=2（加入 B：w3 v4）</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td><strong>4</strong></td>
+<td>4</td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td>i=3（加入 C：w4 v5）</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>7</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>读答案</strong>：<code>dp[3][5] = 7</code>。
+<strong>反向追出&quot;拿了哪几件&quot;</strong>（考点：DP 不只给数值，还能回溯方案）：</p>
+<ul>
+<li><code>dp[3][5] = 7</code> 等于 <code>dp[2][5] = 7</code> → C（第 3 件）<strong>没拿</strong>；</li>
+<li><code>dp[2][5] = 7 = dp[1][5−3] + 4 = 3 + 4</code> → <strong>拿了 B</strong>；</li>
+<li><code>dp[1][2] = 3 = dp[0][2−2] + 3 = 0 + 3</code> → <strong>拿了 A</strong>。
+→ 最优方案 = {A, B}，重量 2+3=5 恰好装满、价值 <strong>7</strong> ✓（与表格一致）</li>
+</ul>
+<p><strong>易错点</strong>：</p>
+<ul>
+<li>填表顺序是<strong>逐行从左到右</strong>（每格只依赖上一行和本行左边的格子），手算时别跳行。</li>
+<li><code>j &lt; w[i]</code> 的格子不能&quot;放&quot;，只能继承上一行——初学者最爱在这里瞎算。</li>
+<li>时间复杂度 <strong>O(n·C)</strong>（物品数 × 容量），不是多项式时间里的&quot;n 的多项式&quot;（C 是数值，所以叫伪多项式）。</li>
+<li><strong>0-1 背包的滚动数组写法</strong>：把二维压成一维 <code>dp[j]</code> 时 <strong>j 必须从大到小</strong>遍历（否则同一件物品会被重复拿，变成&quot;完全背包&quot;）。这个&quot;从大到小&quot;是案例题的高频空。</li>
+</ul>
+<h4 id="h-6">贪心：两个反例（说明&quot;贪心为什么不一定最优&quot;）</h4>
+<p><strong>反例 1——找零钱</strong>：面额 {1, 3, 4}，要凑出 6。</p>
+<ul>
+<li>贪心的做法：每次拿不超过剩余金额的最大面额 → 拿 4 → 剩 2 → 拿 1 → 拿 1 → <strong>3 枚</strong>。</li>
+<li>最优解：3 + 3 = 6 → <strong>2 枚</strong>。贪心错了 ✓</li>
+</ul>
+<p><strong>反例 2——0-1 背包</strong>：容量 10，物品 A(重 8 值 80)、B(重 5 值 49)、C(重 5 值 49)。</p>
+<ul>
+<li>贪心按&quot;单位价值&quot;排：A 每单位 10 最高 → 先拿 A → 剩余容量 2，B、C 都放不下 → 总价值 <strong>80</strong>。（B 9.8、C 9.8）</li>
+<li>最优解：拿 B + C，重量 5+5=10，价值 <strong>49+49 = 98</strong> &gt; 80。贪心又错了 ✓</li>
+</ul>
+<p><strong>为什么&quot;部分背包&quot;贪心就对</strong>：如果物品<strong>可以切碎</strong>（比如装金粉），那容量 10 时拿 A(8) 后还能再装 2 单位的 B → 价值 80 + 49×2/5 = 99.6，反而超过了只拿 B+C 的 98，<strong>贪心确实最优</strong>。
+<strong>结论（考点）</strong>：<strong>背包问题可以分割时用贪心，不可分割（0-1）时必须用动态规划</strong>。这一句是贪心与 DP 分界线的标准考法。</p>
+<p><strong>为什么 Prim/Kruskal/Dijkstra/哈夫曼贪心对</strong>：它们的问题结构有&quot;拟阵&quot;性质或特殊性质，能保证局部最优能拼出全局最优——考试不必证明，记住这四个是&quot;贪心但正确&quot;的就行。</p>
+<h4 id="h-7">回溯：N 皇后（DFS + 剪枝）</h4>
+<p><strong>问题</strong>：n×n 棋盘放 n 个皇后，任意两个不同行、不同列、不同斜线。</p>
+<p><strong>回溯的骨架</strong>（一段伪代码背下来，案例题填空就是它）：</p>
+<pre><code>放第 row 行：
+    for 每一列 col:
+        若 (row, col) 不冲突:
+            摆上皇后            ← 试探
+            若 row == n: 输出一个解
+            否则 放第 row+1 行   ← 递归深入
+            撤掉皇后            ← 回溯（关键！恢复现场）
+</code></pre>
+<ul>
+<li><strong>试探 → 深入 → 撤回</strong>三步循环，就是&quot;一条路走到黑，走不通退回来换条路&quot;。</li>
+<li><strong>剪枝</strong>：一旦当前摆法已经冲突，立刻停（不再往下递归），省掉整棵子树。剪枝越狠越快。</li>
+<li><strong>4 皇后只有 2 个解</strong>（选择题考过&quot;n=4 时解的数量&quot;）；8 皇后 92 个解。</li>
+<li><strong>回溯与图遍历的关系</strong>：回溯 = 在&quot;状态空间树&quot;上做 DFS。3.2 节的 DFS 是它在<strong>图</strong>上的特例，本节是它在&quot;所有可能的选择组合&quot;上的推广——所以两者都用递归 + 恢复现场。</li>
+<li><strong>子集和问题</strong>：从一堆数里挑出若干使和 = 目标值；做法就是&quot;每个数选择拿/不拿两分支&quot;的 DFS，和 0-1 背包的搜索版同族。</li>
+</ul>
+<h4 id="h-8">分支限界 vs 回溯（一字之差）</h4>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>回溯法</th>
+<th>分支限界法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索方式</td>
+<td><strong>深度</strong>优先（一条路走到底）</td>
+<td><strong>广度</strong>优先（一层层扩）</td>
+</tr>
+<tr>
+<td>剪枝依据</td>
+<td>约束条件（不合法就停）</td>
+<td><strong>界限函数</strong>（当前活结点若&quot;不可能比已知最优更好&quot;就砍）</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>找出<strong>所有</strong>可行解 / 任意一个解</td>
+<td>通常求<strong>最优解</strong></td>
+</tr>
+<tr>
+<td>典型</td>
+<td>N 皇后、迷宫、图着色</td>
+<td>旅行商问题（TSP）、0-1 背包最优化</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记法</strong>：<strong>回溯很深、限界很广；回溯看&quot;合不合法&quot;、限界看&quot;划不划算&quot;。</strong></p>
+<p><strong>延伸阅读</strong>：汉诺塔、0-1 背包、N 皇后的分步图示与代码见 <a href="https://www.hello-algo.com/chapter_divide_and_conquer/">hello-algo · 分治</a>、<a href="https://www.hello-algo.com/chapter_dynamic_programming/">动态规划</a>、<a href="https://www.hello-algo.com/chapter_backtracking/">回溯</a>（在线可看；离线不影响自足）。</p>
+<h3 id="h-9">6.2 时间复杂度（必考 1–2 题）<button type="button" class="sec-status" data-status-key="6.2 时间复杂度（必考 1–2 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 时间复杂度（必考 1–2 题）」的学习状态"></button></h3>
+<p>常见复杂度从小到大：<strong>O(1) &lt; O(log n) &lt; O(n) &lt; O(nlog n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</strong></p>
+<p><strong>怎么&quot;数&quot;出来</strong>（不用背公式，数循环）：</p>
+<ul>
+<li><strong>单层循环 n 次</strong> → O(n)。</li>
+<li><strong>两层嵌套、各 n 次</strong> → 乘起来 O(n²)。三层 → O(n³)。</li>
+<li><strong>循环变量每次 ×2 或 ÷2</strong> → 只跑 <strong>log₂n 次</strong> → O(log n)。例：<code>for (i=1; i&lt;=n; i*=2)</code> 是 log₂n 次。</li>
+<li><strong>一外一内：外 ×2 内 n</strong> → O(nlog n)（这就是归并/快排的来源）。</li>
+<li><strong>递归</strong>：看递推式——<code>T(n)=2T(n−1)+1</code>（汉诺塔）→ O(2ⁿ)；<code>T(n)=2T(n/2)+n</code>（归并）→ O(nlog n)；<code>T(n)=T(n/2)+1</code>（二分）→ O(log n)。</li>
+<li><strong>暴力枚举子集/全排列</strong> → O(2ⁿ)、O(n!)。</li>
+</ul>
+<p><strong>对照表（考前扫一眼）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>代码特征</th>
+<th>复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>三条语句、无循环</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>for i=1..n</code></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>for i=1..n</code> 套 <code>for j=1..n</code></td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td><code>while (i&lt;n) i*=2;</code></td>
+<td>O(log₂n)</td>
+</tr>
+<tr>
+<td>外层 i*=2、内层 j 跑 n</td>
+<td>O(nlog₂n)</td>
+</tr>
+<tr>
+<td>汉诺塔 <code>T(n)=2T(n−1)+1</code></td>
+<td>O(2ⁿ)</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong><span class="stars">★</span> 渐近记号</strong>：<strong>O 是上界</strong>（增长率不超过 f(n) 的量级）、<strong>Ω 是下界</strong>、<strong>Θ 是精确界</strong>（上下界同阶）。选择题常考&quot;O(f(n)) 的含义：增长率不超过 f(n) 的量级&quot;。
+<strong>易错点</strong>：O(2n) 就是 O(n)、O(n²+n) 就是 O(n²)——<strong>常数系数和低阶项都要扔掉</strong>，只留增长最快的项。</p>
+<h3 id="h-10">6.3 空间复杂度与递归<button type="button" class="sec-status" data-status-key="6.3 空间复杂度与递归" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.3 空间复杂度与递归」的学习状态"></button></h3>
+<ul>
+<li>空间复杂度看的是<strong>额外</strong>开销：几个临时变量是 O(1)；开一个长度 n 的数组是 O(n)。</li>
+<li><strong>递归的空间 = 递归深度 × 每层开销</strong>：快排平均递归深度 log₂n → 空间 O(log₂n)；<strong>最坏（已有序）深度退化为 n → 空间 O(n)</strong>（第 5.1 节的表里那一列就是这么来的）；归并排序要一个 n 长度的辅助数组 → O(n)。</li>
+<li><strong>递归的两面</strong>：写起来简洁（树遍历、汉诺塔、回溯全靠它），代价是<strong>栈空间</strong>和<strong>函数调用开销</strong>。想改成迭代，就用<strong>自己维护的栈</strong>（3.2 节 DFS 的栈实现就是这个道理）。</li>
+<li><strong>递归三要素</strong>（案例题挖空必考）：① <strong>边界条件</strong>（什么情况下直接返回）；② <strong>递推式</strong>（大问题怎么用小问题表达）；③ <strong>返回值/现场恢复</strong>。缺边界条件 → 无限递归 → 栈溢出。</li>
+</ul>
+<h3 id="h-11">6.4 第六节小结与应试清单<button type="button" class="sec-status" data-status-key="6.4 第六节小结与应试清单" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.4 第六节小结与应试清单」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>考点</th>
+<th>一句话抓手</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算法五特性</td>
+<td>有穷、确定、可行、输入（0 个也行）、输出（至少 1 个）</td>
+</tr>
+<tr>
+<td>五大策略</td>
+<td>分治（独立子问题）、DP（重叠子问题+最优子结构）、贪心（不回溯不保证最优）、回溯（深搜+剪枝）、分支限界（广搜+界限）</td>
+</tr>
+<tr>
+<td>汉诺塔</td>
+<td>T(n)=2ⁿ−1，O(2ⁿ)</td>
+</tr>
+<tr>
+<td>0-1 背包</td>
+<td><code>dp[i][j]=max(不放, 放)</code>；滚动数组要<strong>倒着</strong>遍历 j</td>
+</tr>
+<tr>
+<td>贪心边界</td>
+<td>可分割背包 → 贪心对；0-1 背包 → 必须 DP</td>
+</tr>
+<tr>
+<td>复杂度数法</td>
+<td>嵌套相乘、倍增取 log、递推式看分治结构</td>
+</tr>
+<tr>
+<td>复杂度记号</td>
+<td>O 上界、Ω 下界、Θ 精确界；常数与低阶项全扔</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：</p>
+<ul>
+<li>案例题第 4 题（约 15 分）常给一段 DP 或回溯代码挖空。<strong>先看&quot;状态定义&quot;那句话</strong>（说明里一定有），空基本就在&quot;初始化、转移方程、边界、返回&quot;四处。</li>
+<li>手算纪律：DP 题填完表要<strong>反向追一次方案</strong>（像上面背包那样），能对上才算真懂；填表时按&quot;逐行从左到右&quot;一行行来，别跳。</li>
+<li>背什么：五个策略的&quot;典型例子归属&quot;（看到 Prim 就要能反应&quot;贪心&quot;）、汉诺塔 2ⁿ−1、背包转移方程、O/Ω/Θ 的含义。</li>
+</ul>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="01-数据结构与算法/06-算法设计与分析基础">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-排序.html">
+      <span class="k">上一页</span>
+      <span class="t">01.5 排序 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="07-案例题专攻.html">
+      <span class="k">下一页</span>
+      <span class="t">01.7 案例题专攻：算法填空解题套路</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

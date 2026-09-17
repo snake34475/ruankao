@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.1 软件开发模型与方法 ★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.1 软件开发模型与方法 <span class="stars">★★</span></h1>
+  </header>
+  <h3 id="h-2">1.1 为什么有多种模型<button type="button" class="sec-status" data-status-key="1.1 为什么有多种模型" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 为什么有多种模型」的学习状态"></button></h3>
+<p>不同项目的<strong>需求清晰度</strong>和<strong>风险高低</strong>差别巨大：需求写得一清二楚的项目不需要反复确认，需求说不清的项目硬按部就班走完设计才发现做错了。开发模型的区别就是&quot;<strong>怎么安排&#39;想清楚&#39;和&#39;动手做&#39;的顺序</strong>&quot;。认模型题的关键是抓题干特征词。</p>
+<h3 id="h-3">1.2 先分清「方法」和「模型」<button type="button" class="sec-status" data-status-key="1.2 先分清「方法」和「模型」" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 先分清「方法」和「模型」」的学习状态"></button></h3>
+<p>这两个词真题里都出现，且常被混问。<strong>开发方法回答&quot;用什么思想去理解系统&quot;，开发模型回答&quot;阶段按什么顺序排&quot;</strong>。同一个方法可以用不同模型落地（面向对象方法既能用喷泉模型也能用 UP）。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>开发方法</th>
+<th>核心思想</th>
+<th>一句话识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>结构化方法</strong></td>
+<td>用户至上、自顶向下逐步求精；严格区分工作阶段（每阶段有任务和结果）；强调开发的整体性、全局性；开发过程工程化、文档资料标准化</td>
+<td>&quot;自顶向下、逐步求精、阶段严格&quot;</td>
+</tr>
+<tr>
+<td><strong>原型法</strong></td>
+<td>先给用户一个能跑的原型，边用边改</td>
+<td>&quot;先做出来给用户看&quot;</td>
+</tr>
+<tr>
+<td><strong>面向对象方法</strong></td>
+<td>把系统看成一组互相作用的对象；<strong>关键是建立一个全面、合理、统一的模型</strong>；<strong>分析、设计、实现三阶段界限不明确</strong></td>
+<td>&quot;三阶段界限模糊、复用性好&quot;</td>
+</tr>
+<tr>
+<td><strong>面向服务方法</strong></td>
+<td>把功能包装成松耦合的服务；抽象级别分三层：<strong>操作 → 服务 → 业务流程</strong></td>
+<td>&quot;三层抽象、服务组合&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>考试特征</strong>：&quot;三阶段界限不明确&quot;只能选<strong>面向对象方法</strong>（这句话反过来也考：&quot;面向对象方法与结构化方法的最大区别&quot;）；&quot;抽象级别为操作、服务、业务流程&quot;只能选<strong>面向服务方法</strong>。</p>
+<h3 id="h-4">1.3 开发模型全景（不只有四种）<button type="button" class="sec-status" data-status-key="1.3 开发模型全景（不只有四种）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 开发模型全景（不只有四种）」的学习状态"></button></h3>
+<p>按&quot;想清楚&quot;和&quot;动手做&quot;的排法分两大族：<strong>顺序型</strong>（一次走完，不回头）与<strong>迭代演化型</strong>（反复小圈走）。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>核心特征</th>
+<th>适用场景</th>
+<th>题干特征词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>瀑布模型</strong></td>
+<td>线性顺序，每阶段结束有评审，<strong>文档驱动</strong></td>
+<td>需求<strong>明确且稳定</strong>的项目</td>
+<td>&quot;需求明确&quot;&quot;一次通过、阶段评审&quot;</td>
+</tr>
+<tr>
+<td><strong>V 模型</strong></td>
+<td>瀑布的升级：把测试与开发阶段<strong>一一对应</strong>挂起来（下面的 4.1 节给对应表）</td>
+<td>强调测试贯穿始终的项目</td>
+<td>&quot;测试与开发阶段对应&quot;&quot;测试贯穿始终&quot;</td>
+</tr>
+<tr>
+<td><strong>增量模型</strong></td>
+<td>需求切成一片片<strong>分批交付</strong>，第一个增量常是<strong>核心产品</strong></td>
+<td>可以分期上线、想让核心先稳定的项目</td>
+<td>&quot;分批交付&quot;&quot;先核心后扩展&quot;</td>
+</tr>
+<tr>
+<td><strong>原型模型</strong>（属演化模型）</td>
+<td>先快速做一个可运行的<strong>原型</strong>给用户确认，再正式开发</td>
+<td>需求<strong>不明确</strong>、用户说不清，且<strong>规模不太大不太复杂</strong></td>
+<td>&quot;快速构建演示&quot;&quot;用户确认后再开发&quot;</td>
+</tr>
+<tr>
+<td><strong>螺旋模型</strong>（属演化模型）</td>
+<td>瀑布 + 原型 + <strong>每圈都做风险分析</strong>，多圈迭代</td>
+<td><strong>大型、复杂、高风险</strong>项目</td>
+<td>&quot;风险分析&quot;&quot;多轮迭代&quot;</td>
+</tr>
+<tr>
+<td><strong>喷泉模型</strong></td>
+<td>各阶段<strong>迭代无间隙</strong>（不像瀑布那样阶段分明）；<strong>以用户需求为动力、以对象为驱动</strong></td>
+<td><strong>面向对象</strong>的开发</td>
+<td>&quot;迭代无间隙&quot;&quot;对象驱动&quot;</td>
+</tr>
+<tr>
+<td><strong>统一过程 UP</strong></td>
+<td>三大特点：<strong>用例驱动、以架构为中心、迭代和增量</strong>；四阶段：<strong>初始 → 细化 → 构建 → 交付</strong></td>
+<td>中大型面向对象项目</td>
+<td>&quot;用例驱动&quot;&quot;以架构为中心&quot;&quot;四个阶段&quot;</td>
+</tr>
+<tr>
+<td><strong>敏捷族</strong>（Scrum / XP …）</td>
+<td>短迭代、拥抱变化、可工作软件优先</td>
+<td>需求多变、小团队、快速上线</td>
+<td>&quot;每日站会&quot;&quot;冲刺&quot;&quot;结对编程&quot;&quot;测试驱动&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆抓手</strong>：</p>
+<ul>
+<li><strong>演化模型是一族</strong>，包含原型模型与螺旋模型——题干说&quot;属于演化模型的是&quot;要能选原型/螺旋；</li>
+<li><strong>喷泉模型的&quot;无间隙&quot;对应面向对象</strong>，与瀑布&quot;严格分阶段&quot;正好是一对反义；结构化方法的&quot;严格区分工作阶段&quot;就配瀑布/结构化，别配喷泉；</li>
+<li><strong>UP 的用例驱动 + 以架构为中心</strong>这句连读，是选择题的原话级考点。</li>
+</ul>
+<h3 id="h-5">1.4 敏捷族六个成员（认名字 + 抓一句特征）<button type="button" class="sec-status" data-status-key="1.4 敏捷族六个成员（认名字 + 抓一句特征）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 敏捷族六个成员（认名字 + 抓一句特征）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>敏捷方法</th>
+<th>一句话特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>极限编程 XP</strong></td>
+<td>4 大价值观、5 大原则、<strong>12 个最佳实践</strong>（结对编程、测试驱动开发、持续集成、重构、小型发布…）——<strong>工程实践最多</strong></td>
+</tr>
+<tr>
+<td><strong>水晶法 Crystal</strong></td>
+<td><strong>以人为本</strong>：每个项目都需要一套不同的策略、约定与方法论；项目质量和开发人员素质提高，过程质量也随之提高</td>
+</tr>
+<tr>
+<td><strong>开放式源码</strong></td>
+<td>开发人员<strong>在地域上分布很广</strong></td>
+</tr>
+<tr>
+<td><strong>Scrum（并列争球法）</strong></td>
+<td>把每 <strong>30 天</strong>一次的迭代称为一个&quot;<strong>冲刺周期</strong>&quot;，按需求<strong>优先级</strong>实现；多个<strong>自组织和自治</strong>的小组并行递增实现产品</td>
+</tr>
+<tr>
+<td><strong>功能驱动开发 FDD</strong></td>
+<td><strong>首席程序员</strong>与&quot;类&quot;程序员，人尽其用</td>
+</tr>
+<tr>
+<td><strong>自适应软件开发 ASD</strong></td>
+<td>核心是三个非线性、重叠的阶段：<strong>猜测、合作、学习</strong></td>
+</tr>
+<tr>
+<td><strong>敏捷统一过程 AUP</strong></td>
+<td>采用&quot;大型连续&quot;和&quot;小型迭代&quot;原理构建系统</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>Scrum 与 XP 要能区分</strong>（最高频的一对）：Scrum 是<strong>管理框架</strong>（产品负责人、Sprint 冲刺、每日站会、回顾会）；XP 是<strong>工程实践</strong>（结对编程、测试驱动开发 TDD、持续集成、重构、小型发布）。题干问&quot;结对编程属于&quot;→ XP；问&quot;每日站会属于&quot;→ Scrum。</p>
+<h3 id="h-6">1.5 反例演示（易错三处）<button type="button" class="sec-status" data-status-key="1.5 反例演示（易错三处）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 反例演示（易错三处）」的学习状态"></button></h3>
+<ol>
+<li><strong>原型不是最终产品</strong>——抛弃型原型确认完需求就扔掉；考题说&quot;原型可作为最终系统交付&quot;即错。</li>
+<li><strong>螺旋模型不是&quot;更花哨的瀑布&quot;</strong>——它区别于一切传统模型的核心就是<strong>每圈迭代都加入风险分析</strong>；选项里没有风险分析的螺旋描述都是干扰项。</li>
+<li><strong>瀑布模型的&quot;缺点&quot;考法</strong>——<strong>直到后期才能看到可运行软件</strong>、需求变更代价大；不是&quot;没有文档&quot;（瀑布恰恰<strong>文档最全</strong>，它是文档驱动的）。</li>
+<li><strong>甘特与 PERT 的优缺点不能互串</strong>（详见第七节）——&quot;不能反映依赖关系&quot;是甘特的缺点、&quot;不能反映并行关系&quot;是 PERT 的缺点，这两个形容词一换就是错项。</li>
+</ol>
+<p><strong>应试动作</strong>：背四个特征词对应（明确→瀑布 / 不明确→原型 / 高风险→螺旋 / 多变→敏捷），考试就是配对题；再单独背两条&quot;原话级&quot;结论——<strong>面向对象 = 三阶段界限不明确</strong>、<strong>UP = 用例驱动 + 以架构为中心 + 迭代和增量</strong>。</p>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/01-软件开发模型与方法">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">03 软件工程基础</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-需求分析与软件设计.html">
+      <span class="k">下一页</span>
+      <span class="t">03.2 需求分析与软件设计 ★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

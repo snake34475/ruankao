@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.5 I/O、总线与指令系统 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.5 I/O、总线与指令系统 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">7.1 CPU 怎样与外设交换数据<button type="button" class="sec-status" data-status-key="7.1 CPU 怎样与外设交换数据" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 CPU 怎样与外设交换数据」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>谁盯设备</th>
+<th>CPU 负担</th>
+<th>适用特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>程序查询</td>
+<td>CPU 反复查询</td>
+<td>最大，忙等</td>
+<td>简单、低速</td>
+</tr>
+<tr>
+<td>中断</td>
+<td>设备就绪后通知 CPU</td>
+<td>不必忙等，但每次传送仍需 CPU 处理</td>
+<td>低中速、事件驱动</td>
+</tr>
+<tr>
+<td>DMA</td>
+<td>DMA 控制器在主存与外设间成批传送</td>
+<td>很小，CPU 只做初始化与结束处理</td>
+<td>高速、批量</td>
+</tr>
+<tr>
+<td>通道/I/O 处理机</td>
+<td>专用部件执行 I/O 程序</td>
+<td>更小</td>
+<td>大型系统、多设备</td>
+</tr>
+</tbody></table>
+</div>
+<p>DMA 的关键不是“完全不经过主存”，恰好相反，它让<strong>外设与主存直接成批交换数据</strong>，只是在传送期间暂时取得总线控制权，减少 CPU 逐字搬运。</p>
+<h3 id="h-3">7.2 中断过程<button type="button" class="sec-status" data-status-key="7.2 中断过程" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 中断过程」的学习状态"></button></h3>
+<p>简化顺序：</p>
+<ol>
+<li>设备发出中断请求；</li>
+<li>CPU 通常在当前指令执行完后响应；</li>
+<li>保存断点和现场；</li>
+<li>根据<strong>中断向量</strong>找到中断服务程序入口；</li>
+<li>执行中断服务程序；</li>
+<li>恢复现场，返回原程序。</li>
+</ol>
+<p><strong>中断向量 = 中断服务程序的入口地址（或形成入口地址的信息）</strong>。断点是原程序被打断后应继续执行的位置，二者不是一回事。</p>
+<h3 id="h-4">7.3 总线分类<button type="button" class="sec-status" data-status-key="7.3 总线分类" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 总线分类」的学习状态"></button></h3>
+<p>按传送内容：</p>
+<ul>
+<li>数据总线：传数据，通常双向；</li>
+<li>地址总线：传地址，通常由 CPU 向外，宽度决定可寻址空间；</li>
+<li>控制总线：传读/写、中断、总线请求等控制信号。</li>
+</ul>
+<p>若地址总线有 32 根，按字节编址，可寻址单元数为 2^32，空间为 2^32 B = <strong>4 GiB</strong>。</p>
+<p>按范围可分芯片内总线、系统总线、外部/通信总线；按传送方式可分串行和并行。并行不是永远更快：线路较长、频率较高时，多根线的时序偏差和串扰会限制速度，现代高速外设常用高速串行链路。</p>
+<p><strong>应试动作</strong>：题干出现“CPU 忙等”选查询，“设备通知 CPU”选中断，“主存与高速外设批量直传”选 DMA。“中断服务入口”选中断向量；地址线 n 根、按字节编址就写 2^n B。</p>
+<hr>
+<h2 id="h-5">第八节 指令、寻址方式与 RISC/CISC <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第八节 指令、寻址方式与 RISC/CISC ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 指令、寻址方式与 RISC/CISC ★★★」的学习状态"></button></h2>
+<h3 id="h-6">8.1 寻址方式：指令里的地址字段究竟装了什么<button type="button" class="sec-status" data-status-key="8.1 寻址方式：指令里的地址字段究竟装了什么" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 寻址方式：指令里的地址字段究竟装了什么」的学习状态"></button></h3>
+<p>设指令地址字段为 A，寄存器 R 的内容记为 (R)，主存单元 A 的内容记为 (A)，EA 为有效地址。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>寻址方式</th>
+<th>操作数/有效地址</th>
+<th>一句话识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>立即寻址</td>
+<td>操作数 = A</td>
+<td>指令里就是数</td>
+</tr>
+<tr>
+<td>直接寻址</td>
+<td>EA=A，操作数=(A)</td>
+<td>指令里是一次地址</td>
+</tr>
+<tr>
+<td>间接寻址</td>
+<td>EA=(A)，操作数=((A))</td>
+<td>先从内存取地址，再取数</td>
+</tr>
+<tr>
+<td>寄存器寻址</td>
+<td>操作数=(R)</td>
+<td>寄存器里就是数</td>
+</tr>
+<tr>
+<td>寄存器间接寻址</td>
+<td>EA=(R)，操作数=((R))</td>
+<td>寄存器里是地址</td>
+</tr>
+<tr>
+<td>相对寻址</td>
+<td>EA=(PC)+A</td>
+<td>相对当前程序位置</td>
+</tr>
+<tr>
+<td>基址寻址</td>
+<td>EA=(基址寄存器)+A</td>
+<td>基地址加偏移</td>
+</tr>
+<tr>
+<td>变址寻址</td>
+<td>EA=A+(变址寄存器)</td>
+<td>数组首址加下标</td>
+</tr>
+</tbody></table>
+</div>
+<p>例：A=100，(100)=500，(500)=36：</p>
+<ul>
+<li>立即寻址得到 100；</li>
+<li>直接寻址得到 500；</li>
+<li>间接寻址得到 36。</li>
+</ul>
+<p><strong>反例</strong>：直接寻址不是“直接拿到操作数”，而是直接拿到操作数的地址；真正把操作数写在指令中的是立即寻址。寄存器间接寻址也不是操作数在寄存器，而是操作数的地址在寄存器。</p>
+<h4 id="h-7">有效地址算例：相对、基址、变址别混</h4>
+<ul>
+<li><strong>相对寻址</strong>：若 <code>(PC)=1000</code>，地址字段 <code>A=40</code>，则 <code>EA=1000+40=1040</code>。程序整体搬家后 PC 随之改变，位移 40 不变，适合分支与位置无关代码。</li>
+<li><strong>基址寻址</strong>：若基址寄存器内容为 2000，位移 <code>A=120</code>，则 <code>EA=2000+120=2120</code>。基址常由系统设置，便于程序或存储区域重定位。</li>
+<li><strong>变址寻址</strong>：若数组首址 <code>A=5000</code>，变址寄存器内容为 12，则 <code>EA=5000+12=5012</code>。变址值常随循环变化，适合访问数组元素。</li>
+</ul>
+<p>三者表面都是“加法”，区别在谁是稳定基准、谁会变化：<strong>相对看 PC，基址看程序/区域起点，变址看数组下标或偏移</strong>。</p>
+<p>考试默认速度排序通常写：</p>
+<blockquote class="lead">
+<p><strong>立即寻址 ＞ 寄存器寻址 ＞ 直接寻址 ＞ 间接寻址</strong></p>
+</blockquote>
+<p>这里“＞”表示通常更快。立即数已随指令取入，寄存器寻址只访问寄存器；直接寻址要额外访问一次主存取操作数；间接寻址通常先去主存取有效地址，再去主存取操作数，额外访存最多。若题面明确给出某体系结构的周期数，应按题面数据计算。</p>
+<h3 id="h-8">8.2 RISC 与 CISC<button type="button" class="sec-status" data-status-key="8.2 RISC 与 CISC" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 RISC 与 CISC」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>RISC（精简指令集）</th>
+<th>CISC（复杂指令集）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>指令数量与格式</td>
+<td>少、格式较规整/常定长</td>
+<td>多、常变长</td>
+</tr>
+<tr>
+<td>寻址方式</td>
+<td>少</td>
+<td>多</td>
+</tr>
+<tr>
+<td>单条指令</td>
+<td>功能较简单，多数可快速完成</td>
+<td>功能复杂，周期差异大</td>
+</tr>
+<tr>
+<td>访存</td>
+<td><strong>Load/Store</strong>：通常只有装入/存储指令访问内存</td>
+<td>多种指令可直接访问内存</td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>通用寄存器多</td>
+<td>相对较少</td>
+</tr>
+<tr>
+<td>控制实现</td>
+<td>常用硬布线，利于流水线</td>
+<td>常用微程序控制</td>
+</tr>
+<tr>
+<td>编译器</td>
+<td>更依赖优化编译</td>
+<td>指令本身表达力强</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例</strong>：“RISC 指令少，所以程序一定更短”是错的。完成同一复杂任务，RISC 可能需要更多条简单指令；它追求的是规则、快速、易流水化，不是源程序或机器码条数必然更少。</p>
+<p><strong>流水线辨析</strong>：CISC 并非“绝对不能使用流水线”，现代 CISC 处理器同样会采用流水、译码和内部微操作等技术；只是 RISC 的定长、规整指令和较少寻址方式让分段更均匀，<strong>更容易高效流水化</strong>。因此题目问“更适合流水线”选 RISC，问“能否使用流水线”时不能断言 CISC 完全不能。</p>
+<p>口诀：<strong>RISC：少、齐、快，多寄存器，Load/Store，硬布线，爱流水；CISC 反过来。</strong></p>
+<p><strong>应试动作</strong>：题干出现“定长、少寻址、多寄存器、Load/Store、硬布线、易于流水”就锁定 RISC；“复杂指令、多寻址、可变长、微程序”锁定 CISC。注意“更适合流水线”不等于“另一类绝对不能流水”。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/05-IO总线与指令系统">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="04-磁盘.html">
+      <span class="k">上一页</span>
+      <span class="t">09.4 磁盘容量与存取时间 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="06-流水线与可靠性.html">
+      <span class="k">下一页</span>
+      <span class="t">09.6 流水线与系统可靠性 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

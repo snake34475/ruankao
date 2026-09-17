@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>12.3 多媒体数据与图像容量 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a><ul class="chapter-nav"><li><a href="01-计数与概率.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/01-计数与概率" aria-hidden="true"></i><span class="n">01</span><span class="t">计数与概率 ★★★</span></a></li><li><a href="02-逻辑图论与数值误差.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/02-逻辑图论与数值误差" aria-hidden="true"></i><span class="n">02</span><span class="t">命题逻辑、图论与数值误差 ★★★</span></a></li><li><a href="03-多媒体与图像容量.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/03-多媒体与图像容量" aria-hidden="true"></i><span class="n">03</span><span class="t">多媒体数据与图像容量 ★★★</span></a></li><li><a href="04-音视频容量与颜色空间.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/04-音视频容量与颜色空间" aria-hidden="true"></i><span class="n">04</span><span class="t">音视频容量与颜色空间 ★★★</span></a></li><li><a href="05-压缩与容量题模板.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/05-压缩与容量题模板" aria-hidden="true"></i><span class="n">05</span><span class="t">压缩与容量题统一模板 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/90-课后考题" aria-hidden="true"></i><span class="n">06</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/91-精华题" aria-hidden="true"></i><span class="n">07</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/99-答案与解析" aria-hidden="true"></i><span class="n">08</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 12 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">12.3 多媒体数据与图像容量 <span class="stars">★★★</span></h1>
+  </header>
+  <p>现实中的声音和图像多是连续信号，计算机要经过三步：</p>
+<ol>
+<li><strong>采样</strong>：在时间或空间上取点；</li>
+<li><strong>量化</strong>：把每个样本映射为有限等级；</li>
+<li><strong>编码</strong>：用二进制表示量化结果。</li>
+</ol>
+<p>质量与数据量的基本矛盾：采样越密、量化位数越多，通常越接近原信号，但存储与传输开销越大。</p>
+<p>所有原始容量题都可用同一个思路：</p>
+<p><strong>样本个数 × 每个样本的 bit 数 ÷ 8 = Byte 数</strong></p>
+<p>图像的样本是像素，音频的样本是每个声道每次采样值，视频则是在时间上连续出现的图像帧。</p>
+<p>单位必须统一：</p>
+<ul>
+<li><code>1 B=8 bit</code>；</li>
+<li><code>1 KiB=1024 B</code>，<code>1 MiB=1024 KiB=2^20 B</code>；</li>
+<li><strong>卷面对齐</strong>：软考卷面里的 <strong>MB 通常也按 1024 换算</strong>，即 <code>1 MB=1024 KB=2²⁰ B</code>——数值上与本课的 MiB 完全一致，只是叫法不同，做题直接用 1024 换即可，不必纠结 MB/MiB 的拼写区分；</li>
+<li>存储题若明确使用 KB/MB 的十进制定义，则按题面；未说明的传统软考计算通常按 1024 换算；</li>
+<li>传输速率的 kb/s、Mb/s 常按 1000 进位，仍以题面为准。</li>
+</ul>
+<p><strong>应试动作</strong>：计算式最后写出单位。先得到 bit，再除以 8 变 Byte；只有题目要求 KiB/MiB 时才继续除以 1024。</p>
+<hr>
+<h2 id="h-2">第七节 图像容量与分辨率 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第七节 图像容量与分辨率 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 图像容量与分辨率 ★★★」的学习状态"></button></h2>
+<h3 id="h-3">7.1 位图容量公式<button type="button" class="sec-status" data-status-key="7.1 位图容量公式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.1 位图容量公式」的学习状态"></button></h3>
+<p>未压缩位图容量：</p>
+<p><strong>容量(bit)=水平像素×垂直像素×每像素位数</strong></p>
+<p><strong>容量(Byte)=水平像素×垂直像素×位深÷8</strong></p>
+<p>例：一幅 <code>1024×768</code>、24 bit 真彩色图像：</p>
+<ol>
+<li>像素数=<code>1024×768=786432</code>；</li>
+<li>bit 数=<code>786432×24=18874368 bit</code>；</li>
+<li>Byte 数=<code>18874368/8=2359296 B</code>；</li>
+<li>MiB=<code>2359296/2^20=2.25 MiB</code>。</li>
+</ol>
+<p>第二种方法：24 bit=3 B/像素，直接算 <code>1024×768×3=2359296 B=2.25 MiB</code>，一致。</p>
+<p><strong>反例前置</strong>：24 bit 不是 24 Byte。位深以 bit 表示，每像素 24 bit=3 Byte，漏除以 8 会把容量放大 8 倍。</p>
+<h3 id="h-4">7.2 颜色数与位深<button type="button" class="sec-status" data-status-key="7.2 颜色数与位深" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.2 颜色数与位深」的学习状态"></button></h3>
+<p>b bit 最多表示：</p>
+<p><strong>颜色数 = 2^b</strong></p>
+<p>反过来，要表示 N 种颜色，至少需要：</p>
+<p><strong>b=⌈log2N⌉ bit</strong></p>
+<p>常见对应：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">位深</th>
+<th align="right">最多颜色数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1 bit</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">4 bit</td>
+<td align="right">16</td>
+</tr>
+<tr>
+<td align="right">8 bit</td>
+<td align="right">256</td>
+</tr>
+<tr>
+<td align="right">16 bit</td>
+<td align="right">65536</td>
+</tr>
+<tr>
+<td align="right">24 bit</td>
+<td align="right">2^24≈1677 万</td>
+</tr>
+</tbody></table>
+</div>
+<p>例：至少表示 300 种颜色。8 bit 只能表示 256 种，不够；9 bit 可表示 512 种，因此至少 9 bit。</p>
+<h3 id="h-5">7.3 像素分辨率与 DPI<button type="button" class="sec-status" data-status-key="7.3 像素分辨率与 DPI" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.3 像素分辨率与 DPI」的学习状态"></button></h3>
+<ul>
+<li><code>1920×1080</code>：数字图像的像素尺寸；</li>
+<li>DPI/PPI：每英寸点数/像素数，常用于打印或显示密度；</li>
+<li>打印尺寸（英寸）= 像素数 / PPI。</li>
+</ul>
+<p>例：一幅 3000×2400 像素的图片按 300 PPI 打印，尺寸为 <code>3000/300=10</code> 英寸 × <code>2400/300=8</code> 英寸。</p>
+<p><strong>反例</strong>：只改图片元数据中的 DPI、不改变像素数，通常不会改变未压缩像素数据量；容量公式仍看像素总数和位深。</p>
+<h3 id="h-6">7.4 位图与矢量图<button type="button" class="sec-status" data-status-key="7.4 位图与矢量图" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「7.4 位图与矢量图」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>位图（Raster/Bitmap）</th>
+<th>矢量图（Vector）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>表示</td>
+<td>像素阵列</td>
+<td>几何对象与参数</td>
+</tr>
+<tr>
+<td>放大</td>
+<td>会出现锯齿/像素化</td>
+<td>可无级缩放</td>
+</tr>
+<tr>
+<td>擅长</td>
+<td>照片、复杂纹理</td>
+<td>图标、工程图、字体</td>
+</tr>
+<tr>
+<td>容量影响</td>
+<td>分辨率、位深</td>
+<td>对象数量与复杂度</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：图像容量先写“宽×高×位深÷8”；颜色数用 2^b；打印题用像素÷PPI。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="12-数学与多媒体/03-多媒体与图像容量">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-逻辑图论与数值误差.html">
+      <span class="k">上一页</span>
+      <span class="t">12.2 命题逻辑、图论与数值误差 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="04-音视频容量与颜色空间.html">
+      <span class="k">下一页</span>
+      <span class="t">12.4 音视频容量与颜色空间 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

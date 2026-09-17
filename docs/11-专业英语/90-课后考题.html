@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>11.7 课后考题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a><ul class="chapter-nav"><li><a href="01-五步解题法.html"><i class="sb-dot" data-status-page-dot="11-专业英语/01-五步解题法" aria-hidden="true"></i><span class="n">01</span><span class="t">五步解题法：不要从第一个空开始硬翻 ★★★</span></a></li><li><a href="02-软件工程高频词.html"><i class="sb-dot" data-status-page-dot="11-专业英语/02-软件工程高频词" aria-hidden="true"></i><span class="n">02</span><span class="t">软件工程高频词 ★★★</span></a></li><li><a href="03-面向对象与程序语言词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/03-面向对象与程序语言词汇" aria-hidden="true"></i><span class="n">03</span><span class="t">面向对象、设计模式与程序语言词汇 ★★</span></a></li><li><a href="04-数据库操作系统与网络词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/04-数据库操作系统与网络词汇" aria-hidden="true"></i><span class="n">04</span><span class="t">数据库、操作系统与网络词汇 ★★★</span></a></li><li><a href="05-信息安全云计算与AI词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/05-信息安全云计算与AI词汇" aria-hidden="true"></i><span class="n">05</span><span class="t">信息安全、云计算与 AI 词汇 ★★★</span></a></li><li><a href="06-易混词构词法与长句.html"><i class="sb-dot" data-status-page-dot="11-专业英语/06-易混词构词法与长句" aria-hidden="true"></i><span class="n">06</span><span class="t">易混词、构词法、长句与考前速记 ★★★</span></a></li><li><a href="90-课后考题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="11-专业英语/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="11-专业英语/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="11-专业英语/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 11 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">11.7 课后考题</h1>
+  </header>
+  <blockquote class="lead">
+<p>三篇短文各 5 空，共 15 题。先按正式考试方式连续做完，再看答案。</p>
+</blockquote>
+<h3 id="h-2">Passage 1：Requirements Engineering（第 1–5 题）<button type="button" class="sec-status" data-status-key="Passage 1：Requirements Engineering（第 1–5 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 1：Requirements Engineering（第 1–5 题）」的学习状态"></button></h3>
+<p>Requirements engineering is the process of discovering, documenting, and maintaining what a software system should do. A well-written requirement should be clear, consistent, and <strong>(1)</strong>, so that testers can determine whether the implemented system satisfies it. During elicitation, analysts communicate with stakeholders to <strong>(2)</strong> their real needs rather than merely recording an initial solution. Because business conditions may change, approved requirements should be placed under configuration <strong>(3)</strong>. A traceability matrix links each requirement to design elements and test cases, making the impact of a proposed change easier to <strong>(4)</strong>. When a prototype is built, its main purpose is often to reduce uncertainty and obtain early <strong>(5)</strong> from users.</p>
+<p><strong>1.</strong> A. testable　B. invisible　C. temporary　D. accidental<br><strong>2.</strong> A. delete　B. identify　C. encrypt　D. compile<br><strong>3.</strong> A. management　B. transmission　C. arithmetic　D. recursion<br><strong>4.</strong> A. postpone　B. assess　C. hide　D. randomize<br><strong>5.</strong> A. bandwidth　B. feedback　C. ciphertext　D. deadlock</p>
+<h3 id="h-3">Passage 2：Transactions and Data Protection（第 6–10 题）<button type="button" class="sec-status" data-status-key="Passage 2：Transactions and Data Protection（第 6–10 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 2：Transactions and Data Protection（第 6–10 题）」的学习状态"></button></h3>
+<p>A database transaction groups several operations into a single logical unit of work. Atomicity ensures that either all operations take effect or none <strong>(6)</strong>. Isolation prevents concurrently executing transactions from observing inappropriate <strong>(7)</strong> states. Durability means that committed changes survive system <strong>(8)</strong>. When sensitive records travel across an untrusted network, encryption transforms plaintext into <strong>(9)</strong> so that unauthorized parties cannot understand it. A cryptographic hash serves a different purpose: its digest can help detect unauthorized <strong>(10)</strong> of the data, but it does not by itself keep the data secret.</p>
+<p><strong>6.</strong> A. do　B. are　C. have　D. make<br><strong>7.</strong> A. intermediate　B. permanent　C. public　D. graphical<br><strong>8.</strong> A. failures　B. queries　C. indexes　D. schemas<br><strong>9.</strong> A. metadata　B. ciphertext　C. bandwidth　D. source code<br><strong>10.</strong> A. compression　B. allocation　C. modification　D. scheduling</p>
+<h3 id="h-4">Passage 3：Cloud Computing and Machine Learning（第 11–15 题）<button type="button" class="sec-status" data-status-key="Passage 3：Cloud Computing and Machine Learning（第 11–15 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Passage 3：Cloud Computing and Machine Learning（第 11–15 题）」的学习状态"></button></h3>
+<p>Cloud computing provides shared computing resources over a network on demand. Elasticity allows capacity to scale up or down as the workload <strong>(11)</strong>. In an Infrastructure as a Service model, the customer manages operating systems and applications, while the provider manages the physical infrastructure. In Software as a Service, complete applications are delivered to users over the <strong>(12)</strong>, and the provider manages most of the technology stack. Machine learning takes a different but increasingly related role: a model learns patterns from examples instead of being explicitly <strong>(13)</strong> for every possible case. To estimate how well it will handle unseen examples, data is commonly divided into training and test <strong>(14)</strong>. A model that memorizes noise in its training data but performs poorly on new data is said to be <strong>(15)</strong>.</p>
+<p><strong>11.</strong> A. changes　B. decrypts　C. inherits　D. commits<br><strong>12.</strong> A. compiler　B. Internet　C. register　D. semaphore<br><strong>13.</strong> A. programmed　B. routed　C. normalized　D. signed<br><strong>14.</strong> A. locks　B. keys　C. sets　D. frames<br><strong>15.</strong> A. portable　B. overfitted　C. atomic　D. serialized</p>
+<h3 id="h-5">综合阅读题（不属于下午固定案例，用于训练长文理解）<button type="button" class="sec-status" data-status-key="综合阅读题（不属于下午固定案例，用于训练长文理解）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「综合阅读题（不属于下午固定案例，用于训练长文理解）」的学习状态"></button></h3>
+<p>Read the incident report and answer the questions in Chinese.</p>
+<blockquote>
+<p>After a new version of an online ordering service was deployed, its response time increased sharply during peak hours. Monitoring data showed that CPU utilization remained moderate, but database latency rose as the number of requests increased. Engineers found that a frequently executed query scanned the entire Orders table because a useful index had been removed during migration. They restored the index and added the query to the regression test suite. Performance returned to normal. The team also updated its deployment checklist so that future schema changes would be reviewed before release.</p>
+</blockquote>
+<p><strong>16.</strong> <code>deployed</code> 在文中的含义是什么？<br><strong>17.</strong> 哪项监控证据说明 CPU 不是主要瓶颈？<br><strong>18.</strong> 响应变慢的直接技术原因是什么？<br><strong>19.</strong> <code>regression test suite</code> 的作用是什么？<br><strong>20.</strong> 更新部署检查清单属于“只修复当前问题”，还是还包含预防未来问题？请给出文本依据。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="11-专业英语/90-课后考题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="06-易混词构词法与长句.html">
+      <span class="k">上一页</span>
+      <span class="t">11.6 易混词、构词法、长句与考前速记 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="91-精华题与补充题.html">
+      <span class="k">下一页</span>
+      <span class="t">11.8 精华题与补充题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

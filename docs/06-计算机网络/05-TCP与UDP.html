@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>06.5 TCP、UDP 与三次握手 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a><ul class="chapter-nav"><li><a href="01-网络分层模型.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/01-网络分层模型" aria-hidden="true"></i><span class="n">01</span><span class="t">网络分层模型 ★★★</span></a></li><li><a href="02-IP地址与网关.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/02-IP地址与网关" aria-hidden="true"></i><span class="n">02</span><span class="t">IP 地址、NAT 与默认网关 ★★</span></a></li><li><a href="03-子网划分.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/03-子网划分" aria-hidden="true"></i><span class="n">03</span><span class="t">子网划分与掩码计算 ★★★</span></a></li><li><a href="04-CIDR与路由聚合.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/04-CIDR与路由聚合" aria-hidden="true"></i><span class="n">04</span><span class="t">CIDR 与路由聚合 ★★</span></a></li><li><a href="05-TCP与UDP.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="06-计算机网络/05-TCP与UDP" aria-hidden="true"></i><span class="n">05</span><span class="t">TCP、UDP 与三次握手 ★★★</span></a></li><li><a href="06-应用层协议.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/06-应用层协议" aria-hidden="true"></i><span class="n">06</span><span class="t">应用层协议与端口 ★★★</span></a></li><li><a href="07-Web与网络命令.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/07-Web与网络命令" aria-hidden="true"></i><span class="n">07</span><span class="t">HTML、WWW 与网络命令 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06.5 TCP、UDP 与三次握手 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">为什么要分 TCP 和 UDP 两种<button type="button" class="sec-status" data-status-key="为什么要分 TCP 和 UDP 两种" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要分 TCP 和 UDP 两种」的学习状态"></button></h3>
+<p>传输层负责&quot;程序到程序&quot;的交付（用<strong>端口号</strong>区分同一台主机上的不同应用）。有的应用宁可慢也要<strong>一条都不能丢</strong>（网页、文件、邮件），有的应用宁可丢也要<strong>快</strong>（直播、语音、域名查询）。于是传输层提供两种选择：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th><strong>TCP</strong></th>
+<th><strong>UDP</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连接</td>
+<td><strong>面向连接</strong>（先握手再传数据）</td>
+<td><strong>无连接</strong>（拿到地址直接发）</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td><strong>可靠</strong>（确认、重传、按序交付）</td>
+<td><strong>不可靠</strong>（尽力而为，丢了不补）</td>
+</tr>
+<tr>
+<td>有序性</td>
+<td>保证按序到达</td>
+<td>不保证顺序</td>
+</tr>
+<tr>
+<td>流量控制/拥塞控制</td>
+<td><strong>有</strong>（滑动窗口）</td>
+<td>没有</td>
+</tr>
+<tr>
+<td>开销与速度</td>
+<td>头部大、开销大、较慢</td>
+<td>头部小（8 字节）、开销小、<strong>快</strong></td>
+</tr>
+<tr>
+<td>数据单位</td>
+<td>字节流</td>
+<td>用户数据报</td>
+</tr>
+<tr>
+<td>典型应用</td>
+<td>HTTP/HTTPS、FTP、SMTP、TELNET</td>
+<td><strong>DNS、DHCP、TFTP</strong>、SNMP、音视频流</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>共同点</strong>（考过原型的知识点）：TCP 和 UDP <strong>都用端口号标识上层应用</strong>（端口寻址）；都基于 IP 之上、属于传输层。但 UDP <strong>没有</strong>连接管理、没有重传、没有流量控制。</p>
+<p><strong>反例演示</strong>：</p>
+<ol>
+<li>&quot;UDP 是不可靠协议，所以 UDP 报文没有端口&quot;——<strong>错</strong>。可靠不可靠是传输质量，端口寻址是编址方式，UDP 同样用端口（如 DNS 用 53）。</li>
+<li>&quot;TCP 因为可靠，所以比 UDP 一定更快&quot;——<strong>反了</strong>。确认重传换可靠，代价就是速度；要快用 UDP。</li>
+<li>&quot;DNS 是传输层协议&quot;——<strong>错</strong>。DNS 是<strong>应用层</strong>协议，只是它<strong>使用 UDP</strong>（端口 53）来传输，别把&quot;用谁传输&quot;和&quot;属于哪层&quot;混为一谈。</li>
+</ol>
+<h3 id="h-3">TCP 三次握手（背报文 + 背状态）<button type="button" class="sec-status" data-status-key="TCP 三次握手（背报文 + 背状态）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「TCP 三次握手（背报文 + 背状态）」的学习状态"></button></h3>
+<p><strong>动机</strong>：TCP 要在传数据前确认&quot;双方都具备收发能力&quot;。为什么<strong>三次</strong>而不是两次？——两次握手下，服务器无法确认&quot;客户端能收到我发的数据&quot;；且历史上一个早已失效的连接请求若突然到达服务器，两次握手会让服务器白白建起一条没人用的连接。第三次握手让客户端把&quot;我收到了你的确认&quot;再告诉服务器，双方的收发能力才都被双向确认。</p>
+<p>三次握手过程（客户端 A，服务器 B）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>谁发什么</th>
+<th>报文标志</th>
+<th>本步的状态变化（谁变了、变成什么）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>A → B：请求建立连接</td>
+<td><strong>SYN=1</strong>（seq=x）</td>
+<td><strong>A</strong>：CLOSED → <strong>SYN-SENT</strong>；B 仍停在 LISTEN</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B → A：同意并确认</td>
+<td><strong>SYN=1, ACK=1</strong>（seq=y, ack=x+1）</td>
+<td><strong>B</strong>：LISTEN → <strong>SYN-RCVD</strong>；A 仍停在 SYN-SENT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A → B：确认</td>
+<td><strong>ACK=1</strong>（seq=x+1, ack=y+1）</td>
+<td><strong>A</strong>：SYN-SENT → <strong>ESTABLISHED</strong>；<strong>B</strong>：SYN-RCVD → <strong>ESTABLISHED</strong></td>
+</tr>
+</tbody></table>
+</div>
+<blockquote class="lead">
+<p>这张表的&quot;谁&quot;会随着步骤换人：第 1、3 步的发送方是 A，第 2 步的发送方是 <strong>B</strong>。所以读表时要盯&quot;这一步是谁在发&quot;，别把 B 的状态变化记到 A 头上。</p>
+</blockquote>
+<p><strong>把数字代进去，状态就再也不会记乱</strong>（设 A 的初始序号 x=100、B 的 y=200）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>报文</th>
+<th>这一步在说什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>A→B：SYN=1，seq=<strong>100</strong></td>
+<td>A 说&quot;我把起始编号定为 100&quot;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B→A：SYN=1，ACK=1，seq=<strong>200</strong>，ack=<strong>101</strong></td>
+<td>B 确认&quot;100 我收到了，下一个请给我 101&quot;；同时报出自己的起始号 200</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A→B：ACK=1，seq=<strong>101</strong>，ack=<strong>201</strong></td>
+<td>A 确认&quot;200 我收到了，下一个请给我 201&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>数字规律（背这一条就够）</strong>：<strong>ack = 对方的 seq + 1</strong>——因为 SYN（和之后的 FIN）本身要占掉一个序号位，所以要 +1；而自己的 seq 一旦定下就固定不变，之后每传一段数据才按字节数往前推。</p>
+<p>记忆抓手：<strong>&quot;一请、二请二应、三应&quot;</strong>——第一次只带 SYN；第二次 SYN 和 ACK 一起带（SYN+ACK 报文）；第三次只带 ACK。四个关键状态按顺序：<strong>CLOSED / LISTEN → SYN-SENT → SYN-RCVD → ESTABLISHED</strong>。</p>
+<p><strong>断开连接（四次挥手，了解过程即可）</strong>：FIN → ACK → FIN → ACK，双方各发一次、各回一次；主动方最后进入 <strong>TIME-WAIT</strong> 等待一段时间（确保最后的 ACK 送达、旧报文消亡）再 CLOSED。考点级别低于握手，记住&quot;挥手四次、比握手多一次&quot;即可。</p>
+<h3 id="h-4">滑动窗口（流量控制）<button type="button" class="sec-status" data-status-key="滑动窗口（流量控制）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「滑动窗口（流量控制）」的学习状态"></button></h3>
+<p><strong>动机</strong>：逐段“发一段、等一次确认”太慢；一口气无限发送又可能压垮接收方或网络。滑动窗口让发送方在一个许可范围内连续发送，既利用线路，又给速度设上限。</p>
+<p>TCP 同时受两扇“窗口”约束：</p>
+<ul>
+<li><strong>接收窗口 <code>rwnd</code></strong>：接收方通告自己还有多少缓存，防止发送方压垮<strong>接收主机</strong>，属于流量控制。</li>
+<li><strong>拥塞窗口 <code>cwnd</code></strong>：发送方根据丢包、确认等网络反馈估计可发送量，防止压垮<strong>网络路径</strong>，属于拥塞控制。</li>
+</ul>
+<p>因此，发送方实际可用的发送窗口上限是：</p>
+<blockquote>
+<p><strong>发送窗口 = min(<code>rwnd</code>, <code>cwnd</code>)</strong></p>
+</blockquote>
+<p><strong>不跳步算例</strong>：接收方通告 <code>rwnd = 12 KB</code>，发送方当前 <code>cwnd = 8 KB</code>，则发送窗口为 <code>min(12, 8) = 8 KB</code>。即使接收方还有 12 KB 空间，网络当前只允许谨慎发送 8 KB。若下一时刻 <code>rwnd = 4 KB</code>、<code>cwnd = 10 KB</code>，则窗口变为 4 KB，瓶颈改成接收方。</p>
+<h4 id="h-5">窗口怎样“滑动”</h4>
+<p>为便于手算，先把数据想成编号为 1、2、3……的等长小段，窗口大小设为 4：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>已确认</th>
+<th>当前允许连续发送</th>
+<th>发生了什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>t0</td>
+<td>无</td>
+<td>1、2、3、4</td>
+<td>左边界在 1，可连续发 4 段</td>
+</tr>
+<tr>
+<td>t1</td>
+<td>1、2</td>
+<td>3、4、5、6</td>
+<td>收到累计确认，左边界滑到 3，新放进 5、6</td>
+</tr>
+<tr>
+<td>t2</td>
+<td>1～4</td>
+<td>5、6、7、8</td>
+<td>3、4 也确认，窗口继续右移</td>
+</tr>
+</tbody></table>
+</div>
+<p>这里“确认到 2”可理解为接收方下一段期望 3；已确认的数据移出窗口，右侧才腾出同样数量的新位置。窗口没有把旧数据整体搬家，只是<strong>可发送编号范围的左右边界改变了</strong>。</p>
+<p><strong>反例演示</strong>：若只收到对第 1、2 段的累计确认，却把窗口从 <code>[1,4]</code> 滑成 <code>[5,8]</code>，就等于错误地假设 3、4 也已确认；正确窗口是 <code>[3,6]</code>。</p>
+<h4 id="h-6">慢启动在做什么</h4>
+<p>新连接不知道网络能承受多大流量，因此拥塞窗口不会一开始就开到最大。<strong>慢启动</strong>让 <code>cwnd</code> 从较小值开始，正常收到确认时在每个往返时间内大致成倍增长；到达慢启动门限后转入拥塞避免，增长趋于线性。发生超时等明显拥塞信号时，会显著减小窗口，再谨慎增大。</p>
+<p>“慢启动”名字里的“慢”指<strong>起点小、先试探</strong>，并不表示增长速度一直慢；它的早期增长反而近似指数型。考试通常只要求识别“由小到大探测网络容量”和“<code>cwnd</code> 管网络拥塞”。</p>
+<p><strong>应试动作</strong>：① TCP/UDP 对比表整表背下，特别是“谁用 TCP、谁用 UDP”的典型应用清单；② 三次握手按 SYN → SYN+ACK → ACK 默写；③ 看到“接收方缓存”选 <code>rwnd</code>/流量控制，看到“网络拥塞”选 <code>cwnd</code>/拥塞控制，计算实际窗口就取二者较小值；④ 窗口移动题只让“已经确认”的编号移出左边界。</p>
+
+
+  <footer class="status-bar" data-status-page="06-计算机网络/05-TCP与UDP">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="04-CIDR与路由聚合.html">
+      <span class="k">上一页</span>
+      <span class="t">06.4 CIDR 与路由聚合 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="06-应用层协议.html">
+      <span class="k">下一页</span>
+      <span class="t">06.6 应用层协议与端口 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

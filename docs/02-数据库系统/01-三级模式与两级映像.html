@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>02.1 三级模式与两级映像 ★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a><ul class="chapter-nav"><li><a href="01-三级模式与两级映像.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="02-数据库系统/01-三级模式与两级映像" aria-hidden="true"></i><span class="n">01</span><span class="t">三级模式与两级映像 ★</span></a></li><li><a href="02-E-R模型.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/02-E-R模型" aria-hidden="true"></i><span class="n">02</span><span class="t">E-R 模型 ★★★</span></a></li><li><a href="03-关系代数.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/03-关系代数" aria-hidden="true"></i><span class="n">03</span><span class="t">关系代数 ★★</span></a></li><li><a href="04-关系规范化.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/04-关系规范化" aria-hidden="true"></i><span class="n">04</span><span class="t">关系规范化 ★★★</span></a></li><li><a href="05-SQL.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/05-SQL" aria-hidden="true"></i><span class="n">05</span><span class="t">SQL ★★★</span></a></li><li><a href="06-事务并发与故障恢复.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/06-事务并发与故障恢复" aria-hidden="true"></i><span class="n">06</span><span class="t">事务、并发控制与故障恢复 ★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：数据库设计</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 2 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">02.1 三级模式与两级映像 <span class="stars">★</span></h1>
+  </header>
+  <h3 id="h-2">为什么需要&quot;三级模式&quot;<button type="button" class="sec-status" data-status-key="为什么需要&amp;quot;三级模式&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么需要&quot;三级模式&quot;」的学习状态"></button></h3>
+<p>数据库是被很多应用程序<strong>共享</strong>的：财务程序、人事程序、报表工具都要读同一批数据，但它们各只关心自己那一块，而且谁都不希望&quot;存储结构一改、我的程序就得重写&quot;。为此数据库把数据组织分成三个视角、配上两层&quot;翻译层&quot;，把<strong>变化隔离</strong>在各自层内——这就是考&quot;独立性&quot;的全部动机。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>别名</th>
+<th>看到什么</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外模式</td>
+<td>用户模式/子模式</td>
+<td>某类用户看到的部分数据</td>
+<td>一个视图、一张报表用的字段</td>
+</tr>
+<tr>
+<td>概念模式</td>
+<td>模式/逻辑模式</td>
+<td>全体数据的逻辑结构</td>
+<td>一张张表的定义</td>
+</tr>
+<tr>
+<td>内模式</td>
+<td>存储模式</td>
+<td>数据在磁盘上怎么存</td>
+<td>索引、压缩、存储顺序</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>两级映像</strong>（考试考&quot;哪个映像对应哪种独立性&quot;，必背）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>映像</th>
+<th>连接的两层</th>
+<th>保证的独立性</th>
+<th>白话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>外模式/模式映像</strong></td>
+<td>外模式 ↔ 模式</td>
+<td><strong>逻辑独立性</strong></td>
+<td>表的逻辑结构变了（加字段），应用程序不用改</td>
+</tr>
+<tr>
+<td><strong>模式/内模式映像</strong></td>
+<td>模式 ↔ 内模式</td>
+<td><strong>物理独立性</strong></td>
+<td>换了存储方式（加了索引、换了磁盘），应用程序和表定义都不用改</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：题目说&quot;数据存储结构改变，模式不变&quot;——变化发生在内模式层，靠<strong>模式/内模式映像</strong>挡住 → <strong>物理独立性</strong>；说&quot;表新增了字段，应用程序不变&quot;——变化发生在模式层，靠<strong>外模式/模式映像</strong>挡住 → <strong>逻辑独立性</strong>。判断口诀：<strong>变化发生在哪一层，挡住它的映像就连着哪一层；看应用程序&quot;感知不到什么&quot;来选词</strong>。别把&quot;逻辑独立性 = 跟逻辑有关所以是内模式&quot;想反了——逻辑独立性恰恰是指<strong>逻辑结构变化也影响不到应用</strong>。</p>
+<p><strong>应试动作</strong>：背&quot;外模式/模式映像 ↔ 逻辑独立性，模式/内模式映像 ↔ 物理独立性&quot;这一组对应，考试只考配对，认出题干描述的变化发生在哪层即可。</p>
+
+
+  <footer class="status-bar" data-status-page="02-数据库系统/01-三级模式与两级映像">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">02 数据库系统</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-E-R模型.html">
+      <span class="k">下一页</span>
+      <span class="t">02.2 E-R 模型 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

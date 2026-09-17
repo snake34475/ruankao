@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>07.2 编译的六个阶段 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a><ul class="chapter-nav"><li><a href="01-编译解释与语言成分.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/01-编译解释与语言成分" aria-hidden="true"></i><span class="n">01</span><span class="t">编译、解释与语言基本成分 ★★★</span></a></li><li><a href="02-编译阶段.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/02-编译阶段" aria-hidden="true"></i><span class="n">02</span><span class="t">编译的六个阶段 ★★★</span></a></li><li><a href="03-表达式与语法树.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/03-表达式与语法树" aria-hidden="true"></i><span class="n">03</span><span class="t">前缀、中缀、后缀表达式 ★★</span></a></li><li><a href="04-文法与推导.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/04-文法与推导" aria-hidden="true"></i><span class="n">04</span><span class="t">文法、推导与语法树 ★★</span></a></li><li><a href="05-正规式.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/05-正规式" aria-hidden="true"></i><span class="n">05</span><span class="t">正规式与正规集 ★★★</span></a></li><li><a href="06-有限自动机.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/06-有限自动机" aria-hidden="true"></i><span class="n">06</span><span class="t">有限自动机：DFA 与 NFA ★★★</span></a></li><li><a href="07-函数调用作用域与闭包.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/07-函数调用作用域与闭包" aria-hidden="true"></i><span class="n">07</span><span class="t">函数调用、作用域与闭包 ★★★</span></a></li><li><a href="08-语言特点与分类.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/08-语言特点与分类" aria-hidden="true"></i><span class="n">08</span><span class="t">各语言特点与分类 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/90-课后考题" aria-hidden="true"></i><span class="n">09</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">10</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/99-答案与解析" aria-hidden="true"></i><span class="n">11</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 7 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">07.2 编译的六个阶段 <span class="stars">★★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：为什么翻译不一步到位，要分六个阶段？因为&quot;读懂一段话&quot;本身就是分层的：先认字（词法），再看句子通不通（语法），再理解意思对不对（语义），最后才落笔翻译（中间代码→优化→目标代码）。分层后每个阶段只管一件事，出错也好定位——你在第 2 阶段就发现&quot;句子结构不对&quot;，不必等到最后生成机器码才发现。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>输入 → 输出</th>
+<th>干什么</th>
+<th>依据/工具</th>
+<th>理论考点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① <strong>词法分析</strong></td>
+<td>源程序字符流 → <strong>记号流</strong>（单词符号序列）</td>
+<td>从左到右逐个扫描字符，识别出关键字、标识符、常数、运算符、分隔符</td>
+<td>正规式、<strong>有限自动机</strong></td>
+<td>词法错误</td>
+</tr>
+<tr>
+<td>② <strong>语法分析</strong></td>
+<td>记号流 → <strong>语法树</strong></td>
+<td>按语法规则把单词组成语法单位，检查结构合法性（如 if…end if 配对、括号匹配）</td>
+<td><strong>自顶向下</strong>：递归下降、预测分析；<strong>自底向上</strong>：移进-归约</td>
+<td>语法错误</td>
+</tr>
+<tr>
+<td>③ <strong>语义分析</strong></td>
+<td>语法树</td>
+<td>类型检查等<strong>静态语义</strong>检查（如对浮点数做取余、运算对象类型不合法）</td>
+<td><strong>符号表</strong>辅助</td>
+<td>静态语义错误</td>
+</tr>
+<tr>
+<td>④ <strong>中间代码生成</strong></td>
+<td>语义分析结果 → 中间代码</td>
+<td>生成与<strong>具体机器无关</strong>的中间形式</td>
+<td>常用形式：<strong>后缀式、语法树、三地址码、四元式</strong></td>
+<td>四元式 (运算符， 对象1， 对象2， 结果)</td>
+</tr>
+<tr>
+<td>⑤ <strong>代码优化</strong></td>
+<td>中间代码 → 更优的中间代码</td>
+<td>提高效率（删冗余、提公共子表达式等）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⑥ <strong>目标代码生成</strong></td>
+<td>中间代码 → <strong>目标程序</strong></td>
+<td>转成低级语言代码，<strong>与硬件系统结构密切相关</strong>（寄存器分配等）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p>六阶段不是每个编译器都必须逐项拥有：<strong>词法、语法、语义分析和目标代码生成是基本阶段；中间代码生成与代码优化可以省略</strong>。省略优化只会使目标程序可能不够快，不代表不能正确运行。</p>
+<p>目标程序常见三种形式：</p>
+<ul>
+<li><strong>绝对指令代码</strong>：地址已经确定，可直接装入固定位置执行；</li>
+<li><strong>可重定位指令代码</strong>：地址尚可调整，装入或链接时再确定实际位置；</li>
+<li><strong>汇编指令代码</strong>：还需汇编程序进一步翻译成机器指令。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：“代码优化是必需阶段”错误；优化服务于效率，不决定源程序语义是否正确。“汇编代码属于中间代码”也错误，教材把它列作目标代码形式之一；常见中间代码是后缀式、语法树、三地址码和四元式。</p>
+<p><strong>顺序口诀</strong>：<strong>词法 → 语法 → 语义 → 中间 → 优化 → 目标</strong>（&quot;认字 → 组句 → 懂意 → 打草稿 → 改稿 → 定稿&quot;）。另外<strong>符号表</strong>贯穿编译全程，记录各符号（变量、函数）的信息，辅助语义检查和代码生成。</p>
+<p><strong>中间代码举例</strong>（四元式）：对 <code>x := y + z * 60</code>：</p>
+<pre><code>(*, z, 60, t1)   ← 先算乘法，结果放临时变量 t1
+(+, y, t1, t2)   ← 再算加法
+(:=, t2,  , x)   ← 赋值
+</code></pre>
+<p>中间代码&quot;中间&quot;的意义：它站在高级语言和机器语言之间，<strong>与机器无关</strong>——前端（词法/语法/语义）只管&quot;读懂&quot;，产出到中间代码为止；后端（优化/目标代码）才管&quot;搬到具体机器上&quot;。换一种 CPU，前端原封不动，只改后端。</p>
+<p><strong>错误分类（必考表格，背熟）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>发现时机</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>词法错误</strong></td>
+<td>编译时（词法分析阶段）</td>
+<td>使用了语言字符集以外的非法字符、单词拼写错误、标点符号错误（如误用中文标点）</td>
+</tr>
+<tr>
+<td><strong>语法错误</strong></td>
+<td>编译时（语法分析阶段）</td>
+<td>括号不匹配、缺少分号、if…end if 不配对、<strong>表达式中缺少操作数</strong></td>
+</tr>
+<tr>
+<td><strong>静态语义错误</strong></td>
+<td>编译时（语义分析阶段）</td>
+<td>运算符与运算对象<strong>类型不合法</strong>（如对浮点数做取余、整型与字符串相加）</td>
+</tr>
+<tr>
+<td><strong>动态语义错误</strong></td>
+<td><strong>运行时</strong></td>
+<td>除数为零、数组下标越界、陷入死循环、无效指针引用</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（最易混的两组）</strong>：①「拼写错误 vs 缺分号」——单词拼错、用了中文标点属于<strong>词法</strong>错误；缺分号、缺括号、缺操作数属于<strong>语法</strong>错误（涉及语言结构）。②「编译时 vs 运行时」——除零、下标越界编译器查不出来（它不知道运行时下标是多少），所以叫<strong>动态</strong>错误；死循环也是运行时才暴露。</p>
+<p><strong>应试动作</strong>：① 背死六阶段顺序和三个&quot;输入→输出&quot;（字符流→记号流→语法树→中间代码→目标程序）；② 错误四分类给例子能归类——判断窍门先问&quot;编译时能发现吗&quot;，再按词法（字符级）/语法（结构级）/静态语义（类型级）定位；③ 记住自顶向下=递归下降/预测分析，自底向上=移进-归约。</p>
+
+
+  <footer class="status-bar" data-status-page="07-程序设计语言基础/02-编译阶段">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-编译解释与语言成分.html">
+      <span class="k">上一页</span>
+      <span class="t">07.1 编译、解释与语言基本成分 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-表达式与语法树.html">
+      <span class="k">下一页</span>
+      <span class="t">07.3 前缀、中缀、后缀表达式 ★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

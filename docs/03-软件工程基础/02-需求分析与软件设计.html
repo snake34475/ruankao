@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.2 需求分析与软件设计 ★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.2 需求分析与软件设计 <span class="stars">★</span></h1>
+  </header>
+  <h3 id="h-2">2.1 需求工程的四个过程<button type="button" class="sec-status" data-status-key="2.1 需求工程的四个过程" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 需求工程的四个过程」的学习状态"></button></h3>
+<p><strong>需求获取 → 需求分析 → 需求规格说明（定义）→ 需求验证（确认）</strong>（背顺序）。</p>
+<p><strong>需求分析的任务是&quot;找出系统要实现什么功能&quot;</strong>——只回答<strong>做什么</strong>，不回答<strong>怎么做</strong>。所以&quot;确定模块内部算法&quot;&quot;设计数据库表结构&quot;都<strong>不属于</strong>需求分析（属于设计阶段），这是真题的一种问法。</p>
+<p><strong>需求验证</strong>指检查需求规格说明书是否<strong>正确、一致、完整</strong>（三个词连读记）。</p>
+<h3 id="h-3">2.2 需求的分类（两个层次，别混）<button type="button" class="sec-status" data-status-key="2.2 需求的分类（两个层次，别混）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 需求的分类（两个层次，别混）」的学习状态"></button></h3>
+<p><strong>按抽象层次分三层</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>视角</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>业务需求</strong></td>
+<td>整体（组织为什么做这个系统）</td>
+<td>&quot;提升线上订单占比到 60%&quot;</td>
+</tr>
+<tr>
+<td><strong>用户需求</strong></td>
+<td>用户视角（用户想干什么）</td>
+<td>&quot;我要能在线查订单进度&quot;</td>
+</tr>
+<tr>
+<td><strong>系统需求</strong></td>
+<td>计算机化视角（机器怎么界定）</td>
+<td>见下面三类</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>系统需求内部再分三类</strong>（这一层才是选择题的主战场）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>含义</th>
+<th>识别特征</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>功能需求</strong></td>
+<td>系统<strong>做什么</strong></td>
+<td>动词 + 对象（查询、统计、导出）</td>
+<td>&quot;系统应能按日期导出销售报表&quot;</td>
+</tr>
+<tr>
+<td><strong>性能需求</strong>（非功能需求）</td>
+<td>做得<strong>怎么样</strong></td>
+<td>含<strong>数字指标</strong>：响应时间、吞吐量、并发数、可靠性</td>
+<td>&quot;响应时间不超过 2 秒&quot;</td>
+</tr>
+<tr>
+<td><strong>设计约束</strong></td>
+<td><strong>必须遵守</strong>的外部条件</td>
+<td>&quot;必须用…&quot;&quot;必须符合…标准&quot;</td>
+<td>&quot;必须部署在国产操作系统上&quot;&quot;须符合等保三级&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：判断口诀——<strong>有数字的&quot;多快好省&quot;归性能，有&quot;必须/须符合&quot;的归设计约束，其余动词句归功能需求</strong>。</p>
+<h3 id="h-4">2.3 结构化分析的产出：四件套（必背清单）<button type="button" class="sec-status" data-status-key="2.3 结构化分析的产出：四件套（必背清单）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 结构化分析的产出：四件套（必背清单）」的学习状态"></button></h3>
+<p>结构化分析（SA）做完之后，交出来的东西是<strong>四件</strong>，考题常问&quot;下列不属于结构化分析结果的是&quot;：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>产出</th>
+<th>作用</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>一套分层的数据流图（DFD）</strong></td>
+<td><strong>功能建模</strong>——描述数据怎么流动、被怎么加工</td>
+<td>&quot;系统的功能地图&quot;</td>
+</tr>
+<tr>
+<td><strong>一本数据词典（DD）</strong></td>
+<td>给 DFD 中每个数据流、数据存储、数据项下<strong>精确定义</strong></td>
+<td>&quot;把图上的名字翻译成人能懂的定义&quot;</td>
+</tr>
+<tr>
+<td><strong>一组小说明</strong>（加工逻辑说明）</td>
+<td>描述 DFD 里每个<strong>加工内部</strong>的处理逻辑</td>
+<td>&quot;加工肚子里的算法&quot;</td>
+</tr>
+<tr>
+<td><strong>补充材料：E-R 图</strong></td>
+<td>描述数据之间的关系</td>
+<td>&quot;数据的静态结构&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>动机</strong>：为什么光有 DFD 不够？因为 DFD 里的&quot;订单&quot;&quot;客户信息&quot;只是<strong>名字</strong>，谁也不知道里面究竟有哪几个字段——<strong>没有数据词典，图中的名字就没有精确含义</strong>；同理 DFD 里的&quot;审核&quot;这个加工是个黑盒子，<strong>没有小说明就不知道它按什么规则审核</strong>。图 + 词典 + 说明，才是完整的一份分析结果。</p>
+<h3 id="h-5">2.4 软件设计的四项活动（顺序不能乱）<button type="button" class="sec-status" data-status-key="2.4 软件设计的四项活动（顺序不能乱）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 软件设计的四项活动（顺序不能乱）」的学习状态"></button></h3>
+<p>需求想清楚了，进入设计。设计的四项活动是一条有先后依赖的链：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>做什么</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>① 体系结构设计</strong></td>
+<td>定义软件系统<strong>各主要部件之间的关系</strong>（先搭骨架）</td>
+<td>需求 + 经验</td>
+</tr>
+<tr>
+<td><strong>② 数据设计</strong></td>
+<td>基于 <strong>E-R 图</strong>确定<strong>文件系统结构与数据库表结构</strong></td>
+<td>E-R 图</td>
+</tr>
+<tr>
+<td><strong>③ 接口设计</strong>（人机界面设计）</td>
+<td>软件<strong>内部</strong>、软件与<strong>操作系统</strong>间、软件与<strong>人</strong>之间如何通信</td>
+<td>体系结构</td>
+</tr>
+<tr>
+<td><strong>④ 过程设计</strong></td>
+<td>把结构部件转换成<strong>过程描述</strong>——确定各部件<strong>内部的算法与内部数据结构</strong></td>
+<td>前两项结果</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>考试问法</strong>：&quot;确定模块内部算法与数据结构属于哪个活动&quot;→ <strong>过程设计</strong>（不是体系结构设计，体系结构只管部件之间的关系）。&quot;基于 E-R 图确定表结构&quot;→ <strong>数据设计</strong>。</p>
+<h3 id="h-6">2.5 加工逻辑的三种描述工具（判定表是重点）<button type="button" class="sec-status" data-status-key="2.5 加工逻辑的三种描述工具（判定表是重点）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.5 加工逻辑的三种描述工具（判定表是重点）」的学习状态"></button></h3>
+<p>光有 DFD，加工内部是个黑盒；<strong>小说明</strong>就是用来&quot;打开黑盒&quot;的。描述工具<strong>三种</strong>：<strong>结构化语言、判定表、判定树</strong>。</p>
+<p><strong>为什么需要判定表</strong>：当某个加工的一组动作<strong>依赖多个逻辑条件的取值组合</strong>时，用自然语言写必然又长又漏（&quot;如果是会员且金额够…如果是会员但金额不够…如果不是会员但金额够…&quot;），<strong>判定表能把条件组合与应做的动作一一对平，不漏一种组合</strong>。</p>
+<p><strong>判定表的四个部分</strong>（用双线分割成四个区域）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>左上</td>
+<td><strong>条件定义</strong></td>
+</tr>
+<tr>
+<td>右上</td>
+<td><strong>条件取值的组合</strong>（每一列 = 一条规则）</td>
+</tr>
+<tr>
+<td>左下</td>
+<td><strong>动作定义</strong></td>
+</tr>
+<tr>
+<td>右下</td>
+<td><strong>在各种取值组合下应执行的动作</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>完整例子</strong>（打折规则：会员且金额≥200 打 9 折；金额≥200 或会员打 95 折；其余不打折）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>条件 / 动作</th>
+<th>规则 1</th>
+<th>规则 2</th>
+<th>规则 3</th>
+<th>规则 4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是会员？</td>
+<td>Y</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>金额 ≥ 200？</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td><strong>动作</strong> 打 9 折</td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>打 95 折</td>
+<td></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr>
+<td>不打折</td>
+<td></td>
+<td></td>
+<td></td>
+<td>✓</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>验算这张表对不对</strong>：4 列 = 2 个条件各取真假共 <strong>2² = 4 种组合</strong>，无遗漏无双算 ✓。逐列核对规则——(Y,Y)=会员且够钱 → 9 折 ✓；(N,Y)=非会员但够钱 → 命中&quot;金额≥200&quot;→95 折 ✓；(Y,N)=会员但钱不够 → 命中&quot;是会员&quot;→95 折 ✓；(N,N) 两条都不命中 → 不打折 ✓。</p>
+<p><strong>判定树</strong>是判定表的变形，把条件按层级展开：</p>
+<pre><code>用户是否会员？
+├─ 是 ── 订单金额 ≥ 200 元？
+│        ├─ 是 → 打 9 折
+│        └─ 否 → 打 95 折
+└─ 否 ── 订单金额 ≥ 200 元？
+         ├─ 是 → 打 95 折
+         └─ 否 → 不打折
+</code></pre>
+<p><strong>两者对照</strong>：<strong>判定树更直观、易理解易用</strong>；<strong>判定表在条件组合多时更严密、不易漏</strong>。口诀&quot;<strong>树好看、表不漏</strong>&quot;。</p>
+<p><strong>结构化语言</strong>则是用 <code>IF…THEN…ELSE</code>、<code>WHILE…DO</code> 这类受限的伪代码写，规则同上例：</p>
+<pre><code>WHILE (收到出库申请)
+DO
+    查询会员信息 AND 查询订单金额;
+    IF (是会员 AND 金额 ≥ 200)
+    THEN 打 9 折;
+    ELSE
+        IF (金额 ≥ 200 OR 是会员)
+        THEN 打 95 折;
+        ELSE 不打折;
+        ENDIF
+    ENDIF
+    生成结算单;
+ENDDO
+</code></pre>
+<p><strong>应试动作</strong>：① 背&quot;分层 DFD + 数据词典 + 小说明 + E-R 图&quot;四件套；② 记设计四活动的<strong>依据</strong>（数据设计靠 E-R 图、过程设计管算法）；③ 判定表只需记住&quot;<strong>四区域 + 每列一条规则 + 列数 = 2ⁿ</strong>&quot;，考题问列数就直接算 2 的条件数次方。</p>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/02-需求分析与软件设计">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-软件开发模型与方法.html">
+      <span class="k">上一页</span>
+      <span class="t">03.1 软件开发模型与方法 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-模块化设计.html">
+      <span class="k">下一页</span>
+      <span class="t">03.3 模块化设计：内聚、耦合与模块原则 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

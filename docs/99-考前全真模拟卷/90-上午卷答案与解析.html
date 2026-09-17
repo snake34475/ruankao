@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>99.6 上午卷答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a><ul class="chapter-nav"><li><a href="01-上午卷上.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/01-上午卷上" aria-hidden="true"></i><span class="n">01</span><span class="t">上午卷（上）：计算机系统至设计模式</span></a></li><li><a href="02-上午卷下.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/02-上午卷下" aria-hidden="true"></i><span class="n">02</span><span class="t">上午卷（下）：数据库至专业英语</span></a></li><li><a href="03-上午卷补充题.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/03-上午卷补充题" aria-hidden="true"></i><span class="n">03</span><span class="t">上午卷补充题</span></a></li><li><a href="04-下午卷案例一至三.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/04-下午卷案例一至三" aria-hidden="true"></i><span class="n">04</span><span class="t">下午卷：案例一至三</span></a></li><li><a href="05-下午卷案例四至五.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/05-下午卷案例四至五" aria-hidden="true"></i><span class="n">05</span><span class="t">下午卷：案例四至五</span></a></li><li><a href="90-上午卷答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/90-上午卷答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">上午卷答案与解析</span></a></li><li><a href="91-下午卷答案与评分点.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/91-下午卷答案与评分点" aria-hidden="true"></i><span class="n">07</span><span class="t">下午卷答案与评分点</span></a></li><li><a href="99-成绩诊断.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/99-成绩诊断" aria-hidden="true"></i><span class="n">08</span><span class="t">成绩诊断</span></a></li></ul></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 99 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">99.6 上午卷答案与解析</h1>
+  </header>
+  <details class="answers" id="answers" data-toc="第一科答案速查">
+  <summary>
+    <span class="chev" aria-hidden="true"></span>
+    <span>第一科答案速查</span>
+    <span class="hint">做完题再展开</span>
+  </summary>
+  <div class="answers-body">
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+<th align="right">5</th>
+<th align="right">6</th>
+<th align="right">7</th>
+<th align="right">8</th>
+<th align="right">9</th>
+<th align="right">10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">A</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">A</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">B</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">11</th>
+<th align="right">12</th>
+<th align="right">13</th>
+<th align="right">14</th>
+<th align="right">15</th>
+<th align="right">16</th>
+<th align="right">17</th>
+<th align="right">18</th>
+<th align="right">19</th>
+<th align="right">20</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">21</th>
+<th align="right">22</th>
+<th align="right">23</th>
+<th align="right">24</th>
+<th align="right">25</th>
+<th align="right">26</th>
+<th align="right">27</th>
+<th align="right">28</th>
+<th align="right">29</th>
+<th align="right">30</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">C</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">A</td>
+<td align="right">C</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">B</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">31</th>
+<th align="right">32</th>
+<th align="right">33</th>
+<th align="right">34</th>
+<th align="right">35</th>
+<th align="right">36</th>
+<th align="right">37</th>
+<th align="right">38</th>
+<th align="right">39</th>
+<th align="right">40</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">D</td>
+<td align="right">D</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">D</td>
+<td align="right">D</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">41</th>
+<th align="right">42</th>
+<th align="right">43</th>
+<th align="right">44</th>
+<th align="right">45</th>
+<th align="right">46</th>
+<th align="right">47</th>
+<th align="right">48</th>
+<th align="right">49</th>
+<th align="right">50</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">B</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">51</th>
+<th align="right">52</th>
+<th align="right">53</th>
+<th align="right">54</th>
+<th align="right">55</th>
+<th align="right">56</th>
+<th align="right">57</th>
+<th align="right">58</th>
+<th align="right">59</th>
+<th align="right">60</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">B</td>
+<td align="right">D</td>
+<td align="right">A</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">C</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">A</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">61</th>
+<th align="right">62</th>
+<th align="right">63</th>
+<th align="right">64</th>
+<th align="right">65</th>
+<th align="right">66</th>
+<th align="right">67</th>
+<th align="right">68</th>
+<th align="right">69</th>
+<th align="right">70</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">A</td>
+<td align="right">C</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">B</td>
+<td align="right">B</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">题号</th>
+<th align="right">71</th>
+<th align="right">72</th>
+<th align="right">73</th>
+<th align="right">74</th>
+<th align="right">75</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">答案</td>
+<td align="right">A</td>
+<td align="right">B</td>
+<td align="right">A</td>
+<td align="right">A</td>
+<td align="right">A</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="h-3">第一科逐题解析<button type="button" class="sec-status" data-status-key="第一科逐题解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第一科逐题解析」的学习状态"></button></h2>
+<h3 id="h-4">计算机系统基础<button type="button" class="sec-status" data-status-key="计算机系统基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「计算机系统基础」的学习状态"></button></h3>
+<p><strong>1. A</strong>　负数补码求绝对值：<code>10010110</code> 按位取反为 <code>01101001</code>，加 1 得 <code>01101010</code>=106，所以原数为 −106。反向验证：+106=<code>01101010</code>，取反加 1 正好回到 <code>10010110</code>。D 是误按无符号数解释。</p>
+<p><strong>2. A</strong>　阶码位数决定可表示指数范围，尾数位数决定有效精度。甲阶码长、尾数短，因此范围更大、精度更低。口诀“阶范尾精”。</p>
+<p><strong>3. B</strong>　IR 保存当前指令；PC 保存下一条指令地址；MAR 保存要访问的主存地址；PSW 保存状态标志。“当前指令”是 IR 的识别词。</p>
+<p><strong>4. B</strong>　题目明确 100 ns 是未命中的完整时间，使用加权平均：<code>0.95×10+0.05×100=9.5+5=14.5 ns</code>。结果位于 10～100 ns 之间，合理。C 对应“先查 Cache，未命中再追加 100 ns”的另一种题意，本题不适用。</p>
+<p><strong>5. C</strong>　6000 RPM 一圈需要 <code>60000/6000=10 ms</code>，平均旋转等待为半圈 5 ms；平均存取约为 <code>8+5=13 ms</code>。D 错在加了整圈等待。</p>
+<p><strong>6. A</strong>　直接映射中每个主存块只能放到固定 Cache 行，最容易冲突但电路简单；全相联最自由、冲突最低、硬件最复杂；组相联折中。</p>
+<p><strong>7. C</strong>　冗余模块可靠度=<code>1−(1−0.8)^2=1−0.04=0.96</code>；再与 A 串联：<code>0.9×0.96=0.864</code>。反向检查：并联后高于 0.8，与 A 串联后低于 0.9，符合直觉。</p>
+<p><strong>8. B</strong>　r=3 时 <code>2^3=8&lt;8+3+1=12</code>，不够；r=4 时 <code>16≥8+4+1=13</code>，所以至少 4 位。等号或大于均满足。</p>
+<p><strong>9. C</strong>　RISC 的典型特征是指令少而规整、寻址方式少、多寄存器、Load/Store 访存、常用硬布线并利于流水线。A、B、D 都更符合 CISC。</p>
+<p><strong>10. B</strong>　流水线周期为最长段 4 ns，第一条建立时间=<code>2+3+4=9 ns</code>，20 条总时间=<code>9+(20−1)×4=85 ns</code>。非流水时间为 <code>20×9=180 ns</code>，85 ns 小于它，合理。</p>
+<h3 id="h-5">程序设计语言基础<button type="button" class="sec-status" data-status-key="程序设计语言基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「程序设计语言基础」的学习状态"></button></h3>
+<p><strong>11. A</strong>　词法分析把字符流切分并识别为 token；语法分析再检查 token 序列能否按文法组成表达式和语句。</p>
+<p><strong>12. B</strong>　括号匹配和表达式结构属于语法结构检查，由语法分析完成。词法分析只识别单词级记号。</p>
+<p><strong>13. B</strong>　正规式要求字符串由 a、b 构成并以 <code>abb</code> 结尾。<code>baabb</code> 满足；A 以 <code>bba</code> 结尾，C 以 <code>bab</code> 结尾，D 长度虽可但以 <code>bbb</code> 结尾。</p>
+<p><strong>14. B</strong>　传值时形参得到实参值的副本，修改形参一般不改变调用者变量本身。若值本身是对象引用，可能通过引用修改对象内容，但“把形参重新赋值”仍不等于改变调用者的引用变量；应服从题面语言语义。</p>
+<p><strong>15. C</strong>　解释执行通常边翻译边执行，不要求先生成完整目标程序；编译通常先把源程序整体转换为目标代码，再运行目标程序。A、D 把两者说反，B 把编译期和运行期错误混为一谈。</p>
+<h3 id="h-6">操作系统<button type="button" class="sec-status" data-status-key="操作系统" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「操作系统」的学习状态"></button></h3>
+<p><strong>16. B</strong>　I/O 完成只表示等待条件消失，进程进入就绪队列；是否立即运行还取决于调度器，不能直接写运行态。</p>
+<p><strong>17. B</strong>　进入临界区前执行 P 申请互斥资源，退出后执行 V 释放资源。若顺序倒置，就不能阻止多个进程同时进入。</p>
+<p><strong>18. C</strong>　死锁四个必要条件是互斥、请求并保持、不可剥夺、循环等待。选项 C“可剥夺”恰好是否定了必要条件。</p>
+<p><strong>19. B</strong>　最不利时每个进程都占有 <code>4−1=3</code> 个资源，再多 1 个即可让某进程完成：<code>3×(4−1)+1=10</code>。用 9 个时可能三个进程各占 3 个并互等第 4 个；10 个时至少有一个能取得第 4 个，完成并释放。</p>
+<p><strong>20. B</strong>　4 KiB=<code>2^12</code> B，低 12 位即后三个十六进制数 <code>ABCH</code> 为页内偏移；页号 5 换为物理块号 9，拼成 <code>9ABCH</code>。页内偏移在转换中不变。</p>
+<p><strong>21. C</strong>　前三次装入 1、2、3；再次访问 1 命中，但 FIFO 不改变进入先后；访问 4 时淘汰最早进入的 1，最终集合为 <code>{2,3,4}</code>。若是 LRU，命中 1 会更新近期性并淘汰 2。</p>
+<h3 id="h-7">数据结构与算法<button type="button" class="sec-status" data-status-key="数据结构与算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数据结构与算法」的学习状态"></button></h3>
+<p><strong>22. C</strong>　按栈计算：读到 6、2 后弹出二者做 <code>6/2=3</code>，再压入 3；读到下一个 3 后执行加法，得到 <code>3+3=6</code>。后缀表达式必须按“先弹出的是右操作数”计算。</p>
+<p><strong>23. B</strong>　元素数=<code>(rear−front+10)%10=(7−2+10)%10=5</code>。</p>
+<p><strong>24. C</strong>　二叉树边数既可写为 <code>n−1</code>，又可写为 <code>n1+2n2</code>；代入 <code>n=n0+n1+n2</code> 得 <code>n0=n2+1</code>。即叶子比双分支结点多 1。</p>
+<p><strong>25. A</strong>　前序首项 A 是根；中序把树分为左 <code>DB</code>、右 <code>EC</code>。左子树前序 <code>BD</code>，为 B 的左孩子 D；右子树前序 <code>CE</code>，为 C 的左孩子 E。后序是左 <code>DB</code>、右 <code>EC</code>、根 A，即 <code>DBECA</code>。</p>
+<p><strong>26. C</strong>　依次合并最小权：2+3=5，5+7=12，8+12=20。哈夫曼 WPL 等于所有非叶结点权值之和：<code>5+12+20=37</code>。按叶深复核：2、3 深 3，7 深 2，8 深 1，<code>2×3+3×3+7×2+8×1=37</code>。</p>
+<p><strong>27. A</strong>　无向边 <code>{i,j}</code> 同时使 <code>A[i][j]</code> 与 <code>A[j][i]</code> 有边，因此矩阵关于主对角线对称。无自环时对角线为 0，并非总为 1。</p>
+<p><strong>28. B</strong>　Dijkstra 用“已确定最短距离不会再被更小值推翻”的贪心性质，要求边权非负。含负权边时应考虑 Bellman-Ford 等算法。</p>
+<p><strong>29. C</strong>　拓扑排序不断删除入度为 0 的顶点；能包含所有顶点当且仅当图没有有向环，即图为 DAG。</p>
+<p><strong>30. B</strong>　100 个元素最坏比较次数为 <code>⌈log2(100+1)⌉=7</code>。也可按判定树容量反查：6 次最多区分 <code>2^6−1=63</code> 个元素，不够；7 次最多 127 个，足够。</p>
+<p><strong>31. D</strong>　归并排序在相等关键字时先取左序列元素即可保持原相对次序，属于稳定排序。快速、堆、希尔通常不稳定。</p>
+<p><strong>32. D</strong>　当每次枢轴都造成极不平衡划分时，比较量为 <code>(n−1)+(n−2)+…+1=n(n−1)/2</code>，故最坏为 <code>O(n^2)</code>；平均通常为 <code>O(n log n)</code>。</p>
+<h3 id="h-8">软件工程基础<button type="button" class="sec-status" data-status-key="软件工程基础" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「软件工程基础」的学习状态"></button></h3>
+<p><strong>33. B</strong>　原型模型用可运行原型帮助用户看到系统并反馈，适合需求不清。需求明确、变更少才更适合瀑布。</p>
+<p><strong>34. B</strong>　螺旋模型每一圈包含计划、风险分析、实施和客户评估，最突出的识别词是“风险分析”。</p>
+<p><strong>35. D</strong>　模块内所有成分为一个明确功能服务且不可或缺，是最强的功能内聚。顺序内聚要求前一步输出成为后一步输入，题干没有这种接力链。</p>
+<p><strong>36. D</strong>　直接进入另一个模块内部访问其数据或代码是最强、最差的内容耦合。共享全局数据区才是公共耦合。</p>
+<p><strong>37. C</strong>　<code>V(G)=E−N+2=12−9+2=5</code>。若画出的流程图有 4 个独立判定结点，也可用“判定结点数+1=5”交叉验证。</p>
+<p><strong>38. B</strong>　边界值分析关注合法边界及紧邻边界外的值，0、1、100、101 正好覆盖两个端点内外。A 缺少边界外值。</p>
+<p><strong>39. B</strong>　因外部运行环境（操作系统）变化而修改是适应性维护。修复已发生错误是改正性；扩功能是完善性；为防未来隐患是预防性。</p>
+<p><strong>40. C</strong>　第 4 级定量管理级以度量、统计和定量控制为关键词；第 5 级优化级强调持续过程改进与新技术反馈。</p>
+<h3 id="h-9">面向对象与设计模式<button type="button" class="sec-status" data-status-key="面向对象与设计模式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「面向对象与设计模式」的学习状态"></button></h3>
+<p><strong>41. A</strong>　封装把数据与操作组合并隐藏内部实现，通过公开接口使用。继承是复用父类特征，多态是同一消息产生不同响应。</p>
+<p><strong>42. B</strong>　同类中方法名相同、参数列表不同是重载，编译期按参数匹配；子类用相同签名替换父类实现才是重写。</p>
+<p><strong>43. B</strong>　顺序图以生命线和消息箭头表现对象交互，纵向体现时间先后。类图看静态结构，部署图看物理结点。</p>
+<p><strong>44. C</strong>　部署图描述软件制品/构件部署在哪些物理或执行环境结点上。构件图主要表现软件构件及依赖，不强调物理落点。</p>
+<p><strong>45. A</strong>　身份校验是每次提交订单都执行的必经行为，使用 <code>&lt;&lt;include&gt;&gt;</code>；箭头从基用例“提交订单”指向被包含用例“身份校验”。</p>
+<p><strong>46. B</strong>　“一族可互换算法、运行时选择”是策略模式。观察者处理一对多通知；适配器转换接口；单例保证唯一实例。</p>
+<p><strong>47. C</strong>　适配器把不兼容接口转换为客户期望接口。装饰器增加职责，代理控制访问，备忘录保存和恢复状态。</p>
+<h3 id="h-10">数据库系统<button type="button" class="sec-status" data-status-key="数据库系统" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数据库系统」的学习状态"></button></h3>
+<p><strong>48. B</strong>　内模式/物理存储变化不影响概念模式和应用，称为物理数据独立性；概念模式变化不影响外模式和应用才是逻辑数据独立性。</p>
+<p><strong>49. B</strong>　投影 π 选列，选择 σ 选行。口诀“σ 像筛子筛行，π 两条竖线切列”。</p>
+<p><strong>50. B</strong>　候选键 A 为单属性，不可能存在对键的部分依赖，所以满足 2NF；但 <code>A→B→C</code> 形成非主属性 C 对键 A 的传递依赖，不满足 3NF，最高为 2NF。逐级判断不能因看到冗余就退回 1NF。</p>
+<p><strong>51. B</strong>　AVG 在分组后计算，聚合结果的筛选必须用 HAVING。WHERE 在分组前筛选原始行，此时平均值尚未形成。</p>
+<p><strong>52. D</strong>　持久性要求已提交结果经受系统故障仍保留。原子性是全做或全不做，隔离性处理并发影响。</p>
+<p><strong>53. A</strong>　两段锁要求先处于加锁增长阶段，再处于解锁收缩阶段，可保证冲突可串行化；事务仍可能互持对方需要的锁而死锁。</p>
+<p><strong>54. C</strong>　故障恢复口诀：已提交事务 REDO，保证持久性；未提交事务 UNDO，保证原子性。</p>
+<h3 id="h-11">计算机网络<button type="button" class="sec-status" data-status-key="计算机网络" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「计算机网络」的学习状态"></button></h3>
+<p><strong>55. B</strong>　传统交换机依据 MAC 地址转发帧，工作在数据链路层。路由器依据 IP 地址工作在网络层。</p>
+<p><strong>56. B</strong>　<code>/27</code> 留 5 位主机位，共 <code>2^5=32</code> 个地址；传统 IPv4 子网扣除网络地址和广播地址，可分配 <code>32−2=30</code> 个。</p>
+<p><strong>57. C</strong>　<code>/26</code> 每块 64 个地址，末字节网段起点为 0、64、128、192。130 落在 128～191，网络地址为 <code>192.168.1.128</code>。按位与掩码 <code>255.255.255.192</code> 也得 128。</p>
+<p><strong>58. C</strong>　DNS 默认端口 53；FTP 控制 21，SMTP 25，HTTP 80。DNS 常用 UDP，区域传送或较大响应等场景可用 TCP。</p>
+<p><strong>59. B</strong>　TCP 面向连接，提供可靠、有序、无重复的字节流，并具有确认、重传、流量与拥塞控制；UDP 无连接、尽力而为。</p>
+<h3 id="h-12">信息安全<button type="button" class="sec-status" data-status-key="信息安全" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「信息安全」的学习状态"></button></h3>
+<p><strong>60. A</strong>　签名用发送者自己的私钥，验证用发送者公钥。口诀“私签公验”；接收者的密钥用于保密方向，不用于代表甲签名。</p>
+<p><strong>61. A</strong>　数字信封取长补短：用快速的对称密钥加密大数据，再用接收者公钥加密那把对称密钥，接收者用自己的私钥取出密钥。</p>
+<p><strong>62. B</strong>　Hash 摘要对修改敏感，主要用于完整性校验；它通常无密钥且不隐藏原文，不能单独提供机密性。</p>
+<p><strong>63. B</strong>　参数化查询把 SQL 结构与数据参数分离，配合输入校验可阻止恶意输入被解释成 SQL 代码。单纯改端口、加长密码不能修复字符串拼接漏洞。</p>
+<h3 id="h-13">标准化与知识产权<button type="button" class="sec-status" data-status-key="标准化与知识产权" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「标准化与知识产权」的学习状态"></button></h3>
+<p><strong>64. B</strong>　GB 是国家标准代号，<code>/T</code> 表示推荐性，因此 GB/T 为推荐性国家标准。具体标准是否适用仍以现行正式文本为准。</p>
+<p><strong>65. A</strong>　根据《计算机软件保护条例》，合法软件复制品所有人为了防止复制品损坏，可<strong>在不经著作权人许可的情况下</strong>制作<strong>一份</strong>备份复制品，但不得再行复制，也不得用于营利或恶意传播。B 错在备份属于法定合理使用、无需书面许可；C 错在备份不以&quot;删除原件&quot;为条件；D 错在法律只许&quot;一份&quot;且不得对外传播。具体争议以现行法律和授权协议为准。</p>
+<p><strong>66. C</strong>　软件著作权保护程序及有关文档的具体表达，不垄断思想、处理过程、操作方法或数学概念本身。独立创作相同功能也不当然侵权。</p>
+<h3 id="h-14">数学与多媒体<button type="button" class="sec-status" data-status-key="数学与多媒体" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「数学与多媒体」的学习状态"></button></h3>
+<p><strong>67. B</strong>　不区分职位，用组合：<code>C(8,2)=8×7/(2×1)=28</code>。若两个职位不同才用 <code>A(8,2)=56</code>。</p>
+<p><strong>68. B</strong>　全称命题“所有都通过”的否定是“至少一个不通过”。不需要所有都失败，只要存在一个反例即可推翻全称命题。</p>
+<p><strong>69. B</strong>　容量=<code>800×600×24/8=1440000 B</code>。第二种算法：24 bit=3 B/像素，像素数 480000，乘 3 仍为 1440000 B。C 是漏除以 8 的 bit 数。</p>
+<p><strong>70. B</strong>　容量=<code>8000×8×1×10/8=80000 B</code>。按每次采样 8 bit=1 B 复核：每秒 8000 B，10 秒 80000 B。</p>
+<h3 id="h-15">专业英语<button type="button" class="sec-status" data-status-key="专业英语" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「专业英语」的学习状态"></button></h3>
+<p><strong>71. A — coupling</strong>　良好模块设计是 high cohesion and low coupling（高内聚、低耦合）。其他词分别是递归、带宽、继承。</p>
+<p><strong>72. B — workload</strong>　系统扩展资源是为了处理增长的工作负载，固定语义为 <code>increased workload</code>。</p>
+<p><strong>73. A — fails</strong>　冗余部件的目的，是一个部件失效时服务仍能继续；<code>when one component fails</code> 语法和语义都唯一成立。</p>
+<p><strong>74. A — permitted</strong>　authorization 决定用户被允许访问哪些资源，搭配为 <code>be permitted to access</code>。</p>
+<p><strong>75. A — feedback</strong>　自动测试在变更破坏既有行为时提供快速反馈，固定搭配 <code>rapid feedback</code>。</p>
+<p>全文意译：软件体系结构描述系统主要构件及其关系。高内聚低耦合有助于维护；可伸缩系统通过增加资源应对负载；冗余提高可靠性；认证确认身份，授权决定访问权限；自动测试为破坏既有行为的变更提供快速反馈。</p>
+<h3 id="h-16">补充题解析<button type="button" class="sec-status" data-status-key="补充题解析" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题解析」的学习状态"></button></h3>
+<p><strong>补充 1. C（12）</strong>　求各事件的最早发生时间 ve（按拓扑序前推取最大）：ve(1)=0；ve(2)=0+4=4；ve(3)=0+3=3；ve(4)=max(4+5, 3+6)=max(9,9)=9；ve(5)=max(3+2, 9+3, 4+4)=max(5,12,8)=12。关键路径即 1→3→4→5（3+6+3=12），长度为 12。反向验证：1→2→4→5 为 4+5+3=12，同样是最长路径，两道最长路径一致印证 12 正确。D(13) 是把某些活动各加一误算。</p>
+<p><strong>补充 2. C（4）</strong>　线性探测依次定位：8 落位 1；15 落位 1 冲突→探测到 2；1 落位 1 冲突→探测 2、3；22 落位 1 冲突→探测 2、3、4（3 次冲突后再空位），共比较 4 次。反向验证成表 <code>[—, 8, 15, 1, 22, —, 13]</code>：查找 22 从位 1 起依次与 8、15、1、22 比较，共 4 次。顺带记住：该表查找成功的平均查找长度 <code>ASL=(1+2+3+4+1)/5=2.2</code>。</p>
+<p><strong>补充 3. A</strong>　由弱到强依次为：语句覆盖 &lt; 判定覆盖 ≤ 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖。A 正确。B 是&quot;强→弱&quot;逆序；C 把判定与条件的先后写反；D 起始就错（判定覆盖应强于语句覆盖），且末尾漏了路径覆盖被放到倒数第二。口诀：<strong>语判条→加条（判定/条件）→组合→路径</strong>。</p>
+<p><strong>补充 4. A（4 kHz）</strong>　采样定理：采样率 fs 至少为信号最高频率 fmax 的 2 倍，即 <code>fs≥2·fmax</code>，反解得 <code>fmax≤fs/2=8/2=4 kHz</code>。B 是把 fs 直接当成 fmax；C/D 违背&quot;采样定理采样率大约最高频率的两倍&quot;。反向验证：对 4 kHz 信号确实至少需 8 kHz 采样才能复原 ✓。</p>
+<p><strong>补充 5. C（YCbCr/YUV）</strong>　人眼对亮度（Y）敏感、对色度（CbCr）迟钝，把二者分离后可在色度分量上抽稀压缩而不易察觉。RGB 是把三原色混在一起、彼此等权，不利于对人眼迟钝分量单独压缩；CMYK 面向印刷（青品黄黑油墨）；Lab 是设备无关色彩感知空间。</p>
+<p><strong>补充 6. A</strong>　JPEG 对 8×8 图像块的处理顺序：DCT 变换 → 量化（舍弃人眼不敏感的高频系数）→ Z 字形扫描（把系数按低频到高频重排，加长零游程）→ 熵编码（Huffman/算术编码）。答案 A。B 把量化和 DCT 对调、Z 字形与熵编码颠倒；C 整体逆序；D 把熵编码与量化位置互换——量化和熵编码都发生在扫描之后，不可能先熵编码再量化。</p></div>
+</details>
+
+
+
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷/90-上午卷答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-下午卷案例四至五.html">
+      <span class="k">上一页</span>
+      <span class="t">99.5 下午卷：案例四至五</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="91-下午卷答案与评分点.html">
+      <span class="k">下一页</span>
+      <span class="t">99.7 下午卷答案与评分点</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

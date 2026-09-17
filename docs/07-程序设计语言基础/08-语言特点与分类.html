@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>07.8 各语言特点与分类 ★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a><ul class="chapter-nav"><li><a href="01-编译解释与语言成分.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/01-编译解释与语言成分" aria-hidden="true"></i><span class="n">01</span><span class="t">编译、解释与语言基本成分 ★★★</span></a></li><li><a href="02-编译阶段.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/02-编译阶段" aria-hidden="true"></i><span class="n">02</span><span class="t">编译的六个阶段 ★★★</span></a></li><li><a href="03-表达式与语法树.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/03-表达式与语法树" aria-hidden="true"></i><span class="n">03</span><span class="t">前缀、中缀、后缀表达式 ★★</span></a></li><li><a href="04-文法与推导.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/04-文法与推导" aria-hidden="true"></i><span class="n">04</span><span class="t">文法、推导与语法树 ★★</span></a></li><li><a href="05-正规式.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/05-正规式" aria-hidden="true"></i><span class="n">05</span><span class="t">正规式与正规集 ★★★</span></a></li><li><a href="06-有限自动机.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/06-有限自动机" aria-hidden="true"></i><span class="n">06</span><span class="t">有限自动机：DFA 与 NFA ★★★</span></a></li><li><a href="07-函数调用作用域与闭包.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/07-函数调用作用域与闭包" aria-hidden="true"></i><span class="n">07</span><span class="t">函数调用、作用域与闭包 ★★★</span></a></li><li><a href="08-语言特点与分类.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/08-语言特点与分类" aria-hidden="true"></i><span class="n">08</span><span class="t">各语言特点与分类 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/90-课后考题" aria-hidden="true"></i><span class="n">09</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">10</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/99-答案与解析" aria-hidden="true"></i><span class="n">11</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 7 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">07.8 各语言特点与分类 <span class="stars">★</span></h1>
+  </header>
+  <p><strong>动机</strong>：选择题常给一个应用场景（&quot;人工智能符号处理&quot;&quot;科学计算&quot;）问选什么语言，或给一个语言问它的分类。这纯是背诵题，一张表解决。</p>
+<p><strong>按翻译方式分类</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>语言</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编译型</td>
+<td>C、C++、Pascal、Fortran</td>
+</tr>
+<tr>
+<td>解释型（脚本语言多属此类）</td>
+<td>Python、PHP、JavaScript、Ruby</td>
+</tr>
+<tr>
+<td>先编译为中间代码、再由虚拟机执行</td>
+<td><strong>Java</strong>（字节码 + JVM）、<strong>C#</strong>（中间语言 + .NET）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>静态类型 vs 动态类型</strong>：静态类型语言（C、C++、Java）在<strong>编译期</strong>检查类型；动态类型语言（Python、JavaScript）变量类型在<strong>运行期</strong>才确定、随赋值变化。</p>
+<p><strong>各语言特点表（背&quot;语言 → 一句话&quot;）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>一句话特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fortran</td>
+<td>科学计算，执行效率高</td>
+</tr>
+<tr>
+<td>Pascal</td>
+<td>为教学而开发，表达能力强</td>
+</tr>
+<tr>
+<td>C</td>
+<td>指针操作能力强、高效，常用于操作系统开发</td>
+</tr>
+<tr>
+<td><strong>Lisp</strong></td>
+<td><strong>函数式</strong>语言，符号处理，<strong>人工智能</strong></td>
+</tr>
+<tr>
+<td><strong>Prolog</strong></td>
+<td><strong>逻辑推理</strong>，用于数据库和专家系统</td>
+</tr>
+<tr>
+<td>C++</td>
+<td>面向对象且高效</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>面向对象，编译为中间代码（字节码），跨平台</td>
+</tr>
+<tr>
+<td>C#</td>
+<td>面向对象，中间代码，.NET 平台</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>解释型、面向对象、通用脚本语言</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>服务器端脚本语言，嵌入 HTML 的动态网页</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：重点背两个&quot;最容易和别的搞混&quot;的——<strong>Lisp=函数式/AI</strong>、<strong>Prolog=逻辑推理/专家系统</strong>（两者都沾 AI，别互换）；再背 Java 跨平台靠&quot;字节码 + JVM&quot;这条机制描述。其余扫一眼有印象即可。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="07-程序设计语言基础/08-语言特点与分类">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="07-函数调用作用域与闭包.html">
+      <span class="k">上一页</span>
+      <span class="t">07.7 函数调用、作用域与闭包 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">07.9 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

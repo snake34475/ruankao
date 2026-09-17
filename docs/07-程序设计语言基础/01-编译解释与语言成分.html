@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>07.1 编译、解释与语言基本成分 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a><ul class="chapter-nav"><li><a href="01-编译解释与语言成分.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/01-编译解释与语言成分" aria-hidden="true"></i><span class="n">01</span><span class="t">编译、解释与语言基本成分 ★★★</span></a></li><li><a href="02-编译阶段.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/02-编译阶段" aria-hidden="true"></i><span class="n">02</span><span class="t">编译的六个阶段 ★★★</span></a></li><li><a href="03-表达式与语法树.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/03-表达式与语法树" aria-hidden="true"></i><span class="n">03</span><span class="t">前缀、中缀、后缀表达式 ★★</span></a></li><li><a href="04-文法与推导.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/04-文法与推导" aria-hidden="true"></i><span class="n">04</span><span class="t">文法、推导与语法树 ★★</span></a></li><li><a href="05-正规式.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/05-正规式" aria-hidden="true"></i><span class="n">05</span><span class="t">正规式与正规集 ★★★</span></a></li><li><a href="06-有限自动机.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/06-有限自动机" aria-hidden="true"></i><span class="n">06</span><span class="t">有限自动机：DFA 与 NFA ★★★</span></a></li><li><a href="07-函数调用作用域与闭包.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/07-函数调用作用域与闭包" aria-hidden="true"></i><span class="n">07</span><span class="t">函数调用、作用域与闭包 ★★★</span></a></li><li><a href="08-语言特点与分类.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/08-语言特点与分类" aria-hidden="true"></i><span class="n">08</span><span class="t">各语言特点与分类 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/90-课后考题" aria-hidden="true"></i><span class="n">09</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">10</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础/99-答案与解析" aria-hidden="true"></i><span class="n">11</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 7 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">07.1 编译、解释与语言基本成分 <span class="stars">★★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：计算机 CPU 只认识机器码（0/1 指令），而我们写的是高级语言（C、Java、Python…）。中间必须有一个&quot;翻译程序&quot;把高级语言翻译成机器能执行的东西。按翻译方式不同，分两大流派：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>编译方式</th>
+<th>解释方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>代表语言</td>
+<td>C、C++、Pascal、Fortran</td>
+<td>Python、PHP、JavaScript、Ruby</td>
+</tr>
+<tr>
+<td>翻译过程</td>
+<td><strong>整本翻译</strong>：源程序一次性翻译成目标程序（机器码）</td>
+<td><strong>逐句翻译</strong>：边解释边执行，翻译一句执行一句</td>
+</tr>
+<tr>
+<td>是否生成目标程序</td>
+<td><strong>生成</strong></td>
+<td><strong>不生成</strong></td>
+</tr>
+<tr>
+<td>执行效率</td>
+<td>高（运行时不再翻译）</td>
+<td>低（运行时还要翻译）</td>
+</tr>
+<tr>
+<td>灵活性/可移植性</td>
+<td>差（目标程序绑定具体机器）</td>
+<td>好（源程序拿到哪都能跑）</td>
+</tr>
+<tr>
+<td>翻译程序是否参与执行</td>
+<td>编译器<strong>不参与</strong>执行</td>
+<td>解释器<strong>参与</strong>执行</td>
+</tr>
+</tbody></table>
+</div>
+<p>共同点：两种方式<strong>都</strong>要做词法分析、语法分析、语义分析——别以为解释器就&quot;不分析&quot;，它只是不生成目标程序。</p>
+<p><strong>记忆口诀</strong>：编译&quot;先翻完再念&quot;，解释&quot;边念边翻&quot;——像拿到一本外文书：编译是请人整本翻译好再读，解释是请个翻译坐在旁边念一句你听一句。</p>
+<p><strong>Java / C# 是特殊流派（选择题爱考）</strong>：它们<strong>先编译成中间代码</strong>（Java 字节码 / .NET 中间语言），<strong>再由虚拟机（JVM / CLR）解释或即时编译执行</strong>——&quot;先编译后解释&quot;。正因为中间代码与平台无关、各平台各有虚拟机，Java 才能&quot;一次编写，到处运行&quot;。</p>
+<p><strong>反例演示</strong>：判断题「解释方式也会生成与源程序等价的目标程序」——<strong>错</strong>。这是本考点最常见的陷阱选项；解释器从头到尾不产出可独立执行的目标程序。反向陷阱「编译方式执行效率比解释方式低」——错，编译是&quot;先翻完再念&quot;，运行时零翻译开销，效率更高。</p>
+<p><strong>应试动作</strong>：背对比表的三行——①是否生成目标程序（编译生成、解释不生成）②执行效率（编译高）③可移植性（解释好）。考场上题干不会出现&quot;流派&quot;这种词，直接给&quot;某语言程序需先翻译成目标程序后执行&quot;&quot;逐句翻译执行&quot;等描述让你归类。</p>
+<h2 id="h-2">第二节 程序设计语言的基本成分 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 程序设计语言的基本成分 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 程序设计语言的基本成分 ★★★」的学习状态"></button></h2>
+<p><strong>动机</strong>：不同语言的写法看起来差别很大，但任何程序都绕不开四个问题：<strong>数据长什么样、数据怎么算、执行顺序怎么走、数据怎样进出程序</strong>。教材把这四件事概括为数据、运算、控制和传输成分。选择题常把其中一个换成“语法/编译/存储”等干扰词。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>基本成分</th>
+<th>解决的问题</th>
+<th>常见内容</th>
+<th>最小例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>数据成分</strong></td>
+<td>程序处理什么</td>
+<td>数据类型、变量、常量、数据结构</td>
+<td><code>int age</code>、Python 列表</td>
+</tr>
+<tr>
+<td><strong>运算成分</strong></td>
+<td>数据怎样变化</td>
+<td>算术、关系、逻辑、位、赋值运算</td>
+<td><code>total = price * count</code></td>
+</tr>
+<tr>
+<td><strong>控制成分</strong></td>
+<td>语句按什么顺序执行</td>
+<td>顺序、选择、循环</td>
+<td><code>if</code>、<code>for</code>、<code>while</code></td>
+</tr>
+<tr>
+<td><strong>传输成分</strong></td>
+<td>数据怎样进入、离开或跨过程传递</td>
+<td>输入/输出、参数、返回值、文件与网络读写</td>
+<td><code>read()</code>、<code>print()</code>、<code>return</code></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：“整数、字符、布尔”属于数据成分，不是运算成分；<code>if</code> 决定走哪条路径，属于控制成分；<code>+</code>、<code>&amp;&amp;</code>、赋值号描述数据上的操作，才属于运算成分。题目问“可计算问题的程序都能由哪三种控制结构描述”，答<strong>顺序、选择、循环</strong>，不要把函数调用当第四种基本控制结构。</p>
+<h3 id="h-3">2.1 数据成分：类型决定“能存什么、能做什么”<button type="button" class="sec-status" data-status-key="2.1 数据成分：类型决定“能存什么、能做什么”" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 数据成分：类型决定“能存什么、能做什么”」的学习状态"></button></h3>
+<p>数据类型不只是规定占多少空间，还规定<strong>取值范围和允许的运算</strong>。例如布尔值可以做逻辑运算，整数可以做取模；字符串能拼接，却不能直接参与数值除法。第三节编译知识中的“类型不合法”之所以能在语义分析阶段发现，就是因为类型带着运算规则。</p>
+<p>C/C++ 常见基本类型有整数、浮点、字符、布尔、枚举和指针。Python 高频容器要按两个维度分：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th align="right">是否有序</th>
+<th align="right">是否可变</th>
+<th align="right">是否允许重复</th>
+<th>取元素方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>list</code> 列表</td>
+<td align="right">是</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>tuple</code> 元组</td>
+<td align="right">是</td>
+<td align="right"><strong>不可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>str</code> 字符串</td>
+<td align="right">是</td>
+<td align="right"><strong>不可变</strong></td>
+<td align="right">是</td>
+<td>下标</td>
+</tr>
+<tr>
+<td><code>set</code> 集合</td>
+<td align="right">否</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right"><strong>否</strong></td>
+<td>不能按位置下标</td>
+</tr>
+<tr>
+<td><code>dict</code> 字典</td>
+<td align="right">按插入次序保存键值对</td>
+<td align="right"><strong>可变</strong></td>
+<td align="right">键不可重复</td>
+<td>键</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示</strong>：<code>tuple</code> 不可变，表示不能把其中某个位置重新赋值，不等于“元组里引用的可变对象永远不会变化”；考试只考第一层结论，记作“字符串、元组不可变；列表、集合、字典可变”。集合去重且不靠位置取值，不能因为打印时看见某个顺序就把它当列表。</p>
+<h3 id="h-4">2.2 运算成分：同一个符号要结合类型理解<button type="button" class="sec-status" data-status-key="2.2 运算成分：同一个符号要结合类型理解" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 运算成分：同一个符号要结合类型理解」的学习状态"></button></h3>
+<ul>
+<li>算术运算：<code>+ - * / %</code>；</li>
+<li>关系运算：<code>&lt; &lt;= == != &gt;= &gt;</code>，结果通常是布尔值；</li>
+<li>逻辑运算：<code>and/or/not</code> 或 <code>&amp;&amp;/||/!</code>；</li>
+<li>位运算：按二进制位与、或、异或、移位；</li>
+<li>赋值运算：把计算结果写回变量。</li>
+</ul>
+<p>Python 中 <code>+</code> 对数字表示相加，对字符串或列表表示拼接；<code>*</code> 对数字表示乘法，对字符串或列表可表示重复。例如 <code>[1,2]+[3]=[1,2,3]</code>，<code>&#39;ab&#39;*2=&#39;abab&#39;</code>。这不是符号“随便变义”，而是运算符根据操作数类型选择对应操作。</p>
+<h3 id="h-5">2.3 控制成分：所有流程都能拆成三种结构<button type="button" class="sec-status" data-status-key="2.3 控制成分：所有流程都能拆成三种结构" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 控制成分：所有流程都能拆成三种结构」的学习状态"></button></h3>
+<ol>
+<li><strong>顺序</strong>：从上到下依次执行；</li>
+<li><strong>选择</strong>：条件为真走一支，为假走另一支；</li>
+<li><strong>循环</strong>：条件满足时重复一段操作。</li>
+</ol>
+<pre><code class="language-text">顺序：A → B → C
+选择：条件 ─真→ A
+           └假→ B
+循环：条件 ─真→ A ─┐
+           ↑       │
+           └───────┘；假→ 离开
+</code></pre>
+<h3 id="h-6">2.4 传输成分：不只是键盘输入和屏幕输出<button type="button" class="sec-status" data-status-key="2.4 传输成分：不只是键盘输入和屏幕输出" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.4 传输成分：不只是键盘输入和屏幕输出」的学习状态"></button></h3>
+<p>传输成分负责数据在不同边界之间移动：用户与程序之间有输入/输出，文件与程序之间有读/写，调用者与函数之间有参数和返回值，网络两端之间有发送/接收。例如 <code>x=read()</code> 把外部数据送入程序，<code>return result</code> 把函数结果送回调用者。</p>
+<p><strong>反例演示（易错）</strong>：赋值 <code>x=x+1</code> 是运算成分，因为数据只在程序内部被计算并写回变量；<code>return x</code> 才是把结果跨越函数边界传回调用者。不要看到“数据发生变化”就一律选传输，关键看是否跨越输入输出或过程边界。</p>
+<p><strong>应试动作</strong>：背“四成分 = 数据、运算、控制、传输”和“三结构 = 顺序、选择、循环”。题干给 Python 类型时按“是否可变、是否有序、是否去重、怎样取值”四问排除；题干给 <code>+、*</code> 时先看操作数类型，再判断实际运算。</p>
+
+
+  <footer class="status-bar" data-status-page="07-程序设计语言基础/01-编译解释与语言成分">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">07 程序设计语言基础</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-编译阶段.html">
+      <span class="k">下一页</span>
+      <span class="t">07.2 编译的六个阶段 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

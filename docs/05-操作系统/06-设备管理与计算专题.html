@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>05.6 设备管理与高频计算专题 ★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a><ul class="chapter-nav"><li><a href="01-进程线程与状态.html"><i class="sb-dot" data-status-page-dot="05-操作系统/01-进程线程与状态" aria-hidden="true"></i><span class="n">01</span><span class="t">进程、线程与状态转换 ★★★</span></a></li><li><a href="02-进程调度与PV操作.html"><i class="sb-dot" data-status-page-dot="05-操作系统/02-进程调度与PV操作" aria-hidden="true"></i><span class="n">02</span><span class="t">进程调度与 PV 操作 ★★★</span></a></li><li><a href="03-死锁.html"><i class="sb-dot" data-status-page-dot="05-操作系统/03-死锁" aria-hidden="true"></i><span class="n">03</span><span class="t">死锁 ★★★</span></a></li><li><a href="04-存储管理与页面置换.html"><i class="sb-dot" data-status-page-dot="05-操作系统/04-存储管理与页面置换" aria-hidden="true"></i><span class="n">04</span><span class="t">存储管理与页面置换 ★★★</span></a></li><li><a href="05-文件管理.html"><i class="sb-dot" data-status-page-dot="05-操作系统/05-文件管理" aria-hidden="true"></i><span class="n">05</span><span class="t">文件管理 ★★</span></a></li><li><a href="06-设备管理与计算专题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="05-操作系统/06-设备管理与计算专题" aria-hidden="true"></i><span class="n">06</span><span class="t">设备管理与高频计算专题 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="05-操作系统/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05.6 设备管理与高频计算专题 <span class="stars">★★</span></h1>
+  </header>
+  <h3 id="h-2">磁盘的结构与存取时间<button type="button" class="sec-status" data-status-key="磁盘的结构与存取时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘的结构与存取时间」的学习状态"></button></h3>
+<p>磁盘由多个盘面组成，每个盘面划分成一圈圈<strong>磁道</strong>（从外向里 0,1,2,…编号），每个磁道按角度分成<strong>扇区</strong>；多个盘面的同一号磁道构成<strong>柱面</strong>（所以磁道号也叫柱面号）。</p>
+<p><strong>存取时间 = 寻道时间 + 旋转延迟（等待时间）+ 传输时间</strong>：寻道 = 磁头移到目标磁道（<strong>最耗时，有调度算法可优化</strong>）；旋转延迟 = 等目标扇区转到磁头下（盘匀速转，无算法可言）；传输 = 读写数据。选择题直接考&quot;三段构成&quot;与&quot;寻道时间最值得优化&quot;。</p>
+<p><strong>存取时间算例（公式三件套）</strong>：</p>
+<ul>
+<li>通用形式：读一个数据块的时间 = 寻道 + 旋转延迟 + 传输；含 N 个<strong>分散</strong>数据块的文件总时间 ≈ N × 单块时间。</li>
+<li>代入算例：读一个数据块需寻道 5ms、平均旋转延迟 10ms、传输 1ms；文件分散放在 100 个数据块。单块 = 5+10+1 = 16ms，整个文件 = 100 × 16 = <strong>1600ms = 1.6s</strong>。</li>
+<li>手算口诀：<strong>&quot;先算一块，再乘块数&quot;</strong>。</li>
+<li>反例演示（易错）：若题干说&quot;文件在<strong>同一磁道连续</strong>存放&quot;，寻道只发生<strong>一次</strong>（磁头移过去后停在原磁道连续读），总时间 = 寻道 + N×(旋转+传输)，不能每块都算寻道；旋转延迟给&quot;平均（半圈）&quot;还是&quot;整一圈&quot;，以题干为准，不要自行取平均。</li>
+</ul>
+<h3 id="h-3">磁盘调度算法（<span class="stars">★★★</span> 计算）<button type="button" class="sec-status" data-status-key="磁盘调度算法（★★★ 计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「磁盘调度算法（★★★ 计算）」的学习状态"></button></h3>
+<p>磁头一次只在一个位置，多个磁道访问请求排队，按什么顺序服务？目标：<strong>平均寻道距离最短</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>规则</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FCFS 先来先服务</td>
+<td>按请求到达顺序</td>
+<td>公平但寻道长；方向随时变</td>
+</tr>
+<tr>
+<td><strong>SSTF</strong> 最短寻道时间优先</td>
+<td>每次选<strong>距当前磁头最近</strong>的请求</td>
+<td>贪心，效率高；可能让远处请求&quot;饥饿&quot;；方向随时变</td>
+</tr>
+<tr>
+<td><strong>SCAN</strong> 扫描（电梯）</td>
+<td>沿一个方向扫，沿途服务，<strong>到端头再折返</strong>（题目会说明端头规则）</td>
+<td>不饥饿；方向固定到头才变</td>
+</tr>
+<tr>
+<td>C-SCAN 循环扫描</td>
+<td>扫到端头后直接跳回另一端再同方向扫</td>
+<td>各磁道等待更均匀</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>解题模板</strong>：① 列出请求磁道号和磁头起点；② 按算法规则排出服务顺序；③ 相邻两站求距离差绝对值；④ 全部加总 = 移动道数；除以请求数 = 平均寻道长度。</p>
+<p><strong>代入算例</strong>：磁头在 60 号磁道，请求队列：40、70、25、90、65、10。</p>
+<ul>
+<li><strong>SSTF</strong>：60→65（5）→70（5）→90（20）→40（50）→25（15）→10（15），总移动 = 5+5+20+50+15+15 = <strong>110 道</strong>。验算两遍：① 逐站确认&quot;最近&quot;——60 处各请求距离 40:20、70:10、25:35、90:30、65:5、10:50，选 65 ✓；65 处 70:5 最近 ✓；70 处 90:20 &lt; 40:30 ✓；90 处 40:50 最近（25:65、10:80）✓；② 路径逐段累加复核：5+5=10，+20=30，+50=80，+15=95，+15=110 ✓。</li>
+<li><strong>SCAN</strong>（题干设定：磁头朝磁道号增大方向移动，移动到最外侧磁道 199 才折返）：60→65→70→90→199→40→25→10。总移动 = (199−60) + (199−10) = 139 + 189 = <strong>328 道</strong>。验算逐段：5+5+20+109+159+15+15 = 5+5=10，+20=30，+109=139，+159=298，+15=313，+15=328 ✓。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：① SCAN 是否&quot;必须扫到磁盘端头再折返&quot;，<strong>不同题干设定不同</strong>——有的按&quot;到该方向最后一个请求即折返&quot;处理。务必先读题干：本题明确说&quot;到 199 号磁道才折返&quot;，就必须走到 199，不能在 90 就回头（若在 90 折返则总移动 = (90−60)+(90−10) = 110）；② SSTF 每一步都要<strong>重新</strong>找最近，不是全局排序一次。</p>
+<h3 id="h-4">I/O 软件的四层结构与缓冲（<span class="stars">★★</span>）<button type="button" class="sec-status" data-status-key="I/O 软件的四层结构与缓冲（★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「I/O 软件的四层结构与缓冲（★★）」的学习状态"></button></h3>
+<p><strong>四层结构</strong>（从上层到下层）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>职责</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户层软件</td>
+<td>面向应用封装 I/O 库函数</td>
+<td>printf、read 系统调用封装</td>
+</tr>
+<tr>
+<td>设备独立性软件</td>
+<td>与具体设备无关的公共逻辑：命名、缓冲、设备分配</td>
+<td>缓冲管理、分配设备</td>
+</tr>
+<tr>
+<td>设备驱动程序</td>
+<td>与具体设备相关，把上层动作翻译成该设备命令</td>
+<td>向打印机控制器发指令</td>
+</tr>
+<tr>
+<td>中断处理程序</td>
+<td>设备完成后中断、唤醒等待进程</td>
+<td>传输完毕收尾</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：&quot;缓冲归哪层管&quot; → 设备独立性软件；&quot;与具体设备相关、翻译成指令&quot; → 设备驱动程序；&quot;最贴近硬件的两级&quot; → 设备驱动 + 中断处理。</p>
+<p><strong>单缓冲 / 双缓冲时间（<span class="stars">★</span> 计算）</strong>：</p>
+<ul>
+<li>动机：CPU 与外设速度差几个数量级，不能干等，于是设缓冲。核心差异在<strong>重叠</strong>：单缓冲只有一个格子，处理当前块时下一块<strong>不能开始传</strong>（串行）；双缓冲有两个格子，处理 A 的同时可以传 B（并行）。</li>
+<li>通用形式：设传一块 t、处理一块 c、共 N 块——<ul>
+<li>单缓冲（传/处串行）：总时间 = <strong>N·(t+c)</strong>；</li>
+<li>双缓冲（传与处可并行）：瓶颈是较慢者，总时间 = <strong>N·max(t,c) + min(t,c)</strong>。</li>
+</ul>
+</li>
+<li>代入算例：t = 2ms、c = 6ms、N = 10：单缓冲 = 10×(2+6) = <strong>80ms</strong>；双缓冲 = 10×6 + 2 = <strong>62ms</strong>（处理 c 是瓶颈，10 次处理 60ms，加上开头一次传输 2ms）。</li>
+<li>手算口诀：<strong>&quot;单缓冲串着加，双缓冲看瓶颈（大的乘 N、小的只在尾巴加一次）&quot;</strong>。</li>
+<li>反例演示（易错）：把单缓冲也按双缓冲的&quot;瓶颈×N + min&quot;算（会少算——单缓冲中间的传输与处理完全串行）；双缓冲里把小的也乘 N（双缓冲中传输与处理重叠，只多出开头那一次，不逐块叠加）。</li>
+</ul>
+<h3 id="h-5">Spooling 与虚拟设备<button type="button" class="sec-status" data-status-key="Spooling 与虚拟设备" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「Spooling 与虚拟设备」的学习状态"></button></h3>
+<p>打印机是<strong>独占设备</strong>，一人占用整台机器别人只能干等。<strong>Spooling（假脱机）技术</strong>用磁盘当中转站：打印请求先排队写进磁盘上的输出井，打印进程慢慢取——用户感觉&quot;随时都能提交打印&quot;，仿佛打印机人人可共享。这种由独占设备改造出来的、逻辑上可共享的设备叫<strong>虚拟设备</strong>。特征词：<strong>&quot;独占设备改造成共享设备&quot;→ Spooling → 虚拟设备</strong>，三者一条链。</p>
+<p><strong>应试动作</strong>：① 存取时间三段构成背下来，&quot;寻道可优化、旋转无算法&quot;考过判断；② SSTF/SCAN 老老实实列表逐段相加，SCAN 先看题干折返规则；③ 认题：看到&quot;假脱机/输入井输出井&quot;选 Spooling，看到&quot;虚拟设备&quot;想&quot;独占→共享&quot;。</p>
+<h2 id="h-6">第十节 高频计算题型专攻（应试模板汇总）<button type="button" class="sec-status" data-status-key="第十节 高频计算题型专攻（应试模板汇总）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 高频计算题型专攻（应试模板汇总）」的学习状态"></button></h2>
+<p>本课所有计算题的考场流水线，考前把这张表过一遍：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>题型</th>
+<th>第一步</th>
+<th>核心动作</th>
+<th>验算方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>信号量取值范围</strong></td>
+<td>找资源数 k、进程数 n</td>
+<td>范围 [k−n, k]</td>
+<td>最小值含义 = 全部进程都在排队</td>
+</tr>
+<tr>
+<td><strong>前趋图 PV 填空</strong></td>
+<td>数弧 → 定信号量</td>
+<td>V 在弧<strong>起点末尾</strong>、P 在弧<strong>终点开头</strong></td>
+<td>逐弧检查&quot;一弧一 V 一 P&quot;</td>
+</tr>
+<tr>
+<td><strong>死锁资源数</strong></td>
+<td>认 m、w、n</td>
+<td>n = m(w−1)+1 不死锁；n ≤ m(w−1) 可能死锁</td>
+<td>反代：把答案代回公式看是否自洽</td>
+</tr>
+<tr>
+<td><strong>银行家安全序列</strong></td>
+<td>求 Need、Available</td>
+<td>反复找 Need ≤ Available 者执行并归还</td>
+<td>找不到时验证&quot;所有进程 Need &gt; Available&quot;</td>
+</tr>
+<tr>
+<td><strong>页式地址变换</strong></td>
+<td>页大小化成 2^k</td>
+<td>低 k 位是页内地址（不变），高位查页表换帧号</td>
+<td>十进制走一遍：物理 = 帧号×页大小+偏移</td>
+</tr>
+<tr>
+<td><strong>页面置换</strong></td>
+<td>画表逐位模拟</td>
+<td>命中不淘汰；LRU 看过去、OPT 看未来</td>
+<td>缺页数 = 串长 − 命中数</td>
+</tr>
+<tr>
+<td><strong>位示图</strong></td>
+<td>认清编号起点</td>
+<td>字号 ⌊b/w⌋、位号 b mod w；字数 = 总块数/w</td>
+<td>乘回去：字号×w+位号 = 块号</td>
+</tr>
+<tr>
+<td><strong>索引文件最大长度</strong></td>
+<td>算每块地址项数 B/A</td>
+<td>d + B/A + (B/A)² 块 × B</td>
+<td>分层逐项相加复核</td>
+</tr>
+<tr>
+<td><strong>磁盘调度</strong></td>
+<td>认起点、方向、折返规则</td>
+<td>逐段绝对差相加</td>
+<td>路径两头相减粗验（SCAN 到端头型：(端−起点)+(端−最远反端)）</td>
+</tr>
+<tr>
+<td><strong>周转时间</strong></td>
+<td>列到达/运行时刻表</td>
+<td>完成 = max(上一完成时刻， 到达) + 运行；周转 = 完成 − 到达</td>
+<td>平均值介于最短/最长周转之间</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>考场提示</strong>：这类题是&quot;送分题里最费草稿的&quot;——一定画表，不心算；算完用表里最后一列的验算法快速复核，30 秒能拦住绝大多数失分。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="05-操作系统/06-设备管理与计算专题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-文件管理.html">
+      <span class="k">上一页</span>
+      <span class="t">05.5 文件管理 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">05.7 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

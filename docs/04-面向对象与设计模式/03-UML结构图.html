@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>04.3 UML 结构图：类图、对象图与用例图 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a><ul class="chapter-nav"><li><a href="01-面向对象基本概念.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/01-面向对象基本概念" aria-hidden="true"></i><span class="n">01</span><span class="t">面向对象基本概念 ★</span></a></li><li><a href="02-分析与设计过程.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/02-分析与设计过程" aria-hidden="true"></i><span class="n">02</span><span class="t">面向对象分析与设计过程 ★★</span></a></li><li><a href="03-UML结构图.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/03-UML结构图" aria-hidden="true"></i><span class="n">03</span><span class="t">UML 结构图：类图、对象图与用例图 ★★★</span></a></li><li><a href="04-UML行为与交互图.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/04-UML行为与交互图" aria-hidden="true"></i><span class="n">04</span><span class="t">UML 行为图与交互图 ★★★</span></a></li><li><a href="05-设计模式框架.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/05-设计模式框架" aria-hidden="true"></i><span class="n">05</span><span class="t">设计模式分类与意图速查 ★★★</span></a></li><li><a href="06-高频设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/06-高频设计模式" aria-hidden="true"></i><span class="n">06</span><span class="t">高频设计模式与易混对照 ★★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：UML 建模</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/91-精华题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 4 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">04.3 UML 结构图：类图、对象图与用例图 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">3.0 先建全景：UML 2.x 共 13 种图，按&quot;静态/动态&quot;一刀切开<button type="button" class="sec-status" data-status-key="3.0 先建全景：UML 2.x 共 13 种图，按&amp;quot;静态/动态&amp;quot;一刀切开" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.0 先建全景：UML 2.x 共 13 种图，按&quot;静态/动态&quot;一刀切开」的学习状态"></button></h3>
+<p>UML 2.x 共定义 <strong>13 种图</strong>，按&quot;静态/动态&quot;一刀切开（其中最常见的 10 种必须全认，末尾三种低频，<strong>认名字即可</strong>）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>图</th>
+<th>一句话用途</th>
+<th>认图特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>静态（结构图）</strong></td>
+<td>类图</td>
+<td>一组对象、接口、协作及其关系</td>
+<td>矩形分三格：类名/属性/操作</td>
+</tr>
+<tr>
+<td></td>
+<td>对象图</td>
+<td>某一时刻的对象快照</td>
+<td>名字带<strong>下划线</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>构件图（组件图）</td>
+<td>一组构件之间的组织和依赖（静态<strong>实现</strong>视图）</td>
+<td>构件符号（带两个小凸起）+ 供/需接口</td>
+</tr>
+<tr>
+<td></td>
+<td>部署图</td>
+<td>运行处理<strong>节点</strong>及构件的配置（静态<strong>实施</strong>视图）</td>
+<td><strong>立体长方体</strong>（节点）</td>
+</tr>
+<tr>
+<td></td>
+<td>包图</td>
+<td>类/图如何组织成包及包间依赖</td>
+<td>文件夹形状</td>
+</tr>
+<tr>
+<td></td>
+<td>组合结构图</td>
+<td>分解类、构件或用例的<strong>内部结构</strong></td>
+<td>大框套小框、内部部件</td>
+</tr>
+<tr>
+<td><strong>动态（行为图）</strong></td>
+<td>用例图</td>
+<td>用例、参与者及其关系</td>
+<td>小人（参与者）+ 椭圆（用例）</td>
+</tr>
+<tr>
+<td></td>
+<td>顺序图（序列图）</td>
+<td>以<strong>时间顺序</strong>组织的对象间交互</td>
+<td>竖直生命线 + 水平消息箭头</td>
+</tr>
+<tr>
+<td></td>
+<td>通信图（协作图）</td>
+<td>强调收发消息的对象的<strong>组织结构</strong></td>
+<td>对象间连线标消息序号</td>
+</tr>
+<tr>
+<td></td>
+<td>状态图</td>
+<td>一个<strong>状态机</strong>：状态、转换、事件、活动</td>
+<td>圆角矩形（状态）+ 箭头（转换）</td>
+</tr>
+<tr>
+<td></td>
+<td>活动图</td>
+<td>一个活动到另一个活动的<strong>流程</strong></td>
+<td>泳道、分叉/汇合粗横线</td>
+</tr>
+<tr>
+<td></td>
+<td>交互概览图</td>
+<td>组合顺序图与活动图的特征，显示对象如何交互</td>
+<td>像活动图但节点是交互引用</td>
+</tr>
+<tr>
+<td></td>
+<td>定时图</td>
+<td>关注对象改变状态时的<strong>时间约束</strong></td>
+<td>时间刻度、状态阶梯</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆抓手</strong>：结构图 6 种 = <strong>类、对象、构件、部署、包、组合结构</strong>；行为图 7 种 = <strong>用例、顺序、通信、状态、活动、交互概览、定时</strong>。其中真正高频的是 <strong>10 种（静态五 + 动态五）</strong>——类图、对象图、构件图、部署图、包图、用例图、顺序图、通信图、状态图、活动图。多出的三种（组合结构图、交互概览图、定时图）只会在&quot;UML 图不包括下列哪种&quot;这类题里当干扰项出现。</p>
+<p><strong>反例演示（易错）</strong>：状态图和活动图长得像，区别在——状态图描述<strong>一个对象</strong>因事件引起的状态变迁，必须以&quot;事件&quot;为转换条件；活动图描述<strong>业务流程</strong>步骤，支持并发分支（分叉/汇合），不关心某个对象。另外顺序图 vs 通信图：<strong>内容等价、侧重不同</strong>——顺序图突出时间顺序，通信图突出对象间链接结构，两者可以互相转换（案例题常要求&quot;画出通信图&quot;）。</p>
+<h3 id="h-3">3.1 类图与对象图：三格 + 可见性 + 多重性<button type="button" class="sec-status" data-status-key="3.1 类图与对象图：三格 + 可见性 + 多重性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 类图与对象图：三格 + 可见性 + 多重性」的学习状态"></button></h3>
+<p><strong>类图的矩形三格</strong>（从上到下）：</p>
+<pre><code>┌──────────────────────┐
+│      类名 Book       │  ← 第 1 格：类名（抽象类用斜体）
+├──────────────────────┤
+│ - 书号  : String     │  ← 第 2 格：属性    - 私有  + 公有  # 保护
+│ - 定价  : double     │
+├──────────────────────┤
+│ + 借出() : boolean   │  ← 第 3 格：操作（方法）  括号不能省
+│ + 计算应还日() : Date│
+└──────────────────────┘
+</code></pre>
+<p><strong>可见性符号</strong>（选择题直接问 <code>-</code> 是什么意思）：<code>+</code> 公有 public、<code>-</code> 私有 private、<code>#</code> 保护 protected。考场上看到属性前全是一串减号，说明是<strong>私有属性</strong>（这正是封装）。</p>
+<p><strong>多重性（读书数字）vs 基数</strong>：题目常给你一句业务的自然语言，要你翻成符号。<strong>翻法</strong>是&quot;<strong>在每一端，问自己：一个对面对象能对应几个我</strong>&quot;：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>读作</th>
+<th>业务原话的样子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>1</code></td>
+<td>恰好一个</td>
+<td>&quot;每本书只属于一个书架&quot;</td>
+</tr>
+<tr>
+<td><code>0..1</code></td>
+<td>零个或一个</td>
+<td>&quot;读者可能有一条&quot;欠款记录&quot;，也可能没有&quot;</td>
+</tr>
+<tr>
+<td><code>1..*</code></td>
+<td>一个或多个（<strong>至少一个</strong>）</td>
+<td>&quot;一名读者至少有一条借阅记录&quot;</td>
+</tr>
+<tr>
+<td><code>0..*</code> 或 <code>*</code></td>
+<td>零个或多个（<strong>可以没有</strong>）</td>
+<td>&quot;一个书架可以没有任何图书&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：<code>1..*</code> 与 <code>0..*</code> 只差一个数字，含义却相反。判断口诀——<strong>看&quot;至少&quot;这个词</strong>：题干出现&quot;至少有/必须有&quot;→ 端点写 <code>1..*</code>；出现&quot;可以没有/可能没有/不一定有&quot;→ 写 <code>0..*</code>。这里最容易把手写答案画反，因为<strong>同一句话的两端各有一个多重性</strong>：如&quot;读者可借多本书&quot;，在<strong>图书端</strong>要写的不是&quot;多&quot;而是&quot;1&quot;（一本书只被一条借阅记录指向一个读者），在<strong>读者端</strong>才写 <code>0..*</code>。<strong>逐端问、别照抄句子</strong>。</p>
+<p><strong>对象图</strong>：类图是&quot;模板&quot;，对象图是&quot;<strong>某一时刻的快照</strong>&quot;。识别特征就是<strong>名字带下划线、冒号前是对象名、冒号后是类名</strong>，写成 <code>:图书</code> 或 <code>b1 : 图书</code>。</p>
+<h3 id="h-4">3.2 用例图：三个要素 + 三种关系 + 建模流程四步 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★」的学习状态"></button></h3>
+<p><strong>要素</strong>：<strong>参与者</strong>（小人，缩写可以是人、外部系统）、<strong>用例</strong>（椭圆，一件完整的、有业务价值的事）、<strong>关系</strong>（连线）。</p>
+<p><strong>三种关系</strong>（选择题 + 案例题双考）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>符号</th>
+<th>判据</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>包含</strong> <code>&lt;&lt;include&gt;&gt;</code></td>
+<td>虚线箭头 + 构造型，<strong>基用例 → 被包含用例</strong></td>
+<td><strong>必经</strong>、可被多个用例共用的公共行为</td>
+<td>借书<strong>必须先</strong>登录；借书/还书/查询<strong>都要</strong>检查权限</td>
+</tr>
+<tr>
+<td><strong>扩展</strong> <code>&lt;&lt;extend&gt;&gt;</code></td>
+<td>虚线箭头 + 构造型，<strong>扩展用例 → 基用例</strong></td>
+<td><strong>可选</strong>、条件触发、是基用例的分支场景</td>
+<td>超额时<strong>才</strong>弹逾期提示；勾选定时发布<strong>才</strong>执行</td>
+</tr>
+<tr>
+<td><strong>泛化</strong></td>
+<td>空心三角实线，<strong>子用例 → 父用例</strong></td>
+<td>多个用例有<strong>共同的类似结构和行为</strong>，抽出父用例</td>
+<td>网上注册/电话注册 → 泛化到&quot;课程注册&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>方向易错</strong>：include 是<strong>基用例指出去</strong>（借书 → 登录）；extend 是<strong>扩展用例指回来</strong>（拒绝提示 → 借书）。口诀：<strong>include 从主干指出，extend 从分支指回</strong>；判断只用一句话——<strong>&quot;没有它这事就干不成&quot;是 include，&quot;有它也行没它也行&quot;是 extend</strong>。</p>
+<p><strong>用例建模流程（四步，其中前三步必须、第四步可选）</strong>：</p>
+<ol>
+<li><strong>识别参与者</strong>（必须）—— 谁使用系统、系统服务谁；</li>
+<li><strong>合并需求获得用例</strong>（必须）—— 把每个参与者要做的事收成用例；</li>
+<li><strong>细化用例描述</strong>（必须）—— 写&quot;典型事件流 + 备选事件流&quot;；</li>
+<li><strong>调整用例模型</strong>（可选）—— 抽 include/extend/泛化，简化模型。</li>
+</ol>
+<p><strong>案例题怎么用这四步</strong>：真题给的&quot;用例详细描述&quot;就是第 3 步的产物，<strong>结构固定为——参与者 / 典型事件流（正常步骤 1、2、3…）/ 备选事件流（2a、4a 这类&quot;异常分支&quot;）</strong>。读题时把<strong>典型事件流的步骤</strong>当主线索（对应顺序图的消息顺序），把<strong>编号带字母的备选事件流</strong>当 <strong>extend 的来源</strong>（如&quot;4a 读者要借的书无法外借&quot;→ 扩展用例）。</p>
+<p><strong>反例演示（易错）</strong>：&quot;参与者&quot;里可以有<strong>外部系统</strong>（如&quot;支付网关&quot;&quot;短信平台&quot;），不一定是人；反过来，&quot;系统内部的某个模块&quot;<strong>不能</strong>当参与者——参与者必须<strong>在系统边界之外</strong>。这是选择题的常见陷阱：给你&quot;数据库&quot;&quot;登录模块&quot;当选项，它们都是系统内部的东西，不是参与者。</p>
+
+
+  <footer class="status-bar" data-status-page="04-面向对象与设计模式/03-UML结构图">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-分析与设计过程.html">
+      <span class="k">上一页</span>
+      <span class="t">04.2 面向对象分析与设计过程 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="04-UML行为与交互图.html">
+      <span class="k">下一页</span>
+      <span class="t">04.4 UML 行为图与交互图 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

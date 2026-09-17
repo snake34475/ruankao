@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.12 答案与解析</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.12 答案与解析</h1>
+  </header>
+  <h3 id="h-2">课后考题答案<button type="button" class="sec-status" data-status-key="课后考题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「课后考题答案」的学习状态"></button></h3>
+<p><strong>1. B</strong>
+&quot;用户说不清需求 + 先做演示确认&quot;是原型模型的标志特征。瀑布要需求明确；螺旋面向高风险大型项目（核心是风险分析）；V 模型是测试与开发阶段对应的瀑布变体。</p>
+<p><strong>2. B</strong>
+螺旋模型 = 瀑布 + 原型 + <strong>风险分析</strong>，风险分析是它的灵魂。文档驱动是瀑布的特征（A 干扰项）。</p>
+<p><strong>3. C</strong>
+结对编程、测试驱动开发、持续集成是 XP 的工程实践；每日站会、Sprint、产品负责人是 Scrum 框架角色与仪式。</p>
+<p><strong>4. C</strong>
+&quot;功能无关 + 必须同一时间执行&quot; = 时间内聚（初始化是典型）。若按固定次序执行则属过程内聚——本题关键词是&quot;同时执行&quot;。</p>
+<p><strong>5. B</strong>
+传&quot;记录/数据结构&quot;= 标记耦合；只传简单变量才是数据耦合。控制耦合传的是控制信号；公共耦合是共用全局数据区而非参数传递。</p>
+<p><strong>6. B</strong>
+&quot;同一全局<strong>数据结构</strong>（数组）&quot;→ 公共耦合；若只是同一个全局简单变量则是外部耦合——本题是数组（数据结构），选公共耦合。</p>
+<p><strong>7. C</strong>
+排序：语句 &lt; 判定 &lt; 条件 &lt; 判定/条件 &lt; 条件组合 &lt; <strong>路径</strong>。路径覆盖要求走遍所有执行路径，最强。</p>
+<p><strong>8. A</strong>
+条件覆盖只管&quot;每个条件取到真、假&quot;，不管&quot;判定的真假分支是否都执行&quot;——用例 (A=1,B=0)、(A=0,B=1) 两个条件真假都取遍，但判定恒为假，真分支没走过。这正是排序中条件覆盖与判定覆盖互不包含、需要&quot;判定/条件覆盖&quot;合并保证的原因。</p>
+<p><strong>9. C</strong>
+V(G) = E − N + 2 = 10 − 8 + 2 = <strong>4</strong>。验算：若图有 3 个判定节点，V(G) = 3+1 = 4 ✓。</p>
+<p><strong>10. C</strong>
+边界值分析在边界及其外侧邻值取数：0、1、100、101。只取 1 和 100 会漏掉&quot;边界外一点点&quot;的高发错误区。</p>
+<p><strong>11. A</strong>
+单元 → 集成 → 确认 → 系统 → 验收。确认测试对照需求规格说明书，验收测试由用户参与。</p>
+<p><strong>12. B</strong>
+适应&quot;环境变化&quot;（OS 升级）= 适应性维护。改正性修已发生错误；完善性扩功能；预防性防患未然。</p>
+<p><strong>13. C</strong>
+完善性维护占一半以上（约 50%–60%），直接背。</p>
+<p><strong>14. B</strong>
+可靠性子特性 = 成熟性、容错性、易恢复性。功能性子特性含适合性、准确性、互操作性、安全性等。</p>
+<p><strong>15. B</strong>
+&quot;文档化、标准化、全组织统一采用&quot; = 已定义级（3 级）。可重复级是&quot;能重复以往成功&quot;；已管理级的关键词是&quot;定量&quot;。</p>
+<h3 id="h-3">案例题答案<button type="button" class="sec-status" data-status-key="案例题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题答案」的学习状态"></button></h3>
+<p><strong>问题 1（缺失数据流，共 5 条）</strong>：</p>
+<p>逐句扫描说明，每句拆成&quot;起点 → 终点 → 名字&quot;的三元组，注意<strong>一句话可能对应两条流</strong>：</p>
+<ul>
+<li>句 2「系统<strong>按订单文件中的待处理订单</strong>，向相应餐厅发送订单信息」藏着两条：<strong>订单文件 → 加工②（待处理订单）</strong>（读文件）、<strong>加工② → 餐厅（订单信息）</strong>；</li>
+<li>句 4「配送员从<strong>配送文件</strong>获取取餐通知」也藏两条：<strong>配送文件 → 加工③（配送任务）</strong>（读文件）、<strong>加工③ → 配送员（取餐通知）</strong>——外部实体不能直接读文件，必须由加工中转；</li>
+<li>句 5「系统<strong>更新订单状态</strong>」一条：<strong>加工③ → 订单文件（订单状态）</strong>（写文件）。</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>缺失数据流</th>
+<th>起点</th>
+<th>终点</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>订单文件</td>
+<td>加工② 分派订单</td>
+<td>待处理订单</td>
+</tr>
+<tr>
+<td>2</td>
+<td>加工② 分派订单</td>
+<td>餐厅</td>
+<td>订单信息</td>
+</tr>
+<tr>
+<td>3</td>
+<td>配送文件</td>
+<td>加工③ 跟踪配送</td>
+<td>配送任务</td>
+</tr>
+<tr>
+<td>4</td>
+<td>加工③ 跟踪配送</td>
+<td>配送员</td>
+<td>取餐通知</td>
+</tr>
+<tr>
+<td>5</td>
+<td>加工③ 跟踪配送</td>
+<td>订单文件</td>
+<td>订单状态（更新）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>三个易漏点</strong>：① <strong>&quot;读文件&quot;也是流</strong>——图中只画了写入文件的流（①→订单文件、②→配送文件），一条读流都没有，而说明里明写&quot;按订单文件中的待处理订单&quot;&quot;从配送文件获取&quot;；② <strong>一句话可能对应两条流</strong>（句 2、句 4 都是），一句话只找一条是这道题最常见的丢分原因；③ 反馈类流（确认 / 通知）最容易被当成套话跳过。</p>
+<p><strong>自查</strong>：做完后逐个数每个加工的进出流——加工②若少了&quot;订单文件 → ②&quot;就成了灰洞（进不够出）；加工③若少了&quot;配送文件 → ③&quot;，就凭空发出了取餐通知，变成奇迹。</p>
+<p><strong>问题 2</strong>：</p>
+<ul>
+<li><strong>读配送文件</strong>：获取配送任务与配送进度，使&quot;送达确认&quot;能与配送文件中的任务对应起来——这就是问题 1 的缺失流 3（配送文件 → 加工③）；</li>
+<li><strong>写订单文件</strong>：按送达确认把订单状态更新为&quot;已送达&quot;——这就是问题 1 的缺失流 5（加工③ → 订单文件）。</li>
+</ul>
+<p><strong>与问题 1 的关系</strong>：问题 1 问的是&quot;<strong>图上缺哪些箭头</strong>&quot;（画法），本题问的是&quot;加工<strong>为什么要</strong>碰这些文件&quot;（用途），同一件事的两个角度，考场上一问一答都要写。</p>
+<p><strong>多画会被判错</strong>：加工③<strong>不需要读订单文件</strong>——它要的&quot;订单号&quot;可以从配送任务里带过来，说明里也没有&quot;读取订单信息&quot;这句话。补流题只补<strong>说明中写到过</strong>的流，自己推理出来的流不算。</p>
+<p><strong>问题 3</strong>：</p>
+<pre><code>订单 = 顾客编号 + 菜品明细 + 送餐地址
+菜品明细 = {菜品名 + 数量}
+</code></pre>
+<p>（<code>{}</code> 表示可重复出现；若考试给出字段更细的说明，按说明原词逐项列出。）</p>
+<h3 id="h-4">精华题答案<button type="button" class="sec-status" data-status-key="精华题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「精华题答案」的学习状态"></button></h3>
+<p><strong>1. ① 瀑布模型（需求明确、阶段评审）② 原型模型（需求模糊、先演示确认）③ 螺旋模型（高风险大型项目、每圈风险分析）④ 敏捷（Scrum/XP，短迭代拥抱变化）。</strong>
+识别口诀：明确瀑布、模糊原型、高风险螺旋、多变敏捷。</p>
+<p><strong>2. ① 逻辑内聚</strong>（逻辑相似但功能无关，按参数分支执行不同动作）；<strong>② 通信内聚</strong>（统计、排序、打印都是对<strong>同一批成绩数据</strong>的不同操作，彼此没有&quot;输出即输入&quot;的接力关系）；<strong>③ 偶然内聚</strong>（毫无关系硬凑）。
+易混点：若题干改成&quot;读数据 → 加工 → 把结果写回文件&quot;这种<strong>前一步输出是后一步输入</strong>的接力链，则是顺序内聚——判别标准是看动作之间有没有数据接力。</p>
+<p><strong>3. ① 控制耦合</strong>（传开关标志 = 控制信号）；<strong>② 数据耦合</strong>（简单变量）；<strong>③ 标记耦合</strong>（整条记录结构）；<strong>④ 公共耦合</strong>（直接修改同一全局数据——注意若是&quot;直接进入对方模块内部改&quot;则是内容耦合，本题是共享全局变量区，属公共耦合）。</p>
+<p><strong>4. V(G) = E − N + 2 = 12 − 9 + 2 = 5</strong>；判定节点数 + 1 = 4 + 1 = <strong>5</strong>。两种算法结果一致 ✓。</p>
+<p><strong>5. 满足条件覆盖</strong>（A、B 两条件的真、假取值都各出现了一次）；<strong>不满足判定覆盖</strong>（两次判定结果都是假，s=1 的真分支从未执行）。这也是&quot;条件覆盖不包含判定覆盖&quot;的实例——想同时保证要用判定/条件覆盖或更强的条件组合覆盖。</p>
+<p><strong>6. ① 改正性</strong>（修已发生的 bug）② <strong>预防性</strong>（为将来的修改提前重构，防患未然）③ <strong>完善性</strong>（扩充新功能）④ <strong>适应性</strong>（适应数据库环境更换）。易混点：② 是&quot;还没发生&quot;→ 预防，不是改正。</p>
+<p><strong>7. 第 4 级（已管理级）</strong>。关键词&quot;定量度量与控制&quot;；若描述为&quot;持续改进、采用新技术&quot;则是第 5 级优化级。</p>
+<h3 id="h-5">补充题答案<button type="button" class="sec-status" data-status-key="补充题答案" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题答案」的学习状态"></button></h3>
+<p><strong>选择题</strong></p>
+<p><strong>1. C</strong>
+&quot;模块规模越小越好&quot;是模块设计原则里<strong>固定的错项</strong>。原则①说的正好相反：模块过大，内部可能揉进不同类型的功能，需要进一步划分；但<strong>过小也不对</strong>——系统复杂度反而增加，<strong>模块之间的调用过于频繁，降低了模块的独立性</strong>。A 是扇入的原话定义；B 是原则④（作用域 ⊆ 控制域）；D 是原则②的原话（深度过大 → 有些模块过于简单 → 考虑合并）。</p>
+<p><strong>2. B</strong>
+先数清楚控制流图的<strong>节点</strong>和<strong>边</strong>：</p>
+<pre><code>节点（7 个）：S1、判定A、S2、判定B、S3、S4、S5
+边（8 条）：
+  S1 → A        A → S2   A → B
+  S2 → S5       B → S3   B → S4
+  S3 → S5       S4 → S5
+</code></pre>
+<p>算法一（E − N + 2）：V(G) = 8 − 7 + 2 = <strong>3</strong>。
+算法二（判定节点数 + 1）：判定只有 A、B 两个 → 2 + 1 = <strong>3</strong> ✓ 两法一致。
+干扰项：A = 2 是判定节点数本身（漏了 +1）；D = 8 是把边数直接当复杂度；C = 4 是把三岔汇合点 S5 也误当成判定节点（3 + 1）。</p>
+<p><strong>3. B</strong>
+沟通路径 = n(n−1)/2 = 6 × 5 ÷ 2 = <strong>15</strong>。
+反向验算：n = 6 的两两配对组合数 C(6,2) = (6×5)/(2×1) = 15 ✓。
+干扰项：C = 30 是漏了&quot;每次沟通被两端各算一次&quot;（忘了 ÷2）；D = 36 误用了 n²；A = 6 直接拿人数当路径数（注意<strong>有主程序员</strong>时才是 n − 1 = 5）。</p>
+<p><strong>4. B</strong>
+这是一对&quot;互缺&quot;的图：<strong>甘特图有&quot;并行&quot;没&quot;依赖&quot;</strong>（能看清各任务何时起止、哪些在并行），<strong>PERT 图有&quot;依赖&quot;没&quot;并行&quot;</strong>（能看清依赖关系并据此确定关键路径）。A 把依赖关系这个优点挂到了甘特图上；C 正好把两者互换；D 错在 PERT 图能反映依赖关系与关键路径，不只是起止时间。<strong>题干问&quot;缺哪一句&quot;，两个形容词一换就是错项。</strong></p>
+<p><strong>5. A</strong>
+<strong>有输入、无输出 = 黑洞</strong>（黑进不出）。奇迹是&quot;有输出、无输入&quot;；灰洞是&quot;输入输出都有，但<strong>输入不足以产生该输出</strong>&quot;；黑盒是测试方法名，不是 DFD 的错误类型。</p>
+<p><strong>案例题</strong></p>
+<p><strong>问题 1：外部实体共 2 个——读者、图书管理员。</strong></p>
+<p>判据是&quot;出现在『向××提交 / 向××发送 / 向××返回』位置、且是系统以外的人或组织&quot;：</p>
+<ul>
+<li>句 1「<strong>读者</strong>向系统提交借书申请」、句 3「向<strong>读者</strong>发送借阅成功通知」→ 读者；</li>
+<li>句 4「<strong>图书管理员</strong>向系统提交还书请求」→ 图书管理员。</li>
+</ul>
+<p><strong>两个易错点</strong>：① 不要把&quot;<strong>系统</strong>&quot;填成外部实体——它是被拆成四个加工的整体，是被建模的对象；② 不要漏掉&quot;读者&quot;——它在句 1 当主语、句 3 当宾语各出现一次，只看主语就很容易跳过。</p>
+<p><strong>问题 2：数据存储共 3 个——读者文件、图书文件、借阅文件。</strong></p>
+<p>加工④&quot;处理还书&quot;读写的文件：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>数据流</th>
+<th>起点</th>
+<th>终点</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图书在馆状态</td>
+<td>图书文件</td>
+<td>加工④</td>
+<td><strong>读</strong>：确认该图书条码对应的书存在、当前是什么状态（不读就无从&quot;更新&quot;）</td>
+</tr>
+<tr>
+<td>更新后的在馆状态</td>
+<td>加工④</td>
+<td>图书文件</td>
+<td><strong>写</strong>：把该图书的状态更新为&quot;在馆&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p>另外两个文件的归属：<strong>读者文件</strong>由加工②读（句 2「从读者文件中读取该读者的借阅资格与已借数量」）；<strong>借阅文件</strong>由加工③写（句 3「将借阅记录写入借阅文件」）。</p>
+<p><strong>判据提醒</strong>：数据存储的名一定是&quot;<strong>名词 + 文件 / 表 / 库 / 清单</strong>&quot;。若把&quot;借书申请&quot;&quot;还书请求&quot;&quot;借阅记录&quot;直接填成数据存储就错了——<strong>这些是数据流名（内容），不是存储名（容器）</strong>。</p>
+<p><strong>问题 3：属于「灰洞」。</strong></p>
+<p><strong>理由</strong>：先按顺序排除两种更简单的错误——加工④<strong>有输出</strong>（④→管理员：还书结果），所以不是黑洞（有进无出）；它<strong>也有输入</strong>（管理员→④：还书请求），所以也不是奇迹（有出无进）。但它仍不完整：把在馆状态&quot;更新为在馆&quot;这件事，<strong>必须有图书文件中的在馆数据</strong>作为依据，而&quot;还书请求&quot;里只有图书条码，<strong>输入不足以产生&quot;还书结果&quot;这个输出</strong>——这就是<strong>灰洞（进不够出）</strong>。</p>
+<p><strong>正确补法</strong>：补两条与图书文件之间的流——</p>
+<pre><code>①  图书文件 →（图书在馆状态）→ 加工④        ← 读：拿到当前状态
+②  加工④ →（更新后的在馆状态）→ 图书文件    ← 写：把状态改为&quot;在馆&quot;
+</code></pre>
+<p><strong>通用判断顺序</strong>：① 无输出 → 黑洞；② 无输入 → 奇迹；③ 进、出都有，再问&quot;这点输入够不够产生这个输出&quot; → 不够就是灰洞。口诀：<strong>黑进不出、奇出不进、灰进不够出</strong>。</p>
+<hr>
+<p><strong>下一课</strong>：学完本课、做完题后，对我说「下一课」，我将生成 <a href="../04-面向对象与设计模式/index.html">04-面向对象与设计模式.html</a> 并更新进度表。</p>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/99-答案与解析">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="91-精华题与补充题.html">
+      <span class="k">上一页</span>
+      <span class="t">03.11 精华题与补充题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="../04-面向对象与设计模式/index.html">
+      <span class="k">下一页</span>
+      <span class="t">04 面向对象与设计模式</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

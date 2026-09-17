@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>02.4 关系规范化 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a><ul class="chapter-nav"><li><a href="01-三级模式与两级映像.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/01-三级模式与两级映像" aria-hidden="true"></i><span class="n">01</span><span class="t">三级模式与两级映像 ★</span></a></li><li><a href="02-E-R模型.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/02-E-R模型" aria-hidden="true"></i><span class="n">02</span><span class="t">E-R 模型 ★★★</span></a></li><li><a href="03-关系代数.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/03-关系代数" aria-hidden="true"></i><span class="n">03</span><span class="t">关系代数 ★★</span></a></li><li><a href="04-关系规范化.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="02-数据库系统/04-关系规范化" aria-hidden="true"></i><span class="n">04</span><span class="t">关系规范化 ★★★</span></a></li><li><a href="05-SQL.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/05-SQL" aria-hidden="true"></i><span class="n">05</span><span class="t">SQL ★★★</span></a></li><li><a href="06-事务并发与故障恢复.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/06-事务并发与故障恢复" aria-hidden="true"></i><span class="n">06</span><span class="t">事务、并发控制与故障恢复 ★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：数据库设计</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="02-数据库系统/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 2 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">02.4 关系规范化 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">为什么要规范化<button type="button" class="sec-status" data-status-key="为什么要规范化" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要规范化」的学习状态"></button></h3>
+<p>一张大表什么都往里塞，会出现三种病：<strong>数据冗余</strong>（系主任跟着每个学生重复存）、<strong>修改麻烦</strong>（换主任要改几百行）、<strong>插入/删除异常</strong>（还没招生的系插不进来、最后一个学生毕业系主任信息也跟着没了）。规范化的目的就是<strong>拆表</strong>，把这些病一步步消掉。</p>
+<h3 id="h-3">函数依赖（判断范式的唯一工具）<button type="button" class="sec-status" data-status-key="函数依赖（判断范式的唯一工具）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「函数依赖（判断范式的唯一工具）」的学习状态"></button></h3>
+<p>X→Y 读作&quot;X 决定 Y&quot;：知道 X 就能唯一确定 Y。三种关键形态（设 K 是候选键）：</p>
+<ul>
+<li><strong>完全依赖</strong>：Y 依赖整个 K，去掉 K 中任何一个属性都不行。例：(学号, 课程号)→成绩。</li>
+<li><strong>部分依赖</strong>：Y 依赖 K 的<strong>一部分</strong>就够了。例：(学号, 课程号)→姓名，其实学号→姓名——<strong>部分依赖是病</strong>。</li>
+<li><strong>传递依赖</strong>：X→Y、Y→Z 且 Y 不决定 X，则 Z 传递依赖 X。例：学号→系名→系主任——<strong>传递依赖是病</strong>。</li>
+</ul>
+<p>先把几个容易混的“键”分清：</p>
+<ul>
+<li><strong>超键</strong>：能决定全部属性的属性集，可以含多余属性；</li>
+<li><strong>候选键</strong>：不含多余属性的最小超键，可能不止一个；</li>
+<li><strong>主键</strong>：人为从候选键中选一个作为主要标识；</li>
+<li><strong>主属性</strong>：出现在<strong>任一候选键</strong>中的属性；其余是非主属性；</li>
+<li><strong>全码</strong>：整个关系模式的全部属性合在一起才构成候选键，即所有属性都是主属性且缺一不可。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：若候选键有 <code>AB</code> 和 <code>AC</code>，主属性是 <code>A、B、C</code> 的并集，不是只看被选作主键的 <code>AB</code> 而把 C 误判为非主属性。范式判断看的是<strong>所有候选键</strong>，不是只看主键。</p>
+<h3 id="h-4">范式判定：一级一级&quot;消病&quot;<button type="button" class="sec-status" data-status-key="范式判定：一级一级&amp;quot;消病&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「范式判定：一级一级&quot;消病&quot;」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>范式</th>
+<th>要求</th>
+<th>一句话判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1NF</td>
+<td>属性不可再分（数据库默认满足）</td>
+<td>所有属性都是原子值</td>
+</tr>
+<tr>
+<td>2NF</td>
+<td>消除<strong>部分依赖</strong></td>
+<td>每个非主属性都依赖<strong>整个</strong>候选键</td>
+</tr>
+<tr>
+<td>3NF</td>
+<td>再消除<strong>传递依赖</strong></td>
+<td>非主属性不间接依赖候选键</td>
+</tr>
+<tr>
+<td>BCNF</td>
+<td>每个决定因素都必须是候选键</td>
+<td>比 3NF 更严：主属性也不能有依赖毛病</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>判定四步法（背流程，别背定义）</strong>：</p>
+<ol>
+<li>找候选键（见下）；</li>
+<li>列出所有&quot;决定→被决定&quot;；</li>
+<li>看有没有<strong>非主属性只依赖候选键一部分</strong> → 有则最高 1NF；</li>
+<li>再看有没有<strong>非主属性靠别的非主属性中转</strong> → 有则最高 2NF；都没有 → 3NF；若还有主属性被非主属性决定 → 不到 BCNF。</li>
+</ol>
+<p>把判定压成一张“谁依赖谁”表：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>观察到的依赖</th>
+<th>造成什么问题</th>
+<th>最高可能停在哪</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非主属性依赖组合候选键的一部分</td>
+<td>部分依赖</td>
+<td>1NF</td>
+</tr>
+<tr>
+<td>非主属性经另一个非主属性间接依赖候选键</td>
+<td>传递依赖</td>
+<td>2NF</td>
+</tr>
+<tr>
+<td>决定因素不是超键，但右部是主属性</td>
+<td>允许满足 3NF，不满足 BCNF</td>
+<td>3NF</td>
+</tr>
+<tr>
+<td>每个非平凡依赖的决定因素都是超键</td>
+<td>无上述问题</td>
+<td>BCNF</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>快判 1</strong>：候选键只有一个属性时，不可能存在“对候选键一部分”的依赖，因此只要满足 1NF 就自动满足 2NF。</p>
+<p><strong>快判 2</strong>：如果所有属性都是主属性，就没有“非主属性的部分依赖或传递依赖”，因此至少满足 3NF；但决定因素若不是超键，仍可能不到 BCNF。</p>
+<p>例：R(A,B,C)，F={AB→C，C→B}。候选键有 <code>AB</code> 和 <code>AC</code>，所以 A、B、C 全是主属性，R 满足 3NF；但 <code>C→B</code> 的决定因素 C 不是超键，因此不满足 BCNF，最高为 <strong>3NF</strong>。</p>
+<p><strong>主属性也会部分依赖，但不会把关系打回 1NF</strong>：上例候选键 <code>AC</code> 中，主属性 B 由 C 单独决定，即 B 对候选键 AC 存在部分依赖。2NF 的检查对象是<strong>非主属性</strong>，所以该依赖不违反 2NF；它真正违反的是更严格的 BCNF 条件。不要见到“部分依赖”四个字就机械判 1NF，先看被决定者是不是非主属性。</p>
+<p><strong>反例演示（易错）</strong>：R(学号, 姓名, 系, 系主任)，学号→姓名、学号→系、系→系主任。候选键是学号（单属性），<strong>不可能有部分依赖</strong>（键只有一个属性，&quot;一部分&quot;还是它自己），所以它<strong>直接就是 2NF</strong>；但学号→系→系主任是传递依赖，所以<strong>最高 2NF，不是 3NF</strong>。最常见的错误就是把&quot;有冗余&quot;当成&quot;不是 2NF&quot;——单属性键的表不存在部分依赖，第一步就能跳过。</p>
+<h3 id="h-5">候选键怎么求（案例题必考）<button type="button" class="sec-status" data-status-key="候选键怎么求（案例题必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「候选键怎么求（案例题必考）」的学习状态"></button></h3>
+<p>候选键的严格工具是<strong>属性闭包</strong>。属性集 X 在函数依赖集 F 下能推出的全部属性，记作 <code>X⁺</code>。若 <code>X⁺</code> 等于关系的全部属性，则 X 是超键；再逐个删除 X 中属性，删谁都不能推全，X 才是候选键。</p>
+<p><strong>闭包算法（通用形式）</strong>：</p>
+<ol>
+<li>初始化 <code>X⁺ = X</code>；</li>
+<li>反复扫描每条函数依赖 <code>Y→Z</code>：若 <code>Y ⊆ X⁺</code>，就把 Z 加入 <code>X⁺</code>；</li>
+<li>一轮扫描后不再增加属性时停止；</li>
+<li>与属性全集比较，再做“逐个删除”最小性检查。</li>
+</ol>
+<p><strong>手算口诀：先把自己圈进去；左边已齐，就收右边；一轮没新增，才算停。</strong></p>
+<p><strong>Armstrong 三条公理</strong>是闭包推导的依据：</p>
+<ul>
+<li><strong>自反律</strong>：若 Y⊆X，则 X→Y；</li>
+<li><strong>增广律</strong>：若 X→Y，则 XZ→YZ；</li>
+<li><strong>传递律</strong>：若 X→Y 且 Y→Z，则 X→Z。</li>
+</ul>
+<p>考试常直接使用三条派生规则：<strong>分解</strong>（X→YZ 可推出 X→Y、X→Z）、<strong>合并</strong>（X→Y 且 X→Z 可推出 X→YZ）、<strong>伪传递</strong>（X→Y 且 WY→Z，可推出 WX→Z）。</p>
+<p><strong>完整演算</strong>：R(A1,A2,A3,A4,A5,A6)，F={A1→A3，A1A2→A4，A5A6→A1，A3A5→A6，A2A5→A6}，求一个候选键。</p>
+<ol>
+<li>从未出现在任何依赖右部的属性是 <code>A2、A5</code>，它们无法由其他属性推出，必须进入每个候选键；</li>
+<li>初始化 <code>(A2A5)⁺={A2,A5}</code>；</li>
+<li>用 <code>A2A5→A6</code>，加入 A6；</li>
+<li>用 <code>A5A6→A1</code>，加入 A1；</li>
+<li>用 <code>A1→A3</code>，加入 A3；</li>
+<li>用 <code>A1A2→A4</code>，加入 A4；</li>
+<li>闭包已是 <code>{A1,A2,A3,A4,A5,A6}</code>，故 A2A5 是超键；去掉 A2 或 A5 都无法推全，因此 <strong>A2A5 是候选键</strong>。</li>
+</ol>
+<p>反向验证：只用 A2 时没有任何依赖可启动；只用 A5 也无法启动，两个属性都不可删除，最小性成立。</p>
+<p><strong>启发式口诀：从未在依赖右部出现的属性，必在每个候选键里</strong>。但这只是起点，不是答案；必须继续算闭包并检查最小性。</p>
+<p>例：R(A,B,C,D)，F = {A→B, B→C, D→B}。右部出现过的：B、C。从未出现在右部的：<strong>A、D</strong>。验证 AD：A→B，B→C，D→B → 可推出 A、B、C、D 全部 → <strong>候选键 = AD</strong>（ABD 虽也能决定全部，但含多余属性，是超键不是候选键）。</p>
+<h3 id="h-6">分解后怎么检查：无损连接与保持函数依赖<button type="button" class="sec-status" data-status-key="分解后怎么检查：无损连接与保持函数依赖" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「分解后怎么检查：无损连接与保持函数依赖」的学习状态"></button></h3>
+<p>规范化不是“拆得越碎越好”。拆完必须过两道门：</p>
+<ol>
+<li><strong>无损连接</strong>：分表自然连接后能准确还原原关系，不丢行，也不产生原来不存在的假行；</li>
+<li><strong>保持函数依赖</strong>：原来的约束能在各分表内部检查，不必把表连接起来才能验证。</li>
+</ol>
+<p>二元分解 <code>R→R1、R2</code> 的常用无损快判是：公共属性 <code>R1∩R2</code> 能否函数决定 R1 或 R2 的全部属性，即检查 <code>(R1∩R2)→R1</code> 或 <code>(R1∩R2)→R2</code> 是否成立。</p>
+<p>例：R(A,B,C)，F={A→B}，分为 R1(A,B) 与 R2(A,C)。公共属性是 A，且 <code>A→AB</code> 成立，所以分解<strong>无损</strong>。</p>
+<p>反例：仍是 R(A,B,C)，若分为 R1(A,B) 与 R2(B,C)，公共属性是 B，但由 F 只能知道 A→B，推不出 <code>B→AB</code> 或 <code>B→BC</code>，因此不能判为无损，实际可能连接出假行。</p>
+<p><strong>保持依赖不等于无损</strong>：两者是不同检查项。3NF 综合算法通常可以兼顾无损和保持依赖；BCNF 分解保证无损，但可能牺牲某些依赖保持。案例题若只问“能否还原原表”，答无损；若问“能否分别在单表内检查全部约束”，答保持函数依赖。</p>
+<p><strong>应试动作</strong>：背四步判定法 + &quot;右部不出现的属性进候选键&quot;；考&quot;最高属于第几范式&quot;时<strong>从低往高验</strong>，卡在哪级就答前一级。</p>
+
+
+  <footer class="status-bar" data-status-page="02-数据库系统/04-关系规范化">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-关系代数.html">
+      <span class="k">上一页</span>
+      <span class="t">02.3 关系代数 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-SQL.html">
+      <span class="k">下一页</span>
+      <span class="t">02.5 SQL ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

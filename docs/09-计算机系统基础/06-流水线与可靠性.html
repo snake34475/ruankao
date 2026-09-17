@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.6 流水线与系统可靠性 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.6 流水线与系统可靠性 <span class="stars">★★★</span></h1>
+  </header>
+  <p>若一条指令分成 k 段，各段时间为 t1、t2…tk，流水线周期 Δt = max(ti)。执行 n 条指令的理论时间：</p>
+<p><strong>T = (t1+t2+…+tk) + (n−1)×Δt</strong></p>
+<p>若题目按每段都取统一周期，实践公式：</p>
+<p><strong>T = (k+n−1)×Δt</strong></p>
+<p>例：取指 2 ns、译码 3 ns、执行 4 ns，执行 100 条：</p>
+<ul>
+<li>建立时间 = 2+3+4=9 ns；</li>
+<li>周期 Δt=4 ns；</li>
+<li>T=9+(100−1)×4=<strong>405 ns</strong>。</li>
+</ul>
+<p>不用流水线需 100×9=900 ns，所以确实加速。稳态最大吞吐率：</p>
+<p><strong>TPmax = 1/Δt = 1/4 ns = 2.5×10^8 条/秒</strong>。</p>
+<p><strong>反例</strong>：不能把流水线时间算成 n×最长段时间就直接结束，这漏掉了第一条指令把流水线“灌满”的建立时间。题目若明确采用统一时钟周期，才用 <code>(k+n−1)Δt</code>。</p>
+<p><strong>应试动作</strong>：先圈最长段求周期，再写“第一条完整时间+(n−1)周期”；用结果必须小于非流水时间做合理性检查。</p>
+<hr>
+<h2 id="h-2">第十节 系统可靠性：每个部件可靠，不等于组合后可靠 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第十节 系统可靠性：每个部件可靠，不等于组合后可靠 ★★★」的学习状态"></button></h2>
+<p>可靠度 R(t) 是系统在规定条件和时间内无故障运行的概率。</p>
+<h3 id="h-3">10.1 串联、并联、混联<button type="button" class="sec-status" data-status-key="10.1 串联、并联、混联" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.1 串联、并联、混联」的学习状态"></button></h3>
+<p>串联系统必须所有部件都正常：</p>
+<p><strong>Rs = R1×R2×…×Rn</strong></p>
+<p>两个可靠度均为 0.9 的串联系统：Rs=0.9×0.9=<strong>0.81</strong>。串联环节越多，整体可靠度通常越低。</p>
+<p>并联系统只要至少一个正常：</p>
+<p><strong>Rp = 1−(1−R1)(1−R2)…(1−Rn)</strong></p>
+<p>两个可靠度均为 0.9 的并联系统：Rp=1−0.1×0.1=<strong>0.99</strong>。</p>
+<p>这个公式来自反面事件：“全部失效”的概率是失效率相乘，再用 1 减掉。<strong>反例</strong>：并联可靠度不能直接写 R1+R2=1.8，概率不可能超过 1。</p>
+<p>混联系统先识别局部串/并联，算成一个等效模块，再向外算。例如 A（0.9）与由 B、C（各 0.8）组成的并联模块串联：</p>
+<p>RBC=1−(1−0.8)^2=0.96；总可靠度=0.9×0.96=<strong>0.864</strong>。</p>
+<p>反向检查：并联模块 0.96 应高于单件 0.8；与 A 串联后 0.864 应低于 A 的 0.9，符合直觉。</p>
+<h3 id="h-4">10.2 MTTF、MTTR、MTBF 与可用性<button type="button" class="sec-status" data-status-key="10.2 MTTF、MTTR、MTBF 与可用性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「10.2 MTTF、MTTR、MTBF 与可用性」的学习状态"></button></h3>
+<ul>
+<li><strong>MTTF</strong>：平均无故障运行时间；</li>
+<li><strong>MTTR</strong>：平均修复时间；</li>
+<li><strong>MTBF</strong>：平均故障间隔。教材对它是否包含修复时间存在两种口径，题目若明确定义必须服从题面。</li>
+</ul>
+<p>最稳妥的做法是先写“运行时间 U”和“停机修复时间 D”：</p>
+<blockquote class="lead">
+<p><strong>稳态可用性 A = U / (U+D)</strong></p>
+</blockquote>
+<p>若题目把 U 称为 MTTF，则 <code>A=MTTF/(MTTF+MTTR)</code>；若把 MTBF 定义为“正常运行时间”，则 <code>A=MTBF/(MTBF+MTTR)</code>；若把 MTBF 定义为完整的“运行+修复”周期，则 <code>MTBF=MTTF+MTTR</code>，于是 <code>A=MTTF/MTBF</code>。</p>
+<p>例：平均运行 990 h 后故障，平均修复 10 h：</p>
+<p><code>A=990/(990+10)=0.99=99%</code>。</p>
+<p>反向理解：每个平均周期 1000 h 中约有 990 h 可用、10 h 停机，比例就是 99%。</p>
+<h4 id="h-5">可靠度：在指定时长内不故障的概率</h4>
+<p>若假设失效率 λ 恒定，指数可靠度模型为：</p>
+<blockquote>
+<p><strong>R(t)=e^(−λt)，MTTF=1/λ</strong></p>
+</blockquote>
+<p>当 λt 很小时，可近似 <code>R(t)≈1−λt</code>。例如 <code>λ=10^−5/h</code>，<code>t=1000 h</code>：</p>
+<ul>
+<li>精确值：<code>R(1000)=e^(−0.01)≈0.99005</code>；</li>
+<li>近似值：<code>1−0.01=0.99</code>。</li>
+</ul>
+<p>二者接近，但“可靠度”必须带观察时长 t；只给 MTTF 不能直接说某一时刻可靠度是多少。</p>
+<h4 id="h-6">从“台数、小时、故障数”反推失效率</h4>
+<p>1000 台同型设备各观察 1000 h，共发生 10 次故障。总设备小时为：</p>
+<p><code>1000×1000=1,000,000 台·h</code>。</p>
+<p>估计失效率：</p>
+<p><code>λ=故障次数/总设备小时=10/1,000,000=10^−5/h</code>。</p>
+<p>代入指数模型，单台设备连续运行 1000 h 的可靠度约为 <code>e^(−0.01)=0.99005</code>。若题目直接给“1000 台中 990 台撑过 1000 h”，经验可靠度也可算 <code>990/1000=0.99</code>，与模型结果接近。</p>
+<p><strong>易错点</strong>：分母不是“1000 小时”，而是所有设备贡献的<strong>总设备小时</strong>。漏乘设备台数会把失效率放大 1000 倍。</p>
+<h4 id="h-7">可维护性：规定时间内修好的概率</h4>
+<p>若修复率 μ 恒定，且 <code>MTTR=1/μ</code>，则在时间 t 内完成修复的概率（可维护度）为：</p>
+<blockquote>
+<p><strong>M(t)=1−e^(−μt)=1−e^(−t/MTTR)</strong></p>
+</blockquote>
+<p>例：<code>MTTR=2 h</code>，问 4 h 内修复的概率：</p>
+<p><code>M(4)=1−e^(−4/2)=1−e^(−2)≈1−0.1353=0.8647</code>。</p>
+<p>时间越充裕，修好的概率越高；这与可靠度 <code>R(t)</code> 随时间增长而下降的方向相反。</p>
+<blockquote>
+<p><strong>口径提醒</strong>：有些备考资料写“可靠性指标 = MTTF/(1+MTTF)、可用性指标 = MTBF/(1+MTBF)、可维护性指标 = 1/(1+MTTR)”。这类式子只有在时间先按某个基准单位无量纲化、且题面明确把它定义为归一化评分时才可使用；它们不是通用的可靠度函数或稳态可用性公式。普通计算题优先使用本节带时间/周期含义的公式。</p>
+</blockquote>
+<p><strong>应试动作</strong>：串联直接乘；并联先算“全坏”再用 1 减；混联从内到外。看到“在 t 时间内不坏”用 <code>R(t)</code>；看到“长期能用的时间比例”用可用性 A；看到“在 t 时间内修好”用 <code>M(t)</code>。先看 MTBF 的题面定义，再决定分母，绝不把三种概率混成一个式子。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/06-流水线与可靠性">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-IO总线与指令系统.html">
+      <span class="k">上一页</span>
+      <span class="t">09.5 I/O、总线与指令系统 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="07-校验码.html">
+      <span class="k">下一页</span>
+      <span class="t">09.7 校验码 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

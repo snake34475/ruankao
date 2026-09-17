@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.8 CMM 与 CMMI ★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.8 CMM 与 CMMI <span class="stars">★</span></h1>
+  </header>
+  <h3 id="h-2">8.1 CMM 五级（背顺序 + 抓关键词）<button type="button" class="sec-status" data-status-key="8.1 CMM 五级（背顺序 + 抓关键词）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 CMM 五级（背顺序 + 抓关键词）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+<th>关键词识别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>初始级</strong></td>
+<td>杂乱无章、甚至混乱；几乎没有明确定义的步骤；项目成功<strong>完全依赖个人努力和英雄式核心人物</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>可重复级</strong></td>
+<td>建立了<strong>基本的项目管理过程与实践</strong>，用来跟踪<strong>项目费用、进度和功能特性</strong>；有必要的过程准则来<strong>重复</strong>以前在同类项目中的成功</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>已定义级</strong></td>
+<td>管理和工程两方面的过程已经<strong>文档化、标准化</strong>，并综合成整个开发组织的<strong>标准过程</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>已管理级</strong>（已定量管理级）</td>
+<td>制定了软件过程和产品质量的<strong>详细度量标准</strong>（<strong>定量</strong>）</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>优化级</strong></td>
+<td>加强<strong>定量分析</strong>，通过过程质量反馈与新观念、新技术的反馈，使过程能<strong>不断持续改进</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>口诀</strong>：<strong>初、重、定、管、优</strong>（初始—可重复—已定义—已管理—优化）。</p>
+<p><strong>考法就是配对</strong>：抓&quot;文档化标准化&quot;→ 3 级；&quot;<strong>定量/量化</strong>&quot;→ 4 级；&quot;<strong>持续改进</strong>&quot;→ 5 级；&quot;<strong>重复</strong>以往成功&quot;→ 2 级；&quot;靠个人英雄&quot;→ 1 级。<strong>3/4/5 三级的区分全在三个词上：标准化、定量、持续改进。</strong></p>
+<h3 id="h-3">8.2 CMMI 的两种表示法（一阶段式 / 连续式）<button type="button" class="sec-status" data-status-key="8.2 CMMI 的两种表示法（一阶段式 / 连续式）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 CMMI 的两种表示法（一阶段式 / 连续式）」的学习状态"></button></h3>
+<p><strong>CMMI（能力成熟度模型集成）</strong> 把 CMM 扩成了集成模型，有<strong>两种表示法</strong>：</p>
+<p><strong>① 阶段式（阶段式模型）</strong>——按&quot;组织整体&quot;分五级，与 CMM 五级一一对应：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>初始级</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>已管理级</strong>（CMM 的&quot;可重复级&quot;在这里叫已管理级）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>已定义级</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>定量管理级</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>优化级</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>② 连续式（连续式模型）</strong>——按&quot;单个过程域的能力&quot;分六级 <strong>CL0–CL5</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>名称</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CL0</td>
+<td>未完成的</td>
+<td>过程域未执行，或未达到 CL1 的全部目标</td>
+</tr>
+<tr>
+<td>CL1</td>
+<td><strong>已执行的</strong></td>
+<td>过程能把<strong>可标识的输入工作产品转换成可标识的输出工作产品</strong></td>
+</tr>
+<tr>
+<td>CL2</td>
+<td><strong>已管理的</strong></td>
+<td>重点是把已管理的过程<strong>制度化</strong></td>
+</tr>
+<tr>
+<td>CL3</td>
+<td><strong>已定义级的</strong></td>
+<td>重点是把已定义的过程<strong>制度化</strong></td>
+</tr>
+<tr>
+<td>CL4</td>
+<td><strong>定量管理的</strong></td>
+<td>重点是<strong>可定量管理</strong>的过程制度化</td>
+</tr>
+<tr>
+<td>CL5</td>
+<td><strong>优化的</strong></td>
+<td>用<strong>量化（统计学）手段改变和优化</strong>过程域，满足客户改变与持续改进的需求</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>阶段式 vs 连续式别混</strong>：<strong>阶段式看&quot;组织整体到了第几级&quot;（5 级）</strong>；<strong>连续式看&quot;某一个过程域自身的能力等级&quot;（CL0–CL5，6 级）</strong>。题干说&quot;<strong>某个过程域</strong>……&quot;→ 连续式；说&quot;<strong>整个组织</strong>……&quot;→ 阶段式。</p>
+<h3 id="h-4">8.3 应试动作<button type="button" class="sec-status" data-status-key="8.3 应试动作" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.3 应试动作」的学习状态"></button></h3>
+<p>背两串顺序：<strong>CMM/CMMI 阶段式五级 = 初、重定管优</strong>（CMMI 里&quot;可重复&quot;叫&quot;已管理&quot;）；<strong>连续式 = CL0 未完成 → CL1 已执行 → CL2 已管理 → CL3 已定义 → CL4 定量管理 → CL5 优化</strong>。做题先抓三个关键词（标准化=3、定量=4、持续改进=5），再判断问的是&quot;整个组织&quot;还是&quot;某个过程域&quot;。</p>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/08-CMM与CMMI">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="07-项目管理基础.html">
+      <span class="k">上一页</span>
+      <span class="t">03.7 项目管理基础 ★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="09-案例题专攻.html">
+      <span class="k">下一页</span>
+      <span class="t">03.9 案例题专攻：数据流图</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

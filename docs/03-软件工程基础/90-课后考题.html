@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.10 课后考题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.10 课后考题</h1>
+  </header>
+  <p><strong>一、选择题</strong></p>
+<ol>
+<li><p>某项目用户说不清具体需求，开发方决定先快速构造一个演示系统供用户确认后再正式开发。应采用（ ）。
+A. 瀑布模型  B. 原型模型  C. 螺旋模型  D. V 模型</p>
+</li>
+<li><p>螺旋模型区别于瀑布模型等传统模型的最主要特征是（ ）。
+A. 文档驱动  B. 每轮迭代加入风险分析  C. 分批交付  D. 快速响应用户界面变化</p>
+</li>
+<li><p>下列软件开发实践中，属于 XP（极限编程）而非 Scrum 的是（ ）。
+A. 每日站会  B. Sprint 冲刺  C. 结对编程  D. 产品负责人角色</p>
+</li>
+<li><p>一个模块完成初始化系统所需的多个操作，这些操作本身功能无关、只是必须在系统启动时同时执行。该模块的内聚类型是（ ）。
+A. 偶然内聚  B. 逻辑内聚  C. 时间内聚  D. 过程内聚</p>
+</li>
+<li><p>模块 A 向模块 B 传递参数时传的是一条完整的&quot;学生记录&quot;结构。A、B 之间的耦合类型是（ ）。
+A. 数据耦合  B. 标记耦合  C. 控制耦合  D. 公共耦合</p>
+</li>
+<li><p>多个模块都直接访问同一个全局数组。这种耦合属于（ ）。
+A. 外部耦合  B. 公共耦合  C. 内容耦合  D. 数据耦合</p>
+</li>
+<li><p>下列逻辑覆盖中，覆盖程度最强的是（ ）。
+A. 条件组合覆盖  B. 判定/条件覆盖  C. 路径覆盖  D. 判定覆盖</p>
+</li>
+<li><p>满足条件覆盖却可能不满足判定覆盖，原因是（ ）。
+A. 条件覆盖只要求每个条件取到真假，不保证判定本身的真假分支都走到
+B. 条件覆盖比判定覆盖强
+C. 判定覆盖只针对循环语句
+D. 条件覆盖要求覆盖所有路径</p>
+</li>
+<li><p>某程序控制流图有 10 条边、8 个节点，其 McCabe 环路复杂度 V(G) 为（ ）。
+A. 2  B. 3  C. 4  D. 18</p>
+</li>
+<li><p>黑盒测试中，对取值范围 [1, 100] 的输入，边界值分析应重点选取（ ）。
+A. 50  B. 1 和 100  C. 0、1、100、101  D. 随机值</p>
+</li>
+<li><p>软件测试阶段顺序正确的是（ ）。
+A. 单元 → 集成 → 确认 → 系统 → 验收  B. 集成 → 单元 → 确认 → 系统 → 验收
+C. 单元 → 确认 → 集成 → 系统 → 验收  D. 确认 → 单元 → 集成 → 系统 → 验收</p>
+</li>
+<li><p>为适应操作系统从旧版本升级到新版本而修改软件，属于（ ）。
+A. 改正性维护  B. 适应性维护  C. 完善性维护  D. 预防性维护</p>
+</li>
+<li><p>软件维护工作中占比最大的是（ ）。
+A. 改正性维护  B. 适应性维护  C. 完善性维护  D. 预防性维护</p>
+</li>
+<li><p>ISO/IEC 9126 质量模型中，&quot;成熟性、容错性、易恢复性&quot;属于（ ）的子特性。
+A. 功能性  B. 可靠性  C. 易用性  D. 维护性</p>
+</li>
+<li><p>某组织已将其软件过程文档化、标准化，所有项目均采用经批准的标准过程进行开发。按 CMM 该组织处于（ ）。
+A. 可重复级  B. 已定义级  C. 已管理级  D. 优化级</p>
+</li>
+</ol>
+<p><strong>二、案例题（数据流图，模拟真题风格）</strong></p>
+<p>阅读下列说明和图，回答问题 1 至问题 3。</p>
+<p>【说明】某订餐系统接收顾客订单并跟踪配送，业务如下：</p>
+<ol>
+<li>顾客向系统提交订单（含顾客编号、菜品明细、送餐地址），系统将订单存入订单文件，并向顾客发送订单确认。</li>
+<li>系统按订单文件中的待处理订单，向相应餐厅发送订单信息；同时生成配送任务写入配送文件。</li>
+<li>餐厅备餐完成后向系统发送备餐完成通知。</li>
+<li>配送员从配送文件获取取餐通知。</li>
+<li>配送员送达后向系统发送送达确认，系统更新订单状态，并向顾客发送送达通知。</li>
+</ol>
+<p>顶层图（0 层图的外部实体与之一致）：外部实体为顾客、餐厅、配送员。</p>
+<p>0 层图中画出三个加工：①接收订单、②分派订单、③跟踪配送；两个文件：订单文件、配送文件。
+已画出的数据流有：顾客→①（订单）、①→订单文件（订单）、①→顾客（订单确认）、②→配送文件（配送任务）、③→顾客（送达通知）、配送员→③（送达确认）、餐厅→③（备餐完成通知）。</p>
+<p><strong>问题 1</strong>：对照说明，指出 0 层图中还缺少的数据流（给出起点、终点和数据流名）。</p>
+<p><strong>问题 2</strong>：加工③&quot;跟踪配送&quot;除收到外部输入外，还需要读写哪些文件？各起什么作用？</p>
+<p><strong>问题 3</strong>：补齐数据字典条目：订单 = ______；菜品明细 = ______。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/90-课后考题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="09-案例题专攻.html">
+      <span class="k">上一页</span>
+      <span class="t">03.9 案例题专攻：数据流图</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="91-精华题与补充题.html">
+      <span class="k">下一页</span>
+      <span class="t">03.11 精华题与补充题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

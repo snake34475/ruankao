@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>11.1 五步解题法：不要从第一个空开始硬翻 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a><ul class="chapter-nav"><li><a href="01-五步解题法.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="11-专业英语/01-五步解题法" aria-hidden="true"></i><span class="n">01</span><span class="t">五步解题法：不要从第一个空开始硬翻 ★★★</span></a></li><li><a href="02-软件工程高频词.html"><i class="sb-dot" data-status-page-dot="11-专业英语/02-软件工程高频词" aria-hidden="true"></i><span class="n">02</span><span class="t">软件工程高频词 ★★★</span></a></li><li><a href="03-面向对象与程序语言词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/03-面向对象与程序语言词汇" aria-hidden="true"></i><span class="n">03</span><span class="t">面向对象、设计模式与程序语言词汇 ★★</span></a></li><li><a href="04-数据库操作系统与网络词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/04-数据库操作系统与网络词汇" aria-hidden="true"></i><span class="n">04</span><span class="t">数据库、操作系统与网络词汇 ★★★</span></a></li><li><a href="05-信息安全云计算与AI词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/05-信息安全云计算与AI词汇" aria-hidden="true"></i><span class="n">05</span><span class="t">信息安全、云计算与 AI 词汇 ★★★</span></a></li><li><a href="06-易混词构词法与长句.html"><i class="sb-dot" data-status-page-dot="11-专业英语/06-易混词构词法与长句" aria-hidden="true"></i><span class="n">06</span><span class="t">易混词、构词法、长句与考前速记 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="11-专业英语/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="11-专业英语/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="11-专业英语/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 11 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">11.1 五步解题法：不要从第一个空开始硬翻 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">1.1 第一步：扫读主题<button type="button" class="sec-status" data-status-key="1.1 第一步：扫读主题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 第一步：扫读主题」的学习状态"></button></h3>
+<p>先用 20–30 秒读首句、末句和重复出现的名词，回答：“这段在讲什么？”</p>
+<p>例如反复出现 <code>requirements, stakeholders, traceability, test cases</code>，主题大概率是<strong>需求工程</strong>；反复出现 <code>model, training data, prediction, overfitting</code>，主题就是<strong>机器学习</strong>。</p>
+<p>知道主题后，大脑会自动缩小词义范围。<code>model</code> 在 AI 文章中通常是“模型”，在软件工程中也可能是“开发模型”，不能一看到就只译成“模特”。</p>
+<h3 id="h-3">1.2 第二步：先判词性，再看词义<button type="button" class="sec-status" data-status-key="1.2 第二步：先判词性，再看词义" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 第二步：先判词性，再看词义」的学习状态"></button></h3>
+<p>空格前后的结构会直接淘汰一半选项：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>线索</th>
+<th>空格常需什么</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>a/an/the + ___</code></td>
+<td>名词，或形容词+名词</td>
+<td>an <strong>interface</strong></td>
+</tr>
+<tr>
+<td><code>be + ___</code></td>
+<td>形容词、过去分词或现在分词</td>
+<td>is <strong>reliable</strong></td>
+</tr>
+<tr>
+<td><code>to + ___</code></td>
+<td>动词原形</td>
+<td>to <strong>reduce</strong> cost</td>
+</tr>
+<tr>
+<td><code>can/must/should + ___</code></td>
+<td>动词原形</td>
+<td>can <strong>detect</strong> errors</td>
+</tr>
+<tr>
+<td><code>___ + noun</code></td>
+<td>形容词或名词作定语</td>
+<td><strong>secure</strong> channel</td>
+</tr>
+<tr>
+<td><code>verb + ___</code></td>
+<td>名词/代词作宾语，或副词修饰动词</td>
+<td>improve <strong>quality</strong></td>
+</tr>
+<tr>
+<td><code>one of the + ___</code></td>
+<td>复数名词/最高级+复数名词</td>
+<td>one of the <strong>methods</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例前置</strong>：句子 <code>The system can ___ failures.</code> 中，若选项有 <code>detection</code>（名词）和 <code>detect</code>（动词），即使两个都认识，也只能选 <code>detect</code>。情态动词 <code>can</code> 后必须接动词原形。</p>
+<h3 id="h-4">1.3 第三步：检查固定搭配<button type="button" class="sec-status" data-status-key="1.3 第三步：检查固定搭配" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 第三步：检查固定搭配」的学习状态"></button></h3>
+<p>专业英语里很多答案不是“意思勉强通顺”就行，而是搭配固定：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>搭配</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>be responsible <strong>for</strong></td>
+<td>对……负责</td>
+</tr>
+<tr>
+<td>depend/rely <strong>on</strong></td>
+<td>依赖</td>
+</tr>
+<tr>
+<td>comply <strong>with</strong></td>
+<td>遵守、符合</td>
+</tr>
+<tr>
+<td>consist <strong>of</strong></td>
+<td>由……组成</td>
+</tr>
+<tr>
+<td>prevent A <strong>from</strong> doing B</td>
+<td>防止 A 做 B</td>
+</tr>
+<tr>
+<td>protect A <strong>from/against</strong> B</td>
+<td>保护 A 免受 B</td>
+</tr>
+<tr>
+<td>be divided <strong>into</strong></td>
+<td>被分成</td>
+</tr>
+<tr>
+<td>contribute <strong>to</strong></td>
+<td>有助于、导致</td>
+</tr>
+<tr>
+<td>result <strong>in</strong></td>
+<td>导致某结果</td>
+</tr>
+<tr>
+<td>result <strong>from</strong></td>
+<td>由某原因引起</td>
+</tr>
+<tr>
+<td>be compatible <strong>with</strong></td>
+<td>与……兼容</td>
+</tr>
+<tr>
+<td>have access <strong>to</strong></td>
+<td>有权/能够访问</td>
+</tr>
+<tr>
+<td>in terms <strong>of</strong></td>
+<td>在……方面</td>
+</tr>
+<tr>
+<td>rather <strong>than</strong></td>
+<td>而不是</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例</strong>：<code>The failure results ___ data loss.</code> 应填 <code>in</code>，因为后面是结果；<code>Data loss results ___ the failure.</code> 才填 <code>from</code>，因为后面是原因。口诀：<strong>result in 去结果，result from 找来源</strong>。</p>
+<h3 id="h-5">1.4 第四步：寻找逻辑信号<button type="button" class="sec-status" data-status-key="1.4 第四步：寻找逻辑信号" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 第四步：寻找逻辑信号」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>常见信号词</th>
+<th>做题动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>转折</td>
+<td>but, however, although, while, whereas</td>
+<td>前后意思通常相反或对比</td>
+</tr>
+<tr>
+<td>因果</td>
+<td>because, since, therefore, thus, so, as a result</td>
+<td>找原因与结果</td>
+</tr>
+<tr>
+<td>递进</td>
+<td>moreover, furthermore, in addition</td>
+<td>后句延续同方向</td>
+</tr>
+<tr>
+<td>举例</td>
+<td>for example, such as, including</td>
+<td>后面解释前面的类别</td>
+</tr>
+<tr>
+<td>换言</td>
+<td>in other words, that is</td>
+<td>前后近义解释</td>
+</tr>
+<tr>
+<td>条件</td>
+<td>if, unless, provided that</td>
+<td>判断条件成立与否</td>
+</tr>
+<tr>
+<td>对照</td>
+<td>rather than, instead of, on the other hand</td>
+<td>排除相反项</td>
+</tr>
+</tbody></table>
+</div>
+<p>例：<code>The algorithm is accurate; however, it is computationally ___.</code> <code>however</code> 表示转折，前面夸“准确”，后面通常指出缺点，故应考虑 <code>expensive</code>（计算开销大），而不是 <code>efficient</code>。</p>
+<h3 id="h-6">1.5 第五步：代回全文，做三项检查<button type="button" class="sec-status" data-status-key="1.5 第五步：代回全文，做三项检查" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 第五步：代回全文，做三项检查」的学习状态"></button></h3>
+<p>每空选完后，不要立刻交卷。把答案代回去检查：</p>
+<ol>
+<li>语法是否完整；</li>
+<li>专业结论是否正确；</li>
+<li>全段逻辑是否自洽。</li>
+</ol>
+<p>如果两个词都通顺，优先选能与上下文形成<strong>复现或照应</strong>的词。例如前文说 <code>users report problems quickly</code>，后文出现 <code>shortens the feedback ___</code>，通常选 <code>cycle</code>，因为快速报告问题会缩短反馈周期。</p>
+<h3 id="h-7">1.6 完整演示：把五步走完一整篇 5 空题<button type="button" class="sec-status" data-status-key="1.6 完整演示：把五步走完一整篇 5 空题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.6 完整演示：把五步走完一整篇 5 空题」的学习状态"></button></h3>
+<blockquote class="lead">
+<p>练习全篇：先自己试做下面这篇（不列选项先想一遍词性与意思），再对照&quot;思考痕迹&quot;。这篇同时也作为本课&quot;真题标杆&quot;短文的范本。</p>
+</blockquote>
+<p><strong>短文（主题：软件测试）</strong>：</p>
+<blockquote>
+<p>Software testing is the process of finding defects before software is delivered to users. A well-designed test case consists of input values, the environment in which they run, and the expected <strong>(1)</strong>, so that an actual result can be compared with it. Good test suites cover normal inputs as well as <strong>(2)</strong> cases, such as boundary values and invalid data. Because a defect discovered late is far more <strong>(3)</strong> to fix, testing is carried out throughout the life cycle instead of only at the end. Automated tests can be executed repeatedly at low cost, which is why teams keep a <strong>(4)</strong> test suite to ensure that recent changes do not <strong>(5)</strong> already-working behavior.</p>
+</blockquote>
+<p><strong>逐空思考痕迹（每一次动手前先背口诀：扫主题—判词性—看搭配—找逻辑—代回读）</strong>：</p>
+<ul>
+<li><strong>(1) A. output　B. quickly　C. implemented　D. removable</strong>
+先判词性：<code>the expected ____</code>＝&quot;定冠词 + 形容词 + 空&quot;，所以空里应填<strong>名词</strong>。四个选项只有 <code>output</code>（输出结果）是名词；<code>quickly</code> 是副词、<code>implemented</code>/<code>removable</code> 都是分词/形容词。→ 选 <strong>A</strong>。</li>
+<li><strong>(3) A. expensive　B. portable　C. automatic　D. shared</strong>
+找逻辑：句首 <code>Because</code> 是因果信号，&quot;后期才发现的缺陷&quot;通常是<strong>修复成本更高</strong>，所以选 <code>expensive</code>（昂贵的）。它是形容词，也满足 <code>far more + 形容词 + to fix</code> 的结构。→ 选 <strong>A</strong>。</li>
+<li><strong>(5) A. break　B. encrypt　C. compile　D. measure</strong>
+判词性：<code>do not ____ already-working behavior</code>，情态/助动词 <code>do</code> 后应接<strong>动词原形</strong>；四个都能作动词原形，再看语义——&quot;确保最近改动不<strong>破坏</strong>已正常工作&quot;，<code>break</code>（破坏）最贴。→ 选 <strong>A</strong>。</li>
+<li><strong>(2) A. unusual　B. encrypted　C. affordable　D. broken</strong>
+先判词性：<code>____ cases</code> 是&quot;形容词 + 名词&quot;的结构，四个都能当形容词。这时<strong>不要硬猜词义，用逻辑与共现</strong>：<code>normal inputs as well as ____ cases, such as boundary values and invalid data</code>——<code>as well as</code> 表示加一种<strong>有别于正常</strong>的情况，后面举例&quot;边界值、非法数据&quot;，所以选 <code>unusual</code>（不寻常的）。<code>encrypted</code>（加密的）与测试用例边界无关，<code>affordable</code>/<code>broken</code> 均无该语境。→ 选 <strong>A</strong>。</li>
+<li><strong>(4) A. regression　B. routing　C. symmetric　D. remote</strong>
+<strong>这一步示范&quot;先跳过空&quot;</strong>：如果刚看完前几句一时判断不了，不要耗时间，先标号跳过，做完后面再回来。最后一句 <code>ensure that recent changes do not break already-working behavior</code>（确保近期改动不破坏已工作的行为），正是<strong>回归测试</strong>要防的事，固定术语是 <code>regression test suite</code>（回归测试套件）。其余 <code>routing</code>（路由）、<code>symmetric</code>（对称的）、<code>remote</code>（远程的）都无法与 test suite 组成此专业搭配。→ 回到 <strong>(4)</strong> 选 <strong>A</strong>。</li>
+</ul>
+<p><strong>代回检查</strong>：把 A、A、A、A、A 逐个代回读一遍——每空语法完整、专业结论正确、段落逻辑自洽（先讲测试目的→测试用例构成→覆盖正常与非常规→因因果强调尽早测试→自动化与回归）。五步收工。</p>
+<p><strong>应试动作</strong>：(1)(2)(3) 靠<strong>判词性 + 找逻辑</strong>，(4) 靠<strong>搭配 + 先跳过 + 代回读</strong>，(5) 靠<strong>判词性</strong>。把它们分别标到这类题上，就能在两分钟内做完一组 5 空。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="11-专业英语/01-五步解题法">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">11 专业英语</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-软件工程高频词.html">
+      <span class="k">下一页</span>
+      <span class="t">11.2 软件工程高频词 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

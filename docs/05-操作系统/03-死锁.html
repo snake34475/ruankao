@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>05.3 死锁 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a><ul class="chapter-nav"><li><a href="01-进程线程与状态.html"><i class="sb-dot" data-status-page-dot="05-操作系统/01-进程线程与状态" aria-hidden="true"></i><span class="n">01</span><span class="t">进程、线程与状态转换 ★★★</span></a></li><li><a href="02-进程调度与PV操作.html"><i class="sb-dot" data-status-page-dot="05-操作系统/02-进程调度与PV操作" aria-hidden="true"></i><span class="n">02</span><span class="t">进程调度与 PV 操作 ★★★</span></a></li><li><a href="03-死锁.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="05-操作系统/03-死锁" aria-hidden="true"></i><span class="n">03</span><span class="t">死锁 ★★★</span></a></li><li><a href="04-存储管理与页面置换.html"><i class="sb-dot" data-status-page-dot="05-操作系统/04-存储管理与页面置换" aria-hidden="true"></i><span class="n">04</span><span class="t">存储管理与页面置换 ★★★</span></a></li><li><a href="05-文件管理.html"><i class="sb-dot" data-status-page-dot="05-操作系统/05-文件管理" aria-hidden="true"></i><span class="n">05</span><span class="t">文件管理 ★★</span></a></li><li><a href="06-设备管理与计算专题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/06-设备管理与计算专题" aria-hidden="true"></i><span class="n">06</span><span class="t">设备管理与高频计算专题 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="05-操作系统/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05.3 死锁 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">死锁是什么、为什么会发生<button type="button" class="sec-status" data-status-key="死锁是什么、为什么会发生" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁是什么、为什么会发生」的学习状态"></button></h3>
+<p>若干进程互相要对方手里的资源，谁都拿不齐、谁都不放手，全体卡死——这就是死锁。发生死锁必须<strong>同时</strong>满足四个必要条件（背名称+含义，选择题考配对）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>含义</th>
+<th>破坏它的预防策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>互斥</strong></td>
+<td>资源一次只能一个进程用</td>
+<td>无法破坏（资源物理特性决定）</td>
+</tr>
+<tr>
+<td><strong>请求和保持</strong>（保持和等待）</td>
+<td>占着资源还去申请新的</td>
+<td><strong>一次性申请全部资源（静态分配）</strong></td>
+</tr>
+<tr>
+<td><strong>不剥夺</strong></td>
+<td>别人不能抢走已分配的资源</td>
+<td>允许强行剥夺</td>
+</tr>
+<tr>
+<td><strong>环路等待</strong></td>
+<td>形成&quot;你等我、我等你&quot;的环形链</td>
+<td><strong>资源有序分配法</strong>（全系统资源统一编号、按序申请）</td>
+</tr>
+</tbody></table>
+</div>
+<p>处理策略四层次：<strong>死锁预防</strong>（破坏四条件之一）→ <strong>死锁避免</strong>（银行家算法，动态判断分配后是否安全）→ <strong>死锁检测与解除</strong>（资源图化简）。破坏&quot;互斥&quot;做不到，破坏其余三个都能预防。</p>
+<h3 id="h-3">死锁资源数公式（<span class="stars">★★★</span> 必考计算）<button type="button" class="sec-status" data-status-key="死锁资源数公式（★★★ 必考计算）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「死锁资源数公式（★★★ 必考计算）」的学习状态"></button></h3>
+<ul>
+<li><strong>通用形式</strong>：m 个进程、每个进程最多需要 w 个同类资源、系统共有 n 个资源——<ul>
+<li><strong>不可能发生死锁的最小资源数</strong>：n = <strong>m×(w−1) + 1</strong>（等价条件：n ≥ m(w−1)+1 时必不死锁）；</li>
+<li><strong>可能发生死锁的最大资源数</strong>：n = <strong>m×(w−1)</strong>（n ≤ m(w−1) 时<strong>可能</strong>死锁，不是必然）。</li>
+<li>推导思路：最坏情况是每个进程都拿到 w−1 个还差 1 个、把资源占光——此时共 m(w−1) 个资源全被占着，人人等资源，死锁；只要再多 1 个资源，就有人能凑齐跑完并释放，死锁解开。</li>
+</ul>
+</li>
+<li><strong>代入算例</strong>：3 个进程各需 4 个资源：不可能死锁的最小 n = 3×(4−1)+1 = 10；n = 9 时可能死锁（3 个进程各持 3 个，全占光）。</li>
+<li><strong>手算口诀</strong>：<strong>&quot;每进程先扣 1，乘完再加 1&quot;</strong>。</li>
+</ul>
+<p>反向题型（给 n 求 w）：3 个进程共享 10 个资源，每个进程最多申请 i 个，问&quot;可能发生死锁的最小 i&quot;——令 3×(i−1) ≥ 10，i−1 ≥ 3.34，i ≥ 4.34，取整数 <strong>i = 5</strong>。（i = 4 时 3×3 = 9 &lt; 10，按鸽笼原理必有一个进程能拿到 4 个而完成，不死锁。）</p>
+<h3 id="h-4">进程资源图与&quot;化简&quot;（<span class="stars">★★</span>）<button type="button" class="sec-status" data-status-key="进程资源图与&amp;quot;化简&amp;quot;（★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「进程资源图与&quot;化简&quot;（★★）」的学习状态"></button></h3>
+<p><strong>动机</strong>：死锁检测要回答&quot;当前这批进程是否已死锁&quot;。进程资源图用圆圈表示进程、方块表示资源：<strong>进程→资源</strong>的有向边 = 申请，<strong>资源→进程</strong>的边 = 已分配。化简 = 模拟&quot;让能跑完的进程跑完并归还资源&quot;，看能否全清空。</p>
+<p><strong>判定四步模板（背下来直接套）</strong>：</p>
+<ol>
+<li><strong>列剩余</strong>：每种资源空闲量 = 总量 − Σ各进程已占该资源；</li>
+<li><strong>判阻塞</strong>：申请量 &gt; 空闲量的进程是<strong>阻塞结点</strong>，先放一边；</li>
+<li><strong>执行归还</strong>：找申请量 ≤ 空闲量的进程（非阻塞），模拟它跑完并把它占用的<strong>全部</strong>资源交还空闲池，标记已化简；</li>
+<li><strong>循环 / 下结论</strong>：重复 2–3 步直到全化简 → <strong>非死锁</strong>；某轮再也找不到可化简进程而仍有未化简者 → <strong>死锁</strong>。</li>
+</ol>
+<p><strong>代入算例</strong>：R1 总量 2、R2 总量 2。P1 占 R1×1、还申请 R1×1；P2 占 R1×1、R2×1、还申请 R2×1。</p>
+<ul>
+<li>剩余：R1 空闲 = 2 − (P1 占1 + P2 占1) = 0；R2 空闲 = 2 − (P2 占1) = 1；</li>
+<li>P1 申请 R1 需 1、空闲 0 → 阻塞；P2 申请 R2 需 1、空闲 1 → 可化简；</li>
+<li>P2 跑完归还 R1×1、R2×1 → 空闲 R1 = 1、R2 = 2；此时 P1 申请 R1 需 1 ≤ 空闲 1 → 化简。全部化简 → <strong>非死锁</strong>。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：① 有环<strong>未必</strong>死锁——要把环和&quot;申请是否卡死&quot;合起来看，能化简就不是死锁；② 一次化简会改变空闲量，<strong>每一步都要重刷剩余再判阻塞</strong>，不能拿最初的状态一路判到底。</p>
+<h3 id="h-5">银行家算法（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="银行家算法（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「银行家算法（★★★）」的学习状态"></button></h3>
+<p><strong>动机</strong>：预防策略太死板（一次性分配浪费资源），银行家算法更聪明——每次分配前<strong>先假装分出去，看看能不能找到一个让所有进程都跑完的顺序（安全序列）</strong>：找得到就真分，找不到就不分。银行放贷同理：放钱前先算&quot;这笔放出去后，是否还能让所有贷款人最终都还上钱&quot;。</p>
+<p><strong>判定步骤（五步模板，背下来直接套）</strong>：</p>
+<ol>
+<li>算每个进程的<strong>需求 Need = 最大需求 − 已分配</strong>；</li>
+<li>算<strong>剩余可用 Available</strong> = 资源总量 − 各进程已分配之和；</li>
+<li>在未完成进程中找&quot;Need ≤ Available&quot;的进程，让它<strong>执行完并归还全部已分配资源</strong>（Available += 它的 Allocation），标记完成；</li>
+<li>重复第 3 步，直到所有进程完成（→ <strong>安全</strong>，执行顺序即安全序列）或找不到任何可满足的进程（→ <strong>不安全</strong>，拒绝本次分配）；</li>
+<li>若判断&quot;某进程再申请 X 个能否满足&quot;：先<strong>试探性地</strong>把 X 从 Available 划给它、Need 减 X，再走一遍第 2–4 步；不安全则<strong>回滚并拒绝</strong>。</li>
+</ol>
+<p><strong>代入算例</strong>：资源总量 10。P1 最大 5、已分 3（Need 2）；P2 最大 7、已分 2（Need 5）；P3 最大 6、已分 2（Need 4）。Available = 10 − (3+2+2) = 3。</p>
+<ul>
+<li>Need ≤ 3 的只有 P1（Need 2）→ P1 先跑，归还后 Available = 3+3 = 6；</li>
+<li>此时 P2（Need 5 ≤ 6）、P3（Need 4 ≤ 6）都能跑 → 安全序列有 P1→P2→P3 和 P1→P3→P2 两条。</li>
+</ul>
+<p><strong>反例演示（易错）</strong>：① 只要<strong>找到一条</strong>安全序列就算安全，不要求唯一（但做题时若四个选项里三条都不通，剩下的那条就是答案）；② &quot;不安全&quot; ≠ &quot;已死锁&quot;，只是&quot;可能死锁&quot;，银行家算法宁可错杀不肯冒险；③ 算 Available 时忘了用&quot;总量减已分配&quot;，直接拿 Need 求和比较——必错。</p>
+<p><strong>应试动作</strong>：① 死锁资源数公式&quot;每进程先扣 1 乘完再加 1&quot;正反两个方向都要会算；② 四条件与破坏策略配对（一次性分配→破坏请求和保持；有序分配→破坏环路等待）；③ 银行家五步模板背熟，安全序列判定题在草稿上列表（Need / Available 两列）逐步推，每步检查&quot;Need ≤ Available&quot;。</p>
+
+
+  <footer class="status-bar" data-status-page="05-操作系统/03-死锁">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="02-进程调度与PV操作.html">
+      <span class="k">上一页</span>
+      <span class="t">05.2 进程调度与 PV 操作 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="04-存储管理与页面置换.html">
+      <span class="k">下一页</span>
+      <span class="t">05.4 存储管理与页面置换 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

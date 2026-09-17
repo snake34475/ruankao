@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>05.2 进程调度与 PV 操作 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a><ul class="chapter-nav"><li><a href="01-进程线程与状态.html"><i class="sb-dot" data-status-page-dot="05-操作系统/01-进程线程与状态" aria-hidden="true"></i><span class="n">01</span><span class="t">进程、线程与状态转换 ★★★</span></a></li><li><a href="02-进程调度与PV操作.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="05-操作系统/02-进程调度与PV操作" aria-hidden="true"></i><span class="n">02</span><span class="t">进程调度与 PV 操作 ★★★</span></a></li><li><a href="03-死锁.html"><i class="sb-dot" data-status-page-dot="05-操作系统/03-死锁" aria-hidden="true"></i><span class="n">03</span><span class="t">死锁 ★★★</span></a></li><li><a href="04-存储管理与页面置换.html"><i class="sb-dot" data-status-page-dot="05-操作系统/04-存储管理与页面置换" aria-hidden="true"></i><span class="n">04</span><span class="t">存储管理与页面置换 ★★★</span></a></li><li><a href="05-文件管理.html"><i class="sb-dot" data-status-page-dot="05-操作系统/05-文件管理" aria-hidden="true"></i><span class="n">05</span><span class="t">文件管理 ★★</span></a></li><li><a href="06-设备管理与计算专题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/06-设备管理与计算专题" aria-hidden="true"></i><span class="n">06</span><span class="t">设备管理与高频计算专题 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="05-操作系统/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="05-操作系统/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 5 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">05.2 进程调度与 PV 操作 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">为什么要算周转时间<button type="button" class="sec-status" data-status-key="为什么要算周转时间" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要算周转时间」的学习状态"></button></h3>
+<p>用户交一个作业给系统，最关心的就是&quot;多久能跑完&quot;。周转时间衡量这个：从<strong>到达</strong>到<strong>完成</strong>的全部等待 + 运行时间。调度算法不同，周转时间不同——考题就是给几个作业的到达/运行时间，让你按某算法排顺序再求平均周转时间。</p>
+<h3 id="h-3">公式三件套<button type="button" class="sec-status" data-status-key="公式三件套" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「公式三件套」的学习状态"></button></h3>
+<ul>
+<li><strong>通用形式</strong>：周转时间 = 完成时刻 − 到达时刻；平均周转时间 = 各作业周转时间之和 ÷ 作业数；带权周转时间 = 周转时间 ÷ 实际运行时间。</li>
+<li><strong>代入算例</strong>：作业 J1 时刻 0 到达、需运行 4；J2 时刻 1 到达、需运行 3；J3 时刻 2 到达、需运行 1。按先来先服务（FCFS）单道顺序执行：J1 在 0–4 完成，周转 = 4−0 = 4；J2 在 4–7 完成，周转 = 7−1 = 6；J3 在 7–8 完成，周转 = 8−2 = 6。平均周转时间 = (4+6+6)/3 = 16/3 ≈ 5.33。</li>
+<li><strong>手算口诀</strong>：先列表填&quot;开始时刻、完成时刻&quot;两列（完成 = 上一个完成时刻与本作业到达时刻中较大者 + 运行时间），再用&quot;完成减到达&quot;一列竖式扫下去。</li>
+</ul>
+<h3 id="h-4">常考调度算法<button type="button" class="sec-status" data-status-key="常考调度算法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「常考调度算法」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>规则</th>
+<th>特征词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FCFS 先来先服务</td>
+<td>按到达顺序</td>
+<td>&quot;先来先服务&quot;</td>
+</tr>
+<tr>
+<td>SJF 短作业优先（非抢占）</td>
+<td>可运行作业中挑<strong>运行时间最短</strong>的</td>
+<td>&quot;短作业优先&quot;&quot;平均周转时间最短&quot;</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（易错）</strong>：SJF 非抢占时，<strong>时刻 0 只能从已到达的作业里挑短的</strong>，不是全场谁短谁先。上例改按 SJF：t=0 只有 J1 已到 → 仍先跑 J1（0–4）；t=4 时 J2(需 3)、J3(需 1) 都在等 → 挑短的 J3（4–5，周转 5−2 = 3）；再跑 J2（5–8，周转 8−1 = 7）。平均 = (4+3+7)/3 = 14/3 ≈ 4.67 &lt; 5.33 ✓（SJF 平均周转更短，这正是它的卖点）。若错把 J3 提到最前面先跑，就掉进&quot;未到达就运行&quot;的陷阱。</p>
+<p><strong>应试动作</strong>：背公式&quot;周转 = 完成 − 到达&quot;；SJF 题每一步都先检查&quot;该时刻这个作业到了没有&quot;；选项给分数（16/3、14/3）时别慌，保留分数或算到两位小数即可。</p>
+<h2 id="h-5">第四节 进程同步与互斥：PV 操作 <span class="stars">★★★</span>（必考）<button type="button" class="sec-status" data-status-key="第四节 进程同步与互斥：PV 操作 ★★★（必考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 进程同步与互斥：PV 操作 ★★★（必考）」的学习状态"></button></h2>
+<h3 id="h-6">为什么要互斥：临界资源<button type="button" class="sec-status" data-status-key="为什么要互斥：临界资源" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「为什么要互斥：临界资源」的学习状态"></button></h3>
+<p>两个进程同时往同一台打印机上输出，纸上的内容就会交错成一团乱码。像打印机这种<strong>同一时刻只允许一个进程使用的资源</strong>叫<strong>临界资源</strong>，进程中访问临界资源的那段代码叫<strong>临界区</strong>。注意区分：临界资源必须互斥使用；普通共享资源（如可重入的代码）允许多进程同时用。</p>
+<p>临界区管理的四条准则（选择题考过名称与含义）：<strong>有空即进、无空则等、有限等待、让权等待</strong>（进不了临界区就释放 CPU，避免&quot;忙等&quot;）。</p>
+<h3 id="h-7">信号量与 PV：一个会&quot;记账&quot;的变量<button type="button" class="sec-status" data-status-key="信号量与 PV：一个会&amp;quot;记账&amp;quot;的变量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「信号量与 PV：一个会&quot;记账&quot;的变量」的学习状态"></button></h3>
+<p><strong>信号量 S 是一个特殊变量</strong>，本质是资源账本：S &gt; 0 表示还剩 S 个资源可用；S = 0 表示资源刚好用光、无人排队；<strong>S &lt; 0 的绝对值 = 排队等资源的进程数</strong>。</p>
+<ul>
+<li><strong>P(S)</strong>（申请）：S 减 1；若 S &lt; 0，本进程阻塞进等待队列。</li>
+<li><strong>V(S)</strong>（释放）：S 加 1；若 S ≤ 0（说明有人在排队），唤醒一个等待进程。</li>
+</ul>
+<p>初学者最容易问：&quot;不就是个加减法吗，为什么要绑定阻塞/唤醒？&quot;——因为判断和等待必须<strong>一步完成</strong>：如果&quot;先查 S 再决定等不等&quot;分成两步，两个进程可能同时查到&quot;还有 1 个&quot;然后都进去，互斥就破了。PV 把&quot;查账 + 排队/叫号&quot;做成了不可拆的整体。</p>
+<p><strong>初值怎么定（核心结论）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>信号量含义</th>
+<th>初值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>互斥</strong>（多进程抢同一资源）</td>
+<td>资源数量</td>
+<td>= 资源数（1 台打印机 → 1；3 台同类打印机 → 3）</td>
+</tr>
+<tr>
+<td><strong>同步</strong>（前者做完了后者才能做）</td>
+<td>&quot;前者已完成&quot;这个消息</td>
+<td>一般为 <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>前趋图</strong></td>
+<td>每条有向弧一个信号量</td>
+<td>全为 <strong>0</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>信号量取值范围题（公式三件套）</strong>：</p>
+<ul>
+<li>通用形式：n 个进程共享 k 个同类资源，S 初值 k，则 S 的最大值 = k，最小值 = k − n（负到&quot;全部进程都在排队&quot;为止）。</li>
+<li>代入算例：10 个进程共享 3 台打印机：最大 3，最小 3 − 10 = −7，即 S ∈ [−7, 3]。</li>
+<li>手算口诀：<strong>&quot;上界是初值，下界是初值减进程数&quot;</strong>。</li>
+</ul>
+<h3 id="h-8">前趋图配 PV：套路题（<span class="stars">★★★</span>）<button type="button" class="sec-status" data-status-key="前趋图配 PV：套路题（★★★）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「前趋图配 PV：套路题（★★★）」的学习状态"></button></h3>
+<p>前趋图刻画&quot;哪些任务必须等哪些任务做完才能开始&quot;（思想与数据结构的拓扑排序一致，见 <a href="../01-数据结构与算法/03-图.html">第 01 课「图」</a> 第 3.5 节；与软件工程的关键路径网络图也同源）。</p>
+<p><strong>规则（背死）</strong>：</p>
+<ol>
+<li><strong>图中有几条有向弧，就定义几个信号量</strong>（每条弧一个，初值全为 0）；</li>
+<li>每条弧的<strong>起点</strong>（前趋任务）末尾做 <strong>V</strong>（&quot;我做完了&quot;），<strong>终点</strong>（后继任务）开头做 <strong>P</strong>（&quot;等我的前置完成&quot;）；</li>
+<li>一个任务有几条入弧，开头就要连续做几个 P；有几条出弧，末尾就连续做几个 V。</li>
+</ol>
+<p><strong>代入算例</strong>：弧为 A→B、A→C、B→D、C→D 共 4 条 → 信号量 S1～S4，初值均为 0：</p>
+<pre><code>A: 执行; V(S1); V(S2);
+B: P(S1); 执行; V(S3);
+C: P(S2); 执行; V(S4);
+D: P(S3); P(S4); 执行;
+</code></pre>
+<p><strong>反例演示（易错）</strong>：把 V 写在弧的终点、P 写在起点——顺序反了：变成&quot;后继先 V 报信、前趋再 P 等待&quot;，而信号量初值是 0，前趋 P 时会永远阻塞，整张图谁都跑不起来。记住口诀：<strong>&quot;V 在前驱末，P 在后继初&quot;</strong>。另一易错点：同步信号量与互斥信号量混用初值——同步（前趋图）初值 0，互斥初值 = 资源数，二者不能抄混。</p>
+<h3 id="h-9">生产者-消费者：互斥 + 同步组合题<button type="button" class="sec-status" data-status-key="生产者-消费者：互斥 + 同步组合题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「生产者-消费者：互斥 + 同步组合题」的学习状态"></button></h3>
+<p><strong>动机</strong>：一个进程往缓冲区放数据（生产者），一个进程从缓冲区取（消费者）。缓冲区格子是<strong>临界资源</strong>（同一时刻只容一个放/取），同时还有两条先后关系：缓冲区<strong>满</strong>时生产者要等消费者取走，缓冲区<strong>空</strong>时消费者要等生产者放入。因此至少三类信号量：</p>
+<ul>
+<li>互斥 <code>mutex</code>，初值 1，保护&quot;进出缓冲区（放/取）&quot;这段临界区；</li>
+<li>同步 <code>empty</code>，初值 = 缓冲区格数（还剩几个空位）；</li>
+<li>同步 <code>full</code>，初值 0（已放入几格数据）。</li>
+</ul>
+<p><strong>同步为什么&quot;先 P 后 V&quot;（核心，必背）</strong>：同步信号量记的是&quot;资源余量&quot;，<strong>用前先 P（检查、不够就等），用后 V（归还）</strong>——这与互斥只在初值上不同。而且<strong>同步的 P 必须放在互斥的 P 之前</strong>：若反了，缓冲区满时生产者占着 <code>mutex</code> 去等 <code>empty</code>，消费者却要 <code>mutex</code> 才能取出、腾出空位 → 互相等 = 死锁。</p>
+<p><strong>代入算例</strong>：缓冲区可放 5 格，初态全空。</p>
+<pre><code>semaphore mutex=1, empty=5, full=0;
+生产者：P(empty);   // 先申请空位，满则等
+        P(mutex);   // 再进临界区
+        放入数据;
+        V(mutex);
+        V(full);    // 通知多了一格数据
+消费者：P(full);    // 有数据才取，空则等
+        P(mutex);
+        取出数据;
+        V(mutex);
+        V(empty);   // 归还一个空位
+</code></pre>
+<p><strong>口诀：&quot;同步 P 在前、互斥 P 在后，V 成对跟各自操作后&quot;</strong>。</p>
+<p><strong>反例演示（易错）</strong>：① 把 <code>P(mutex)</code> 提到 <code>P(empty)</code> 之前（见上&quot;为什么&quot;），缓冲区满即死锁；② <code>empty</code> 初值误设 0（空位应是缓冲区容量 5，不是 0）；③ 生产者也写 <code>P(full)</code>/<code>V(empty)</code>（把消费者的同步抄反，会在空缓冲时误等）。</p>
+<p><strong>应试动作</strong>：① 互斥 → 初值 = 资源数；同步/前趋 → 初值 0；② 取值范围 = [初值−进程数， 初值]；③ 前趋图按&quot;弧数 = 信号量数、V 起点末、P 终点初&quot;机械填写，填完逐弧检查一遍&quot;每条弧恰好一个 V 和一个 P&quot;。这种题若以小问嵌在案例大题里（历史上考过整道大题），按同一套路做。并发互斥的思想与数据库的锁机制同源，可对照 <a href="../02-数据库系统/06-事务并发与故障恢复.html">02-数据库系统.html</a> 的并发控制一节。</p>
+
+
+  <footer class="status-bar" data-status-page="05-操作系统/02-进程调度与PV操作">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-进程线程与状态.html">
+      <span class="k">上一页</span>
+      <span class="t">05.1 进程、线程与状态转换 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-死锁.html">
+      <span class="k">下一页</span>
+      <span class="t">05.3 死锁 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

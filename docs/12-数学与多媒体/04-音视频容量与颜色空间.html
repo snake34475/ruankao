@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>12.4 音视频容量与颜色空间 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a><ul class="chapter-nav"><li><a href="01-计数与概率.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/01-计数与概率" aria-hidden="true"></i><span class="n">01</span><span class="t">计数与概率 ★★★</span></a></li><li><a href="02-逻辑图论与数值误差.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/02-逻辑图论与数值误差" aria-hidden="true"></i><span class="n">02</span><span class="t">命题逻辑、图论与数值误差 ★★★</span></a></li><li><a href="03-多媒体与图像容量.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/03-多媒体与图像容量" aria-hidden="true"></i><span class="n">03</span><span class="t">多媒体数据与图像容量 ★★★</span></a></li><li><a href="04-音视频容量与颜色空间.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/04-音视频容量与颜色空间" aria-hidden="true"></i><span class="n">04</span><span class="t">音视频容量与颜色空间 ★★★</span></a></li><li><a href="05-压缩与容量题模板.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/05-压缩与容量题模板" aria-hidden="true"></i><span class="n">05</span><span class="t">压缩与容量题统一模板 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/90-课后考题" aria-hidden="true"></i><span class="n">06</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/91-精华题" aria-hidden="true"></i><span class="n">07</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/99-答案与解析" aria-hidden="true"></i><span class="n">08</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 12 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">12.4 音视频容量与颜色空间 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">8.1 音频容量<button type="button" class="sec-status" data-status-key="8.1 音频容量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 音频容量」的学习状态"></button></h3>
+<p>未压缩 PCM 音频：</p>
+<p><strong>容量(bit)=采样频率(次/秒)×量化位数(bit/次)×声道数×时间(秒)</strong></p>
+<p><strong>容量(Byte)=上述结果÷8</strong></p>
+<p>例：44.1 kHz、16 bit、双声道，录音 10 秒：</p>
+<p><code>44100×16×2×10/8=1764000 B≈1.682 MiB</code>。</p>
+<p>第二种方法：每次每声道 16 bit=2 B；每秒双声道 <code>44100×2×2=176400 B</code>；10 秒 <code>176400×10=1764000 B</code>，一致。</p>
+<p><strong>反例</strong>：双声道不是把采样率翻倍，而是在同一时刻记录两个声道；计算容量时仍要额外乘 2。<code>44.1 kHz=44100 Hz</code>，不能直接把 44.1 当每秒采样次数。</p>
+<h3 id="h-3">8.2 采样定理<button type="button" class="sec-status" data-status-key="8.2 采样定理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 采样定理」的学习状态"></button></h3>
+<p>为从采样值中恢复最高频率为 fmax 的带限信号，理想情况下采样频率应满足：</p>
+<p><strong>fs ≥ 2fmax</strong></p>
+<p>例：语音最高频率 8 kHz，采样频率至少应为 <code>2×8=16 kHz</code>。</p>
+<p>口诀：<strong>最高频率乘二，才不发生混叠</strong>。实际系统通常留出滤波余量，不会只卡理论等号。</p>
+<p><strong>反向考法（fmax ≤ fs/2，必背）</strong>：把公式反过来读——<strong>采样频率一旦给定，能不失真恢复的最高频率就是 fs/2</strong>（称为奈奎斯特频率）。两种问法对应两种动作：给 fmax 求 fs → <strong>乘 2</strong>；给 fs 求&quot;能采到的最高频率&quot; → <strong>除 2</strong>。</p>
+<p><strong>混叠算例</strong>：设采样频率 fs=8 kHz，对它采样一个最高频率 5 kHz 的正弦信号。按定理要求 fs 应 ≥ 2×5=10 kHz，8 kHz <strong>不满足</strong> → 发生<strong>混叠（频谱折叠）</strong>。恢复时 5 kHz 会&quot;折叠&quot;成 <code>|fs − f|</code>，即 <code>8−5=3</code> kHz——你恢复出来的是一个 <strong>3 kHz 的假信号</strong>。口诀：<strong>采样不够，高频折叠成 fs−f</strong>。</p>
+<h3 id="h-4">8.3 MIDI 与数字音频<button type="button" class="sec-status" data-status-key="8.3 MIDI 与数字音频" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.3 MIDI 与数字音频」的学习状态"></button></h3>
+<ul>
+<li>PCM/WAV 类采样音频保存波形样本，能记录人声和任意声音，容量较大；</li>
+<li>MIDI 保存音符、音高、时长、乐器等演奏指令，不保存真实声音波形，容量小，但播放效果依赖音源，不能直接真实记录一段人声。</li>
+</ul>
+<h3 id="h-5">8.4 未压缩视频容量<button type="button" class="sec-status" data-status-key="8.4 未压缩视频容量" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.4 未压缩视频容量」的学习状态"></button></h3>
+<p><strong>视频容量(Byte)=宽×高×每像素位数×帧率×时长÷8</strong></p>
+<p>例：<code>1280×720</code>、24 bit、25 fps、10 秒的未压缩视频：</p>
+<p><code>1280×720×24×25×10/8=691200000 B≈659.18 MiB</code>。</p>
+<p>反向分层验证：每帧 <code>1280×720×3=2764800 B</code>；10 秒共 <code>25×10=250</code> 帧；<code>2764800×250=691200000 B</code>。</p>
+<p><strong>应试动作</strong>：音频写“采样率×位数×声道×秒÷8”；视频在图像公式后再乘“帧/秒×秒”。看到最高频率则乘 2 求最低采样率。</p>
+<hr>
+<h2 id="h-6">第九节 颜色空间：显示、印刷与视频各有一套语言 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第九节 颜色空间：显示、印刷与视频各有一套语言 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 颜色空间：显示、印刷与视频各有一套语言 ★★」的学习状态"></button></h2>
+<h3 id="h-7">9.1 RGB：发光设备做加法<button type="button" class="sec-status" data-status-key="9.1 RGB：发光设备做加法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.1 RGB：发光设备做加法」的学习状态"></button></h3>
+<p>RGB 用红（Red）、绿（Green）、蓝（Blue）三种光叠加：</p>
+<ul>
+<li>三者全 0 → 黑；</li>
+<li>三者都达到最大 → 白；</li>
+<li>适合显示器、摄像头等发光/采集设备。</li>
+</ul>
+<p>称为<strong>加色模型</strong>，因为加光越多越亮。</p>
+<h3 id="h-8">9.2 CMY/CMYK：印刷颜料做减法<button type="button" class="sec-status" data-status-key="9.2 CMY/CMYK：印刷颜料做减法" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.2 CMY/CMYK：印刷颜料做减法」的学习状态"></button></h3>
+<p>CMY 为青（Cyan）、品红（Magenta）、黄（Yellow），颜料通过吸收一部分光形成颜色，属于<strong>减色模型</strong>。印刷常增加 K（Black，黑）形成 CMYK，以得到更纯的黑色并节省彩色墨水。</p>
+<p><strong>反例</strong>：打印机不是把 RGB 三束光打到纸上。屏幕自身发光用 RGB；纸张反射环境光、油墨吸光，用 CMYK。</p>
+<h3 id="h-9">9.3 YUV/YCbCr：把亮度与色度分开<button type="button" class="sec-status" data-status-key="9.3 YUV/YCbCr：把亮度与色度分开" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.3 YUV/YCbCr：把亮度与色度分开」的学习状态"></button></h3>
+<ul>
+<li>Y：亮度（luminance/luma）；</li>
+<li>U、V 或 Cb、Cr：色度/色差信息。</li>
+</ul>
+<p>人眼对亮度细节比色度细节更敏感，因此视频和 JPEG 可对色度做更强压缩，减少数据而尽量保持主观质量。Y 分量还带来与黑白显示的兼容思路。</p>
+<h3 id="h-10">9.4 HSV/HSL：按人的颜色直觉描述<button type="button" class="sec-status" data-status-key="9.4 HSV/HSL：按人的颜色直觉描述" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「9.4 HSV/HSL：按人的颜色直觉描述」的学习状态"></button></h3>
+<p>HSV 常用 Hue（色相）、Saturation（饱和度）、Value（明度）描述颜色，便于选色与图像处理。它不是显示器物理发光的基本模型。</p>
+<p><strong>应试动作</strong>：显示器选 RGB（加色）；印刷选 CMYK（减色）；电视/视频与亮色分离选 YUV/YCbCr；按色相、饱和度调色选 HSV/HSL。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="12-数学与多媒体/04-音视频容量与颜色空间">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-多媒体与图像容量.html">
+      <span class="k">上一页</span>
+      <span class="t">12.3 多媒体数据与图像容量 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-压缩与容量题模板.html">
+      <span class="k">下一页</span>
+      <span class="t">12.5 压缩与容量题统一模板 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

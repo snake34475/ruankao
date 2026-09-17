@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>04.5 设计模式分类与意图速查 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a><ul class="chapter-nav"><li><a href="01-面向对象基本概念.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/01-面向对象基本概念" aria-hidden="true"></i><span class="n">01</span><span class="t">面向对象基本概念 ★</span></a></li><li><a href="02-分析与设计过程.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/02-分析与设计过程" aria-hidden="true"></i><span class="n">02</span><span class="t">面向对象分析与设计过程 ★★</span></a></li><li><a href="03-UML结构图.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/03-UML结构图" aria-hidden="true"></i><span class="n">03</span><span class="t">UML 结构图：类图、对象图与用例图 ★★★</span></a></li><li><a href="04-UML行为与交互图.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/04-UML行为与交互图" aria-hidden="true"></i><span class="n">04</span><span class="t">UML 行为图与交互图 ★★★</span></a></li><li><a href="05-设计模式框架.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/05-设计模式框架" aria-hidden="true"></i><span class="n">05</span><span class="t">设计模式分类与意图速查 ★★★</span></a></li><li><a href="06-高频设计模式.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/06-高频设计模式" aria-hidden="true"></i><span class="n">06</span><span class="t">高频设计模式与易混对照 ★★★</span></a></li><li><a href="07-案例题专攻.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/07-案例题专攻" aria-hidden="true"></i><span class="n">07</span><span class="t">案例题专攻：UML 建模</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/91-精华题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 4 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">04.5 设计模式分类与意图速查 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">4.1 23 种模式的分类框架（先背骨架）<button type="button" class="sec-status" data-status-key="4.1 23 种模式的分类框架（先背骨架）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 23 种模式的分类框架（先背骨架）」的学习状态"></button></h3>
+<p>模式按<strong>目的</strong>分三类——这本身就回答了&quot;为什么有 23 种&quot;：<strong>创建型</strong>管&quot;对象怎么造出来&quot;（5 种）、<strong>结构型</strong>管&quot;对象怎么组装起来&quot;（7 种）、<strong>行为型</strong>管&quot;对象怎么交互分工&quot;（11 种）。</p>
+<p>口诀（自编，按序号背）：</p>
+<ul>
+<li>创建型 5：<strong>单原工抽建</strong>（单例、原型、工厂方法、抽象工厂、构建器）</li>
+<li>结构型 7：<strong>适桥组外装享代</strong>（适配器、桥接、组合、外观、装饰器、享元、代理）</li>
+<li>行为型 11：<strong>责命解迭中，备观状策模访</strong>（职责链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者）</li>
+</ul>
+<p><strong>数量口诀</strong>：<strong>5 / 7 / 11</strong>（连着念&quot;五七十一&quot;）。考题问&quot;下列属于创建型的有几个&quot;，先数出 5 个就够了，不必逐个回忆意图。</p>
+<p><strong>另一种分类维度（算考点，别忽略）</strong>：按<strong>作用范围</strong>分<strong>类模式</strong>与<strong>对象模式</strong>——<strong>类模式只有 4 个</strong>：<strong>工厂方法、适配器（类）、模板方法、解释器</strong>；其余 19 个都是<strong>对象模式</strong>（适配器两种都算：既可用类继承实现，也可用对象组合实现，所以两边都列它）。<strong>记住&quot;类模式 = 4 个&quot;这个数</strong>比记名字更实用：看到&quot;下列属于类模式的是&quot;，先在心里数出这 4 个。</p>
+<h3 id="h-3">4.2 23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）<button type="button" class="sec-status" data-status-key="4.2 23 种意图速查表（背&amp;quot;意图一句话 + 速记词&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 23 种意图速查表（背&quot;意图一句话 + 速记词&quot;）」的学习状态"></button></h3>
+<p><strong>创建型（管出生）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Singleton 单例</td>
+<td>保证一个类<strong>只有一个实例</strong>，提供全局访问点</td>
+<td>唯一实例</td>
+</tr>
+<tr>
+<td>Prototype 原型</td>
+<td>通过<strong>拷贝</strong>原型来创建新对象</td>
+<td>克隆</td>
+</tr>
+<tr>
+<td>Factory Method 工厂方法</td>
+<td>定义创建对象的接口，<strong>由子类决定</strong>实例化哪个类</td>
+<td>动态生产对象</td>
+</tr>
+<tr>
+<td>Abstract Factory 抽象工厂</td>
+<td>创建<strong>一系列相关对象</strong>，无需指定具体类</td>
+<td>成系列生产</td>
+</tr>
+<tr>
+<td>Builder 构建器</td>
+<td>复杂对象的<strong>构建过程与表示分离</strong>，分步构造</td>
+<td>分步组装</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>结构型（管组装）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Adapter 适配器</td>
+<td><strong>转换接口</strong>，使原本不兼容的类协同工作</td>
+<td>转换接口</td>
+</tr>
+<tr>
+<td>Bridge 桥接</td>
+<td>把<strong>抽象与实现分离</strong>（两个维度），使它们独立变化</td>
+<td>继承树拆两维</td>
+</tr>
+<tr>
+<td>Composite 组合</td>
+<td>把对象组成<strong>树形结构</strong>表示&quot;整体—部分&quot;，单个和组合对象使用一致</td>
+<td>树形目录</td>
+</tr>
+<tr>
+<td>Facade 外观</td>
+<td>给复杂子系统提供一个<strong>统一的高层接口</strong></td>
+<td>统一窗口</td>
+</tr>
+<tr>
+<td>Decorator 装饰器</td>
+<td><strong>动态地给对象附加职责</strong>，比继承灵活</td>
+<td>附加职责</td>
+</tr>
+<tr>
+<td>Flyweight 享元</td>
+<td><strong>共享</strong>大量细粒度对象，节省内存</td>
+<td>共享细粒度</td>
+</tr>
+<tr>
+<td>Proxy 代理</td>
+<td>为对象提供一个<strong>替身</strong>以控制对它的访问</td>
+<td>间接访问</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>行为型（管交互）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意图一句话</th>
+<th>速记词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chain of Responsibility 职责链</td>
+<td>请求沿处理者<strong>链条传递</strong>，直到被处理</td>
+<td>传递职责</td>
+</tr>
+<tr>
+<td>Command 命令</td>
+<td>把请求封装成对象，支持<strong>撤销、日志、排队</strong></td>
+<td>请求变对象</td>
+</tr>
+<tr>
+<td>Interpreter 解释器</td>
+<td>给定语言文法，用解释器<strong>解释句子</strong></td>
+<td>解释语言</td>
+</tr>
+<tr>
+<td>Iterator 迭代器</td>
+<td>顺序访问聚合元素而<strong>不暴露内部表示</strong></td>
+<td>逐个访问</td>
+</tr>
+<tr>
+<td>Mediator 中介者</td>
+<td>封装对象间交互，各对象<strong>不必显式互相引用</strong></td>
+<td>中介转达</td>
+</tr>
+<tr>
+<td>Memento 备忘录</td>
+<td>保存对象状态，需要时<strong>恢复</strong></td>
+<td>存档恢复</td>
+</tr>
+<tr>
+<td>Observer 观察者</td>
+<td>一对多依赖，状态变化时<strong>通知所有依赖者</strong></td>
+<td>订阅—通知</td>
+</tr>
+<tr>
+<td>State 状态</td>
+<td>对象在<strong>状态改变时改变行为</strong></td>
+<td>状态变行为变</td>
+</tr>
+<tr>
+<td>Strategy 策略</td>
+<td>封装一系列<strong>算法</strong>，使它们可<strong>互相替换</strong></td>
+<td>算法可换</td>
+</tr>
+<tr>
+<td>Template Method 模板方法</td>
+<td>父类定<strong>算法骨架</strong>，某些步骤延迟到子类</td>
+<td>骨架在父类</td>
+</tr>
+<tr>
+<td>Visitor 访问者</td>
+<td>不改动类的前提下给类<strong>添加新操作</strong></td>
+<td>外加操作</td>
+</tr>
+</tbody></table>
+</div>
+
+
+  <footer class="status-bar" data-status-page="04-面向对象与设计模式/05-设计模式框架">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="04-UML行为与交互图.html">
+      <span class="k">上一页</span>
+      <span class="t">04.4 UML 行为图与交互图 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="06-高频设计模式.html">
+      <span class="k">下一页</span>
+      <span class="t">04.6 高频设计模式与易混对照 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

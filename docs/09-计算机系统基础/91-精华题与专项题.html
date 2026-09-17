@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.9 精华题与专项题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.9 精华题与专项题</h1>
+  </header>
+  <p><strong>1.</strong> 8 位补码可表示的最小整数及其编码分别是（ ）。</p>
+<p>A. −127，<code>11111111</code><br>B. −127，<code>10000001</code><br>C. −128，<code>10000000</code><br>D. −128，<code>11111111</code></p>
+<p><strong>2.</strong> 若先查 Cache 需 6 ns，未命中后追加访问主存需 94 ns，Cache 命中率为 98%，平均访问时间为（ ）。</p>
+<p>A. 6.00 ns<br>B. 7.88 ns<br>C. 8.00 ns<br>D. 98.12 ns</p>
+<p><strong>3.</strong> 用 <code>8K×4 bit</code> 芯片组成 <code>32K×16 bit</code> 存储器，至少需要（ ）片。</p>
+<p>A. 4<br>B. 8<br>C. 16<br>D. 32</p>
+<p><strong>4.</strong> 某磁盘转速为 12000 RPM，每磁道 100 个扇区。忽略寻道时间，平均旋转等待加读取 2 个连续扇区的时间约为（ ）。</p>
+<p>A. 0.10 ms<br>B. 2.50 ms<br>C. 2.60 ms<br>D. 5.10 ms</p>
+<p><strong>5.</strong> 一个系统由三个可靠度为 0.9 的模块串联。若把中间模块改为两个相同模块并联，其余不变，改造后总可靠度为（ ）。</p>
+<p>A. 0.729<br>B. 0.8019<br>C. 0.891<br>D. 0.9801</p>
+<p><strong>6.</strong> 关于校验码，下列说法正确的是（ ）。</p>
+<p>A. 奇偶校验能发现所有两位错误<br>B. CRC 通过普通带借位除法求余数<br>C. 海明码利用多个奇偶校验组定位错误位<br>D. 接收方 CRC 余数为 0 就能证明数据绝对没有错误</p>
+<p><strong>7.</strong> 某流水线有 4 段，每段统一为 5 ns，连续执行 20 个任务。流水时间和最大吞吐率分别是（ ）。</p>
+<p>A. 100 ns，2×10^8 个/秒<br>B. 115 ns，2×10^8 个/秒<br>C. 115 ns，5×10^9 个/秒<br>D. 400 ns，5×10^7 个/秒</p>
+<hr>
+<h2 id="h-2">扩充专项题（本轮新增）<button type="button" class="sec-status" data-status-key="扩充专项题（本轮新增）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「扩充专项题（本轮新增）」的学习状态"></button></h2>
+<p><strong>1.</strong> 4 位补码表示的 −3 为 <code>1101</code>，对应的移码是（ ）。</p>
+<p>A. <code>0010</code></p>
+<p>B. <code>0101</code></p>
+<p>C. <code>1010</code></p>
+<p>D. <code>1101</code></p>
+<p><strong>2.</strong> 二进制浮点数 <code>0.1100×2^3 + 0.1100×2^3</code> 相加后，规格化结果是（ ）。</p>
+<p>A. <code>0.1100×2^3</code></p>
+<p>B. <code>0.1100×2^4</code></p>
+<p>C. <code>0.0110×2^4</code></p>
+<p>D. <code>1.1000×2^4</code></p>
+<p><strong>3.</strong> 地址范围为 <code>B3000H～DABFFH</code>，按字节编址，其容量是（ ）。</p>
+<p>A. 158 KiB</p>
+<p>B. 159 KiB</p>
+<p>C. 160 KiB</p>
+<p>D. 162816 KiB</p>
+<p><strong>4.</strong> 直接映射 Cache 的主存地址通常划分为（ ）。</p>
+<p>A. 标记、块内偏移</p>
+<p>B. 标记、组号、块内偏移</p>
+<p>C. 标记、行号、块内偏移</p>
+<p>D. 行号、组号、替换算法</p>
+<p><strong>5.</strong> 某磁盘转速为 6000 RPM，平均寻道时间 5 ms，每道 100 个扇区。现读取 4 个随机散落的扇区，假定每个扇区都重新寻道并经历平均旋转等待，则总时间约为（ ）。</p>
+<p>A. 10.1 ms</p>
+<p>B. 10.4 ms</p>
+<p>C. 25.4 ms</p>
+<p>D. 40.4 ms</p>
+<p><strong>6.</strong> 采用相对寻址，若 <code>(PC)=1000</code>，地址字段为 −20，则有效地址 EA 为（ ）。</p>
+<p>A. −20</p>
+<p>B. 980</p>
+<p>C. 1000</p>
+<p>D. 1020</p>
+<p><strong>7.</strong> 关于 RISC、CISC 与流水线，下列说法正确的是（ ）。</p>
+<p>A. 只有 RISC 才能使用流水线，CISC 绝对不能</p>
+<p>B. 只有 CISC 才能使用流水线</p>
+<p>C. 两者都可采用流水线，但 RISC 的规整指令通常更容易高效流水化</p>
+<p>D. 是否适合流水线只取决于寄存器数量</p>
+<p><strong>8.</strong> 500 台同型设备各观察 2000 h，共发生 5 次故障。估计恒定失效率 λ 为（ ）。</p>
+<p>A. <code>5×10^−3/h</code></p>
+<p>B. <code>5×10^−5/h</code></p>
+<p>C. <code>5×10^−6/h</code></p>
+<p>D. <code>2×10^5/h</code></p>
+<p><strong>9.</strong> 某设备修复时间服从指数分布，MTTR=2 h。其在 4 h 内修复的概率约为（ ）。</p>
+<p>A. 0.1353</p>
+<p>B. 0.5000</p>
+<p>C. 0.6321</p>
+<p>D. 0.8647</p>
+<p><strong>10.</strong> 某编码的最小码距为 5，它最多能保证检测 e 位错误、纠正 t 位错误。正确的是（ ）。</p>
+<p>A. e=4，t=2</p>
+<p>B. e=5，t=2</p>
+<p>C. e=4，t=3</p>
+<p>D. e=2，t=4</p>
+<p><strong>11.</strong> 信息位 <code>1101</code>，CRC 除数为 <code>1011</code>，则应补的 0 的个数和最终余数分别是（ ）。</p>
+<p>A. 2 个，<code>01</code></p>
+<p>B. 3 个，<code>001</code></p>
+<p>C. 3 个，<code>101</code></p>
+<p>D. 4 个，<code>0001</code></p>
+<p><strong>12.</strong> 4 位数据 <code>1011</code> 按本课规则生成偶校验海明码 <code>0110011</code>。若收到 <code>0110001</code>，综合征 <code>s4s2s1</code> 和错误位置分别是（ ）。</p>
+<p>A. <code>011</code>，第 3 位</p>
+<p>B. <code>101</code>，第 5 位</p>
+<p>C. <code>110</code>，第 6 位</p>
+<p>D. <code>111</code>，第 7 位</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/91-精华题与专项题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="90-课后考题.html">
+      <span class="k">上一页</span>
+      <span class="t">09.8 课后考题</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="99-答案与解析.html">
+      <span class="k">下一页</span>
+      <span class="t">09.10 答案与解析</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

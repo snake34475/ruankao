@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>06.2 IP 地址、NAT 与默认网关 ★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a><ul class="chapter-nav"><li><a href="01-网络分层模型.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/01-网络分层模型" aria-hidden="true"></i><span class="n">01</span><span class="t">网络分层模型 ★★★</span></a></li><li><a href="02-IP地址与网关.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="06-计算机网络/02-IP地址与网关" aria-hidden="true"></i><span class="n">02</span><span class="t">IP 地址、NAT 与默认网关 ★★</span></a></li><li><a href="03-子网划分.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/03-子网划分" aria-hidden="true"></i><span class="n">03</span><span class="t">子网划分与掩码计算 ★★★</span></a></li><li><a href="04-CIDR与路由聚合.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/04-CIDR与路由聚合" aria-hidden="true"></i><span class="n">04</span><span class="t">CIDR 与路由聚合 ★★</span></a></li><li><a href="05-TCP与UDP.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/05-TCP与UDP" aria-hidden="true"></i><span class="n">05</span><span class="t">TCP、UDP 与三次握手 ★★★</span></a></li><li><a href="06-应用层协议.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/06-应用层协议" aria-hidden="true"></i><span class="n">06</span><span class="t">应用层协议与端口 ★★★</span></a></li><li><a href="07-Web与网络命令.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/07-Web与网络命令" aria-hidden="true"></i><span class="n">07</span><span class="t">HTML、WWW 与网络命令 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06.2 IP 地址、NAT 与默认网关 <span class="stars">★★</span></h1>
+  </header>
+  <h3 id="h-2">IP 地址长什么样<button type="button" class="sec-status" data-status-key="IP 地址长什么样" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「IP 地址长什么样」的学习状态"></button></h3>
+<p>IPv4 地址是 <strong>32 位二进制数</strong>，为了人能看懂，每 8 位一组转成十进制、中间用点隔开，叫<strong>点分十进制</strong>，如 <code>192.168.1.1</code>。每组取值 0～255。32 位 = 4 个字节。</p>
+<h3 id="h-3">五类地址（必须会判断类别）<button type="button" class="sec-status" data-status-key="五类地址（必须会判断类别）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「五类地址（必须会判断类别）」的学习状态"></button></h3>
+<p>按<strong>第一个字节</strong>（前几位）划分：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>二进制开头</th>
+<th>网络位/主机位</th>
+<th>第一字节范围</th>
+<th>默认掩码</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A 类</strong></td>
+<td>0</td>
+<td>8 位 / 24 位</td>
+<td><strong>1 ～ 126</strong></td>
+<td>255.0.0.0</td>
+<td>超大网络（主机数极多）</td>
+</tr>
+<tr>
+<td><strong>B 类</strong></td>
+<td>10</td>
+<td>16 位 / 16 位</td>
+<td><strong>128 ～ 191</strong></td>
+<td>255.255.0.0</td>
+<td>中型网络</td>
+</tr>
+<tr>
+<td><strong>C 类</strong></td>
+<td>110</td>
+<td>24 位 / 8 位</td>
+<td><strong>192 ～ 223</strong></td>
+<td>255.255.255.0</td>
+<td>小型网络</td>
+</tr>
+<tr>
+<td>D 类</td>
+<td>1110</td>
+<td>—</td>
+<td>224 ～ 239</td>
+<td>—</td>
+<td>组播（多播）</td>
+</tr>
+<tr>
+<td>E 类</td>
+<td>1111</td>
+<td>—</td>
+<td>240 ～ 255</td>
+<td>—</td>
+<td>保留（实验）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>判断口诀</strong>：看第一字节——<strong>1～126 是 A，128～191 是 B，192～223 是 C</strong>；中间没写的 127 是特例（见下）。D、E 类不用于给普通主机编址。</p>
+<h3 id="h-4">特殊地址（考试直接考结论）<button type="button" class="sec-status" data-status-key="特殊地址（考试直接考结论）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「特殊地址（考试直接考结论）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>地址</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>127.x.x.x</strong></td>
+<td><strong>回环地址</strong>（本机自测，最常见 127.0.0.1），永远不进网络</td>
+</tr>
+<tr>
+<td>主机位<strong>全 0</strong></td>
+<td>代表<strong>网络本身</strong>（网络地址），不能分给主机</td>
+</tr>
+<tr>
+<td>主机位<strong>全 1</strong></td>
+<td>代表<strong>广播地址</strong>（向全网段所有主机广播），不能分给主机</td>
+</tr>
+<tr>
+<td><strong>169.254.x.x</strong></td>
+<td>链路本地地址（DHCP 要不到地址时系统自动配的&quot;临时工&quot;），不是私网地址</td>
+</tr>
+<tr>
+<td>0.0.0.0</td>
+<td>代表所有网络/未指定地址</td>
+</tr>
+<tr>
+<td><strong>255.255.255.255</strong></td>
+<td><strong>受限广播地址</strong>：只在本地网段广播，路由器不转发</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>这正是第三节&quot;减 2&quot;的来源</strong>：一个网段里主机位全 0（网络地址）和全 1（广播地址）两个地址被&quot;公家&quot;占用，可用主机数要减 2。</p>
+<h3 id="h-5">私网地址（三段，必背）<button type="button" class="sec-status" data-status-key="私网地址（三段，必背）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「私网地址（三段，必背）」的学习状态"></button></h3>
+<p>私网地址是只允许在单位内部使用的地址段，<strong>不会出现在公网路由上</strong>（不同公司的内网可以重用同一批私网地址）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>范围</th>
+<th>相当于哪类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>10.0.0.0/8</strong></td>
+<td>10.0.0.0 ～ 10.255.255.255</td>
+<td>A 类</td>
+</tr>
+<tr>
+<td><strong>172.16.0.0/12</strong></td>
+<td><strong>172.16.0.0 ～ 172.31.255.255</strong></td>
+<td>B 类</td>
+</tr>
+<tr>
+<td><strong>192.168.0.0/16</strong></td>
+<td>192.168.0.0 ～ 192.168.255.255</td>
+<td>C 类</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示（三段边界陷阱）</strong>：</p>
+<ol>
+<li><strong>172.32.1.1 不是私网</strong>——私网只到 172.31.255.255，172.32 已越界（是普通 B 类公网地址）。判断只看第二字节是否在 <strong>16～31</strong> 之间。</li>
+<li><strong>192.169.1.1 不是私网</strong>——192.168 段只覆盖第三组为 0～255 的 192.168.x.x；192.169 越界。</li>
+<li><strong>127.0.0.1 不是私网地址</strong>，它是回环地址，和私网是两个概念。</li>
+<li>私网判断题里若出现 169.254.x.x，它是&quot;链路本地&quot;，也不是 RFC 私网三段之一。</li>
+</ol>
+<h3 id="h-6">NAT：私网主机怎样访问公网 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="NAT：私网主机怎样访问公网 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「NAT：私网主机怎样访问公网 ★★」的学习状态"></button></h3>
+<p>私网地址不能直接在公网中路由，但家里多台设备仍能共用一个公网地址上网，靠的是路由器上的 <strong>NAT（网络地址转换）</strong>。数据离开内网时，NAT 把报文中的私网源地址改成公网地址；返回报文到达后，再根据转换记录还原并交给原主机。</p>
+<p>家庭路由器常用端口转换（也常称 NAPT/PAT）：不仅转换 IP，还给不同内网连接分配不同的公网端口。例如：</p>
+<pre><code class="language-text">192.168.1.10:5000 ── NAT ──→ 203.0.113.8:40001
+192.168.1.20:5000 ── NAT ──→ 203.0.113.8:40002
+</code></pre>
+<p>两台主机可以使用相同的内网端口，因为公网侧端口不同，返回数据仍能找到各自的主人。NAT 的主要作用是<strong>节省公网 IPv4 地址、让私网地址访问公网</strong>；它会隐藏内部地址结构，但<strong>不等同于防火墙</strong>，不能因为用了 NAT 就认为系统自动安全。</p>
+<h3 id="h-7">默认网关：跨网段通信的第一跳 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="默认网关：跨网段通信的第一跳 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「默认网关：跨网段通信的第一跳 ★★」的学习状态"></button></h3>
+<p><strong>默认网关</strong>通常是“与本机位于同一网段的路由器接口 IP 地址”。主机准备发送数据时，先用自己的子网掩码判断目的 IP 是否同网段：</p>
+<ul>
+<li><strong>同网段</strong>：直接查询目的主机的 MAC 地址并发送，<strong>不经过默认网关</strong>。</li>
+<li><strong>不同网段</strong>：主机不知道完整远程路径，就先把帧交给默认网关，由路由器继续查路由表转发。</li>
+</ul>
+<p>例：主机 A 为 <code>192.168.1.10/24</code>，网关为 <code>192.168.1.1</code>。</p>
+<ul>
+<li>访问 <code>192.168.1.80</code>：前三个字节相同，属于同一 /24 网段，帧直接发给 <code>.80</code> 的 MAC。</li>
+<li>访问 <code>10.0.0.8</code>：不同网段，IP 分组的目的 IP 仍是 <code>10.0.0.8</code>，但第一跳帧的目的 MAC 是网关 <code>192.168.1.1</code> 对应的 MAC。</li>
+</ul>
+<p><strong>常见故障判断</strong>：本机能访问同网段设备，却不能访问任何外网地址，优先检查默认网关或路由；若连同网段设备也不通，则还要检查 IP、掩码、网卡与链路。</p>
+<p><strong>反例演示</strong>：“默认网关可以随便填一个公网 IP”——错。主机必须能在本地链路上把帧交给网关，因此网关接口通常必须和主机在同一子网；否则连第一跳都送不到。</p>
+<p><strong>应试动作</strong>：① 背 A/B/C 三类的第一字节范围与默认掩码；② 私网三段背死（10 / 172.16～172.31 / 192.168），判断时逐字节比边界；③ 记住&quot;主机位全 0 是网络地址、全 1 是广播地址、127 是回环&quot;，这三条既直接出选择题，又是子网计算的理论基础。</p>
+
+
+  <footer class="status-bar" data-status-page="06-计算机网络/02-IP地址与网关">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-网络分层模型.html">
+      <span class="k">上一页</span>
+      <span class="t">06.1 网络分层模型 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-子网划分.html">
+      <span class="k">下一页</span>
+      <span class="t">06.3 子网划分与掩码计算 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

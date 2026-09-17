@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>12.1 计数与概率 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a><ul class="chapter-nav"><li><a href="01-计数与概率.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/01-计数与概率" aria-hidden="true"></i><span class="n">01</span><span class="t">计数与概率 ★★★</span></a></li><li><a href="02-逻辑图论与数值误差.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/02-逻辑图论与数值误差" aria-hidden="true"></i><span class="n">02</span><span class="t">命题逻辑、图论与数值误差 ★★★</span></a></li><li><a href="03-多媒体与图像容量.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/03-多媒体与图像容量" aria-hidden="true"></i><span class="n">03</span><span class="t">多媒体数据与图像容量 ★★★</span></a></li><li><a href="04-音视频容量与颜色空间.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/04-音视频容量与颜色空间" aria-hidden="true"></i><span class="n">04</span><span class="t">音视频容量与颜色空间 ★★★</span></a></li><li><a href="05-压缩与容量题模板.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/05-压缩与容量题模板" aria-hidden="true"></i><span class="n">05</span><span class="t">压缩与容量题统一模板 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/90-课后考题" aria-hidden="true"></i><span class="n">06</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/91-精华题" aria-hidden="true"></i><span class="n">07</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/99-答案与解析" aria-hidden="true"></i><span class="n">08</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 12 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">12.1 计数与概率 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">1.1 加法原理与乘法原理<button type="button" class="sec-status" data-status-key="1.1 加法原理与乘法原理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 加法原理与乘法原理」的学习状态"></button></h3>
+<p>计数题最先判断的不是排列还是组合，而是事情怎样完成。</p>
+<ul>
+<li><strong>分类完成，用加法</strong>：完成任务有若干条互斥路线，任选一条即可，总数相加；</li>
+<li><strong>分步完成，用乘法</strong>：任务必须依次完成若干步，每步选择数相乘。</li>
+</ul>
+<p>例 1：从北京到上海可坐 4 趟火车或 3 个航班，任选一种方式，共 <code>4+3=7</code> 种。这是分类。</p>
+<p>例 2：先从 4 件上衣中选 1 件，再从 3 条裤子中选 1 条，共 <code>4×3=12</code> 种。这是分步。</p>
+<p><strong>反例前置</strong>：把“先选用户名，再选密码”算成用户名数+密码数是错的，因为一次完整登录凭据必须两步都完成，应使用乘法。</p>
+<p><strong>应试动作</strong>：看到“或、任选一种路线”先想加法；看到“先……再……、同时具备”先想乘法。</p>
+<h3 id="h-3">1.2 排列：选出来以后还要排顺序<button type="button" class="sec-status" data-status-key="1.2 排列：选出来以后还要排顺序" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 排列：选出来以后还要排顺序」的学习状态"></button></h3>
+<p>从 n 个不同元素中取 m 个并按顺序排列：</p>
+<p><strong>A(n,m) = n×(n−1)×…×(n−m+1) = n!/(n−m)!</strong></p>
+<p>其中 <code>n! = n×(n−1)×…×2×1</code>，并约定 <code>0!=1</code>。</p>
+<p>例：从 6 人中选班长、学习委员、生活委员，职位不同，谁担任哪个职位会改变结果：</p>
+<p><code>A(6,3)=6×5×4=120</code>。</p>
+<p>手算口诀：<strong>有位置就排，依次递减乘</strong>。</p>
+<h3 id="h-4">1.3 组合：只选一组，不管组内顺序<button type="button" class="sec-status" data-status-key="1.3 组合：只选一组，不管组内顺序" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 组合：只选一组，不管组内顺序」的学习状态"></button></h3>
+<p>从 n 个不同元素中取 m 个组成一组：</p>
+<p><strong>C(n,m) = n!/[m!(n−m)!] = A(n,m)/m!</strong></p>
+<p>为何要除以 m!？同一组选出后，内部的 m! 种排列在组合里都算同一种。</p>
+<p>例：从 6 人中选 3 人组成学习小组：</p>
+<p><code>C(6,3)=(6×5×4)/(3×2×1)=120/6=20</code>。</p>
+<p>反向验证：先排列有 120 种，但每个三人组被按 3!=6 种顺序重复计算，所以 <code>120/6=20</code>。</p>
+<p>组合的对称性：<strong>C(n,m)=C(n,n−m)</strong>。从 10 人中选 8 人留下，等价于选 2 人不参加，因此 <code>C(10,8)=C(10,2)=45</code>。</p>
+<p><strong>反例</strong>：“从 6 人中选 3 人参加会议”若算 <code>A(6,3)=120</code> 就错了。甲乙丙和丙乙甲是同一组，顺序不产生新结果。</p>
+<p><strong>应试动作</strong>：给每个被选者假想贴职位标签——交换两人后算不算新结果？算新结果用排列，不算用组合。</p>
+<h3 id="h-5">1.4 可重复选择、重复元素排列与圆排列<button type="button" class="sec-status" data-status-key="1.4 可重复选择、重复元素排列与圆排列" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.4 可重复选择、重复元素排列与圆排列」的学习状态"></button></h3>
+<p><strong>每个位置可重复选择</strong>：若有 n 种字符，填 m 个位置，每个位置都可重复，共 <strong>n^m</strong> 种。</p>
+<p>例：4 位数字验证码允许重复，每位 0–9 均可选，共 <code>10^4=10000</code> 种。若首位不能为 0，则第一位 9 种，其余各 10 种，共 <code>9×10^3=9000</code> 种。</p>
+<p><strong>有重复元素的全排列</strong>：n 个元素中分别有 n1、n2…个相同元素：</p>
+<p><strong>排列数 = n!/(n1!×n2!×…)</strong></p>
+<p>例：<code>LEVEL</code> 有 5 个字母，L 重复 2 次、E 重复 2 次：</p>
+<p><code>5!/(2!×2!)=120/4=30</code>。</p>
+<p><strong>圆排列</strong>：n 个不同的人围成一圈，只把整体旋转视为相同，共 <strong>(n−1)!</strong> 种。固定一个人作为参照，其余 n−1 人线性排列即可。</p>
+<p>例：4 人围圆桌坐（只旋转、不换相对座次算同一种），共 <code>(4−1)!=3!=6</code> 种；若站成一排则是 <code>4!=24</code> 种。两者差异正好是&quot;旋转的 n 倍&quot;：线形 <code>24 / 4 = 6</code> ✓。口诀：<strong>圆形是线形除以 n</strong>。</p>
+<p><strong>应试动作</strong>：允许重复填位置用 n^m；相同元素被重复计算就除以各自阶乘；“围成一圈且旋转算同一种”用 <code>(n−1)!</code>。</p>
+<h3 id="h-6">1.5 容斥与抽屉原理<button type="button" class="sec-status" data-status-key="1.5 容斥与抽屉原理" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 容斥与抽屉原理」的学习状态"></button></h3>
+<p>两个集合的容斥：</p>
+<p><strong>|A∪B| = |A|+|B|−|A∩B|</strong></p>
+<p>例：40 人中 25 人会 Java，18 人会 Python，10 人两者都会。至少会一种的有：</p>
+<p><code>25+18−10=33</code> 人。两者都会的人被前两项算了两次，所以减回一次。</p>
+<p>抽屉原理：把 n+1 个物品放进 n 个抽屉，至少一个抽屉有 2 个物品。推广形式：把 N 个物品放进 k 个抽屉，至少一个抽屉有 <strong>⌈N/k⌉</strong> 个物品。</p>
+<p>例：13 个人按出生月份分到 12 个“月份抽屉”，至少 2 人同月出生。</p>
+<p><strong>⌈⌉ 的代入算例</strong>（必背）：把 17 个苹果放进 5 个抽屉，<code>⌈17/5⌉=⌈3.4⌉=4</code>，所以至少有一个抽屉里有 4 个苹果。反向验证：若每个抽屉至多 3 个，5 个抽屉最多放 <code>5×3=15</code> 个，装不下 17 个 → 必有一个抽屉 ≥4 ✓。注意 ⌈⌉ 是<strong>向上取整</strong>（3.4 → 4），别取成 3。</p>
+<p><strong>应试动作</strong>：看到“至少多少个相同类别”想抽屉原理（口诀：<strong>有余必进一</strong>）；看到“两类至少一个”先加后减交集。</p>
+<hr>
+<h2 id="h-7">第二节 概率基础：有利情况除以全部情况 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 概率基础：有利情况除以全部情况 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 概率基础：有利情况除以全部情况 ★★」的学习状态"></button></h2>
+<p>在所有基本结果等可能时：</p>
+<p><strong>P(A)=事件 A 的有利结果数 / 全部结果数</strong></p>
+<p>例：从 5 个合格模块、3 个不合格模块中随机抽 2 个，恰好抽到 1 个不合格模块：</p>
+<ul>
+<li>全部选法：<code>C(8,2)=28</code>；</li>
+<li>有利选法：从 3 个不合格中选 1 个、从 5 个合格中选 1 个，<code>C(3,1)×C(5,1)=15</code>；</li>
+<li>概率：<code>15/28</code>。</li>
+</ul>
+<p>常用关系：</p>
+<ul>
+<li>对立事件：<code>P(非A)=1−P(A)</code>；</li>
+<li>A、B 相互独立：<code>P(A∩B)=P(A)P(B)</code>；</li>
+<li>一般加法：<code>P(A∪B)=P(A)+P(B)−P(A∩B)</code>。</li>
+</ul>
+<p>“至少一个成功”常用反面更快：</p>
+<p><strong>P(至少一个成功)=1−P(全部失败)</strong></p>
+<p>例：两个独立服务器单次成功率均为 0.9，至少一个成功的概率为 <code>1−0.1²=0.99</code>。</p>
+<p><strong>反例</strong>：只有相互独立时才能直接把概率相乘。连续两次不放回抽球，第二次的概率会受第一次影响，不能机械写成同一个概率的平方。</p>
+<p><strong>应试动作</strong>：题目有“等可能”才用有利/全部；遇到“至少一个”优先算“一个都没有”。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="12-数学与多媒体/01-计数与概率">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">12 数学与多媒体</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-逻辑图论与数值误差.html">
+      <span class="k">下一页</span>
+      <span class="t">12.2 命题逻辑、图论与数值误差 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

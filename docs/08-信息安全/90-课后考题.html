@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>08.4 课后考题</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a><ul class="chapter-nav"><li><a href="01-安全目标与密码技术.html"><i class="sb-dot" data-status-page-dot="08-信息安全/01-安全目标与密码技术" aria-hidden="true"></i><span class="n">01</span><span class="t">安全目标与密码技术 ★★★</span></a></li><li><a href="02-摘要签名与证书.html"><i class="sb-dot" data-status-page-dot="08-信息安全/02-摘要签名与证书" aria-hidden="true"></i><span class="n">02</span><span class="t">信息摘要、数字签名与证书 ★★★</span></a></li><li><a href="03-防火墙攻击与恶意代码.html"><i class="sb-dot" data-status-page-dot="08-信息安全/03-防火墙攻击与恶意代码" aria-hidden="true"></i><span class="n">03</span><span class="t">防火墙、常见攻击与恶意代码 ★★</span></a></li><li><a href="90-课后考题.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="08-信息安全/90-课后考题" aria-hidden="true"></i><span class="n">04</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/91-精华题" aria-hidden="true"></i><span class="n">05</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="08-信息安全/99-答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 8 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">08.4 课后考题</h1>
+  </header>
+  <h3 id="h-2">选择题<button type="button" class="sec-status" data-status-key="选择题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「选择题」的学习状态"></button></h3>
+<p><strong>1.</strong> 某网站数据库被攻击者篡改了首页内容，这直接破坏了信息安全五大属性中的（）。
+A. 机密性
+B. 完整性
+C. 可用性
+D. 不可否认性</p>
+<p><strong>2.</strong> 下列攻击中，属于被动攻击的是（）。
+A. 流量分析
+B. 重放攻击
+C. 拒绝服务攻击
+D. 信息篡改</p>
+<p><strong>3.</strong> DES 加密算法属于（）。
+A. 非对称加密算法
+B. 对称加密算法
+C. 信息摘要算法
+D. 数字签名算法</p>
+<p><strong>4.</strong> 关于对称加密与非对称加密，下列叙述正确的是（）。
+A. 非对称加密的加解密速度通常比对称加密快
+B. 对称加密中，加密密钥与解密密钥必须不同
+C. 非对称加密体制中，公钥可以公开，私钥由本人秘密保存
+D. RSA 算法适合对大文件进行快速加密</p>
+<p><strong>5.</strong> 某系统有 10 个用户，任意两个用户之间都需要用对称加密秘密通信。若每对用户共用一把密钥，则全系统共需（）把密钥。
+A. 10
+B. 20
+C. 45
+D. 90</p>
+<p><strong>6.</strong> 甲要给乙发送大量机密数据，采用数字信封（混合加密）方式。正确的做法是（）。
+A. 甲用乙的公钥加密全部数据，用对称密钥加密乙的私钥
+B. 甲生成对称密钥加密数据，再用乙的公钥加密该对称密钥后一起发送
+C. 甲用自己的私钥加密数据，用对称密钥加密自己的公钥
+D. 甲用乙的私钥加密数据，用对称密钥加密自己的私钥</p>
+<p><strong>7.</strong> 信息摘要（Hash）算法不具备的特性是（）。
+A. 对任意长度的输入产生固定长度的输出
+B. 由摘要无法反向推出原文
+C. 使用密钥参与运算，不同密钥产生不同摘要
+D. 原文微小改动会导致摘要发生巨大变化</p>
+<p><strong>8.</strong> MD5 算法产生的信息摘要长度是（）位。
+A. 64
+B. 128
+C. 160
+D. 256</p>
+<p><strong>9.</strong> 甲向乙发送了附有数字签名的消息，乙收到后应使用（）验证该签名。
+A. 甲的公钥
+B. 甲的私钥
+C. 乙的公钥
+D. 乙的私钥</p>
+<p><strong>10.</strong> 数字签名技术不能提供的保障是（）。
+A. 证明消息确实由签名者发出
+B. 签名者无法否认发过该消息
+C. 发现消息在传输中是否被篡改
+D. 防止消息的内容被第三方窃听</p>
+<p><strong>11.</strong> 甲要与乙通信，既要保证消息机密性，又要让乙能验证消息确实出自甲且未被篡改。正确的流程是（）。
+A. 甲用自己的公钥签名摘要，用甲的私钥加密消息后发送
+B. 甲用甲的私钥对摘要签名，再将消息和签名用乙的公钥加密后发送
+C. 甲用乙的公钥对摘要签名，再用甲的公钥加密消息后发送
+D. 甲先用乙的私钥加密消息，再用自己的公钥对全文签名</p>
+<p><strong>12.</strong> 关于数字证书，下列叙述正确的是（）。
+A. 数字证书中包含证书持有者的公钥
+B. 验证数字证书的有效性应使用证书持有者的公钥
+C. 数字证书由证书持有者自己生成并签名
+D. 数字证书中包含证书持有者的私钥</p>
+<p><strong>13.</strong> 包过滤防火墙工作在（），根据数据包的源地址、目的地址和端口号决定放行或丢弃。
+A. 应用层
+B. 会话层
+C. 网络层
+D. 物理层</p>
+<p><strong>14.</strong> 关于防火墙，下列叙述中不正确的是（）。
+A. 可以控制进出网络的数据包和数据流向
+B. 可以提供网络流量信息的日志和审计
+C. 可以有效防范来自网络内部人员的攻击
+D. 可以隐藏内部网络的 IP 地址和结构细节</p>
+<p><strong>15.</strong> 攻击者截获某用户登录系统时的合法认证报文，稍后将其原样发给服务器冒充该用户登录。这种攻击属于（）。
+A. 重放攻击
+B. SQL 注入攻击
+C. 分布式拒绝服务攻击
+D. 钓鱼攻击</p>
+<h3 id="h-3">案例题风格题<button type="button" class="sec-status" data-status-key="案例题风格题" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「案例题风格题」的学习状态"></button></h3>
+<p><strong>16.</strong> 某银行系统要求客户甲向服务器乙提交转账指令时，满足：① 只有乙能读取指令内容；② 乙能确认指令确实由甲发出且未被篡改。系统采用公钥密码体制（每人一对公私钥）和 Hash 函数。</p>
+<p>（1）甲对指令正文生成信息摘要，应使用什么函数？
+（2）甲对摘要进行签名，应使用谁的什么密钥？
+（3）将&quot;指令+签名&quot;加密后发送，应使用谁的什么密钥？
+（4）乙收到后先做什么才能读到指令内容？随后用什么密钥验证签名？
+（5）若攻击者 P 截获了甲此前提交的一条合法指令报文，并于次日原样重发给乙。这种攻击叫什么？系统可采用什么机制防住它？</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="08-信息安全/90-课后考题">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-防火墙攻击与恶意代码.html">
+      <span class="k">上一页</span>
+      <span class="t">08.3 防火墙、常见攻击与恶意代码 ★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="91-精华题.html">
+      <span class="k">下一页</span>
+      <span class="t">08.5 精华题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

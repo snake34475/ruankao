@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>08.1 安全目标与密码技术 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a><ul class="chapter-nav"><li><a href="01-安全目标与密码技术.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="08-信息安全/01-安全目标与密码技术" aria-hidden="true"></i><span class="n">01</span><span class="t">安全目标与密码技术 ★★★</span></a></li><li><a href="02-摘要签名与证书.html"><i class="sb-dot" data-status-page-dot="08-信息安全/02-摘要签名与证书" aria-hidden="true"></i><span class="n">02</span><span class="t">信息摘要、数字签名与证书 ★★★</span></a></li><li><a href="03-防火墙攻击与恶意代码.html"><i class="sb-dot" data-status-page-dot="08-信息安全/03-防火墙攻击与恶意代码" aria-hidden="true"></i><span class="n">03</span><span class="t">防火墙、常见攻击与恶意代码 ★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/90-课后考题" aria-hidden="true"></i><span class="n">04</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="08-信息安全/91-精华题" aria-hidden="true"></i><span class="n">05</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="08-信息安全/99-答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 8 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">08.1 安全目标与密码技术 <span class="stars">★★★</span></h1>
+  </header>
+  <p><strong>动机</strong>：先想清楚&quot;安全&quot;到底要保住什么，后面每个技术（加密、签名、防火墙）才能对号入座——<strong>每个安全技术都是为了守住某一条安全属性而生的</strong>。</p>
+<h3 id="h-2">1.1 五大安全属性<button type="button" class="sec-status" data-status-key="1.1 五大安全属性" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.1 五大安全属性」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+<th>一句话理解</th>
+<th>被谁破坏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>机密性</strong></td>
+<td>信息不泄露给未授权者</td>
+<td>偷看不得</td>
+<td>截获/窃听</td>
+</tr>
+<tr>
+<td><strong>完整性</strong></td>
+<td>信息不被未授权篡改</td>
+<td>改动不得</td>
+<td>篡改</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>授权用户要用时能用</td>
+<td>想用就能用</td>
+<td>中断（如 DoS）</td>
+</tr>
+<tr>
+<td><strong>不可否认性</strong></td>
+<td>发过的话不能赖账</td>
+<td>赖账不得</td>
+<td>伪造/抵赖</td>
+</tr>
+<tr>
+<td><strong>可控性</strong></td>
+<td>对信息传播与内容具有控制能力</td>
+<td>流传范围可控</td>
+<td>越权传播</td>
+</tr>
+</tbody></table>
+</div>
+<p>选择题最爱的配对：<strong>截获→机密性；篡改→完整性；中断→可用性；伪造→真实性/不可否认性</strong>。记法：&quot;看（截获）改（篡改）断（中断）造（伪造）&quot;对&quot;密完可用真&quot;。</p>
+<h3 id="h-3">1.2 主动攻击 vs 被动攻击 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="1.2 主动攻击 vs 被动攻击 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.2 主动攻击 vs 被动攻击 ★★★」的学习状态"></button></h3>
+<p>这是历年真题反复考的二分类，判别标准只有一条：<strong>是否修改/破坏了系统中的数据和资源</strong>。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特征</th>
+<th>包含的攻击</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>被动攻击</strong></td>
+<td>只<strong>偷看</strong>，不改数据，难察觉</td>
+<td><strong>窃听</strong>（网络监听、搭线）、<strong>流量分析</strong>（不看内容只分析通信的模式、频率、流向）</td>
+</tr>
+<tr>
+<td><strong>主动攻击</strong></td>
+<td><strong>动手改</strong>数据或破坏系统</td>
+<td><strong>篡改</strong>、<strong>伪造</strong>、<strong>伪装</strong>（冒充他人）、<strong>重放</strong>、<strong>拒绝服务 DoS / 分布式拒绝服务 DDoS</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示</strong>（最容易错的一道）：「流量分析」听起来很&quot;主动&quot;（在主动分析嘛），但它<strong>只观察通信模式、不修改任何数据</strong>，属于<strong>被动攻击</strong>。真题就爱把它混进&quot;主动攻击&quot;选项里。反向陷阱：「拒绝服务」听起来只是&quot;让服务慢一点&quot;，但它<strong>主动发起请求洪流破坏可用性</strong>，属于主动攻击。</p>
+<p><strong>应试动作</strong>：背判断句&quot;<strong>只看不改是被动（窃听、流量分析），又改又砸是主动（篡改、伪造、伪装、重放、DoS/DDoS）</strong>&quot;。考场上题干给攻击名让你分类，或给&quot;以下不属于主动攻击的是&quot;——找&quot;窃听/流量分析&quot;。</p>
+<h3 id="h-4">1.3 贯穿总表：「属性 → 用什么技术 → 被什么攻击」（学完全课回来自检）<button type="button" class="sec-status" data-status-key="1.3 贯穿总表：「属性 → 用什么技术 → 被什么攻击」（学完全课回来自检）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.3 贯穿总表：「属性 → 用什么技术 → 被什么攻击」（学完全课回来自检）」的学习状态"></button></h3>
+<p>把本课所有技术按&quot;它到底守住哪个属性&quot;串成一张表，做题时对号入座：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>安全属性</th>
+<th>用哪种技术守住</th>
+<th>被哪种攻击破坏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>机密性</strong></td>
+<td>加密（对称/非对称）、数字信封</td>
+<td>窃听、流量分析（被动）</td>
+</tr>
+<tr>
+<td><strong>完整性</strong></td>
+<td>信息摘要（Hash）比对、数字签名</td>
+<td>篡改</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>冗余、限流、CDN、防火墙</td>
+<td>DoS/DDoS、资源耗尽攻击（海量请求蹭连接）</td>
+</tr>
+<tr>
+<td><strong>不可否认性 / 真实性</strong></td>
+<td>数字签名、数字证书（CA 认证身份）</td>
+<td>伪造、伪装、抵赖</td>
+</tr>
+<tr>
+<td><strong>可控性</strong></td>
+<td>访问控制、操作审计</td>
+<td>越权传播</td>
+</tr>
+</tbody></table>
+</div>
+<p>一句话穿起来：<strong>&quot;加密管机密、摘要管完整、签名管真实不赖账、防火墙/限流管可用、访问控制管可控&quot;</strong>——几乎每一章都是一个技术守一个属性、防一类攻击。考试时先问&quot;这题在考哪个属性&quot;，再反推用哪个技术/是哪类攻击。</p>
+<hr>
+<h2 id="h-5">第二节 对称加密与非对称加密 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第二节 对称加密与非对称加密 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 对称加密与非对称加密 ★★★」的学习状态"></button></h2>
+<p><strong>动机</strong>：想把一段话保密，最直观的办法是&quot;加密&quot;——用一把钥匙把明文搅成乱码，收到的人用钥匙再搅回来。那钥匙怎么设计？历史上只有&quot;同一把钥匙加又解&quot;，直到 1976 年才有人发明&quot;加解各用一把、成对出现&quot;的方案。这两条技术路线就是本节主角。</p>
+<h3 id="h-6">2.1 对比表（选择题直接查这张表作答）<button type="button" class="sec-status" data-status-key="2.1 对比表（选择题直接查这张表作答）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 对比表（选择题直接查这张表作答）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>对称加密（私钥加密/共享密钥加密）</th>
+<th>非对称加密（公钥加密/公开密钥加密）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>密钥结构</td>
+<td>加密、解密用<strong>同一把</strong>密钥</td>
+<td><strong>成对</strong>出现：公钥 + 私钥</td>
+</tr>
+<tr>
+<td>密钥分发</td>
+<td>难：必须先走秘密信道把钥匙送到对方手里</td>
+<td>易：公钥可公开随便发，私钥自己藏着</td>
+</tr>
+<tr>
+<td>n 人需要密钥数</td>
+<td><strong>n(n−1)/2</strong> 个（每两人共用一把）</td>
+<td><strong>2n</strong> 个（每人一对）</td>
+</tr>
+<tr>
+<td>速度</td>
+<td><strong>快</strong>（约快 1～2 个数量级）</td>
+<td><strong>慢</strong></td>
+</tr>
+<tr>
+<td>加密数据量</td>
+<td>适合<strong>大量数据</strong></td>
+<td>适合<strong>少量数据</strong>（密钥、摘要）</td>
+</tr>
+<tr>
+<td>代表算法</td>
+<td><strong>DES</strong>（分组 64 位，有效密钥 56 位）、3DES、<strong>AES</strong>（分组 128 位，密钥 128/192/256 位）、IDEA、RC-5</td>
+<td><strong>RSA</strong>（基于大整数分解难题）、ECC（椭圆曲线）、ElGamal</td>
+</tr>
+<tr>
+<td>能否数字签名／提供不可否认性</td>
+<td><strong>原则上不能</strong>：加解密用同一把钥匙，发送方、接收方<strong>双方都有</strong>，&quot;签&quot;得出来却举证不了是谁签的</td>
+<td><strong>能</strong>：<strong>私钥唯一</strong>，只有本人能签 → 提供不可否认性</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆口诀</strong>：对称&quot;一把钥匙开一把锁，双方同款&quot;；非对称&quot;公锁私钥一对凑，公钥上锁私钥开&quot;。算法名归类口诀：<strong>&quot;DES、AES 是兄弟（对称），RSA 单干是公私（非对称）&quot;</strong>——考场上认名字：带 DES/AES/IDEA 的选对称，带 RSA/ECC/DSA 的选非对称。</p>
+<p><strong>密钥数公式的来历</strong>（防遗忘就地展开）：n 个人两两通信都要保密，任何两人的密钥都不能与第三者相同，所以是&quot;从 n 人里取 2 人配一把&quot;= C(n,2) = n(n−1)/2。例如 n=10：C(10,2) = (10×9)/(2×1) = <strong>45</strong> 把。非对称则每人只需自己的一对：n=10 → 10 对共 20 把。这个对比正说明了非对称在密钥管理上的优势。</p>
+<h3 id="h-7">2.2 两个方向，别拧反了（本课第一易错点）<button type="button" class="sec-status" data-status-key="2.2 两个方向，别拧反了（本课第一易错点）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.2 两个方向，别拧反了（本课第一易错点）」的学习状态"></button></h3>
+<p>非对称加密的两把钥匙有<strong>两种用法</strong>，方向必须刻进脑子：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>加密用谁</th>
+<th>解密用谁</th>
+<th>达到什么目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>加密（保密）</strong></td>
+<td><strong>接收者的公钥</strong></td>
+<td><strong>接收者的私钥</strong></td>
+<td>只有收方能看 → 机密性</td>
+</tr>
+<tr>
+<td><strong>签名（认证）</strong></td>
+<td><strong>发送者的私钥</strong></td>
+<td><strong>发送者的公钥</strong></td>
+<td>只有本人能签 → 身份真实 + 不可否认</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>反例演示</strong>：「甲用乙的公钥加密后发给乙」✓ 保密方向；若写成「甲用自己的公钥加密后发给乙」就错了——公钥人人都有，别人也能解开，毫无保密性。「甲用乙的私钥签名」更是无中生有——乙的私钥只有乙自己有，甲根本拿不到；签名必须用自己的私钥。</p>
+<p>一句话锁死：<strong>&quot;想让对方独看，用对方公钥锁；想证明是自己，用自己私钥签&quot;</strong>。</p>
+<p><strong>为什么对称加密做不了数字签名（本节关键一问）</strong>：签名要提供&quot;不可否认性&quot;——证明&quot;这件事只有你能做、别人替不了&quot;。对称加密里加密和解密是<strong>同一把钥匙</strong>，收发双方都握着它，那么甲乙两人谁都能用这把钥匙做出&quot;签名效果&quot;，事后谁也说不清到底是甲还是乙签的——<strong>举证不了、无法定责</strong>，相当于&quot;章谁都能盖&quot;。数字签名必须依赖<strong>私钥唯一</strong>的非对称体系：全天下只有甲持有甲的私钥，甲签出来的东西别人仿造不出，才&quot;赖不掉&quot;。理解这一句，就等于掌握了&quot;数字签名为什么注定走非对称&quot;的根本原因——考题若问&quot;为什么对称加密不能提供不可否认性&quot;，答<strong>密钥双方共有、无法归因到唯一签名者</strong>。</p>
+<h3 id="h-8">2.3 数字信封（混合加密）<span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="2.3 数字信封（混合加密）★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.3 数字信封（混合加密）★★★」的学习状态"></button></h3>
+<p><strong>动机</strong>：实战里&quot;鱼与熊掌要兼得&quot;——对称快但钥匙难送，非对称好送但慢。办法：<strong>用对称加密保护大数据，用对方的公钥只加密那把对称密钥</strong>。这个&quot;套了一层非对称外皮的对称密钥&quot;就叫<strong>数字信封</strong>。</p>
+<p>流程（以 A 发给 B）：</p>
+<ol>
+<li>A 生成一把<strong>一次性对称密钥</strong> K，用 K 加密正文（快，管大数据）；</li>
+<li>A 用 <strong>B 的公钥</strong>加密 K（只加密一小段，慢也无所谓）——这就是&quot;信封&quot;；</li>
+<li>把密文 + 加了密的 K 一起发给 B；</li>
+<li>B 用<strong>自己的私钥</strong>解出 K，再用 K 解开正文。</li>
+</ol>
+<p><strong>应试动作</strong>：背&quot;<strong>对称保正文，公钥保钥匙；封谁用谁公钥，拆封谁用谁私钥</strong>&quot;。选择题给出流程步骤让你填&quot;用谁的什么钥&quot;，按这句作答。DES/AES/RSA 名字归类题则直接查 2.1 对比表。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="08-信息安全/01-安全目标与密码技术">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="index.html">
+      <span class="k">上一页</span>
+      <span class="t">08 信息安全</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="02-摘要签名与证书.html">
+      <span class="k">下一页</span>
+      <span class="t">08.2 信息摘要、数字签名与证书 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

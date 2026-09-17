@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>06.6 应用层协议与端口 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a><ul class="chapter-nav"><li><a href="01-网络分层模型.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/01-网络分层模型" aria-hidden="true"></i><span class="n">01</span><span class="t">网络分层模型 ★★★</span></a></li><li><a href="02-IP地址与网关.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/02-IP地址与网关" aria-hidden="true"></i><span class="n">02</span><span class="t">IP 地址、NAT 与默认网关 ★★</span></a></li><li><a href="03-子网划分.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/03-子网划分" aria-hidden="true"></i><span class="n">03</span><span class="t">子网划分与掩码计算 ★★★</span></a></li><li><a href="04-CIDR与路由聚合.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/04-CIDR与路由聚合" aria-hidden="true"></i><span class="n">04</span><span class="t">CIDR 与路由聚合 ★★</span></a></li><li><a href="05-TCP与UDP.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/05-TCP与UDP" aria-hidden="true"></i><span class="n">05</span><span class="t">TCP、UDP 与三次握手 ★★★</span></a></li><li><a href="06-应用层协议.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="06-计算机网络/06-应用层协议" aria-hidden="true"></i><span class="n">06</span><span class="t">应用层协议与端口 ★★★</span></a></li><li><a href="07-Web与网络命令.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/07-Web与网络命令" aria-hidden="true"></i><span class="n">07</span><span class="t">HTML、WWW 与网络命令 ★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="06-计算机网络/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 6 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">06.6 应用层协议与端口 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">端口是什么、怎么记<button type="button" class="sec-status" data-status-key="端口是什么、怎么记" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「端口是什么、怎么记」的学习状态"></button></h3>
+<p>一台主机上同时跑着浏览器、微信、下载器……数据到了该交给谁？传输层用 <strong>16 位端口号</strong>区分进程。范围 0～65535；<strong>知名端口 1～1023</strong> 固定分配给常见服务。端口成对工作：服务器端用知名端口&quot;听&quot;，客户端随机开口。<strong>IP 地址找到主机，端口找到主机里的程序</strong>。</p>
+<h3 id="h-3">常用协议端口表（必背，年年考）<button type="button" class="sec-status" data-status-key="常用协议端口表（必背，年年考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「常用协议端口表（必背，年年考）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>端口</th>
+<th>传输层</th>
+<th>功能一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>FTP</strong></td>
+<td><strong>20（数据）/ 21（控制）</strong></td>
+<td>TCP</td>
+<td>文件传输</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>22</td>
+<td>TCP</td>
+<td>安全远程登录</td>
+</tr>
+<tr>
+<td><strong>TELNET</strong></td>
+<td><strong>23</strong></td>
+<td>TCP</td>
+<td>远程登录（明文，不安全）</td>
+</tr>
+<tr>
+<td><strong>SMTP</strong></td>
+<td><strong>25</strong></td>
+<td>TCP</td>
+<td><strong>发</strong>邮件（推）</td>
+</tr>
+<tr>
+<td><strong>DNS</strong></td>
+<td><strong>53</strong></td>
+<td><strong>UDP 为主</strong>（区域传送用 TCP）</td>
+<td>域名 ↔ IP 解析</td>
+</tr>
+<tr>
+<td>TFTP</td>
+<td>69</td>
+<td>UDP</td>
+<td>简单文件传输</td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td><strong>80</strong></td>
+<td>TCP</td>
+<td>网页传输</td>
+</tr>
+<tr>
+<td>POP3</td>
+<td><strong>110</strong></td>
+<td>TCP</td>
+<td><strong>收</strong>邮件（拉）</td>
+</tr>
+<tr>
+<td>SNMP</td>
+<td>161</td>
+<td>UDP</td>
+<td>网络设备管理</td>
+</tr>
+<tr>
+<td><strong>HTTPS</strong></td>
+<td><strong>443</strong></td>
+<td>TCP</td>
+<td>加密的网页传输</td>
+</tr>
+<tr>
+<td><strong>DHCP</strong></td>
+<td><strong>67 / 68</strong></td>
+<td><strong>UDP</strong></td>
+<td><strong>自动分配 IP 配置</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆口诀</strong>：&quot;<strong>21 号 FTP 控制，20 传数据；23 远登、25 发信、53 域名、80 网页、110 收信、443 加密</strong>&quot;。UDP 一族只有四个：<strong>DNS、TFTP、SNMP、DHCP</strong>（口诀：&quot;域名、简单传文件、网管、拿地址，都图个快&quot;），其余常考应用协议全走 TCP。</p>
+<p><strong>DHCP 单独强调</strong>（常考功能题）：DHCP 的作用是让主机开机后<strong>自动获取 IP 地址、子网掩码、默认网关、DNS 服务器</strong>等配置，免手工设置；采用 UDP，客户端从 68 端口向服务器 67 端口申请。工作过程&quot;发现（Discover）→ 提供（Offer）→ 请求（Request）→ 确认（Ack）&quot;四步，知道名字即可。</p>
+<p><strong>反例演示</strong>：</p>
+<ol>
+<li>&quot;SMTP 端口 110&quot;——<strong>错</strong>。<strong>SMTP 发信用 25，POP3 收信用 110</strong>，这组是端口题最经典的调包陷阱。</li>
+<li>&quot;DNS 用 TCP 53&quot;——<strong>错一半</strong>。DNS 日常查询用 <strong>UDP 53</strong>，只有区域传送（主从服务器同步整个区域文件）才用 TCP。选择题若笼统问 DNS 的端口号，答 53；若问传输层载体，答&quot;主要 UDP&quot;。</li>
+<li>&quot;FTP 端口是 20&quot;——<strong>不完整</strong>。FTP 是<strong>双端口</strong>：21 控制、20 传数据；题目问&quot;控制连接&quot;答 21。</li>
+</ol>
+<p><strong>应试动作</strong>：① 端口表按口诀背到看到协议名 1 秒报端口（反向也要会：给端口报协议）；② 牢记 UDP 四兄弟 DNS/TFTP/SNMP/DHCP，其余默认 TCP；③ SMTP/POP3 是&quot;发/收&quot;配对，FTP 是&quot;21 控制/20 数据&quot;配对，专防调包。</p>
+
+
+  <footer class="status-bar" data-status-page="06-计算机网络/06-应用层协议">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-TCP与UDP.html">
+      <span class="k">上一页</span>
+      <span class="t">06.5 TCP、UDP 与三次握手 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="07-Web与网络命令.html">
+      <span class="k">下一页</span>
+      <span class="t">06.7 HTML、WWW 与网络命令 ★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

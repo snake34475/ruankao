@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>99.2 上午卷（下）：数据库至专业英语</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a><ul class="chapter-nav"><li><a href="01-上午卷上.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/01-上午卷上" aria-hidden="true"></i><span class="n">01</span><span class="t">上午卷（上）：计算机系统至设计模式</span></a></li><li><a href="02-上午卷下.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/02-上午卷下" aria-hidden="true"></i><span class="n">02</span><span class="t">上午卷（下）：数据库至专业英语</span></a></li><li><a href="03-上午卷补充题.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/03-上午卷补充题" aria-hidden="true"></i><span class="n">03</span><span class="t">上午卷补充题</span></a></li><li><a href="04-下午卷案例一至三.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/04-下午卷案例一至三" aria-hidden="true"></i><span class="n">04</span><span class="t">下午卷：案例一至三</span></a></li><li><a href="05-下午卷案例四至五.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/05-下午卷案例四至五" aria-hidden="true"></i><span class="n">05</span><span class="t">下午卷：案例四至五</span></a></li><li><a href="90-上午卷答案与解析.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/90-上午卷答案与解析" aria-hidden="true"></i><span class="n">06</span><span class="t">上午卷答案与解析</span></a></li><li><a href="91-下午卷答案与评分点.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/91-下午卷答案与评分点" aria-hidden="true"></i><span class="n">07</span><span class="t">下午卷答案与评分点</span></a></li><li><a href="99-成绩诊断.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷/99-成绩诊断" aria-hidden="true"></i><span class="n">08</span><span class="t">成绩诊断</span></a></li></ul></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 99 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">99.2 上午卷（下）：数据库至专业英语</h1>
+  </header>
+  <p><strong>48.</strong> 修改数据库的物理存储结构而不影响概念模式和应用程序，体现了（ ）。</p>
+<p>A. 逻辑数据独立性<br>B. 物理数据独立性<br>C. 事务隔离性<br>D. 数据冗余性</p>
+<p><strong>49.</strong> 关系代数中，用于选取指定列的运算是（ ）。</p>
+<p>A. 选择 σ<br>B. 投影 π<br>C. 笛卡尔积 ×<br>D. 除法 ÷</p>
+<p><strong>50.</strong> 关系 R(A,B,C) 上有函数依赖 <code>A→B，B→C</code>，候选键为 A。若属性均为原子值，则 R 最高属于（ ）。</p>
+<p>A. 1NF<br>B. 2NF<br>C. 3NF<br>D. BCNF</p>
+<p><strong>51.</strong> 查询各课程平均成绩，并只保留平均成绩不低于 80 分的课程，聚合条件应写在（ ）。</p>
+<p>A. WHERE 子句<br>B. HAVING 子句<br>C. ORDER BY 子句<br>D. DISTINCT 子句</p>
+<p><strong>52.</strong> 事务提交后，即使系统随后发生故障，其修改结果仍应保留。这体现 ACID 中的（ ）。</p>
+<p>A. 原子性<br>B. 一致性<br>C. 隔离性<br>D. 持久性</p>
+<p><strong>53.</strong> 关于两段锁协议，正确的是（ ）。</p>
+<p>A. 能保证冲突可串行化，但仍可能发生死锁<br>B. 能彻底避免死锁<br>C. 要求事务先释放全部锁再申请锁<br>D. 只适用于单用户数据库</p>
+<p><strong>54.</strong> 系统故障恢复时，对故障前已提交事务和未提交事务通常分别执行（ ）。</p>
+<p>A. UNDO、UNDO<br>B. REDO、REDO<br>C. REDO、UNDO<br>D. UNDO、REDO</p>
+<h2 id="h-2">八、计算机网络（第 55–59 题）<button type="button" class="sec-status" data-status-key="八、计算机网络（第 55–59 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「八、计算机网络（第 55–59 题）」的学习状态"></button></h2>
+<p><strong>55.</strong> 传统以太网交换机主要工作在 OSI 的（ ）。</p>
+<p>A. 物理层<br>B. 数据链路层<br>C. 网络层<br>D. 传输层</p>
+<p><strong>56.</strong> IPv4 子网采用 <code>/27</code> 前缀。每个子网内除网络地址和广播地址外，通常可实际分配给主机的地址数为（ ）。</p>
+<p>A. 14<br>B. 30<br>C. 32<br>D. 62</p>
+<p><strong>57.</strong> 地址 <code>192.168.1.130/26</code> 所在网络地址是（ ）。</p>
+<p>A. <code>192.168.1.0</code><br>B. <code>192.168.1.64</code><br>C. <code>192.168.1.128</code><br>D. <code>192.168.1.192</code></p>
+<p><strong>58.</strong> DNS 服务默认使用的端口号是（ ）。</p>
+<p>A. 21<br>B. 25<br>C. 53<br>D. 80</p>
+<p><strong>59.</strong> 与 UDP 相比，TCP 的主要特点是（ ）。</p>
+<p>A. 无连接且不确认<br>B. 面向连接并提供可靠字节流<br>C. 只支持广播通信<br>D. 不进行流量控制</p>
+<h2 id="h-3">九、信息安全（第 60–63 题）<button type="button" class="sec-status" data-status-key="九、信息安全（第 60–63 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「九、信息安全（第 60–63 题）」的学习状态"></button></h2>
+<p><strong>60.</strong> 甲对消息摘要进行数字签名，应使用（ ）。</p>
+<p>A. 甲的私钥<br>B. 甲的公钥<br>C. 接收者的私钥<br>D. CA 的私钥</p>
+<p><strong>61.</strong> 数字信封通常采用（ ）。</p>
+<p>A. 对称密钥加密大数据，接收者公钥加密该对称密钥<br>B. 发送者公钥加密大数据，接收者私钥签名<br>C. Hash 函数直接加密全部明文<br>D. 接收者私钥加密对称密钥并公开发送</p>
+<p><strong>62.</strong> 单向 Hash 摘要主要用于验证数据的（ ）。</p>
+<p>A. 机密性<br>B. 完整性<br>C. 可用性<br>D. 压缩率</p>
+<p><strong>63.</strong> 防御 SQL 注入最有效的常见措施之一是（ ）。</p>
+<p>A. 把数据库端口改成任意数字<br>B. 使用参数化查询并校验输入<br>C. 关闭所有日志<br>D. 延长用户密码但仍拼接 SQL 字符串</p>
+<h2 id="h-4">十、标准化与知识产权（第 64–66 题）<button type="button" class="sec-status" data-status-key="十、标准化与知识产权（第 64–66 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十、标准化与知识产权（第 64–66 题）」的学习状态"></button></h2>
+<p><strong>64.</strong> 标准代号 <code>GB/T</code> 表示（ ）。</p>
+<p>A. 强制性国家标准<br>B. 推荐性国家标准<br>C. 行业标准<br>D. 企业标准</p>
+<p><strong>65.</strong> 合法软件持有人为防止原件损坏，在未取得著作权人许可的情况下制作了一份备份复制件。在符合法律规定且不对外传播的前提下，该行为通常（ ）。</p>
+<p>A. 属于允许的合理使用，无需事先许可<br>B. 仍然构成侵权，备份必须事先取得著作权人书面许可<br>C. 属于侵权，除非备份完成后立即删除原件<br>D. 属于合法备份，可以任意制作多份并对外分发</p>
+<p><strong>66.</strong> 计算机软件著作权主要保护（ ）。</p>
+<p>A. 解决问题的抽象思想本身<br>B. 算法背后的数学规律本身<br>C. 程序及其有关文档的表达<br>D. 任何人独立创作的相同功能</p>
+<h2 id="h-5">十一、数学与多媒体（第 67–70 题）<button type="button" class="sec-status" data-status-key="十一、数学与多媒体（第 67–70 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十一、数学与多媒体（第 67–70 题）」的学习状态"></button></h2>
+<p><strong>67.</strong> 从 8 人中任选 2 人组成不区分职务的小组，共有（ ）种选法。</p>
+<p>A. 16<br>B. 28<br>C. 56<br>D. 64</p>
+<p><strong>68.</strong> “所有模块都通过测试”的否定是（ ）。</p>
+<p>A. 所有模块都未通过测试<br>B. 至少一个模块未通过测试<br>C. 至少一个模块通过测试<br>D. 没有执行任何测试</p>
+<p><strong>69.</strong> 一幅 <code>800×600</code>、24 bit 的未压缩图像占（ ）。</p>
+<p>A. 480000 B<br>B. 1440000 B<br>C. 11520000 B<br>D. 34560000 B</p>
+<p><strong>70.</strong> 8 kHz、8 bit、单声道 PCM 音频录制 10 秒，未压缩容量为（ ）。</p>
+<p>A. 8000 B<br>B. 80000 B<br>C. 640000 B<br>D. 800000 B</p>
+<h2 id="h-6">十二、专业英语（第 71–75 题）<button type="button" class="sec-status" data-status-key="十二、专业英语（第 71–75 题）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「十二、专业英语（第 71–75 题）」的学习状态"></button></h2>
+<p>Software architecture describes the major components of a system and the relationships among them. A good architecture makes important design decisions explicit and helps developers reason about quality attributes. For example, dividing a system into modules with high cohesion and low <strong>(71)</strong> can improve maintainability. When traffic grows, a scalable system can add resources to handle the increased <strong>(72)</strong>. Reliability is also important: redundant components may allow a service to continue operating when one component <strong>(73)</strong>. Security must be considered throughout development rather than added only at the end. Authentication verifies a user&#39;s identity, while authorization determines which resources the user is <strong>(74)</strong> to access. Finally, automated tests provide rapid <strong>(75)</strong> when a change breaks existing behavior.</p>
+<p><strong>71.</strong><br>A. coupling<br>B. recursion<br>C. bandwidth<br>D. inheritance</p>
+<p><strong>72.</strong><br>A. syntax<br>B. workload<br>C. ciphertext<br>D. compilation</p>
+<p><strong>73.</strong><br>A. fails<br>B. compiles<br>C. inherits<br>D. encrypts</p>
+<p><strong>74.</strong><br>A. permitted<br>B. sorted<br>C. sampled<br>D. normalized</p>
+<p><strong>75.</strong><br>A. feedback<br>B. deadlock<br>C. topology<br>D. redundancy</p>
+
+
+  <footer class="status-bar" data-status-page="99-考前全真模拟卷/02-上午卷下">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-上午卷上.html">
+      <span class="k">上一页</span>
+      <span class="t">99.1 上午卷（上）：计算机系统至设计模式</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-上午卷补充题.html">
+      <span class="k">下一页</span>
+      <span class="t">99.3 上午卷补充题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

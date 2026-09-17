@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>03.4 软件测试 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a><ul class="chapter-nav"><li><a href="01-软件开发模型与方法.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/01-软件开发模型与方法" aria-hidden="true"></i><span class="n">01</span><span class="t">软件开发模型与方法 ★★</span></a></li><li><a href="02-需求分析与软件设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/02-需求分析与软件设计" aria-hidden="true"></i><span class="n">02</span><span class="t">需求分析与软件设计 ★</span></a></li><li><a href="03-模块化设计.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/03-模块化设计" aria-hidden="true"></i><span class="n">03</span><span class="t">模块化设计：内聚、耦合与模块原则 ★★★</span></a></li><li><a href="04-软件测试.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="03-软件工程基础/04-软件测试" aria-hidden="true"></i><span class="n">04</span><span class="t">软件测试 ★★★</span></a></li><li><a href="05-软件维护.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/05-软件维护" aria-hidden="true"></i><span class="n">05</span><span class="t">软件维护 ★</span></a></li><li><a href="06-软件质量与文档.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/06-软件质量与文档" aria-hidden="true"></i><span class="n">06</span><span class="t">软件质量特性与软件文档 ★</span></a></li><li><a href="07-项目管理基础.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/07-项目管理基础" aria-hidden="true"></i><span class="n">07</span><span class="t">项目管理基础 ★</span></a></li><li><a href="08-CMM与CMMI.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/08-CMM与CMMI" aria-hidden="true"></i><span class="n">08</span><span class="t">CMM 与 CMMI ★</span></a></li><li><a href="09-案例题专攻.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/09-案例题专攻" aria-hidden="true"></i><span class="n">09</span><span class="t">案例题专攻：数据流图</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/90-课后考题" aria-hidden="true"></i><span class="n">10</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/91-精华题与补充题" aria-hidden="true"></i><span class="n">11</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础/99-答案与解析" aria-hidden="true"></i><span class="n">12</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 3 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">03.4 软件测试 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">4.1 测试的两大分类：静态 vs 动态<button type="button" class="sec-status" data-status-key="4.1 测试的两大分类：静态 vs 动态" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 测试的两大分类：静态 vs 动态」的学习状态"></button></h3>
+<p>测试不等于&quot;把程序跑一遍看对不对&quot;——有一大类测试<strong>根本不运行程序</strong>。这张分类树是很多题的答案来源：</p>
+<pre><code>软件测试
+├── 静态测试（纯人工，不运行程序）
+│    ├── 桌前检查（desk checking）
+│    ├── 代码走查（walkthrough）
+│    └── 代码审查（inspection）
+└── 动态测试（实际把程序跑起来）
+     ├── 黑盒测试（测功能，不看代码）
+     ├── 白盒测试（测结构，看代码）
+     └── 灰盒测试（黑白结合）
+</code></pre>
+<p><strong>考试特征</strong>：题干出现&quot;<strong>不运行程序</strong>&quot;&quot;<strong>人工评审</strong>&quot;&quot;<strong>代码评审会</strong>&quot;→ 静态测试；出现&quot;输入数据看输出&quot;→ 动态测试。</p>
+<h3 id="h-3">4.2 静态测试三手段（三者的差别就是考点）<button type="button" class="sec-status" data-status-key="4.2 静态测试三手段（三者的差别就是考点）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 静态测试三手段（三者的差别就是考点）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>手段</th>
+<th>谁主持</th>
+<th>怎么做</th>
+<th>正式程度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>桌前检查</strong></td>
+<td>代码作者自己（或拉个同行在桌边）</td>
+<td>自己把代码<strong>逐行过一遍</strong>，对可疑处做标记</td>
+<td>最轻、非正式</td>
+</tr>
+<tr>
+<td><strong>代码走查</strong></td>
+<td><strong>开发人员（作者）主持</strong></td>
+<td>作者<strong>逐段讲解</strong>自己的代码，评审者<strong>边听边跟着走代码</strong>、随时提问</td>
+<td>中等</td>
+</tr>
+<tr>
+<td><strong>代码审查</strong></td>
+<td><strong>评审组长</strong>（不是作者）</td>
+<td>评审小组<strong>对照一份&quot;常见错误检查表&quot;逐项核对</strong>，最后产出缺陷清单与处理结论</td>
+<td><strong>最正式</strong></td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆抓手</strong>：<strong>桌前看自己、走查听讲解、审查对清单</strong>。（三者的共同点是都<strong>不运行程序</strong>，所以都属于静态测试——这是最容易混的地方。）</p>
+<h3 id="h-4">4.3 测试阶段：顺序、目标、依据文档<button type="button" class="sec-status" data-status-key="4.3 测试阶段：顺序、目标、依据文档" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 测试阶段：顺序、目标、依据文档」的学习状态"></button></h3>
+<p><strong>顺序（必须背）</strong>：<strong>单元测试 → 集成测试 → 确认测试 → 系统测试</strong>（教材四步）；<strong>若题目另外单列出&quot;验收测试&quot;，则排在最后</strong>（下详）。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>测什么</th>
+<th><strong>依据的文档</strong></th>
+<th>主要任务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>单元测试</strong></td>
+<td>单个<strong>模块内部</strong></td>
+<td><strong>详细设计</strong></td>
+<td>模块接口、局部数据结构、<strong>边界条件</strong>、独立路径、错误处理</td>
+</tr>
+<tr>
+<td><strong>集成测试</strong></td>
+<td>模块<strong>之间的接口与通信</strong></td>
+<td><strong>概要设计</strong></td>
+<td>数据传递错误、模块间调用关系异常</td>
+</tr>
+<tr>
+<td><strong>确认测试</strong></td>
+<td>软件<strong>与需求的一致性</strong></td>
+<td><strong>需求规格说明书</strong></td>
+<td>有效性测试、软件配置审查</td>
+</tr>
+<tr>
+<td><strong>系统测试</strong></td>
+<td><strong>真实环境</strong>下与硬件/网络/其他系统的整体联调</td>
+<td>需求 + 环境约束</td>
+<td>恢复、安全性、<strong>强度</strong>、性能、可靠性、<strong>安装</strong>测试</td>
+</tr>
+<tr>
+<td>（验收测试）</td>
+<td>用户确认是否满足<strong>业务需求</strong></td>
+<td>合同 / 需求</td>
+<td>由<strong>用户</strong>主导</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>关于&quot;确认测试&quot;与&quot;验收测试&quot;的口径</strong>：确认测试本身有<strong>四种形式</strong>——<strong>内部确认测试、Alpha 测试（在开发方场所、开发者在场）、Beta 测试（在用户实际使用环境）、验收测试（用户主导）</strong>。所以题目给四个空就填&quot;单元→集成→确认→系统&quot;，给五个空才把&quot;验收测试&quot;单列在最后。<strong>两者不是矛盾的两套体系，只是一个合并算、一个拆开算</strong>。</p>
+<p><strong>为什么&quot;集成测试发现接口问题&quot;、而单元测试发现不了</strong>（真题原话考法）：单元测试时每个模块是<strong>孤立</strong>跑的，调用关系是假的，接口错配根本暴露不出来；只有把模块<strong>组装</strong>起来，参数个数、类型、顺序、数据传递的错误才会显形。</p>
+<h3 id="h-5">4.4 V 模型：测试与开发阶段的对应关系<button type="button" class="sec-status" data-status-key="4.4 V 模型：测试与开发阶段的对应关系" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.4 V 模型：测试与开发阶段的对应关系」的学习状态"></button></h3>
+<p>V 模型是瀑布模型的升级，它把&quot;测试&quot;从最后一坨拆开、提到与开发阶段<strong>一一对应</strong>的位置上：</p>
+<pre><code>需求分析 ────────────────▶ 验收测试
+     \                   /
+      \                 /
+概要设计 ───────────▶ 系统测试
+        \           /
+详细设计 ─────▶ 集成测试
+          \   /
+     编码 ──▶ 单元测试
+</code></pre>
+<p><strong>四对对应关系（背下来，真题原话考过&quot;系统测试阶段的测试目标来自于哪个阶段&quot;→ 需求分析）</strong>：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>开发阶段</th>
+<th>对应测试</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求分析</td>
+<td><strong>验收测试</strong></td>
+<td>需求对不对，最终只能由用户验收时回答</td>
+</tr>
+<tr>
+<td>概要设计</td>
+<td><strong>系统测试</strong></td>
+<td>概要设计定部件与系统边界，系统测试在真实环境验证整体</td>
+</tr>
+<tr>
+<td>详细设计</td>
+<td><strong>集成测试</strong></td>
+<td>详细设计定模块接口，接口错配在集成时暴露</td>
+</tr>
+<tr>
+<td>编码</td>
+<td><strong>单元测试</strong></td>
+<td>代码片段对不对，只在该单元内检查</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>记忆抓手</strong>：<strong>越晚的测试，对应的文档越&quot;上游&quot;</strong>——验收问的是&quot;需求对不对&quot;，单元只问&quot;这段代码对不对&quot;。</p>
+<h3 id="h-6">4.5 集成测试的两种策略（桩模块 / 驱动模块，高频易错）<button type="button" class="sec-status" data-status-key="4.5 集成测试的两种策略（桩模块 / 驱动模块，高频易错）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.5 集成测试的两种策略（桩模块 / 驱动模块，高频易错）」的学习状态"></button></h3>
+<p>模块一个个写，总有&quot;还没做好&quot;的邻居。集成测试要按方向借&quot;假模块&quot;顶替：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>从哪开始</th>
+<th>需要什么辅助模块</th>
+<th>辅助模块的作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>自顶向下</strong></td>
+<td>从<strong>主控模块</strong>往下逐层组装</td>
+<td><strong>桩模块（stub）</strong></td>
+<td>模拟<strong>被调用</strong>的<strong>下级</strong>模块（下面的还没做好，先拿假的顶住）</td>
+</tr>
+<tr>
+<td><strong>自底向上</strong></td>
+<td>从<strong>最底层</strong>模块往上组装</td>
+<td><strong>驱动模块（driver）</strong></td>
+<td>模拟<strong>调用者</strong>（<strong>上级</strong>还没做好，先造个假的来调我）</td>
+</tr>
+<tr>
+<td><strong>三明治集成</strong></td>
+<td>上下并行（混合）</td>
+<td>桩 + 驱动都要</td>
+<td>—</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>方向别记反</strong>：<strong>&quot;桩&quot;打在地里 → 在最下面被顶住的是桩</strong>；<strong>&quot;驱动&quot;来自上层 → 主动去调别人的是驱动</strong>。所以&quot;自顶向下需要桩模块、自底向上需要驱动模块&quot;——这句话可以直接填两个空。</p>
+<h3 id="h-7">4.6 其他专项测试（一句话区分）<button type="button" class="sec-status" data-status-key="4.6 其他专项测试（一句话区分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.6 其他专项测试（一句话区分）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>回归测试</strong></td>
+<td>软件<strong>修改之后</strong>再测：既测变更部分是否正确，也测变更有没有碰坏别处（防止引入新错误）</td>
+</tr>
+<tr>
+<td><strong>负载测试</strong></td>
+<td>测软件在<strong>规定负载</strong>（如 500 并发）下的表现能力</td>
+</tr>
+<tr>
+<td><strong>压力测试</strong></td>
+<td>测软件在<strong>超负荷</strong>条件下的运行情况（如 5000 并发，看它是降级还是崩溃）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>回归 vs 压力别混</strong>：<strong>改完就回归</strong>、<strong>压趴才叫压力</strong>。</p>
+<h3 id="h-8">4.7 白盒测试与逻辑覆盖（必考排序）<button type="button" class="sec-status" data-status-key="4.7 白盒测试与逻辑覆盖（必考排序）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.7 白盒测试与逻辑覆盖（必考排序）」的学习状态"></button></h3>
+<p>白盒测试把程序看成<strong>透明</strong>的，按<strong>程序内部逻辑</strong>设计用例。逻辑覆盖从弱到强：</p>
+<p><strong>语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</strong></p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>覆盖</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>语句覆盖</strong></td>
+<td>每条<strong>语句</strong>至少执行一次（最弱）</td>
+</tr>
+<tr>
+<td><strong>判定覆盖</strong>（分支覆盖）</td>
+<td>每个判定的<strong>真、假分支</strong>各至少经历一次（判定可以是 1 个条件，也可以是多个条件的组合）</td>
+</tr>
+<tr>
+<td><strong>条件覆盖</strong></td>
+<td>每个判定中每个<strong>条件的真、假取值</strong>各至少一次</td>
+</tr>
+<tr>
+<td><strong>判定/条件覆盖</strong></td>
+<td>判定的真假分支 + 条件的真假取值<strong>都</strong>满足（= 判定覆盖 ∧ 条件覆盖）</td>
+</tr>
+<tr>
+<td><strong>条件组合覆盖</strong></td>
+<td>每个判定中条件的<strong>所有取值组合</strong>都出现</td>
+</tr>
+<tr>
+<td><strong>路径覆盖</strong></td>
+<td>覆盖程序<strong>所有可能的路径</strong>（最强）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>必须知道的一个&quot;例外&quot;</strong>：上表的先后只是<strong>习惯排列</strong>，严格讲 <strong>条件覆盖与判定覆盖互不包含</strong>——既不是&quot;条件覆盖 ⊃ 判定覆盖&quot;，也不是反过来。所以考题若直接问&quot;条件覆盖和判定覆盖谁更强&quot;，正确说法是&quot;<strong>两者没有包含关系</strong>&quot;；要同时保证两者，必须上&quot;<strong>判定/条件覆盖</strong>&quot;。真正的包含链是：</p>
+<pre><code>路径覆盖 ⊃ 条件组合覆盖 ⊃ 判定/条件覆盖 ⊃ 判定覆盖 ⊃ 语句覆盖
+                                  （条件覆盖不在这条链上，它与判定覆盖互不包含）
+</code></pre>
+<p><strong>反例演示（经典陷阱）</strong>：判定 <code>A&gt;0 AND B&gt;0</code>，两个用例取 (A=1,B=0) 和 (A=0,B=1)——两个条件的真假都取遍了（<strong>条件覆盖满足</strong>），但判定结果<strong>都是假</strong>，真分支一次没走过（<strong>判定覆盖不满足</strong>）。这就是为什么排序里条件覆盖只保证条件、不保证分支。</p>
+<h3 id="h-9">4.8 从流程图数出「最少用例数」（真题形态）<button type="button" class="sec-status" data-status-key="4.8 从流程图数出「最少用例数」（真题形态）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.8 从流程图数出「最少用例数」（真题形态）」的学习状态"></button></h3>
+<p>真题常这么问：给一张程序流程图，问&quot;进行<strong>语句覆盖</strong>测试和<strong>路径覆盖</strong>测试<strong>至少</strong>需要几个测试用例&quot;。它考的不是覆盖定义，而是<strong>你数不数得清路径</strong>。看下面这张流程图（一个&quot;双分支 + 双分支&quot;的程序）：</p>
+<pre><code>        开始 (1)
+          |
+          v
+      读入 A,B (2)
+          |
+          v
+     &lt; A &gt; 0 ? &gt; (3)
+       |        |
+      Y|        |N
+       v        v
+   x = 1 (4)  x = 2 (5)
+       |        |
+       +---+----+
+           |
+           v
+        汇合 (6)
+           |
+           v
+     &lt; B &gt; 0 ? &gt; (7)
+       |        |
+      Y|        |N
+       v        v
+   y = 1 (8)  y = 2 (9)
+       |        |
+       +---+----+
+           |
+           v
+        汇合 (10)
+           |
+           v
+        结束 (11)
+</code></pre>
+<p><strong>① 语句覆盖最少用例数</strong>：要四条赋值语句 ④⑤⑧⑨ 各执行一次。一个用例走&quot;每个判定的一侧&quot;，所以一个用例只能覆盖 2 条赋值语句；两个用例（如 A=1,B=1 走 ④⑧、A=−1,B=−1 走 ⑤⑨）刚好覆盖 ④⑤⑧⑨ → <strong>2 个</strong>。</p>
+<p><strong>② 路径覆盖最少用例数</strong>：无循环时，<strong>路径条数 = 各判定分支数的乘积</strong> = 2 × 2 = <strong>4 条</strong>，所以需要 <strong>4 个</strong>用例。四条路径是：④⑧ / ④⑨ / ⑤⑧ / ⑤⑨。</p>
+<p><strong>③ 判定覆盖最少用例数</strong>：判定 ③ 要取真假、判定 ⑦ 要取真假 → 同样 2 个用例（A=1,B=1 给&quot;真真&quot;，A=−1,B=−1 给&quot;假假&quot;）。</p>
+<p><strong>记法</strong>：<strong>语句覆盖、判定覆盖通常 2 个就够（一个走一侧）；路径覆盖数&quot;分支数的乘积&quot;</strong>。判定层数一多，路径数就指数级膨胀——这正是路径覆盖在工程上很难做到的原因（考试只让你数，不让你穷举）。</p>
+<h3 id="h-10">4.9 McCabe 环路复杂度（必考计算，重点是&quot;怎么数&quot;）<button type="button" class="sec-status" data-status-key="4.9 McCabe 环路复杂度（必考计算，重点是&amp;quot;怎么数&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.9 McCabe 环路复杂度（必考计算，重点是&quot;怎么数&quot;）」的学习状态"></button></h3>
+<p>McCabe 环路复杂度衡量程序控制流的复杂程度，<strong>三种等价算法</strong>，任给两样就能算第三样：</p>
+<p><strong>V(G) = 边数 m − 结点数 n + 2 = 判定节点数 + 1 = 封闭区域数 + 1</strong></p>
+<p><strong>从流程图数起来的三步</strong>：</p>
+<ol>
+<li><strong>转结点图</strong>：把流程图化成<strong>有向图</strong>——每个语句块/判定是一个结点，<strong>分支汇合处要补一个新结点</strong>；</li>
+<li><strong>数 m 和 n</strong>：m 是<strong>有向弧</strong>的条数（注意方向，一条弧算一条），n 是结点数；</li>
+<li><strong>代入 + 互验</strong>：算 m − n + 2，再用&quot;判定节点数 + 1&quot;对一遍。</li>
+</ol>
+<p><strong>用 4.8 那张图走一遍</strong>（同一张图，正好两问一起考）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数出来</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结点数 n</td>
+<td><strong>11</strong></td>
+<td>开始1、读入2、判定3、赋值4/5、<strong>汇合6</strong>、判定7、赋值8/9、<strong>汇合10</strong>、结束11</td>
+</tr>
+<tr>
+<td>有向弧数 m</td>
+<td><strong>12</strong></td>
+<td>1→2、2→3、3→4、3→5、4→6、5→6、6→7、7→8、7→9、8→10、9→10、10→11</td>
+</tr>
+<tr>
+<td><strong>V(G) = m − n + 2</strong></td>
+<td><strong>12 − 11 + 2 = 3</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>互验：判定节点数 + 1</strong></td>
+<td><strong>2 + 1 = 3</strong></td>
+<td>判定节点只有 ③ 和 ⑦ 两个 ✓ 两法一致</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>关于&quot;补汇合结点&quot;要不要补</strong>：一定要补，因为<strong>不补图就不合法、m 和 n 都数不清</strong>。补一个汇合点会让 <strong>n 和 m 各 +1</strong>，代入 V(G) = m − n + 2 恰好抵消，所以<strong>补不补不影响最终结果</strong>——它的作用只是让你<strong>数得清、不重不漏</strong>。考试里老实补上再数，最稳。</p>
+<p><strong>V(G) 与&quot;路径条数&quot;不是一回事（别混）</strong>：上面这张图的路径覆盖要 4 条用例，而 V(G) = 3。V(G) 反映的是<strong>判定中枢的个数</strong>（基本路径测试取&quot;独立路径&quot;条数），不等于&quot;所有组合路径的条数&quot;。这两问同时出现时<strong>分开算</strong>，别拿 3 当 4 用。</p>
+<p><strong>反例演示（易错三处）</strong>：</p>
+<ul>
+<li><strong>&quot;判定节点&quot;只数分支点</strong>（if、while、for、case 的分支），<code>i = i + 1</code> 这类顺序语句<strong>不是</strong>判定节点，别把它算进&quot;判定节点数 + 1&quot;里；</li>
+<li>复合条件 <code>if (A&gt;0 AND B&gt;0)</code> 在软考默认按<strong>一个判定节点</strong>算（即这个 if 算 1 个），不要拆成 2 个条件各算一个；</li>
+<li><strong>一条弧只算一条</strong>，画图时不要因为视觉上&quot;线长&quot;就重复计数。</li>
+</ul>
+<p><strong>应试动作</strong>：① 三种算法任选一种先用、另一种互验（<strong>没互验过不要落笔</strong>，这是本课最容易算错的地方）；② 遇到流程图，先在草稿上标结点号（1、2、3…）再数弧，数弧时按&quot;从一个结点出发有几条箭头出去&quot;逐个结点数，最后加总；③ 记住&quot;语句覆盖 2 个 / 路径覆盖 = 分支数相乘&quot;这个速算结论。</p>
+<h3 id="h-11">4.10 黑盒测试（看功能不看代码）<button type="button" class="sec-status" data-status-key="4.10 黑盒测试（看功能不看代码）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.10 黑盒测试（看功能不看代码）」的学习状态"></button></h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>等价类划分</strong></td>
+<td>把输入分成若干&quot;同类&quot;的<strong>有效等价类</strong>与<strong>无效等价类</strong>，每类取一个代表。<strong>规则：设计用例尽可能多地覆盖有效等价类；而每个无效等价类只用一个用例覆盖</strong></td>
+</tr>
+<tr>
+<td><strong>边界值分析</strong></td>
+<td>在等价类<strong>边界</strong>处取值：<strong>恰好等于、稍小于、稍大于</strong>边界值。范围 [1, 100] 就取 <strong>0、1、100、101</strong>——错误最爱出现在边界</td>
+</tr>
+<tr>
+<td><strong>错误推测</strong></td>
+<td>凭经验猜易错点</td>
+</tr>
+<tr>
+<td><strong>因果图</strong></td>
+<td>输入条件的组合 → 判定表（适合&quot;输入条件互相制约&quot;的场景）</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>为什么&quot;无效等价类只覆盖一个&quot;</strong>（真题原话级考点）：<strong>一个好的无效等价类用例，应该只从一个角度违反规则</strong>。若一个用例同时违反了年龄、学历两个条件，出错时<strong>无法定位到底哪一条规则判错了</strong>；只违反一条，错误才能精确定位。</p>
+<p><strong>等价类 vs 边界值</strong>：等价类是&quot;<strong>在类里随便取一个</strong>&quot;（如 [1,100] 取 50），边界值是&quot;<strong>专挑边的内外侧</strong>&quot;（0、1、100、101）。两者常配合使用。</p>
+<h3 id="h-12">4.11 测试的基本原则（五条，选择题直接考）<button type="button" class="sec-status" data-status-key="4.11 测试的基本原则（五条，选择题直接考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.11 测试的基本原则（五条，选择题直接考）」的学习状态"></button></h3>
+<ol>
+<li><strong>尽早、不断地进行测试</strong>（测试不是编码完才开始；对应 V 模型把测试提前）；</li>
+<li><strong>程序员应避免测试自己设计的程序</strong>（自己写的东西自己看不出错）；</li>
+<li><strong>既要选有效、合理的数据，也要选无效、不合理的数据</strong>（只测正确输入必漏 bug）；</li>
+<li><strong>修改后应进行回归测试</strong>（防止改一处坏一片）；</li>
+<li><strong>尚未发现的错误数量与该程序已发现的错误数成正比</strong>（已发现的错越多，说明剩下的错也越多——所以&quot;测得越干净&quot;不代表&quot;质量越好&quot;）。</li>
+</ol>
+<p><strong>应试动作</strong>：① 覆盖强弱排序背死（语句最弱、路径最强），并记住&quot;<strong>条件覆盖 ⊉ 判定覆盖</strong>&quot;这个唯一例外；② 流程图两问（最少用例数、McCabe）分开算，McCabe 必须<strong>两种算法互验</strong>；③ 记住三条速算——<strong>语句覆盖 2 个 / 路径覆盖 = 分支数相乘 / V(G) = 判定节点数 + 1</strong>；④ 黑盒题抓&quot;无效等价类只违反一个条件&quot;。</p>
+
+
+  <footer class="status-bar" data-status-page="03-软件工程基础/04-软件测试">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="03-模块化设计.html">
+      <span class="k">上一页</span>
+      <span class="t">03.3 模块化设计：内聚、耦合与模块原则 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="05-软件维护.html">
+      <span class="k">下一页</span>
+      <span class="t">03.5 软件维护 ★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>12.2 命题逻辑、图论与数值误差 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a><ul class="chapter-nav"><li><a href="01-计数与概率.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/01-计数与概率" aria-hidden="true"></i><span class="n">01</span><span class="t">计数与概率 ★★★</span></a></li><li><a href="02-逻辑图论与数值误差.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/02-逻辑图论与数值误差" aria-hidden="true"></i><span class="n">02</span><span class="t">命题逻辑、图论与数值误差 ★★★</span></a></li><li><a href="03-多媒体与图像容量.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/03-多媒体与图像容量" aria-hidden="true"></i><span class="n">03</span><span class="t">多媒体数据与图像容量 ★★★</span></a></li><li><a href="04-音视频容量与颜色空间.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/04-音视频容量与颜色空间" aria-hidden="true"></i><span class="n">04</span><span class="t">音视频容量与颜色空间 ★★★</span></a></li><li><a href="05-压缩与容量题模板.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/05-压缩与容量题模板" aria-hidden="true"></i><span class="n">05</span><span class="t">压缩与容量题统一模板 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/90-课后考题" aria-hidden="true"></i><span class="n">06</span><span class="t">课后考题</span></a></li><li><a href="91-精华题.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/91-精华题" aria-hidden="true"></i><span class="n">07</span><span class="t">精华题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体/99-答案与解析" aria-hidden="true"></i><span class="n">08</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 12 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">12.2 命题逻辑、图论与数值误差 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">3.1 基本联结词<button type="button" class="sec-status" data-status-key="3.1 基本联结词" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.1 基本联结词」的学习状态"></button></h3>
+<p>设 P、Q 为命题：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th>读法</th>
+<th>何时为真</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>¬P</td>
+<td>非 P</td>
+<td>P 为假</td>
+</tr>
+<tr>
+<td>P∧Q</td>
+<td>P 且 Q</td>
+<td>两者都真</td>
+</tr>
+<tr>
+<td>P∨Q</td>
+<td>P 或 Q</td>
+<td>至少一个真（通常是可兼或）</td>
+</tr>
+<tr>
+<td>P→Q</td>
+<td>若 P 则 Q</td>
+<td><strong>只有 P 真、Q 假时为假</strong></td>
+</tr>
+<tr>
+<td>P↔Q</td>
+<td>P 当且仅当 Q</td>
+<td>两者真假相同</td>
+</tr>
+</tbody></table>
+</div>
+<p>蕴含 <code>P→Q</code> 最容易反直觉。把它理解成承诺：“只要 P 发生，我保证 Q 发生。”只有 P 已发生而 Q 没发生，承诺才被打破。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">P</th>
+<th align="right">Q</th>
+<th align="right">P→Q</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">真</td>
+<td align="right">真</td>
+<td align="right">真</td>
+</tr>
+<tr>
+<td align="right">真</td>
+<td align="right">假</td>
+<td align="right"><strong>假</strong></td>
+</tr>
+<tr>
+<td align="right">假</td>
+<td align="right">真</td>
+<td align="right">真</td>
+</tr>
+<tr>
+<td align="right">假</td>
+<td align="right">假</td>
+<td align="right">真</td>
+</tr>
+</tbody></table>
+</div>
+<p><code>P→Q</code> 的等价式：<strong>¬P∨Q</strong>；逆否命题：<strong>¬Q→¬P</strong>，与原命题等价。</p>
+<p><strong>反例前置</strong>：原命题“若通过认证，则允许进入”不能推出“若允许进入，则通过认证”，后者是逆命题，未必成立；也不能只否定其中一边。与原命题等价的逆否命题是“若没有被允许进入，则没有通过认证”。</p>
+<h3 id="h-3">3.2 德摩根律<button type="button" class="sec-status" data-status-key="3.2 德摩根律" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.2 德摩根律」的学习状态"></button></h3>
+<p><strong>¬(P∧Q) = ¬P∨¬Q</strong><br><strong>¬(P∨Q) = ¬P∧¬Q</strong></p>
+<p>口诀：<strong>括号外取反，里面每项取反，且与或互换</strong>。</p>
+<p>例：“并非（系统安全且高效）”等价于“系统不安全或不高效”。</p>
+<p><strong>反例</strong>：<code>¬(P∧Q)</code> 不能写成 <code>¬P∧¬Q</code>。只要两者中有一个不成立，“P 且 Q”就已被否定，所以中间应是“或”。</p>
+<h3 id="h-4">3.3 充分条件、必要条件与量词否定<button type="button" class="sec-status" data-status-key="3.3 充分条件、必要条件与量词否定" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「3.3 充分条件、必要条件与量词否定」的学习状态"></button></h3>
+<p><code>P→Q</code> 中：P 是 Q 的<strong>充分条件</strong>，Q 是 P 的<strong>必要条件</strong>。</p>
+<p>例：“是正方形 → 四边相等”。正方形足以保证四边相等，所以“是正方形”是充分条件；一个图形若是正方形，四边相等是必不可少的，所以“四边相等”是必要条件。</p>
+<p>量词否定：</p>
+<ul>
+<li>“所有对象都满足 P”的否定：<strong>至少有一个对象不满足 P</strong>；</li>
+<li>“至少有一个对象满足 P”的否定：<strong>所有对象都不满足 P</strong>。</li>
+</ul>
+<p><strong>反例</strong>：“所有测试都通过”的否定不是“所有测试都没通过”，而是“至少一个测试没通过”。</p>
+<p><strong>应试动作</strong>：蕴含只背一个假情况“前真后假”；否定复合命题时用德摩根律；否定“所有”变“至少一个不”。</p>
+<hr>
+<h2 id="h-5">第四节 图论基础：点与边的三个送分公式 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第四节 图论基础：点与边的三个送分公式 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第四节 图论基础：点与边的三个送分公式 ★★」的学习状态"></button></h2>
+<h3 id="h-6">4.1 度数和公式（握手定理）<button type="button" class="sec-status" data-status-key="4.1 度数和公式（握手定理）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.1 度数和公式（握手定理）」的学习状态"></button></h3>
+<p>无向图中，每条边连接两个端点，因此每条边给总度数贡献 2：</p>
+<p><strong>所有顶点度数之和 = 2|E|</strong></p>
+<p>例：某无向图各顶点度数之和为 30，则边数 <code>|E|=30/2=15</code>。</p>
+<p>推论：无向图中奇数度顶点的个数一定是偶数。</p>
+<p>有向图中：</p>
+<p><strong>所有顶点入度之和 = 所有顶点出度之和 = |E|</strong>。</p>
+<h3 id="h-7">4.2 完全图边数<button type="button" class="sec-status" data-status-key="4.2 完全图边数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.2 完全图边数」的学习状态"></button></h3>
+<p>n 个顶点的无向完全图，每两个顶点之间都有一条边：</p>
+<p><strong>|E|=C(n,2)=n(n−1)/2</strong></p>
+<p>例：6 个结点两两直连，边数：</p>
+<p><code>C(6,2)=(6×5)/(2×1)=15</code>。</p>
+<p>n 个顶点的有向完全图若任意两个不同顶点之间两个方向的弧都存在，则弧数为 <strong>n(n−1)</strong>。</p>
+<p><strong>反例（无向 vs 有向别混）</strong>：无向图同一对点只算 1 条边 → 要<strong>除以 2</strong>（<code>n(n−1)/2</code>）；有向图同一对点算两条相反方向的弧 → <strong>不除以 2</strong>（<code>n(n−1)</code>）。口诀：<strong>“无向折半，有向双份”</strong>。例：n=4 时无向完全图 <code>4×3/2=6</code> 条边，有向完全图 <code>4×3=12</code> 条弧。</p>
+<h3 id="h-8">4.3 树的边数<button type="button" class="sec-status" data-status-key="4.3 树的边数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「4.3 树的边数」的学习状态"></button></h3>
+<p>含 n 个顶点的无向树恰有：</p>
+<p><strong>|E|=n−1</strong></p>
+<p>树连通且无环。若一个连通无向图有 n 个顶点、n−1 条边，它就是树；树再加 1 条边必形成环，删掉任意一条已有边会不连通。</p>
+<p>例：20 台设备用最少链路保持整体连通，至少需要 <code>20−1=19</code> 条链路。</p>
+<p>本考点图论<strong>只有三个公式</strong>：无向完全图 <code>n(n−1)/2</code>、有向完全图 <code>n(n−1)</code>、树 <code>n−1</code>——考到就套，别往深里加料（大纲不考更复杂的图论）。</p>
+<p><strong>应试动作</strong>：总度数除以 2 得边数；“两两相连”用组合数；“最少边保持连通”用 n−1。</p>
+<hr>
+<h2 id="h-9">第五节 数值误差：答案偏了多少 <span class="stars">★★</span></h2>
+<p>设真值为 x，近似值为 x*：</p>
+<ul>
+<li><em><em>绝对误差 = |x−x</em>|</em>*；</li>
+<li><em><em>相对误差 = |x−x</em>|/|x|</em>*（x≠0）；</li>
+<li>百分相对误差 = 相对误差×100%。</li>
+</ul>
+<p>例：真值 20.00，近似值 19.80：</p>
+<ul>
+<li>绝对误差=<code>|20.00−19.80|=0.20</code>；</li>
+<li>相对误差=<code>0.20/20.00=0.01</code>；</li>
+<li>百分相对误差=<code>0.01×100%=1%</code>。</li>
+</ul>
+<p>反向检查：19.8 比 20 少 0.2，而 0.2 是 20 的百分之一，确为 1%。</p>
+<h3 id="h-10">5.1 截断与舍入<button type="button" class="sec-status" data-status-key="5.1 截断与舍入" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.1 截断与舍入」的学习状态"></button></h3>
+<ul>
+<li>截断：超过保留位数的部分直接丢弃；</li>
+<li>四舍五入：看下一位决定末位是否加 1。</li>
+</ul>
+<p>将 3.146 保留两位小数：截断得 3.14，四舍五入得 3.15。真值按 3.146 计：</p>
+<ul>
+<li>截断绝对误差 0.006；</li>
+<li>四舍五入绝对误差 0.004。</li>
+</ul>
+<p>本例中舍入误差更小，但不要背“任何计算中舍入都必然更准确”；连续运算还会传播和累积误差。</p>
+<h3 id="h-11">5.2 避免灾难性抵消<button type="button" class="sec-status" data-status-key="5.2 避免灾难性抵消" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.2 避免灾难性抵消」的学习状态"></button></h3>
+<p>两个非常接近的数相减，会把前面相同的有效数字消掉，使相对误差被放大，称为<strong>有效数字损失/灾难性抵消</strong>。数值计算题若给出等价公式，通常优先选避免“大数减大数”的形式。</p>
+<p><strong>数值算例</strong>：算 <code>√(x+1) − √x</code>，当 x 较大（如 x=10⁶）时，<code>√(1000001)≈1000.0005</code>、<code>√(1000000)=1000</code>——两个都得存成约 1000 的接近大数，相减后只剩 0.0005，前面共享的&quot;1000&quot;有效位全被消掉，相对误差被大幅放大，这就是<strong>灾难性抵消</strong>。更稳的改法是分子有理化：<code>√(x+1) − √x = 1/(√(x+1)+√x) ≈ 1/2000.0005</code>——先把两个大数<strong>相加</strong>再取倒数，精度一下就保住了。题面若同时给出等价格式，优先选<strong>先相加</strong>（再取倒数 / 相减）的形态。</p>
+<p><strong>应试动作</strong>：绝对误差有原量纲，相对误差无量纲；百分数别忘乘 100%。看到“保留若干位”先分清截断还是四舍五入。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="12-数学与多媒体/02-逻辑图论与数值误差">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="01-计数与概率.html">
+      <span class="k">上一页</span>
+      <span class="t">12.1 计数与概率 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="03-多媒体与图像容量.html">
+      <span class="k">下一页</span>
+      <span class="t">12.3 多媒体数据与图像容量 ★★★</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

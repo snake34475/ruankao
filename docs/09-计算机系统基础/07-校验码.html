@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>09.7 校验码 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a><ul class="chapter-nav"><li><a href="01-数据表示与浮点数.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/01-数据表示与浮点数" aria-hidden="true"></i><span class="n">01</span><span class="t">数据表示与浮点数 ★★★</span></a></li><li><a href="02-CPU与主存.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/02-CPU与主存" aria-hidden="true"></i><span class="n">02</span><span class="t">CPU、存储体系与主存编址 ★★★</span></a></li><li><a href="03-Cache.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/03-Cache" aria-hidden="true"></i><span class="n">03</span><span class="t">Cache ★★★</span></a></li><li><a href="04-磁盘.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/04-磁盘" aria-hidden="true"></i><span class="n">04</span><span class="t">磁盘容量与存取时间 ★★★</span></a></li><li><a href="05-IO总线与指令系统.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/05-IO总线与指令系统" aria-hidden="true"></i><span class="n">05</span><span class="t">I/O、总线与指令系统 ★★★</span></a></li><li><a href="06-流水线与可靠性.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/06-流水线与可靠性" aria-hidden="true"></i><span class="n">06</span><span class="t">流水线与系统可靠性 ★★★</span></a></li><li><a href="07-校验码.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/07-校验码" aria-hidden="true"></i><span class="n">07</span><span class="t">校验码 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/90-课后考题" aria-hidden="true"></i><span class="n">08</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与专项题.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/91-精华题与专项题" aria-hidden="true"></i><span class="n">09</span><span class="t">精华题与专项题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础/99-答案与解析" aria-hidden="true"></i><span class="n">10</span><span class="t">答案与解析</span></a></li></ul></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="../11-专业英语/index.html"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 9 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">09.7 校验码 <span class="stars">★★★</span></h1>
+  </header>
+  <h3 id="h-2">11.1 码距与能力<button type="button" class="sec-status" data-status-key="11.1 码距与能力" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.1 码距与能力」的学习状态"></button></h3>
+<p>两个合法码字不同位的最少数量叫<strong>最小码距 dmin</strong>。</p>
+<ul>
+<li>要检测 e 位错误：dmin ≥ e+1；</li>
+<li>要纠正 t 位错误：dmin ≥ 2t+1。</li>
+</ul>
+<p>这说明“检错”和“纠错”不是一回事：发现“有人错了”比指出“具体哪位错了”容易。</p>
+<p><strong>代入算例</strong>：若某编码的最小码距 <code>dmin=4</code>：</p>
+<ul>
+<li>检错能力满足 <code>4≥e+1</code>，所以最多保证检测 <code>e=3</code> 位错误；</li>
+<li>纠错能力满足 <code>4≥2t+1</code>，即 <code>2t≤3</code>，所以最多保证纠正 <code>t=1</code> 位错误。</li>
+</ul>
+<p>反向检查：若想纠正 2 位错误，至少需要 <code>dmin≥2×2+1=5</code>，码距 4 不够。口诀：<strong>检 e 要 e+1，纠 t 要 2t+1</strong>。</p>
+<h3 id="h-3">11.2 奇偶校验<button type="button" class="sec-status" data-status-key="11.2 奇偶校验" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.2 奇偶校验」的学习状态"></button></h3>
+<p>加 1 位校验位，使整个码字中 1 的数量为奇数（奇校验）或偶数（偶校验）。</p>
+<p>数据 <code>1011001</code> 有 4 个 1：</p>
+<ul>
+<li>偶校验位填 0，总数仍为偶数；</li>
+<li>奇校验位填 1，总数变成 5。</li>
+</ul>
+<p>奇偶校验能发现<strong>奇数个位</strong>错误，不能发现所有偶数个位错误，也不能定位纠错。</p>
+<p><strong>反例</strong>：不能说“奇校验只能发现奇数值错误”。这里的奇数指<strong>发生翻转的位数为奇数</strong>，与数据表示的数值奇偶无关。</p>
+<h3 id="h-4">11.3 CRC：用模二除法求余数<button type="button" class="sec-status" data-status-key="11.3 CRC：用模二除法求余数" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.3 CRC：用模二除法求余数」的学习状态"></button></h3>
+<p>设信息位为 M，生成多项式对应二进制除数 G 有 r+1 位，则校验位有 r 位：</p>
+<ol>
+<li>在 M 后补 r 个 0；</li>
+<li>用 G 做模二除法（减法就是 XOR，无借位）；</li>
+<li>得到 r 位余数，替换补上的 0；</li>
+<li>接收方用同一 G 除完整码字，余数为 0 表示“未检测到错误”。</li>
+</ol>
+<p>例：信息 <code>1101</code>，生成多项式 G=<code>1011</code>（最高次数 3，所以 r=3）：</p>
+<p><strong>第 1 步：补 0。</strong> 除数 <code>1011</code> 有 4 位，最高次数 r=3，所以信息后必须补 <strong>3 个 0</strong>：</p>
+<p><code>1101 → 1101000</code>。</p>
+<p><strong>第 2 步：逐轮模二除。</strong> 每轮把当前最高位 1 与除数最高位对齐；“减法”就是 XOR，不借位。做完一轮后丢掉左侧 0，再落下下一位：</p>
+<pre><code class="language-text">1101 XOR 1011 = 0110，落下 0 → 1100
+1100 XOR 1011 = 0111，落下 0 → 1110
+1110 XOR 1011 = 0101，落下 0 → 1010
+1010 XOR 1011 = 0001
+</code></pre>
+<p>最后取 r=3 位，余数是 <strong><code>001</code></strong>。</p>
+<p><strong>第 3 步：拼发送码字。</strong> 用余数替换原来补的 3 个 0：</p>
+<p><code>C = 1101 001</code>。</p>
+<p><strong>第 4 步：反向验算。</strong> 接收方计算 <code>1101001 ÷ 1011</code>：</p>
+<pre><code class="language-text">1101 XOR 1011 = 0110，落下 0 → 1100
+1100 XOR 1011 = 0111，落下 0 → 1110
+1110 XOR 1011 = 0101，落下 1 → 1011
+1011 XOR 1011 = 0000
+</code></pre>
+<p>余数为 <code>000</code>，说明该码字能被 G 整除。</p>
+<p><strong>反例</strong>：G 有 4 位却只在信息后补 2 个 0，拿 <code>110100</code> 去除，会得到另一组余数，而且发送码字长度也少一位。校验位数永远是“生成多项式最高次数 r”，也就是“除数位数−1”，不是凭信息位长度猜。</p>
+<p>CRC 擅长检错，尤其是突发错误，但一般<strong>不能依据余数唯一定位并纠正错误</strong>。</p>
+<h3 id="h-5">11.4 海明码：让校验结果直接指出错误位置<button type="button" class="sec-status" data-status-key="11.4 海明码：让校验结果直接指出错误位置" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「11.4 海明码：让校验结果直接指出错误位置」的学习状态"></button></h3>
+<p>若有 m 位数据、r 位校验位，为纠正 1 位错误需满足：</p>
+<p><strong>2^r ≥ m+r+1</strong></p>
+<p>右侧的 m+r 是每个可能出错的位置，另加 1 种“无错”状态；r 个校验位能产生 2^r 种状态。</p>
+<p>例：m=4。试 r=2：2²=4＜4+2+1=7，不够；试 r=3：2³=8≥4+3+1=8，所以需 <strong>3 位校验位</strong>。</p>
+<p>校验位放在位置 1、2、4、8…（2 的幂），数据放其余位置。以 4 位数据 <code>1011</code> 依次放入位置 3、5、6、7，采用偶校验：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+<th align="right">5</th>
+<th align="right">6</th>
+<th align="right">7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容</td>
+<td align="right">p1</td>
+<td align="right">p2</td>
+<td align="right">1</td>
+<td align="right">p4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>p1 检查 1、3、5、7 → 已有两个 1，所以 p1=0；</li>
+<li>p2 检查 2、3、6、7 → 已有三个 1，所以 p2=1；</li>
+<li>p4 检查 4、5、6、7 → 已有两个 1，所以 p4=0；</li>
+<li>码字为 <code>0110011</code>。</li>
+</ul>
+<p>为什么校验位必须放在 1、2、4、8…？把位置编号写成二进制就看出来了：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th align="right">位置</th>
+<th>二进制编号</th>
+<th>由哪些校验位检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td>001</td>
+<td>p1</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>010</td>
+<td>p2</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>011</td>
+<td>p2、p1</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>100</td>
+<td>p4</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>101</td>
+<td>p4、p1</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>110</td>
+<td>p4、p2</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>111</td>
+<td>p4、p2、p1</td>
+</tr>
+</tbody></table>
+</div>
+<p>p1 检查二进制最低位为 1 的位置，p2 检查中间位为 1 的位置，p4 检查最高位为 1 的位置。三个检查结果拼起来，天然就是出错位置的二进制编号。</p>
+<h4 id="h-6">第 6 位翻转后，怎样重算综合征</h4>
+<p>原码字 <code>0110011</code> 的第 6 位原为 1。翻转后收到：</p>
+<p><code>0110001</code>。</p>
+<p>采用偶校验，逐组把校验位本身也算进去：</p>
+<ul>
+<li><strong>s1</strong> 检查位置 1、3、5、7：<code>0、1、0、1</code>，共 2 个 1，仍为偶数，所以 <code>s1=0</code>；</li>
+<li><strong>s2</strong> 检查位置 2、3、6、7：<code>1、1、0、1</code>，共 3 个 1，奇数异常，所以 <code>s2=1</code>；</li>
+<li><strong>s4</strong> 检查位置 4、5、6、7：<code>0、0、0、1</code>，共 1 个 1，奇数异常，所以 <code>s4=1</code>。</li>
+</ul>
+<p>按 <code>s4s2s1</code> 排列得到：</p>
+<p><code>110₂ = 6</code>。</p>
+<p>因此第 6 位出错，把收到码字的第 6 位从 0 翻回 1，恢复为 <code>0110011</code>。再次重算三组都为偶数，综合征变成 <code>000</code>，完成反向验证。</p>
+<p><strong>反例</strong>：若把校验位随意放在 3、5、6 位，三个校验组就不再分别代表位置编号的 1、2、4 三个二进制权值；即使发现某些组异常，也不能把 <code>s4s2s1</code> 直接解释成错误位置。放在 2 的幂位置不是排版习惯，而是定位机制本身。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>校验方式</th>
+<th align="right">校验位</th>
+<th>典型能力</th>
+<th>核心操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>奇偶校验</td>
+<td align="right">1</td>
+<td>检奇数位错，不纠错</td>
+<td>数 1 的奇偶</td>
+</tr>
+<tr>
+<td>CRC</td>
+<td align="right">由生成多项式次数决定</td>
+<td>强检错，通常不纠错</td>
+<td>模二除法</td>
+</tr>
+<tr>
+<td>海明码</td>
+<td align="right">2^r≥m+r+1</td>
+<td>可定位并纠正 1 位错</td>
+<td>分组奇偶校验</td>
+</tr>
+</tbody></table>
+</div>
+<p><strong>应试动作</strong>：看到“模二除法”选 CRC；“校验位插在 1、2、4、8 位、能定位”选海明码；海明位数从 r=1 往上试，等号满足也算够。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="09-计算机系统基础/07-校验码">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="06-流水线与可靠性.html">
+      <span class="k">上一页</span>
+      <span class="t">09.6 流水线与系统可靠性 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">09.8 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

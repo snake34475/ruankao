@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>11.6 易混词、构词法、长句与考前速记 ★★★</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ruankao-theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // 支持 ?theme=dark|light 覆盖（截图验收 / 分享深浅色链接用）
+      var p = new URLSearchParams(location.search).get('theme');
+      if (p === 'dark' || p === 'light') t = p;
+      document.documentElement.dataset.theme = t;
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">软考 · <span>软件设计师</span></a>
+  <span class="topbar-spacer"></span>
+  <button class="btn" type="button" data-action="theme">深色</button>
+  <button class="btn" type="button" data-action="toc" aria-controls="sidebar" aria-expanded="false">目录</button>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <nav class="outline-nav" aria-label="全部课程">
+      <section class="tier tier-0" title="先看全局，再按梯队推进">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>总纲<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../软件设计师考点大纲.html"><i class="sb-dot" data-status-page-dot="软件设计师考点大纲" aria-hidden="true"></i><span class="n">大纲</span><span class="t">考点大纲与优先级</span></a></li>
+          <li><a href="../00-总览与进度.html"><i class="sb-dot" data-status-page-dot="00-总览与进度" aria-hidden="true"></i><span class="n">00</span><span class="t">自学总览与进度</span></a></li>
+          <li><a href="../学习计划.html"><i class="sb-dot" data-status-page-dot="学习计划" aria-hidden="true"></i><span class="n">计划</span><span class="t">考前学习计划（9 月 15 日 → 10 月 27 日）</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-1" title="分值大头 + 案例直接考，优先学">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第一梯队<span class="cnt">0/4</span></p>
+        <ul>
+          <li><a href="../01-数据结构与算法/index.html"><i class="sb-dot" data-status-page-dot="01-数据结构与算法" aria-hidden="true"></i><span class="n">01</span><span class="t">数据结构与算法</span></a></li>
+          <li><a href="../02-数据库系统/index.html"><i class="sb-dot" data-status-page-dot="02-数据库系统" aria-hidden="true"></i><span class="n">02</span><span class="t">数据库系统</span></a></li>
+          <li><a href="../03-软件工程基础/index.html"><i class="sb-dot" data-status-page-dot="03-软件工程基础" aria-hidden="true"></i><span class="n">03</span><span class="t">软件工程基础</span></a></li>
+          <li><a href="../04-面向对象与设计模式/index.html"><i class="sb-dot" data-status-page-dot="04-面向对象与设计模式" aria-hidden="true"></i><span class="n">04</span><span class="t">面向对象与设计模式</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-2" title="选择题稳定得分点">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第二梯队<span class="cnt">0/5</span></p>
+        <ul>
+          <li><a href="../05-操作系统/index.html"><i class="sb-dot" data-status-page-dot="05-操作系统" aria-hidden="true"></i><span class="n">05</span><span class="t">操作系统</span></a></li>
+          <li><a href="../06-计算机网络/index.html"><i class="sb-dot" data-status-page-dot="06-计算机网络" aria-hidden="true"></i><span class="n">06</span><span class="t">计算机网络</span></a></li>
+          <li><a href="../07-程序设计语言基础/index.html"><i class="sb-dot" data-status-page-dot="07-程序设计语言基础" aria-hidden="true"></i><span class="n">07</span><span class="t">程序设计语言基础</span></a></li>
+          <li><a href="../08-信息安全/index.html"><i class="sb-dot" data-status-page-dot="08-信息安全" aria-hidden="true"></i><span class="n">08</span><span class="t">信息安全</span></a></li>
+          <li><a href="../09-计算机系统基础/index.html"><i class="sb-dot" data-status-page-dot="09-计算机系统基础" aria-hidden="true"></i><span class="n">09</span><span class="t">计算机系统基础</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-3" title="背诵即可拿分">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>第三梯队<span class="cnt">0/3</span></p>
+        <ul>
+          <li><a href="../10-标准化与知识产权/index.html"><i class="sb-dot" data-status-page-dot="10-标准化与知识产权" aria-hidden="true"></i><span class="n">10</span><span class="t">标准化与知识产权</span></a></li>
+          <li><a href="index.html" class="is-course-current"><i class="sb-dot" data-status-page-dot="11-专业英语" aria-hidden="true"></i><span class="n">11</span><span class="t">专业英语</span></a><ul class="chapter-nav"><li><a href="01-五步解题法.html"><i class="sb-dot" data-status-page-dot="11-专业英语/01-五步解题法" aria-hidden="true"></i><span class="n">01</span><span class="t">五步解题法：不要从第一个空开始硬翻 ★★★</span></a></li><li><a href="02-软件工程高频词.html"><i class="sb-dot" data-status-page-dot="11-专业英语/02-软件工程高频词" aria-hidden="true"></i><span class="n">02</span><span class="t">软件工程高频词 ★★★</span></a></li><li><a href="03-面向对象与程序语言词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/03-面向对象与程序语言词汇" aria-hidden="true"></i><span class="n">03</span><span class="t">面向对象、设计模式与程序语言词汇 ★★</span></a></li><li><a href="04-数据库操作系统与网络词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/04-数据库操作系统与网络词汇" aria-hidden="true"></i><span class="n">04</span><span class="t">数据库、操作系统与网络词汇 ★★★</span></a></li><li><a href="05-信息安全云计算与AI词汇.html"><i class="sb-dot" data-status-page-dot="11-专业英语/05-信息安全云计算与AI词汇" aria-hidden="true"></i><span class="n">05</span><span class="t">信息安全、云计算与 AI 词汇 ★★★</span></a></li><li><a href="06-易混词构词法与长句.html" class="is-current" aria-current="page"><i class="sb-dot" data-status-page-dot="11-专业英语/06-易混词构词法与长句" aria-hidden="true"></i><span class="n">06</span><span class="t">易混词、构词法、长句与考前速记 ★★★</span></a></li><li><a href="90-课后考题.html"><i class="sb-dot" data-status-page-dot="11-专业英语/90-课后考题" aria-hidden="true"></i><span class="n">07</span><span class="t">课后考题</span></a></li><li><a href="91-精华题与补充题.html"><i class="sb-dot" data-status-page-dot="11-专业英语/91-精华题与补充题" aria-hidden="true"></i><span class="n">08</span><span class="t">精华题与补充题</span></a></li><li><a href="99-答案与解析.html"><i class="sb-dot" data-status-page-dot="11-专业英语/99-答案与解析" aria-hidden="true"></i><span class="n">09</span><span class="t">答案与解析</span></a></li></ul></li>
+          <li><a href="../12-数学与多媒体/index.html"><i class="sb-dot" data-status-page-dot="12-数学与多媒体" aria-hidden="true"></i><span class="n">12</span><span class="t">数学与多媒体</span></a></li>
+        </ul>
+      </section>
+      <section class="tier tier-4" title="全真模拟，整卷限时训练">
+        <p class="tier-title"><span class="dot" aria-hidden="true"></span>收尾<span class="cnt">0/1</span></p>
+        <ul>
+          <li><a href="../99-考前全真模拟卷/index.html"><i class="sb-dot" data-status-page-dot="99-考前全真模拟卷" aria-hidden="true"></i><span class="n">99</span><span class="t">考前全真模拟卷</span></a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+<main>
+  <header class="page-head">
+    <p class="eyebrow">
+      <span>第 11 课</span>
+        <span class="dot"></span>
+        <span>共 12 课</span>
+    </p>
+    <h1 id="h-1">11.6 易混词、构词法、长句与考前速记 <span class="stars">★★★</span></h1>
+  </header>
+  <div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>在 IT 语境中的常见意思</th>
+<th>不要误译成</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>actual</td>
+<td>实际的</td>
+<td>当前的（current）</td>
+</tr>
+<tr>
+<td>argument</td>
+<td>实参/参数；论点</td>
+<td>争吵</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>执行程序/指令</td>
+<td>处决</td>
+</tr>
+<tr>
+<td>library</td>
+<td>程序库</td>
+<td>图书馆</td>
+</tr>
+<tr>
+<td>issue</td>
+<td>问题；发布；议题</td>
+<td>只理解为“发行”</td>
+</tr>
+<tr>
+<td>current</td>
+<td>当前的；电流</td>
+<td>实际的</td>
+</tr>
+<tr>
+<td>support</td>
+<td>支持、兼容</td>
+<td>只理解为“扶着”</td>
+</tr>
+<tr>
+<td>implement</td>
+<td>实现、实施</td>
+<td>工具（名词义很少用于题目）</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>实例；一次情况</td>
+<td>只理解为“例子”</td>
+</tr>
+<tr>
+<td>object</td>
+<td>对象；目标</td>
+<td>物体</td>
+</tr>
+<tr>
+<td>property</td>
+<td>属性</td>
+<td>财产</td>
+</tr>
+<tr>
+<td>field</td>
+<td>字段；领域</td>
+<td>田地</td>
+</tr>
+<tr>
+<td>record</td>
+<td>记录</td>
+<td>唱片</td>
+</tr>
+<tr>
+<td>relation</td>
+<td>关系（数据库表）</td>
+<td>人际关系</td>
+</tr>
+<tr>
+<td>interrupt</td>
+<td>中断</td>
+<td>打扰</td>
+</tr>
+<tr>
+<td>address</td>
+<td>地址；处理/解决问题</td>
+<td>演讲</td>
+</tr>
+<tr>
+<td>port</td>
+<td>端口</td>
+<td>港口</td>
+</tr>
+<tr>
+<td>host</td>
+<td>主机</td>
+<td>主持人</td>
+</tr>
+<tr>
+<td>thread</td>
+<td>线程</td>
+<td>线</td>
+</tr>
+<tr>
+<td>token</td>
+<td>记号；令牌</td>
+<td>纪念品</td>
+</tr>
+</tbody></table>
+</div>
+<p>另有四组必须分开：</p>
+<ul>
+<li><code>adapt</code>（适应/改造）与 <code>adopt</code>（采用）；</li>
+<li><code>affect</code>（通常作动词：影响）与 <code>effect</code>（通常作名词：效果）；</li>
+<li><code>ensure</code>（确保）与 <code>insure</code>（投保）；</li>
+<li><code>complement</code>（补充、补码）与 <code>compliment</code>（赞美）。</li>
+</ul>
+<p><strong>应试动作</strong>：不背孤立中文，要把词放回 IT 搭配中背，例如 <code>execute an instruction</code>、<code>software library</code>、<code>address a security issue</code>、<code>database record</code>。</p>
+<hr>
+<h2 id="h-2">第七节 构词法：不认识也能猜 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第七节 构词法：不认识也能猜 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第七节 构词法：不认识也能猜 ★★」的学习状态"></button></h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>词缀</th>
+<th>含义</th>
+<th>例词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>re-</td>
+<td>再次、返回</td>
+<td>retry, retransmit, recover</td>
+</tr>
+<tr>
+<td>de-</td>
+<td>去除、反向</td>
+<td>decrypt, decode, deallocate</td>
+</tr>
+<tr>
+<td>en-/em-</td>
+<td>使成为</td>
+<td>enable, encrypt, encapsulate</td>
+</tr>
+<tr>
+<td>inter-</td>
+<td>之间</td>
+<td>interface, interaction, interoperability</td>
+</tr>
+<tr>
+<td>intra-</td>
+<td>内部</td>
+<td>intranet</td>
+</tr>
+<tr>
+<td>multi-</td>
+<td>多</td>
+<td>multitasking, multithreading</td>
+</tr>
+<tr>
+<td>dis-</td>
+<td>否定、分离</td>
+<td>disconnect, disable</td>
+</tr>
+<tr>
+<td>un-</td>
+<td>否定</td>
+<td>unauthorized, unavailable</td>
+</tr>
+<tr>
+<td>-tion/-ment</td>
+<td>常构成名词</td>
+<td>authentication, management</td>
+</tr>
+<tr>
+<td>-able/-ible</td>
+<td>可……的</td>
+<td>maintainable, compatible</td>
+</tr>
+<tr>
+<td>-ity</td>
+<td>性质、状态</td>
+<td>reliability, availability</td>
+</tr>
+</tbody></table>
+</div>
+<p>例：即使第一次见 <code>interoperability</code>，也可拆成 <code>inter-</code>（相互之间）+ <code>operate</code>（操作）+ <code>-ability</code>（能力），猜到“不同系统相互协作的能力”，即互操作性。</p>
+<p><strong>反例</strong>：构词法只能帮助猜范围，不能压过上下文。<code>decomposition</code> 中 <code>de-</code> 不是简单“不”，整体是“分解”；最终仍要代回句子验证。</p>
+<p><strong>应试动作</strong>：长词先拆前缀、词根、后缀，再结合主题判断。看到 <code>-tion/-ment/-ity</code> 先按名词处理，看到 <code>-able</code> 先按形容词处理。</p>
+<hr>
+<h2 id="h-3">第八节 长句拆解：只抓主干，不被修饰成分拖走 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第八节 长句拆解：只抓主干，不被修饰成分拖走 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第八节 长句拆解：只抓主干，不被修饰成分拖走 ★★」的学习状态"></button></h2>
+<p>专业短文常把条件、定语从句塞进一句话里。拆句只做三件事：找主语 S、谓语 V、宾语/表语 O/C。</p>
+<p>例句：</p>
+<blockquote class="lead">
+<p>A cache, which stores recently accessed data, reduces the time that the processor spends waiting for main memory.</p>
+</blockquote>
+<p>先去掉两个修饰成分：</p>
+<ul>
+<li><code>which stores recently accessed data</code> 修饰 cache；</li>
+<li><code>that the processor spends waiting for main memory</code> 修饰 time。</li>
+</ul>
+<p>主干只剩：<code>A cache reduces the time.</code>（Cache 减少时间。）</p>
+<p>再把修饰补回：Cache 保存最近访问的数据，从而减少处理器等待主存的时间。</p>
+<p>拆句的难点来自三类结构，下面把&quot;最小语法&quot;补一张四卡 + 三个示范，让你不必死记专业语法书。</p>
+<h3 id="h-4">8.1 四张最小语法卡<button type="button" class="sec-status" data-status-key="8.1 四张最小语法卡" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.1 四张最小语法卡」的学习状态"></button></h3>
+<p><strong>卡①　五大基本句型</strong>：任何句子必有主语 S + 谓语 V，它是哪种句型看谓语后面还跟什么：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>句型</th>
+<th>结构</th>
+<th>示例（先看 V 后有什么）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S+V</td>
+<td>主+谓</td>
+<td>The process runs. 进程运行。</td>
+</tr>
+<tr>
+<td>S+V+O</td>
+<td>主+谓+宾</td>
+<td>The server sends a packet. 服务器发送分组。</td>
+</tr>
+<tr>
+<td>S+V+C</td>
+<td>主+谓+表语</td>
+<td>The system is reliable. 系统是可靠的。</td>
+</tr>
+<tr>
+<td>S+V+O+O</td>
+<td>主+谓+双宾语</td>
+<td>The cache gives the CPU data. 缓存把数据给 CPU。</td>
+</tr>
+<tr>
+<td>S+V+O+C</td>
+<td>主+谓+宾+宾补</td>
+<td>We call this object an instance. 我们把这个对象称为实例。</td>
+</tr>
+</tbody></table>
+</div>
+<p>判别口诀：<strong>&quot;先找 V（谓语），它后面有没有宾语 O，宾语后面是否还跟一个词/句说明 O（宾补 C）&quot;</strong>。真题里出现频率最高的是 S+V+O 与 S+V+C（系动词 be 后接表语）。</p>
+<p><strong>卡②　被动语态 = be + 过去分词</strong>：主语是动作的<strong>承受者</strong>。抓法：<code>is/are/was/were/has been/be + 过去分词（-ed 或不规则）</code>。例：<code>Data is transferred over the network.</code>（数据被通过网络传输）。
+反例：<code>The file is downloading</code>（下载中，现在进行，-ing）≠ <code>The file is downloaded</code>（已被下载，被动）。看到 <code>be + ___</code> 的空格，选项里 <code>-ed</code> 与 <code>-ing</code> 二选一时，若主语承受动作就选 <code>-ed</code>。</p>
+<p><strong>卡③　分词作后置定语</strong>：名词后面直接跟短语修饰它，分词两兄弟分工明确：</p>
+<ul>
+<li>现在分词 <code>-ing</code>：表<strong>主动、正在进行</strong>（相当于 something that does…）→ <code>the process running in background</code>（正在后台运行的那个进程）；</li>
+<li>过去分词 <code>-ed</code>：表<strong>被动、已完成</strong>（相当于 something that is done）→ <code>the data sent</code>（被发送的那些数据）。</li>
+</ul>
+<p>判别：看名词与动作的关系——名词主动去做用 <code>-ing</code>，名词被动承受用 <code>-ed</code>。反例：<code>the data sending</code>（数据在&quot;主动发送别人&quot;）是病句，数据是被发送的，应写 <code>the data sent</code>。</p>
+<p><strong>卡④　代词指代</strong>：<code>it / they / which / that</code> 往前找一个名词作指代对象。找法：<strong>向前找到最近的、单复数与代词一致的那个名词</strong>。
+例：<code>The client sends the request to the server, and it processes it.</code> 两个 <code>it</code> 指不同对象——前一个 <code>it</code> 指 server（它处理请求），后一个 <code>it</code> 指 request。反例：硬把 <code>it</code> 指回句首 <code>client</code>，会误读成&quot;客户端处理它自己发出的请求&quot;。</p>
+<h3 id="h-5">8.2 三个难句拆解示范<button type="button" class="sec-status" data-status-key="8.2 三个难句拆解示范" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「8.2 三个难句拆解示范」的学习状态"></button></h3>
+<p><strong>示范 1　被动句</strong>：<code>The bandwidth of a link is shared by all active users.</code>
+拆：先找 <code>be + 过去分词</code> = <code>is shared</code>，所以是被动句；主语是 <code>The bandwidth</code>，<code>by</code> 引出动作执行者 <code>all active users</code>。主干&quot;带宽被所有活跃用户共享&quot;，翻译别写成&quot;带宽共享所有用户&quot;。<strong>被动句的关键是分清承受者（主语）与执行者（by 后面的名词）</strong>。</p>
+<p><strong>示范 2　插入语（逗号夹层）</strong>：<code>The server, after receiving the request, replies with the stored data.</code>
+拆：划掉逗号之间的插入 <code>after receiving the request</code>，主干 <code>The server replies with the stored data.</code>（服务器用存储的数据回复）；再把插入补回：服务器在收到请求之后回复。<strong>插入语不一定是定语，也可能是时间/伴随状语，先划掉再读主干最稳</strong>。</p>
+<p><strong>示范 3　代词指代（含对比）</strong>：<code>Each thread shares the process&#39;s memory, whereas different processes do not; instead each process has its own address space.</code>
+拆：<code>whereas</code> 表对比，前半句主干 <code>Each thread shares the memory</code>（每个线程共享进程的内存），后半句 <code>each process has its own address space</code>（每个进程有它自己的地址空间）。<code>its</code> 指 <code>each process</code>，不要指回 <code>thread</code>。<strong>对比结构里，<code>its/they</code> 常指对比另一侧的名词，回看单复数与就近名词</strong>。</p>
+<p>常见从句信号：</p>
+<ul>
+<li><code>which/that/who</code>：通常引出修饰前面名词的定语从句；</li>
+<li><code>when/if/unless</code>：条件或时间；</li>
+<li><code>because/since</code>：原因；</li>
+<li><code>so that/in order to</code>：目的；</li>
+<li><code>while/whereas</code>：对比。</li>
+</ul>
+<p><strong>反例</strong>：不要遇到 <code>that</code> 就翻成“那个”。在 <code>the data that the client sends</code> 中，that 只连接定语从句，整体是“客户端发送的数据”。</p>
+<p><strong>应试动作</strong>：长句先圈谓语动词，再找谁做这个动作。括号、逗号之间的插入说明可以暂时划掉，先读主干，再逐层加回。</p>
+<hr>
+<h2 id="h-6">第九节 考前速记：必须能秒认的 30 个词 <span class="stars">★★★</span><button type="button" class="sec-status" data-status-key="第九节 考前速记：必须能秒认的 30 个词 ★★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第九节 考前速记：必须能秒认的 30 个词 ★★★」的学习状态"></button></h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>English</th>
+<th>中文</th>
+<th>English</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>requirement</td>
+<td>需求</td>
+<td>stakeholder</td>
+<td>利益相关者</td>
+</tr>
+<tr>
+<td>maintainability</td>
+<td>可维护性</td>
+<td>reliability</td>
+<td>可靠性</td>
+</tr>
+<tr>
+<td>cohesion</td>
+<td>内聚</td>
+<td>coupling</td>
+<td>耦合</td>
+</tr>
+<tr>
+<td>verification</td>
+<td>验证</td>
+<td>validation</td>
+<td>确认</td>
+</tr>
+<tr>
+<td>regression</td>
+<td>回归</td>
+<td>defect</td>
+<td>缺陷</td>
+</tr>
+<tr>
+<td>encapsulation</td>
+<td>封装</td>
+<td>inheritance</td>
+<td>继承</td>
+</tr>
+<tr>
+<td>polymorphism</td>
+<td>多态</td>
+<td>instance</td>
+<td>实例</td>
+</tr>
+<tr>
+<td>transaction</td>
+<td>事务</td>
+<td>constraint</td>
+<td>约束</td>
+</tr>
+<tr>
+<td>concurrency</td>
+<td>并发</td>
+<td>durability</td>
+<td>持久性</td>
+</tr>
+<tr>
+<td>deadlock</td>
+<td>死锁</td>
+<td>interrupt</td>
+<td>中断</td>
+</tr>
+<tr>
+<td>bandwidth</td>
+<td>带宽</td>
+<td>latency</td>
+<td>时延</td>
+</tr>
+<tr>
+<td>throughput</td>
+<td>吞吐率</td>
+<td>routing</td>
+<td>路由</td>
+</tr>
+<tr>
+<td>confidentiality</td>
+<td>机密性</td>
+<td>integrity</td>
+<td>完整性</td>
+</tr>
+<tr>
+<td>authentication</td>
+<td>认证</td>
+<td>authorization</td>
+<td>授权</td>
+</tr>
+<tr>
+<td>encryption</td>
+<td>加密</td>
+<td>vulnerability</td>
+<td>漏洞</td>
+</tr>
+</tbody></table>
+</div>
+<p>考场口诀再念一遍：<strong>扫主题—判词性—看搭配—找逻辑—代回读</strong>。</p>
+<hr>
+
+
+  <footer class="status-bar" data-status-page="11-专业英语/06-易混词构词法与长句">
+    <span class="sb-label">本页学习状态</span>
+    <div class="sb-picker">
+      <button type="button" class="sb-current" data-action="status-menu" aria-haspopup="true" aria-expanded="false">
+        <i class="sb-dot" data-status="none" aria-hidden="true"></i><span class="sb-text">未开始</span><span class="sb-chev" aria-hidden="true">▾</span>
+      </button>
+      <div class="sb-menu" hidden>
+        <button type="button" data-set="none"><i class="sb-dot" data-status="none" aria-hidden="true"></i>未开始</button>
+        <button type="button" data-set="doing"><i class="sb-dot" data-status="doing" aria-hidden="true"></i>进行中</button>
+        <button type="button" data-set="done"><i class="sb-dot" data-status="done" aria-hidden="true"></i>已理解</button>
+        <button type="button" data-set="later"><i class="sb-dot" data-status="later" aria-hidden="true"></i>稍后学习</button>
+      </div>
+    </div>
+    <button type="button" class="sb-io" data-action="status-export" title="导出学习状态为 JSON 文件（后期可接入 WebDAV 同步）">导出状态</button>
+    <button type="button" class="sb-io" data-action="status-import" title="从 JSON 文件导入学习状态">导入状态</button>
+    <input type="file" accept=".json,application/json" data-status-file hidden>
+  </footer>
+  <footer class="page-nav">
+    <a class="nav-card prev" href="05-信息安全云计算与AI词汇.html">
+      <span class="k">上一页</span>
+      <span class="t">11.5 信息安全、云计算与 AI 词汇 ★★★</span>
+    </a>
+    <a class="nav-home" href="index.html">返回本课</a>
+    <a class="nav-card next" href="90-课后考题.html">
+      <span class="k">下一页</span>
+      <span class="t">11.7 课后考题</span>
+    </a>
+  </footer>
+</main>
+  <aside class="rail" id="rail">
+    <div class="toc-block" data-toc-block>
+      <p class="side-title">本页大纲</p>
+      <nav class="toc-nav" data-toc-nav aria-label="本页大纲"></nav>
+    </div>
+  </aside>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<div class="scrim"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>
