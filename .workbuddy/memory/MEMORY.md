@@ -4,7 +4,7 @@
 
 ## 仓库与平台
 
-- **origin 指向 Gitee**：`https://gitee.com/wang-tengyao/ruankao-software-designer.git`（非 GitHub）。
+- **两个远端并存**：`origin` → Gitee（`git@gitee.com:wang-tengyao/ruankao-software-designer.git`）、`github` → GitHub（`git@github.com:snake34475/ruankao.git`）。**两边 main 保持同一提交，推送时两个都要推。**
 - **Gitee Pages 已被官方下线**（Gitee 官方 issue `oschina/git-osc#IC6I0L` 明确答复「该功能已下线」；网上大量 CSDN 问答声称"仍正常"，是过时/AI 生成内容，不要采信）。→ **在线阅读一律走 GitHub Pages**。
 - 仓库已入库范围包含 `.workbuddy/`（会话记忆）与 `design/`（设计样张）——用户 2026-09-14 明确要求入库，**不要把它们加回 `.gitignore`**。
 - **`讲义扩充规划.md`（仓库根）是工作文档，不进 `docs/`**：构建脚本 `tools/build_html.mjs` 的 `pageSources` 只含 `软件设计师考点大纲.md` + `软考学习/*.md`，根目录其他 md 不会被转换。所以「规划 / 设计 / 说明」类文档一律放仓库根，**不要放 `软考学习/`**——放进去会被当成 lesson 页混进索引卡片与梯队导航。
@@ -15,13 +15,14 @@
 
 - 提交信息用**简体中文**，与历史提交保持一致。
 - 拆提交按「内容层 / 工程层」分开：讲义 md 与产物 HTML 的 UI 改动不要混在一个 commit 里。
-- **作者身份不一致（未解决）**：仓库 `git config` 是 `wangtengyao <1098834475@qq.com>`，但历史提交里出现过 `snake34475 <snake34475@users.noreply.github.com>`（疑似用户的 GitHub 账号）。提交前留意用哪个身份。
+- **作者身份（2026-09-17 已确认）**：`snake34475` 就是用户的 GitHub 账号——SSH 认证返回 `Hi snake34475!`，与 Gitee 用的是**同一把公钥** `~/.ssh/id_ed25519.pub`（注释为 `1098834475@qq.com`）。仓库 `git config` 仍是 `wangtengyao <1098834475@qq.com>`；两处邮箱一致，所以 GitHub 上提交显示为 `wangtengyao` 而非 `snake34475`，**不算问题，不必改 config**。
 - `LF will be replaced by CRLF` 警告在本机是 `core.autocrlf` 的正常行为，仓库内存 LF，无需处理。
 
 ## 部署
 
-- **推送已改走 SSH**：`origin` = `git@gitee.com:wang-tengyao/ruankao-software-designer.git`，密钥 `~/.ssh/id_ed25519`（ed25519，空密码短语）。**不要再改回 HTTPS** —— 本环境的凭据弹窗无法交互，HTTPS 会卡住。这把公钥也可复用到 GitHub。
-- `docs/` 就是发布目录，**GitHub Pages 不需要 Actions**：Settings → Pages → Deploy from a branch → `main` + `/docs`。
+- **推送已改走 SSH**：密钥 `~/.ssh/id_ed25519`（ed25519，空密码短语），Gitee 与 GitHub 共用同一把。**不要再改回 HTTPS** —— 本环境的凭据弹窗无法交互，HTTPS 会卡住。本机**未安装 gh CLI**，查 GitHub 侧状态用 `git ls-remote` / `ssh -T git@github.com`。
+- **GitHub Pages 已启用（2026-09-17 实测可访问）**：在线阅读 <https://snake34475.github.io/ruankao/>。推送命令 `git push origin main && git push github main` —— **Pages 只读 GitHub 那个仓库的 `/docs`**，只推 Gitee 线上不会更新。
+- `docs/` 就是发布目录，**GitHub Pages 不需要 Actions**：Settings → Pages → Deploy from a branch → `main` + `/docs`（已配置好）。
 - **每次改完 md 必须本地 `npm run build` 并把 `docs/` 一起提交**——Pages 只发布提交上去的内容，它不跑构建。
 - `docs/.nojekyll` 由 `tools/build_html.mjs` 生成（**不手改 docs/**），用于跳过 Jekyll；若丢失重跑构建即可恢复。
 - 部署步骤的完整说明在 `README.md` 的「在线部署（GitHub Pages）」小节。
