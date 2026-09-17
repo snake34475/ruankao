@@ -13,6 +13,7 @@
 ├── README.md                    ← 本文件
 ├── 软件设计师考点大纲.md          ← 全局大纲：考点范围、题型、分值、优先级
 ├── 讲义扩充规划.md               ← 逐课体检结论 + 扩写执行清单（工作文档，不进 docs/）
+├── 页面内存诊断.html             ← 阅读版的内存/性能实测诊断与优化记录（工程记录，不进 docs/）
 ├── 软考学习/
 │   ├── 00-总览与进度.md          ← TODO 进度表 + 学习方法（学习入口）
 │   ├── 学习计划.md               ← 考前排期：双线并行 + 背诵轮转 + 复盘体系
@@ -46,7 +47,9 @@ Markdown 源文件是唯一真源；`docs/` 下是由构建脚本生成的网页
 
 ## 在线部署（GitHub Pages）
 
-`docs/` 本身就是一份现成的静态站点，**不需要 Actions、不需要任何配置**，直接把它设为发布目录即可：
+**本仓库已配置完成**，在线阅读：<https://snake34475.github.io/ruankao/>
+
+`docs/` 本身就是一份现成的静态站点，**不需要 Actions、不需要任何配置**，直接把它设为发布目录即可（以下是从零开始的步骤）：
 
 1. 在 GitHub 新建一个仓库（建议 public），把本地仓库推上去；
 2. 打开仓库 **Settings → Pages**；
@@ -57,11 +60,11 @@ Markdown 源文件是唯一真源；`docs/` 下是由构建脚本生成的网页
 
 - **每次改完 md 要重新构建并提交**：`npm run build` → 提交 `docs/`。GitHub 只发布你提交上去的 `docs/` 内容，它不跑构建。
 - **`docs/.nojekyll` 不要删**：它由构建脚本生成并随仓库提交，用来跳过 GitHub Pages 的 Jekyll 处理。
-- **本仓库当前的 origin 指向 Gitee**，Gitee Pages 服务现已下线，所以要在线阅读需另加一个 GitHub remote（见下方命令）。
+- **本仓库配了两个远端**：`origin` 指向 Gitee、`github` 指向 GitHub。Gitee Pages 服务已下线，**在线可读的只有 GitHub Pages**，所以推送时两个远端都要推：
 
 ```bash
-git remote add github https://github.com/<用户名>/<仓库名>.git
-git push github main          # 已有的 origin 不受影响，两个远端可以并存
+git push origin main    # Gitee → git@gitee.com:wang-tengyao/ruankao-software-designer.git
+git push github main    # GitHub → git@github.com:snake34475/ruankao.git（Pages 从这个仓库的 /docs 发布）
 ```
 
 > 平台政策会变，以官方通知为准。
