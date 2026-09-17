@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>页面内存诊断 · 软考讲义阅读版</title>
+<style>
+  :root {
+    --bg: #faf8f4; --surface: #fff; --ink: #23201c; --ink-soft: #5a544c;
+    --ink-faint: #8b857c; --line: #e6e0d6; --accent: #8a5a24; --gold: #b8860b;
+    --ok: #2f7d4f; --warn: #a8641a; --code-bg: #f3efe7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917; --surface: #232220; --ink: #ece7dd; --ink-soft: #b3aca0;
+      --ink-faint: #837c72; --line: #38352f; --accent: #d9a441; --gold: #e0b155;
+      --ok: #6ec48c; --warn: #d9a441; --code-bg: #2b2926;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.75 "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  main { max-width: 52rem; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  h1 { font-size: 1.7rem; line-height: 1.35; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  .sub { color: var(--ink-faint); font-size: .875rem; margin: 0 0 2rem; }
+  h2 {
+    font-size: 1.2rem; margin: 2.75rem 0 1rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 { font-size: 1rem; margin: 1.75rem 0 .6rem; }
+  p { margin: .75rem 0; }
+  .lede {
+    background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0;
+  }
+  .lede p { margin: .4rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: .875rem; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 600; white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  code {
+    background: var(--code-bg); border-radius: 3px; padding: .1em .35em;
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace; font-size: .85em;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: .9rem 1rem; overflow: auto; font-size: .8rem; line-height: 1.6;
+  }
+  pre code { background: none; padding: 0; }
+  .verdict { color: var(--ok); font-weight: 600; }
+  .flag { color: var(--warn); font-weight: 600; }
+  ol.plan { padding-left: 1.4rem; }
+  ol.plan > li { margin: 1.5rem 0; }
+  ol.plan > li > strong { display: block; margin-bottom: .3rem; }
+  .tag {
+    display: inline-block; font-size: .75rem; padding: .1em .5em; border-radius: 99px;
+    background: var(--code-bg); color: var(--ink-soft); border: 1px solid var(--line);
+    margin-left: .4rem; vertical-align: middle;
+  }
+  details { margin: 1rem 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  summary { cursor: pointer; padding: .6rem .9rem; font-size: .875rem; color: var(--ink-soft); }
+  details > div { padding: 0 1rem 1rem; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
+  a { color: var(--accent); }
+  .to-top { position: fixed; right: 1.2rem; bottom: 1.2rem; }
+  .to-top a {
+    display: block; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 99px; padding: .4em .9em; font-size: .8rem; text-decoration: none;
+  }
+  @media (max-width: 640px) { th, td { font-size: .8rem; padding: .4rem .5rem; } }
+</style>
+</head>
+<body>
+<main>
+
+<h1>页面内存诊断：Chrome 打开讲义页为何占 215 MB</h1>
+<p class="sub">软考软件设计师资料库 · <code>docs/</code> 阅读版 · 2026-09-17 · 全部数字为实测值</p>
+
+<div class="lede">
+  <p><strong>结论：215 MB 里约七成与页面无关。</strong></p>
+  <p>在一台全新、无扩展的 Chrome 上，打开一个<strong>完全空白</strong>的标签页就要 <strong>562.7 MB</strong>（10 个进程）；打开体积最大、DOM 节点最多的 01 课讲义页，总计 <strong>668.9 MB</strong>。两者相差 106 MB。</p>
+  <p>单看承载页面的那个渲染进程：空白页 <strong>84.1 MB</strong> → 讲义页 <strong>114.9 MB</strong>，<strong>页面内容只贡献约 30 MB</strong>。其余是 Blink 排版引擎、V8、ICU 字符库、GPU 合成器、网络栈的固定开销。</p>
+  <p style="margin-top:.9rem; padding-top:.7rem; border-top:1px dashed var(--line); color:var(--ink-soft); font-size:.875rem;">
+    <strong>实施记录（同日追加）：</strong>方案 2「去掉顶栏毛玻璃」与方案 4「字重归并」已实施并通过三档宽度验收；
+    方案 3「content-visibility」在实施后经实测<strong>收益为零、且造成首屏滚动条失真 26%</strong>，<strong>已回退</strong>；方案 5「表格改列表」在 01 课试点后一次实渲即被判定"展示异常"，<strong>已整批回退</strong>——详见下文方案 3、方案 5。
+  </p>
+</div>
+
+<h2>一、实测环境与方法</h2>
+<p>为了排除扩展、缓存、其他标签的干扰，每次测量都用独立的临时 profile 启动 Chrome，并在加载完成后通过 CDP（Chrome DevTools 协议）读取指标，同时用系统 API 读取各进程的内存。</p>
+<table>
+  <tr><th>项目</th><th>取值</th></tr>
+  <tr><td>浏览器</td><td>Chrome（正式版）</td></tr>
+  <tr><td>窗口</td><td>1440 × 900，缩放 100%</td></tr>
+  <tr><td>Profile</td><td>每次全新临时目录，禁用扩展与同步</td></tr>
+  <tr><td>进程内存</td><td><code>tasklist</code> 私有工作集（与任务管理器「内存占用」同源）</td></tr>
+  <tr><td>进程类型</td><td>CDP <code>SystemInfo.getProcessInfo</code> 按进程 ID 关联</td></tr>
+  <tr><td>页面指标</td><td>CDP <code>Performance.getMetrics</code> + <code>Memory.getDOMCounters</code></td></tr>
+</table>
+
+<h2>二、三个场景的实测数据</h2>
+<table>
+  <tr>
+    <th>场景</th><th>DOM 节点</th><th>总内存</th><th>渲染进程合计</th>
+    <th>最大单个渲染进程</th><th>浏览器主进程</th><th>GPU 进程</th>
+  </tr>
+  <tr>
+    <td>空白页 about:blank</td><td class="num">16</td><td class="num">562.7 MB</td>
+    <td class="num">248.1 MB</td><td class="num">84.1 MB</td><td class="num">147.7 MB</td><td class="num">105.2 MB</td>
+  </tr>
+  <tr>
+    <td><code>index.html</code>（索引页）</td><td class="num">456</td><td class="num">593.6 MB</td>
+    <td class="num">265.2 MB</td><td class="num">81.3 MB</td><td class="num">150.1 MB</td><td class="num">116.3 MB</td>
+  </tr>
+  <tr>
+    <td><code>01-数据结构与算法.html</code></td><td class="num">10,971</td><td class="num">668.9 MB</td>
+    <td class="num">317.2 MB</td><td class="num">114.9 MB</td><td class="num">157.4 MB</td><td class="num">131.8 MB</td>
+  </tr>
+</table>
+<p>三个场景都是 10 个进程。注意索引页这一行：节点数从 16 涨到 456（28 倍），最大渲染进程反而从 84.1 MB 降到 81.3 MB——说明 <strong>80 MB 上下就是渲染进程的稳定底子，与页面内容无关</strong>。直到 01 课的 10,971 个节点，它才跳到 114.9 MB。</p>
+<p>换句话说：<strong>DOM 规模翻 24 倍，渲染进程只涨 34 MB。</strong>这也决定了"减 DOM"这类优化的收益上限——就是几十 MB 量级，不可能把 215 MB 变成 50 MB。</p>
+
+<h2>三、这个页面"重"在哪</h2>
+<p>对 01 课（体积最大的一课，生成后 199.6 KB）做结构体检：</p>
+<table>
+  <tr><th>指标</th><th>实测值</th><th>说明</th></tr>
+  <tr><td>DOM 节点 / 元素</td><td class="num">10,971 / 3,984</td><td>偏高，健康线是单页 2 万节点以内</td></tr>
+  <tr><td>表格 / 单元格 / 行</td><td class="num">41 / 1,004 / 267</td><td>表格是 Blink 里最重的布局对象</td></tr>
+  <tr><td><code>&lt;pre&gt;</code> 代码块</td><td class="num">47</td><td>另有 260 个 <code>&lt;code&gt;</code></td></tr>
+  <tr><td><code>&lt;strong&gt;</code> 粗体</td><td class="num">992</td><td>内容侧的粗体标记偏多</td></tr>
+  <tr><td>标题</td><td class="num">1 × h1 / 10 × h2 / 42 × h3</td><td>共 53 个标题，进本页大纲</td></tr>
+  <tr><td>页面总高</td><td class="num">73,113 px</td><td>约合 81 屏（900px 视口）</td></tr>
+  <tr><td><strong>JS 堆内存</strong></td><td class="num"><span class="verdict">0.57 MB</span></td><td>极健康，JS 完全不是内存来源</td></tr>
+  <tr><td>事件监听器</td><td class="num">66</td><td>正常，无泄漏迹象</td></tr>
+  <tr><td>加载时主线程耗时</td><td class="num">Layout 1.43 s + Script 0.22 s</td><td class="flag">偏慢，布局是瓶颈</td></tr>
+</table>
+<p><code>tools/app.js</code>（14.5 KB）本身写得很克制：没有常驻定时器、没有缓存大对象、滚动用 <code>requestAnimationFrame</code> 节流并声明 <code>passive</code>。内存问题与它无关。</p>
+
+<h2>四、另外验证的两件事</h2>
+<h3>1. <code>file://</code> 下学习状态是共享的（好消息）</h3>
+<p>曾担心双击打开时每个文件是独立源、导致「学习状态」跨页不互通。实测从 <code>index.html</code> 写入 <code>localStorage</code>，再导航到 01 课读取——<strong>能读到</strong>。Chrome 把所有 <code>file://</code> 页面视为同一个源，状态记录功能正常工作。</p>
+<h3>2. 同源标签页并不会复用渲染进程</h3>
+<p>曾设想"改用本地 HTTP 服务让同源页面共享进程、从而省内存"。实测：无论 <code>file://</code> 还是 <code>http://</code>，每新开一个标签页就新增一个独立渲染进程（两次新开，渲染进程都 +2）。<strong>这条设想不成立</strong>，改用 HTTP 服务并不能省内存，因此不作为优化建议。</p>
+
+<h2>五、优化方案（按收益排序）</h2>
+<ol class="plan">
+
+  <li>
+    <strong>1 · 单标签阅读，开启「内存节省程序」<span class="tag">省 80–115 MB / 个标签</span></strong>
+    这是唯一有数量级效果的杠杆。既然每个标签页都是独立渲染进程、且同源也不复用，同时开 5 个讲义页就是 5 × 80–115 MB 的纯渲染开销，再叠加每个页面的内容成本。
+    <p>做法：Chrome 设置 → 性能 → 打开「内存节省程序」，让闲置标签自动休眠。也可以访问 <code>chrome://discards</code> 手动丢弃暂时不看的标签。</p>
+    <p>阅读习惯上：用 <code>docs/index.html</code> 作为唯一入口页跳转，而不是把十几课都开着。</p>
+  </li>
+
+  <li>
+    <strong>2 · 去掉顶栏的毛玻璃效果<span class="tag">样式重算 −64%</span><span class="tag">滚动 CPU −30%</span></strong>
+    <code>tools/style.css</code> 第 129–130 行给吸顶栏加了 <code>backdrop-filter: blur(12px) saturate(1.3)</code>。它会让顶栏成为独立合成层，还必须保留其背后像素的副本，滚动时持续重新采样。
+    <p>实测（软件合成）：滚动一屏时样式重算从 <strong>190 次降到 68 次</strong>，滚动 CPU 从 <strong>501 ms 降到 352 ms</strong>。你的机器是 i7-8565U 核显，软件合成占比比独显机器高，这条对你尤其有效。GPU 合成模式下 CPU 差异会变小，但合成层纹理（占 GPU 进程内存）依然会省下来。</p>
+    <pre><code>/* tools/style.css 第 129-130 行 */
+.topbar {
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(12px) saturate(1.3);   /* ← 删掉这一行 */
+  border-bottom: 1px solid var(--line);
+}</code></pre>
+    <p>背景本来就是 84% 不透明的页面底色，改成不透明后<strong>视觉上几乎看不出差别</strong>，底部细线保留。改完必须重跑 <code>npm run build</code> 并同步 <code>docs/style.css</code>。</p>
+  </li>
+
+  <li>
+    <strong>3 · 长文档：让屏幕外内容不参与排版<span class="tag">已实施 → 实测否决 → 已回退</span></strong>
+    做法：改 <code>tools/build_html.mjs</code> 按 <code>h2</code> 把正文包成 <code>&lt;section class="sec"&gt;</code>（原正文在 <code>&lt;main&gt;</code> 下是扁平的，没有分节容器），再对 <code>.sec</code> 加 <code>content-visibility: auto</code> 与 <code>contain-intrinsic-size: auto 720px</code>，让屏幕外的小节跳过排版与绘制。
+    <p><strong>实测结果：收益为零，代价明显，已回退。</strong></p>
+    <table>
+      <tr><th>实测项</th><th>未分节</th><th>分节后</th><th>结论</th></tr>
+      <tr><td>加载时 Layout 耗时</td><td class="num">1735 ms</td><td class="num">1854 ms</td><td>未改善</td></tr>
+      <tr><td>滚动阶段 Task 耗时</td><td class="num">570 ms</td><td class="num">573 ms</td><td>无差别</td></tr>
+      <tr><td>首屏文档总高</td><td class="num">73,113 px</td><td class="num">54,117 px</td><td class="flag">短 26%，滚动条失真</td></tr>
+      <tr><td>慢速浏览一遍后</td><td class="num">73,113 px</td><td class="num">73,509 px</td><td>会收敛，但过程中位置漂移</td></tr>
+      <tr><td>前 5 个标题的位置</td><td colspan="2" class="num">逐像素完全一致</td><td>分节未改变布局（间距修正有效）</td></tr>
+    </table>
+    <p>原因：这份文档各小节高度差异极大（约 500 px 到 2 万 px），<code>contain-intrinsic-size</code> 取任何固定估算值都会让文档总高严重偏离实际。虽然滚过一遍后浏览器会记住真实尺寸并收敛，但首次浏览期间滚动条长度会从 54,117 变到 73,509，产生"内容在往下移"的漂移感——对精读场景是明显劣化。而布局成本的大头是 CJK 字体就绪后的全文重排，跳过屏幕外小节并不省它。</p>
+  </li>
+
+  <li>
+    <strong>4 · 字重归并到标准两档<span class="tag">零视觉损失</span></strong>
+    <code>tools/style.css</code> 中出现了 <code>font-weight: 750</code>（第 413 行）、<code>780</code>（第 893 行）、<code>650</code>（第 978 行）以及多处 <code>600</code>。这类非标准字重，在命中可变字体（Windows 11 自带的 Segoe UI Variable、或系统里装了思源黑体可变版）时，每个不同数值都会实例化一套字形实例。中文页面的字形缓存是隐形大头。
+    <p>建议统一到 <code>700</code> 与 <code>600</code> 两档。改动无副作用，风险为零。</p>
+  </li>
+
+  <li>
+    <strong>5 · 步骤流水账表格改「一行一条」列表<span class="tag">已试点 → 已整批回退</span></strong>
+    表格在 Blink 中是最重的布局对象（走独立的表格布局算法），而且<strong>每一列都必须服从同一套列宽</strong>——内容长短差异一大，短列就被压扁、长列疯狂折行。01 课原有 41 张表、267 行、1,004 个单元格。
+    <p><strong>先说一条被实测推翻的旧判据：</strong>此前写的"首列 ≤3 字、其他列含长句 → 必然竖排"不成立。列宽是<strong>整张表所有列共同博弈</strong>的结果，且首列是纯数字或拉丁词时根本不会折行（拉丁词不折行，最小宽度就是整个词）。用无头 Chrome 逐格实测（"单行所需宽度 vs 可用宽度" + 实际行数）后：<strong>01 课 41 张表里只有 2 张真的被挤压</strong>（八大排序一览的"不稳定"列 43.2/44.4 px、快排演算的"起始"18.2/29.6 px）；全仓库 13 课 230 张表<strong>也只有 3 张</strong>（另两张在 04 / 06）。</p>
+    <p><strong>做法（已试过，结论是不要这么做）：</strong>把 10 张「步骤流水账」表——每行代表"第几步做了什么"、各列语义互不相同（DFS/BFS 演算、Kruskal/Prim/Dijkstra 逐轮、拓扑排序、绕树记录、八大排序一览、快排挖坑、线性探测算例）——换成<strong>「一行图例 + 每条一行、字段用全角 <code>｜</code> 分隔」</strong>的列表：</p>
+    <pre><code>**每行依次是：步 ｜ 动作 ｜ 栈（顶在右） ｜ 已访问（输出序）**
+
+- **1** ｜ A 无路可退，先访问 A、压栈 ｜ `A` ｜ A
+- **2** ｜ A 的第一个未访问邻居 B → 访问 B、压栈 ｜ `A B` ｜ A B</code></pre>
+    <p><strong>结构指标确实全部向好：</strong>表格 41 → 31 张、行 267 → 192、单元格 1,004 → 640（<strong>−36%</strong>）；DOM 节点 10,971 → 10,208；页面总高 73,113 → 72,159 px；"逐字竖排"从 2 处降到 <strong>0 处</strong>；三档宽度与深色主题截图也无溢出。</p>
+    <p><strong>但一次实渲就被否掉，已整批回退：</strong>① <code>｜</code> 是<strong>行内文本</strong>，比例字体下每一行分隔符的横坐标各不相同——<strong>列对齐在数学上不可能</strong>，眼睛会反复试图按列扫读而失败，看上去就像一张"坏掉的表格"；② 因此原表里那些<strong>靠成列才好用的关键信息</strong>被拆散到行中段、还会折行——例如八大排序一览的"稳定性"一列（考试就考哪个不稳定）、Kruskal 的"判断"一列（✓选中 / ✗跳过），散进长句后完全丧失可扫性。回退方式：<code>git checkout HEAD -- 软考学习/01-数据结构与算法.md</code>，再重跑两类标记缺陷修复（回退会把 <code>~</code>→<code>～</code> 的修复一起带回旧状态，必须补跑）。</p>
+    <p><strong>这条的教训：</strong>结构指标好 ≠ 读者读起来好。横向对齐的比较信息留在表格里；真正竖排的那 3 张，优先<strong>改措辞 / 缩格内文字</strong>，其次改<strong>分组列表</strong>（每条一段、术语加粗引导），<strong>绝不要用 <code>｜</code> 把字段拼回一行</strong>。任何新格式在推广到多课之前，必须先在一页上实渲并逐格核对。</p>
+  </li>
+</ol>
+
+<h3>不建议做的</h3>
+<table>
+  <tr><th>做法</th><th>为什么不建议</th></tr>
+  <tr><td>关闭硬件加速</td><td>省下 GPU 进程的 105–132 MB，但光栅化会转移到渲染进程，总量通常不降反升，滚动还会明显变卡</td></tr>
+  <tr><td>拆分讲义页</td><td>破坏「一考点一文件」结构，且实测页面内容只占约 30 MB，拆了也省不下来</td></tr>
+  <tr><td>给整页小节加 <code>content-visibility</code></td><td>已实测：收益为零、首屏滚动条失真 26%，见方案 3（实施后已回退）</td></tr>
+  <tr><td>换用更轻的字体栈</td><td>页面零外部请求、用的是系统字体，没有可省的下载体积；<code>pdf/text/</code> 与 <code>docs/</code> 无关</td></tr>
+  <tr><td>用 <code>｜</code> 拼列的"伪表格"替换表格</td><td>省 DOM 节点是真的，但比例字体下<strong>列不可能对齐</strong>，关键列信息被打散、还会折行——读者第一眼就判定"展示异常"，见方案 5（已整批回退）</td></tr>
+</table>
+
+<h2>六、自己动手看内存</h2>
+<p>想确认某个标签页到底吃多少，不要看 Windows 任务管理器（chrome.exe 十几行分不清谁是谁），用 Chrome 内置的：</p>
+<ol>
+  <li>在 Chrome 里按 <code>Shift + Esc</code> 打开 Chrome 任务管理器；</li>
+  <li>看「内存占用」列，并注意每行左侧的<strong>类型</strong>（标签页 / GPU 进程 / 浏览器 / 实用程序）；</li>
+  <li>同一个页面刷新后内存会明显回落，说明是"正常的高水位"而非泄漏；</li>
+  <li>要判断页面自身是否过重，看 DOM 节点数（本仓库最大页 10,971，健康）和 JS 堆（0.57 MB，极健康）比看总内存更有意义。</li>
+</ol>
+
+<hr>
+
+<details>
+<summary>附录：本次诊断用的探针脚本（可复现）</summary>
+<div>
+<p>脚本用无头/带界面 Chrome + CDP 读取指标，并与系统进程内存做关联。保存在 <code>.refs/mem-probe.mjs</code>（该目录已 gitignore，不随仓库提交）。</p>
+<pre><code>用法：
+  node .refs/mem-probe.mjs &lt;文件路径或URL&gt; [normal|noblur|ui|ui-noblur] [标签]
+示例：
+  node .refs/mem-probe.mjs "docs/01-数据结构与算法.html" ui "01课"
+  node .refs/mem-probe.mjs "about:blank" normal "空白页基线"</code></pre>
+<p>mode 含义：<code>normal</code> 无头模式；<code>ui</code> 带界面（最贴近真实）；<code>noblur</code> / <code>ui-noblur</code> 注入覆盖样式禁用 <code>backdrop-filter</code> 作为对照。</p>
+<pre><code>import { spawn, execSync } from 'node:child_process';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+const PORT = 9411 + (process.pid % 200);
+const rawTarget = process.argv[2];
+const MODE = process.argv[3] || 'normal';
+const url = /^https?:|^file:|^about:/.test(rawTarget)
+  ? rawTarget : pathToFileURL(resolve(rawTarget)).href;
+
+const sleep = ms =&gt; new Promise(r =&gt; setTimeout(r, ms));
+
+function chromeProcs() {
+  const map = new Map();
+  try {
+    const out = execSync('tasklist /FI "IMAGENAME eq chrome.exe" /FO CSV /NH',
+      { encoding: 'utf8', windowsHide: true });
+    for (const line of out.split(/\r?\n/)) {
+      const m = line.match(/^"chrome\.exe","(\d+)","[^"]*","\d+","([\d,]+) K"/);
+      if (m) map.set(+m[1], +m[2].replace(/,/g, ''));
+    }
+  } catch {}
+  return map;
+}
+
+class CDP {
+  constructor(ws) {
+    this.ws = ws; this.seq = 0; this.pending = new Map(); this.handlers = new Map();
+    ws.addEventListener('message', ev =&gt; {
+      const m = JSON.parse(ev.data);
+      if (m.id &amp;&amp; this.pending.has(m.id)) {
+        const { res, rej } = this.pending.get(m.id); this.pending.delete(m.id);
+        m.error ? rej(new Error(JSON.stringify(m.error))) : res(m.result);
+      } else if (m.method &amp;&amp; this.handlers.has(m.method)) {
+        this.handlers.get(m.method)(m.params); this.handlers.delete(m.method);
+      }
+    });
+  }
+  send(method, params = {}) {
+    const id = ++this.seq;
+    return new Promise((res, rej) =&gt; {
+      this.pending.set(id, { res, rej });
+      this.ws.send(JSON.stringify({ id, method, params }));
+    });
+  }
+  once(m) { return new Promise(res =&gt; this.handlers.set(m, res)); }
+  async evalJS(expression) {
+    const r = await this.send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
+    return r.result &amp;&amp; r.result.value;
+  }
+}
+
+async function typedMemory(cdpBrowser, snapshot) {
+  const res = {};
+  const info = await cdpBrowser.send('SystemInfo.getProcessInfo');
+  for (const p of info.processInfo || []) {
+    const kb = snapshot.get(p.id), type = p.type || 'unknown';
+    const s = res[type] || (res[type] = { count: 0, totalMB: 0, maxMB: 0 });
+    s.count++;
+    if (kb) {
+      s.totalMB = +(s.totalMB + kb / 1024).toFixed(1);
+      s.maxMB = Math.max(s.maxMB, +(kb / 1024).toFixed(1));
+    }
+  }
+  return res;
+}
+
+const profile = mkdtempSync(join(tmpdir(), 'rkprobe-'));
+const before = chromeProcs();
+const args = [
+  `--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`,
+  '--no-first-run', '--no-default-browser-check', '--disable-extensions',
+  '--disable-sync', '--window-size=1440,900', '--force-device-scale-factor=1',
+  '--enable-precise-memory-info', 'about:blank',
+];
+if (MODE !== 'ui' &amp;&amp; MODE !== 'ui-noblur') args.unshift('--headless=new');
+const proc = spawn(CHROME, args, { stdio: 'ignore' });
+
+try {
+  let page;
+  for (let i = 0; i &lt; 80 &amp;&amp; !page; i++) {
+    try {
+      const j = await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();
+      page = j.find(t =&gt; t.type === 'page');
+    } catch {}
+    if (!page) await sleep(250);
+  }
+  const ws = new WebSocket(page.webSocketDebuggerUrl);
+  await new Promise(r =&gt; ws.addEventListener('open', r, { once: true }));
+  const cdp = new CDP(ws);
+  await cdp.send('Runtime.enable');
+  await cdp.send('Page.enable');
+  await cdp.send('Performance.enable');
+
+  const ver = await (await fetch(`http://127.0.0.1:${PORT}/json/version`)).json();
+  const bws = new WebSocket(ver.webSocketDebuggerUrl);
+  await new Promise(r =&gt; bws.addEventListener('open', r, { once: true }));
+  const cdpBrowser = new CDP(bws);
+
+  const loaded = cdp.once('Page.loadEventFired');
+  await cdp.send('Page.navigate', { url });
+  await loaded;
+  await cdp.send('Page.bringToFront').catch(() =&gt; {});
+  await sleep(2500);
+
+  if (MODE.includes('noblur')) {
+    await cdp.evalJS(`(()=&gt;{const s=document.createElement('style');
+      s.textContent='.topbar{backdrop-filter:none!important;background:var(--bg)!important}';
+      document.head.append(s);return 'ok';})()`);
+    await sleep(600);
+  }
+
+  const toObj = l =&gt; Object.fromEntries((l || []).map(m =&gt; [m.name, m.value]));
+  const afterLoad = toObj((await cdp.send('Performance.getMetrics')).metrics);
+  const dom = await cdp.send('Memory.getDOMCounters');
+
+  await cdp.evalJS(`(async()=&gt;{
+    const step = innerHeight * 0.9;
+    for (let y = 0; y &lt; document.documentElement.scrollHeight; y += step) {
+      scrollTo(0, y);
+      await new Promise(r =&gt; requestAnimationFrame(() =&gt; requestAnimationFrame(r)));
+    }
+    scrollTo(0, 0);
+    await new Promise(r =&gt; setTimeout(r, 400));
+  })()`);
+
+  const afterScroll = toObj((await cdp.send('Performance.getMetrics')).metrics);
+  await sleep(1500);
+  const after = chromeProcs();
+  let totalKB = 0; const mine = [];
+  for (const [pid, mem] of after) if (!before.has(pid)) { mine.push({ pid, memKB: mem }); totalKB += mem; }
+  mine.sort((a, b) =&gt; b.memKB - a.memKB);
+
+  console.log(JSON.stringify({
+    url, mode: MODE,
+    domCounters: dom,
+    load: {
+      layoutMs: +(afterLoad.LayoutDuration * 1000).toFixed(1),
+      scriptMs: +(afterLoad.ScriptDuration * 1000).toFixed(1),
+      taskMs: +(afterLoad.TaskDuration * 1000).toFixed(1),
+    },
+    scrollExtra: {
+      taskMs: +((afterScroll.TaskDuration - afterLoad.TaskDuration) * 1000).toFixed(1),
+      recalcStyle: afterScroll.RecalcStyleCount - afterLoad.RecalcStyleCount,
+      layout: afterScroll.LayoutCount - afterLoad.LayoutCount,
+      jsHeapDeltaMB: +((afterScroll.JSHeapUsedSize - afterLoad.JSHeapUsedSize) / 1048576).toFixed(2),
+    },
+    processMemory: {
+      totalMB: +(totalKB / 1024).toFixed(1),
+      procCount: mine.length,
+      top: mine.slice(0, 8).map(p =&gt; +(p.memKB / 1024).toFixed(1)),
+      byType: await typedMemory(cdpBrowser, after),
+    },
+  }, null, 2));
+  ws.close(); bws.close();
+} finally {
+  for (const pid of chromeProcs().keys()) {
+    if (!before.has(pid)) {
+      try { execSync(`taskkill /F /PID ${pid}`, { stdio: 'ignore', windowsHide: true }); } catch {}
+    }
+  }
+  proc.kill();
+  await sleep(500);
+  try { rmSync(profile, { recursive: true, force: true }); } catch {}
+}</code></pre>
+</div>
+</details>
+
+<p style="margin-top:2rem; color:var(--ink-faint); font-size:.8rem;">
+  本文档为一次性工程诊断记录，存放于仓库根目录，不参与 <code>npm run build</code> 构建，也不会出现在 <code>docs/</code> 阅读版中。
+</p>
+
+</main>
+<div class="to-top"><a href="#">回到顶部</a></div>
+</body>
+</html>
