@@ -850,7 +850,7 @@ HAVING COUNT(*) &gt;= 3
 <p>识别依据：必经行为用 include；满足条件且主动申请才发生的可选行为用 extend。口诀“include 从基用例指出去，extend 从扩展用例指回来”。</p>
 <h3 id="h-55">问题 2（5 分）<button type="button" class="sec-status" data-status-key="问题 2（5 分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「问题 2（5 分）」的学习状态"></button></h3>
 <ul>
-<li>课程—课时是**组合（composition）**关系；</li>
+<li>课程—课时是<strong>组合</strong>（composition）关系；</li>
 <li>实心菱形画在整体“课程”一端；</li>
 <li>一门课程包含 <code>1..*</code> 个课时，每个课时属于 <code>1</code> 门课程；若允许空课程，课程到课时一端也可按业务规则标 <code>0..*</code>，但本题“由若干课时组成”应取 <code>1..*</code>；</li>
 <li>学员和课程的 m:n 联系拆成两个 1:n：学员 <code>1</code>—<code>0..*</code> 选课记录，课程 <code>1</code>—<code>0..*</code> 选课记录；</li>

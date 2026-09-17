@@ -538,7 +538,7 @@ B → bB | b
 <ul>
 <li><strong>通用形式</strong>：正则闭包 A⁺ = A¹ ∪ A² ∪ …（<strong>1 个或多个</strong> A 连接）；闭包 A* = A⁰ ∪ A⁺（在正则闭包基础上<strong>加上 A⁰ = {ε}</strong>，ε 是空串）。</li>
 <li><strong>代入算例</strong>：A = {ab} 时，A⁺ = {ab, abab, ababab, …}；A* = {ε, ab, abab, …}——只多一个空串 ε。</li>
-<li><strong>手算口诀</strong>：<strong>&quot;加 1 乘 0&quot;</strong>——<code>+</code> 表示 1<del>n 个（不含空串），<code>*</code> 表示 0</del>n 个（含空串）。</li>
+<li><strong>手算口诀</strong>：<strong>&quot;加 1 乘 0&quot;</strong>——<code>+</code> 表示 1～n 个（不含空串），<code>*</code> 表示 0～n 个（含空串）。</li>
 </ul>
 <h3 id="h-14">5.3 语法推导树<button type="button" class="sec-status" data-status-key="5.3 语法推导树" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 语法推导树」的学习状态"></button></h3>
 <p>从起始符 S 出发按产生式展开：根是 S，内部结点是非终结符，叶子从左到右拼起来就是句子。上例 <code>aabb</code> 的树可写成：</p>

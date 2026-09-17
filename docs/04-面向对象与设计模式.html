@@ -209,7 +209,7 @@
 </tbody></table>
 </div>
 <p><strong>记忆抓手</strong>：<strong>过载</strong>名字一样、<strong>参数</strong>类型当参、<strong>包含</strong>子类包进来、<strong>强制</strong>编译器硬转。</p>
-<p><strong>反例演示（易错）</strong>：别把&quot;参数多态&quot;和&quot;包含多态&quot;混了 —— 判断标准是**&quot;靠类型参数化&quot;还是&quot;靠继承层次&quot;<strong>。<code>List&lt;int&gt;</code> 和 <code>List&lt;String&gt;</code> 用同一个 <code>List</code> 是</strong>参数多态**（没有继承关系）；父类引用指向子类对象是<strong>包含多态</strong>（有继承关系）。</p>
+<p><strong>反例演示（易错）</strong>：别把&quot;参数多态&quot;和&quot;包含多态&quot;混了 —— 判断标准是<strong>靠类型参数化还是靠继承层次</strong>。<code>List&lt;int&gt;</code> 和 <code>List&lt;String&gt;</code> 用同一个 <code>List</code> 是<strong>参数多态</strong>（没有继承关系）；父类引用指向子类对象是<strong>包含多态</strong>（有继承关系）。</p>
 <h3 id="h-7">1.5 动态绑定：多态落地要同时满足三个条件 <span class="stars">★</span><button type="button" class="sec-status" data-status-key="1.5 动态绑定：多态落地要同时满足三个条件 ★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「1.5 动态绑定：多态落地要同时满足三个条件 ★」的学习状态"></button></h3>
 <p>讲义前面说&quot;父类引用指向子类对象、调用被重写的方法就执行子类版本&quot;——这不是无条件成立的，<strong>三个条件缺一不可</strong>：</p>
 <ol>
@@ -219,7 +219,7 @@
 </ol>
 <p><strong>绑定时机对照</strong>：<strong>静态绑定</strong>发生在<strong>编译时</strong>（如重载按参数类型选定方法）；<strong>动态绑定</strong>发生在<strong>运行时</strong>（按对象的实际类型选定方法）。</p>
 <p><strong>反例演示（易错）</strong>：三个条件少一个，多态就不发生 —— 若父类方法<strong>没被子类重写</strong>，父类引用调它就是父类版本；若用<strong>子类引用</strong>调，即使重写了也谈不上&quot;多态&quot;（本来就是子类对象，直接调即可）；若方法被声明为不可覆盖（Java 的 <code>static</code>、<code>final</code>、<code>private</code> 方法），走的就是静态绑定。</p>
-<p><strong>应试动作</strong>：看到代码题里出现 <code>父类 p = new 子类();</code>，先在心里核对这三条，再判定&quot;调的是哪个版本&quot;；问&quot;为什么输出父类版本&quot;时，答案往往就是**&quot;该方法没有被重写&quot;<strong>或</strong>&quot;它不是通过父类引用调用的&quot;**。</p>
+<p><strong>应试动作</strong>：看到代码题里出现 <code>父类 p = new 子类();</code>，先在心里核对这三条，再判定&quot;调的是哪个版本&quot;；问&quot;为什么输出父类版本&quot;时，答案往往就是<strong>该方法没有被重写</strong>，或<strong>它不是通过父类引用调用的</strong>。</p>
 <h2 id="h-8">第二节 面向对象分析与设计过程 <span class="stars">★★</span><button type="button" class="sec-status" data-status-key="第二节 面向对象分析与设计过程 ★★" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「第二节 面向对象分析与设计过程 ★★」的学习状态"></button></h2>
 <h3 id="h-9">2.1 为什么先要有&quot;过程&quot;<button type="button" class="sec-status" data-status-key="2.1 为什么先要有&amp;quot;过程&amp;quot;" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「2.1 为什么先要有&quot;过程&quot;」的学习状态"></button></h3>
 <p>很多人以为&quot;面向对象&quot;就是&quot;写类&quot;。但类从哪来？属性怎么定？关系怎么画？——<strong>不解决这些问题，画出来的类图就是凭感觉摆的</strong>。OOA（面向对象分析）解决&quot;<strong>要什么</strong>&quot;，OOD（面向对象设计）解决&quot;<strong>怎么搭</strong>&quot;，两步各有一套固定动作。考试既考选择题（问&quot;下面哪一步属于 OOA&quot;），更是 UML 案例题的<strong>解题骨架</strong>——案例题让你补类名、补方法名，靠的就是 OOD 的&quot;定义属性/定义服务&quot;这两步。</p>
@@ -1080,7 +1080,7 @@
 <li><strong>适配器 vs 外观</strong>：适配器是&quot;一个接口转成另一个接口&quot;（一对一改造）；外观是&quot;一堆子系统接口收敛成一个入口&quot;（多合一简化）。</li>
 <li><strong>桥接 vs 装饰器</strong>：桥接拆的是<strong>两个独立变化的结构维度</strong>（形状×绘制方式）；装饰器是<strong>同一维度上叠加功能</strong>。</li>
 <li><strong>策略 vs 状态</strong>：结构几乎一样（都委托给一个接口），但<strong>客户能不能选</strong>是分水岭——策略是<strong>客户主动选算法</strong>（想换就换）；状态是<strong>对象自己随条件转换</strong>，客户通常不指定（且状态之间常互相触发迁移）。</li>
-<li><strong>命令 vs 备忘录</strong>（撤销题的正主）<strong>：支持&quot;撤销&quot;的机制是</strong>命令**（把操作封装成对象，命令里存了执行所需的信息，提供 <code>undo()</code>）；备忘录是<strong>保存/恢复对象状态快照</strong>。若题目问&quot;把请求封装成对象从而支持撤销/排队/日志&quot;→ <strong>命令</strong>；问&quot;保存对象某一时刻的状态以便以后恢复&quot;→ <strong>备忘录</strong>。真题里两者常同框出现，<strong>看题干强调的是&quot;操作&quot;还是&quot;状态&quot;</strong>。</li>
+<li><strong>命令 vs 备忘录（撤销题的正主）</strong>：支持&quot;撤销&quot;的机制是<strong>命令</strong>（把操作封装成对象，命令里存了执行所需的信息，提供 <code>undo()</code>）；备忘录是<strong>保存/恢复对象状态快照</strong>。若题目问&quot;把请求封装成对象从而支持撤销/排队/日志&quot;→ <strong>命令</strong>；问&quot;保存对象某一时刻的状态以便以后恢复&quot;→ <strong>备忘录</strong>。真题里两者常同框出现，<strong>看题干强调的是&quot;操作&quot;还是&quot;状态&quot;</strong>。</li>
 <li><strong>工厂方法 vs 抽象工厂</strong>：都造对象，区别在<strong>单一还是系列</strong>——工厂方法造<strong>一个产品</strong>（由子类决定），抽象工厂造<strong>一整个产品族</strong>（一族相关对象，如&quot;Windows 风格的按钮+滚动条&quot;）。</li>
 </ol>
 <p><strong>应试动作</strong>：① 背三分类数字&quot;5/7/11&quot; + 口诀；② 速查表每个模式的&quot;速记词&quot;必须条件反射——考试 80% 是&quot;场景/意图 → 模式名&quot;的配对；③ 易混对按&quot;意图&quot;区分；④ <strong>高频模式的角色名要能默写英文</strong>（服务案例题填空）。</p>
@@ -1258,7 +1258,7 @@ A. 存在继承关系  B. 子类重写了父类的方法  C. 父类引用指向�
 <p>用例&quot;借书（BorrowBook）&quot;的详细描述如下：</p>
 <ul>
 <li>参与者：读者（Reader）；</li>
-<li>典型事件流：① 输入读者 ID；② 确认该读者可以借阅图书，并记录读者 ID；③ 输入所借图书的图书 ID；④ 根据图书目录中的图书 ID 确认该书可借，计算归还日期，生成借阅记录；⑤ 通知读者归还日期。重复步骤 ③~⑤，直到读者结束借阅；</li>
+<li>典型事件流：① 输入读者 ID；② 确认该读者可以借阅图书，并记录读者 ID；③ 输入所借图书的图书 ID；④ 根据图书目录中的图书 ID 确认该书可借，计算归还日期，生成借阅记录；⑤ 通知读者归还日期。重复步骤 ③～⑤，直到读者结束借阅；</li>
 <li>备选事件流：2a. 若读者有超期未还图书则不能借阅：① 告知读者不能借阅并说明原因；② 本用例结束。4a. 若所借图书不可外借：① 告知读者该书不可借阅；② 回到步骤 ③；</li>
 <li>说明：归还期限与读者身份有关，教师为 60 天、学生为 30 天；读者 ID 中包含读者身份信息。</li>
 </ul>
