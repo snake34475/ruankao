@@ -17,6 +17,7 @@
 | 修改 `tools/`、构建、导航、HTML 路由或 `docs/` | [`.agents/html-build.md`](.agents/html-build.md) |
 | 拆分、合并或迁移课程文件 | [`.agents/course-splitting.md`](.agents/course-splitting.md) |
 | 任何内容或代码变更的交付前检查 | [`.agents/verification.md`](.agents/verification.md) |
+| 处理用户“记住/以后都这样”的记忆声明 | [`.agents/memory-management.md`](.agents/memory-management.md) |
 
 ## 唯一真源
 
@@ -36,6 +37,12 @@
 - 仓库内链接使用相对路径，不写本机绝对路径。
 - 不确定的教材结论宁可核实或不写，不得编造。
 - 年份、报名、政策和考试日期等信息注明“以官方通知为准”。
+
+## 提交与推送
+
+- 每次提交前先运行 `npm run build`，确认 136 个页面产物与源码一致，不提交失败或不完整的构建产物。
+- 本体仓库配置了双远端：`origin`（Gitee，gitee.com:wang-tengyao/ruankao-software-designer）与 `github`（GitHub，git@github.com:snake34475/ruankao.git）。
+- 提交后必须推送到两个远端：`git push`（推 origin）后，再 `git push github main`，两者缺一不可。
 
 ## 仓库结构
 
