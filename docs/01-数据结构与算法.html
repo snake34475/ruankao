@@ -1233,22 +1233,95 @@ WPL = 3×1 + 4×2 + 1×3 + 2×3 = 3 + 8 + 3 + 6 = 20   （非叶节点和 = 3+7+
 </tr>
 </tbody></table>
 </div>
-<p><strong>连通分量长什么样</strong>（另取一张&quot;不连通&quot;的图做例子）：</p>
-<pre><code>        A ─── B            C ← 孤立点，不连任何边
-        │     │
-        └──── D
+<p><strong>连通分量长什么样</strong>——把「连通图」和「不连通图」并排看最清楚：</p>
+<pre><code>   连通图 G1（占满全图，只有 1 个分量）         不连通图（脱成 2 片）
 
-     A、B、D 三点互相可达 → 连成一片，算 1 个连通分量
-     C 谁也不连 → 它自己也算 1 个连通分量
-     ⇒ 这张图共有 2 个连通分量，所以它「不是」连通图
+        A ─── B                                    A ─── B        C ← 孤立点
+        │     │                                    │     │
+        C ─── D ─── E                              └──── D
+
+   A、B、C、D、E 全部互相可达，          A、B、D 三点互相可达 → 连成一片，算 1 个分量
+   连成一片，就是 1 个连通分量          C 谁也不连 → 它自己也算 1 个分量
+   ⇒ 连通图 = 1 个连通分量            ⇒ 这张图共有 2 个分量，所以它「不是」连通图
 </code></pre>
 <p><strong>判别口诀</strong>：<strong>连通分量 = 数一数图被&quot;断&quot;成了几片</strong>（孤立的一个点也算一片）。遍历时对每个未访问顶点各起一次遍历，起了几次就有几个连通分量（3.2 节会用到）。</p>
+<p><strong>完全图长什么样</strong>——完全图 = <strong>任意两点之间都有直接连边</strong>，不许&quot;隔着别人绕路&quot;。从 3 个点一路看到 5 个点：</p>
+<pre><code>   无向 K3：3 个点两两直接连 → C(3,2) = 3 条边
+        A                       三条边 = AB、AC、BC
+       / \                      每对点都有直连 ✓
+      /   \
+     B ─── C
+
+   无向 K4：4 个点 → 四边形再加两条对角线 = 6 条边
+        A ──── B
+        │ \   / │      六条边 =
+        │  \ /  │      四边形 AB、BC、CD、DA
+        │   X   │      再补对角线 AC、BD
+        │  / \  │      （图中 \ 与 / 交叉处 = 两对角线相交）
+        │ /   \ │
+        D ──── C
+
+   无向 K5：5 个点两两全连，数一遍正好 10 条（= C(5,2)）
+       A─B  A─C  A─D  A─E      每一行 = 一个点连到&quot;它后面的所有点&quot;
+       B─C  B─D  B─E           相加 5+4+3+2+1 = 10
+       C─D  C─E                一个点对都不漏，才是完全图 ✓
+       D─E
+</code></pre>
+<p><strong>有向完全图</strong> = 把上面每条无向边<strong>拆成方向相反的两条</strong>：A→B 与 B→A 是两条不同的边，所以数量正好翻倍——K3=6、K4=12、K5=20，一般地 <code>n(n−1)</code> 条。</p>
 <p><strong><span class="stars">★</span> 边数公式（必背两条 + 一条反推）</strong>：</p>
 <ol>
 <li><strong>无向完全图</strong>：<code>n(n−1)/2</code> 条边。n=5 → 5×4/2 = 10 条。</li>
 <li><strong>有向完全图</strong>：<code>n(n−1)</code> 条边（每对顶点两个方向的边都要有）。n=5 → 20 条。</li>
 <li>反推：无向图边数<strong>最多</strong> <code>n(n−1)/2</code>。边数接近这个上限 = <strong>稠密图</strong>；远小于上限 = <strong>稀疏图</strong>。这个判别直接决定 3.1 节用哪种存储（稠密用矩阵、稀疏用邻接表）。</li>
 </ol>
+<details class="note">
+<summary>扩展知识 · 组合／排列推导：无向边数为什么 ÷2（默认折叠，点开查看）</summary>
+
+<p><strong>边数公式背后的原理：为什么无向要 ÷2？（组合 vs 排列）</strong>——<code>n(n−1)/2</code> 和 <code>n(n−1)</code> 只差那个「÷2」，两者本质是同一个计数问题的两种数法：从 n 个点里选 2 个，<strong>要不要分先后</strong>。</p>
+<p>先看通用公式（k 个一组）：</p>
+<ul>
+<li><strong>组合 C(n,k)</strong>（从 n 个里「不分先后」选 k 个）：
+<code>C(n,k) = n! / (k!·(n−k)!)</code></li>
+<li><strong>排列 P(n,k)</strong>（从 n 个里「分先后」选 k 个）：
+<code>P(n,k) = n! / (n−k)!</code></li>
+<li>两者的桥：<code>P(n,k) = C(n,k) × k!</code>，也就是 <code>C(n,k) = P(n,k) / k!</code>。</li>
+</ul>
+<p>代入 k = 2：</p>
+<ul>
+<li><strong>C(n,2) = n! / (2!·(n−2)!) = n(n−1) / 2</strong>　→　n=5：5!/(2·3!) = 120/12 = 10 ✓</li>
+<li><strong>P(n,2) = n! / (n−2)! = n(n−1)</strong>　→　n=5：5!/3! = 120/6 = 20 ✓</li>
+</ul>
+<p>对回完全图：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>含义</th>
+<th>该用哪个</th>
+<th>边数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无向完全图</td>
+<td>两点之间<strong>只有 1 条边</strong>，&quot;来去&quot;算同一条</td>
+<td>组合 <strong>C(n,2)</strong>（不分先后）</td>
+<td><code>n(n−1)/2</code></td>
+</tr>
+<tr>
+<td>有向完全图</td>
+<td>A→B 与 B→A 是<strong>两条不同的边</strong>，&quot;选谁当起点&quot;也算区别</td>
+<td>排列 <strong>P(n,2)</strong>（分先后）</td>
+<td><code>n(n−1)</code></td>
+</tr>
+</tbody></table>
+</div>
+<p>关键的一步：<code>P(n,2) = C(n,2) × 2!</code>，乘这个 <code>2! = 2</code>，正是无向公式里那个「÷2」的来历——无向把来、回两条折叠成一条，所以要除以 2。<strong>口诀：无向 ÷2（不分来去）、有向不 ÷2（来去两条）</strong>。</p>
+<blockquote>
+<p>顺手钉死一个易混点：<strong>C(n, n−1) 不等于 n(n−1)</strong>。<code>C(n, n−1) = C(n, 1) = n</code>（&quot;选 n−1 个&quot;等价于&quot;挑 1 个不要&quot;，就 n 种）。完全图公式用的是 C(n,2)，不是 C(n, n−1)。</p>
+</blockquote>
+</details>
+
 <p><strong><span class="stars">★</span> 度数定理（每年都有它的题）</strong>：无向图中<strong>所有顶点的度数之和 = 2e</strong>（e 是边数）。理由很朴素：一条边有两个端点，它给两头的度数各加 1。</p>
 <ul>
 <li>用 G1 验算：度数 2+2+2+3+1 = <strong>10</strong>（A2、B2、C2、D3、E1），边数 5 → 10 = 2×5 ✓</li>
