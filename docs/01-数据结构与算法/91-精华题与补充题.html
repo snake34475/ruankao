@@ -107,7 +107,7 @@
 <hr>
 <h2 id="h-2">补充题（第三节 图 专项）<button type="button" class="sec-status" data-status-key="补充题（第三节 图 专项）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「补充题（第三节 图 专项）」的学习状态"></button></h2>
 <blockquote class="lead">
-<p>第三节从 50 行扩写到 500 多行后补的练手题：最小生成树、关键路径、遍历与度数各一题。做完再看末尾的「补充题答案」。</p>
+<p>第三节从 50 行扩写到 500 多行后补的练手题：最小生成树、关键路径、遍历与度数各一题；后来又补了两道关键路径题（一题完整计算、一题压缩工期）。做完再看末尾的「补充题答案」。</p>
 </blockquote>
 <p><strong>1【最小生成树】</strong> 带权无向图 G：顶点 A、B、C、D、E；边及权值：
 A-B 6、A-C 4、B-C 1、B-D 5、C-D 2、C-E 7、D-E 3。</p>
@@ -167,6 +167,101 @@ A-B 6、A-C 4、B-C 1、B-D 5、C-D 2、C-E 7、D-E 3。</p>
 <li>(1) 写出深度优先遍历（DFS）得到的顶点序列。</li>
 <li>(2) 写出广度优先遍历（BFS）得到的顶点序列。</li>
 <li>(3) 该图有多少条边？所有顶点的度数之和是多少？这个图有几个连通分量？</li>
+</ul>
+<p><strong>4【关键路径 · 完整计算】</strong> 某 AOE 网中活动及工期如下（V1 为源点、V6 为汇点）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>起止</th>
+<th>工期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1</td>
+<td>V1→V2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>a2</td>
+<td>V1→V3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>a3</td>
+<td>V2→V4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>a4</td>
+<td>V3→V4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>a5</td>
+<td>V3→V5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>a6</td>
+<td>V4→V6</td>
+<td>3</td>
+</tr>
+<tr>
+<td>a7</td>
+<td>V5→V6</td>
+<td>2</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>(1) 顺推求各事件的 ve，写出总工期。</li>
+<li>(2) 逆推求各事件的 vl（注意 V3 有两条出边）。</li>
+<li>(3) 求各活动的 e、l 与时间余量，指出哪些是关键活动。</li>
+<li>(4) 写出关键路径，并说明它是否唯一。</li>
+</ul>
+<p><strong>5【关键路径 · 压缩工期】</strong> 某 AOE 网中活动及工期如下（V1 为源点、V5 为汇点）：</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>活动</th>
+<th>起止</th>
+<th>工期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a1</td>
+<td>V1→V2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>a2</td>
+<td>V1→V3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>a3</td>
+<td>V2→V4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>a4</td>
+<td>V3→V4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>a5</td>
+<td>V4→V5</td>
+<td>2</td>
+</tr>
+</tbody></table>
+</div>
+<ul>
+<li>(1) 求总工期与关键路径，并指出活动 a2 的时间余量。</li>
+<li>(2) 若只把 a1 的工期从 6 天压缩到 4 天，总工期变成多少？此时关键路径有几条？</li>
+<li>(3) 若把 a1 继续压缩到 3 天，总工期还能再缩短吗？为什么？</li>
 </ul>
 
 
