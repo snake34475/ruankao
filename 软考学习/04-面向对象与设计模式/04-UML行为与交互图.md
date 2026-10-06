@@ -56,6 +56,20 @@
 
 **反例演示（易错）**：**分叉（fork）和分支（decision）都画两条出路，但含义相反**——**分支**是"**二选一**，只走一条"（菱形，路上标条件）；**分叉**是"**两条都要走，并发执行**"（粗横线）。看符号不看箭头数量：**菱形 = 选一条，粗横线 = 全走并同时走**。
 
+<figure class="fig">
+<svg viewBox="0 0 760 365" width="100%" style="max-width:760px" role="img" aria-label="订单处理活动图，分为顾客和系统两个泳道。顾客提交订单后，系统校验订单；校验通过时，系统分叉并发执行生成发票和安排配送，二者汇合后发送确认；校验不通过时发送拒绝提示。图中菱形是二选一的分支，粗横线是两项都执行的分叉与汇合。">
+<style>.lane{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}.act{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{stroke:var(--ink);stroke-width:2;fill:none}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.h{fill:var(--ink-strong);font:bold 15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style>
+<defs><marker id="act-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="var(--ink)"/></marker></defs>
+<rect x="35" y="30" width="220" height="305" class="lane"/><rect x="255" y="30" width="470" height="305" class="lane"/><text x="117" y="54" class="h">顾客泳道</text><text x="454" y="54" class="h">系统泳道</text>
+<circle cx="145" cy="84" r="8" fill="var(--ink)"/><path d="M145 92V115" class="e" marker-end="url(#act-arrow)"/><rect x="90" y="116" width="110" height="38" rx="18" class="act"/><text x="111" y="140" class="t">提交订单</text><path d="M200 135H328" class="e" marker-end="url(#act-arrow)"/>
+<rect x="329" y="116" width="110" height="38" rx="18" class="act"/><text x="350" y="140" class="t">校验订单</text><path d="M384 154V173" class="e" marker-end="url(#act-arrow)"/><path d="M384 174l18 18 -18 18 -18 -18z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="408" y="196" class="s">[通过]</text><text x="313" y="222" class="s">[不通过]</text>
+<path d="M402 192H520V220" class="e" marker-end="url(#act-arrow)"/><path d="M366 192H350V255" class="e" marker-end="url(#act-arrow)"/><rect x="295" y="256" width="110" height="38" rx="18" class="act"/><text x="309" y="280" class="t">发送拒绝提示</text><path d="M350 294V331" class="e" marker-end="url(#act-arrow)"/><circle cx="350" cy="343" r="10" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/><circle cx="350" cy="343" r="5" fill="var(--ink)"/>
+<path d="M520 220V232" class="e" marker-end="url(#act-arrow)"/><path d="M480 234H700" stroke="var(--ink)" stroke-width="7"/><path d="M520 237V255" class="e" marker-end="url(#act-arrow)"/><path d="M640 237V255" class="e" marker-end="url(#act-arrow)"/><rect x="465" y="256" width="110" height="38" rx="18" class="act"/><text x="483" y="280" class="t">生成发票</text><rect x="585" y="256" width="110" height="38" rx="18" class="act"/><text x="603" y="280" class="t">安排配送</text>
+<path d="M520 294V310" class="e" marker-end="url(#act-arrow)"/><path d="M640 294V310" class="e" marker-end="url(#act-arrow)"/><path d="M480 313H700" stroke="var(--ink)" stroke-width="7"/><path d="M590 317V331" class="e" marker-end="url(#act-arrow)"/><circle cx="590" cy="343" r="10" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/><circle cx="590" cy="343" r="5" fill="var(--ink)"/>
+</svg>
+<figcaption>菱形后的两条路径只能选一条；粗横线后的两条路径都要完成，才能在下一条粗横线汇合。</figcaption>
+</figure>
+
 ### 3.5 状态图：五要素 + 四类事件 + 组合状态 ★★
 
 状态图是"**单个对象的生命史**"：它在这辈子经历过哪些状态、因为什么事件而切换。**五要素必须背齐**：
@@ -101,6 +115,20 @@
 - **并发子状态**：某时刻**可以同时达到多个**子状态，内部**并发进行**。
 
 **反例演示（易错）**：题干说"进入该状态后，可以同时进行 A、B 两件事"→ **并发子状态**；说"先做 A、做完再做 B，两步都完成状态才结束"→ **顺序子状态**。判别只看一个字：**"同时"还是"先后"**。
+
+<figure class="fig">
+<svg viewBox="0 0 760 265" width="100%" style="max-width:760px" role="img" aria-label="订单状态图。初态进入待支付；支付成功且库存充足时转到待发货，动作是扣库存；支付超时转到已取消，动作是释放库存；待发货经发货事件转到运输中，再经签收事件转到已完成终态。每条转移均标明事件、可选监护条件和动作。">
+<style>.st{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{stroke:var(--ink);stroke-width:2;fill:none}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.h{fill:var(--ink-strong);font:bold 15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style>
+<defs><marker id="state-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="var(--ink)"/></marker></defs>
+<text x="250" y="26" class="h">事件 [监护条件] / 动作 写在状态转换箭头上</text><circle cx="54" cy="127" r="8" fill="var(--ink)"/><path d="M62 127H114" class="e" marker-end="url(#state-arrow)"/>
+<rect x="115" y="101" width="100" height="52" rx="14" class="st"/><text x="145" y="132" class="t">待支付</text><path d="M215 118H316" class="e" marker-end="url(#state-arrow)"/><text x="224" y="101" class="s">支付成功[库存足]/扣库存</text>
+<rect x="317" y="101" width="100" height="52" rx="14" class="st"/><text x="347" y="132" class="t">待发货</text><path d="M417 127H500" class="e" marker-end="url(#state-arrow)"/><text x="434" y="114" class="s">发货</text>
+<rect x="501" y="101" width="100" height="52" rx="14" class="st"/><text x="531" y="132" class="t">运输中</text><path d="M601 127H678" class="e" marker-end="url(#state-arrow)"/><text x="620" y="114" class="s">签收</text><circle cx="697" cy="127" r="12" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/><circle cx="697" cy="127" r="6" fill="var(--ink)"/>
+<path d="M165 153V205H288" class="e" marker-end="url(#state-arrow)"/><text x="175" y="198" class="s">支付超时 / 释放库存</text><rect x="289" y="180" width="100" height="52" rx="14" class="st"/><text x="319" y="211" class="t">已取消</text><path d="M389 206H450" class="e" marker-end="url(#state-arrow)"/><circle cx="469" cy="206" r="12" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/><circle cx="469" cy="206" r="6" fill="var(--ink)"/>
+<text x="115" y="254" class="s">状态图描述一个订单对象的状态变化；业务流程的并发责任划分应使用活动图。</text>
+</svg>
+<figcaption>读状态图时先沿箭头读“源状态—触发事件—条件/动作—目标状态”，不要把状态名与业务步骤混为一谈。</figcaption>
+</figure>
 
 ### 3.6 构件图：一眼认出供接口和需接口 ★
 
@@ -155,4 +183,3 @@
 2. **认符号**：三角 = 泛化/实现（虚线是接口实现）、菱形 = 整体部分（空心聚合 / 实心组合）、虚线 = 弱关系（依赖最弱）、**整圆供/半圆需**、**立体长方体 = 部署节点**、**下划线 = 对象**；
 3. **判用例关系**：必经 include（主干指出）、可选 extend（分支指回）；
 4. **状态图五要素**与**四类事件**要能默写（简答题和填空都可能要）。
-

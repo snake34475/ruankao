@@ -93,6 +93,17 @@
 <li><strong>代入算例</strong>：页大小 4KB，页表&quot;页 0→帧 5、页 1→帧 8、页 2→帧 3&quot;。逻辑地址 1F48H：4KB = 2^12 = 1000H，低 3 位十六进制 F48H 是页内地址，高位 1H 是页号 → 查表页 1 → 帧 8 → 物理地址 = <strong>8F48H</strong>。验算（十进制走一遍）：0x1F48 = 8008，8008 = 1×4096 + 3912，页内偏移 3912；物理地址 = 8×4096 + 3912 = 36680 = 0x8F48 ✓。</li>
 <li><strong>手算口诀</strong>：<strong>&quot;页内地址不动，页号查表换页帧&quot;</strong>。十六进制题先看页大小定拆分位数：4KB = 2^12 = 1000H → 低 3 位十六进制是页内地址；2KB = 2^11 → 十六进制不足 3 位对应，先转二进制拆低 11 位更稳；1KB = 2^10 → 低 10 位二进制是页内地址。</li>
 </ul>
+<figure class="fig">
+<svg viewBox="0 0 720 270" width="100%" style="max-width:720px" role="img" aria-label="页式地址变换示意，页大小四 KB。逻辑地址一 F 四八 H 分为页号一 H 和页内地址 F 四八 H；查页表得页一映射到页帧八；页内地址保持 F 四八 H 不变，拼成物理地址八 F 四八 H。">
+<style>.box{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:2}.accent{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.gold{fill:var(--gold-soft);stroke:var(--gold);stroke-width:2}.t{fill:var(--ink-strong);font:15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.b{fill:var(--ink-strong);font:bold 16px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style><defs><marker id="page-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<text x="35" y="33" class="b">页大小 = 4KB = 2¹² = 1000H，因此低 3 位十六进制是页内地址</text>
+<text x="55" y="79" class="t">逻辑地址 1F48H</text><rect x="48" y="94" width="105" height="48" class="accent"/><rect x="153" y="94" width="195" height="48" class="gold"/><text x="88" y="124" class="b">1</text><text x="230" y="124" class="b">F48</text><text x="64" y="163" class="s">页号 1</text><text x="205" y="163" class="s">页内地址 F48（不变）</text>
+<path d="M100 142V199H263" stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#page-arrow)"/><text x="142" y="191" class="s">查页表：页 1 → 页帧 8</text><rect x="263" y="190" width="128" height="52" class="box"/><text x="278" y="221" class="t">页表</text><text x="329" y="221" class="b">1 → 8</text>
+<path d="M391 216H451" stroke="var(--ink)" stroke-width="2" marker-end="url(#page-arrow)"/><rect x="465" y="94" width="105" height="48" class="accent"/><rect x="570" y="94" width="105" height="48" class="gold"/><text x="505" y="124" class="b">8</text><text x="603" y="124" class="b">F48</text><text x="478" y="163" class="s">页帧号 8</text><text x="572" y="163" class="s">原样保留</text><text x="498" y="73" class="t">物理地址 8F48H</text>
+</svg>
+<figcaption>地址转换只替换高位的页号；低位偏移既不查表也不改变。</figcaption>
+</figure>
+
 <p><strong>反例演示（易错）</strong>：① 忘了查页表，直接把逻辑地址当物理地址（1F48H → 1F48H 是错的）；② 把&quot;页号 × 页大小&quot;当成物理地址（只换了页号没加页内地址）；③ 页号页内地址拆分位 Number 弄错——<strong>页大小决定页内地址位数</strong>：4KB→12 位（低 3 位十六进制），1KB→10 位，2KB→11 位。</p>
 <h3 id="h-4">段式与段页式<button type="button" class="sec-status" data-status-key="段式与段页式" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「段式与段页式」的学习状态"></button></h3>
 <div class="table-wrap">

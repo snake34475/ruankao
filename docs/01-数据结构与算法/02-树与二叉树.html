@@ -98,6 +98,14 @@
 <li><strong>层</strong>：根是第 1 层，往下逐层 +1（A 第 1 层，B/C 第 2 层，D/E/F 第 3 层）。</li>
 <li><strong>深度 / 高度</strong>：默认按&quot;经过的<strong>边</strong>数&quot;算——D 的深度 = A 走到 D 经 2 条边；树的高度 = 根到最深叶子的边数（上图 = 2）。个别教材按&quot;节点数&quot;算（结果差 1），题干会说明，看清即可。</li>
 </ul>
+<figure class="fig">
+<svg viewBox="0 0 620 300" width="100%" style="max-width:620px" role="img" aria-label="二叉树结构图。根 A 在第一层；B 和 C 是第二层，分别为 A 的左、右孩子；D、E 为 B 的左右孩子，F 为 C 的右孩子，D、E、F 均为叶子。A、B 的度为二，C 的度为一，树高按边数为二。">
+<style>.n{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{stroke:var(--ink);stroke-width:2}.t{fill:var(--ink-strong);font:16px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style>
+<path d="M310 70L190 140M310 70L430 140M190 140L125 210M190 140L255 210M430 140L495 210" class="e"/><g class="n"><circle cx="310" cy="65" r="25"/><circle cx="190" cy="135" r="25"/><circle cx="430" cy="135" r="25"/><circle cx="125" cy="205" r="25"/><circle cx="255" cy="205" r="25"/><circle cx="495" cy="205" r="25"/></g><g class="t"><text x="304" y="71">A</text><text x="184" y="141">B</text><text x="424" y="141">C</text><text x="119" y="211">D</text><text x="249" y="211">E</text><text x="489" y="211">F</text></g><text x="332" y="58" class="s">根，第 1 层</text><text x="80" y="255" class="s">叶子：D、E、F；树高（按边数）= 2</text><text x="345" y="255" class="s">度：A=2，B=2，C=1</text>
+</svg>
+<figcaption>读树先区分层、度和高度；本图从根到叶子经过两条边，所以高度是 2。</figcaption>
+</figure>
+
 <p><strong>性质的&quot;为什么&quot;（理解了才不用死背）：</strong></p>
 <ol>
 <li><p><strong>第 i 层最多 2^(i-1) 个节点</strong>：每往下走一层，每个节点最多分裂成 2 个，所以每层最多是上一层的 2 倍——1、2、4、8……第 i 层即 2^(i-1)。</p>

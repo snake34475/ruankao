@@ -35,6 +35,18 @@
 
 > 这张表的"谁"会随着步骤换人：第 1、3 步的发送方是 A，第 2 步的发送方是 **B**。所以读表时要盯"这一步是谁在发"，别把 B 的状态变化记到 A 头上。
 
+<figure class="fig">
+<svg viewBox="0 0 720 330" width="100%" style="max-width:720px" role="img" aria-label="TCP 三次握手时序图。客户端 A 从 CLOSED 发送 SYN seq x 进入 SYN-SENT；服务器 B 在 LISTEN 收到后发送 SYN 加 ACK，seq y ack x 加一，进入 SYN-RCVD；客户端 A 回 ACK，seq x 加一 ack y 加一，进入 ESTABLISHED，服务器 B 收到后也进入 ESTABLISHED。">
+<style>.box{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.life{stroke:var(--line-strong);stroke-width:2;stroke-dasharray:7 5}.e{fill:none;stroke:var(--ink);stroke-width:2}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.ok{fill:var(--gold);font:bold 13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style><defs><marker id="tcp-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<rect x="85" y="26" width="130" height="38" rx="8" class="box"/><rect x="505" y="26" width="130" height="38" rx="8" class="box"/><text x="119" y="50" class="t">客户端 A</text><text x="539" y="50" class="t">服务器 B</text><path d="M150 64V296M570 64V296" class="life"/>
+<text x="89" y="91" class="s">CLOSED</text><text x="513" y="91" class="s">LISTEN</text><path d="M150 106H570" class="e" marker-end="url(#tcp-arrow)"/><text x="294" y="96" class="t">① SYN=1，seq=x</text><text x="88" y="125" class="ok">A：SYN-SENT</text>
+<path d="M570 166H150" class="e" marker-end="url(#tcp-arrow)"/><text x="260" y="156" class="t">② SYN=1，ACK=1，seq=y，ack=x+1</text><text x="493" y="185" class="ok">B：SYN-RCVD</text>
+<path d="M150 226H570" class="e" marker-end="url(#tcp-arrow)"/><text x="273" y="216" class="t">③ ACK=1，seq=x+1，ack=y+1</text><text x="82" y="247" class="ok">A：ESTABLISHED</text><text x="493" y="270" class="ok">B 收到后：ESTABLISHED</text>
+<text x="165" y="315" class="s">规律：确认号 ack = 对方 SYN 的 seq + 1；第一次只 SYN，第二次 SYN+ACK，第三次只 ACK。</text>
+</svg>
+<figcaption>纵向虚线表示两端各自的时间推进；读每条消息时先认发送者，再看它令哪一端状态改变。</figcaption>
+</figure>
+
 **把数字代进去，状态就再也不会记乱**（设 A 的初始序号 x=100、B 的 y=200）：
 
 | 步骤 | 报文 | 这一步在说什么 |
@@ -85,4 +97,3 @@ TCP 同时受两扇“窗口”约束：
 “慢启动”名字里的“慢”指**起点小、先试探**，并不表示增长速度一直慢；它的早期增长反而近似指数型。考试通常只要求识别“由小到大探测网络容量”和“`cwnd` 管网络拥塞”。
 
 **应试动作**：① TCP/UDP 对比表整表背下，特别是“谁用 TCP、谁用 UDP”的典型应用清单；② 三次握手按 SYN → SYN+ACK → ACK 默写；③ 看到“接收方缓存”选 `rwnd`/流量控制，看到“网络拥塞”选 `cwnd`/拥塞控制，计算实际窗口就取二者较小值；④ 窗口移动题只让“已经确认”的编号移出左边界。
-

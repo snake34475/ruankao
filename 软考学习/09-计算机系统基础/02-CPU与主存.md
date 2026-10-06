@@ -49,6 +49,15 @@ CPU 时间 = 5×10^8 × 4 / (2×10^9) = **1 s**。
 - 时间局部性：刚访问过的内容很快又访问，如循环中的指令；
 - 空间局部性：访问某地址后很快访问邻近地址，如顺序扫描数组。
 
+<figure class="fig">
+<svg viewBox="0 0 700 250" width="100%" style="max-width:700px" role="img" aria-label="存储体系层次图：寄存器、Cache、主存、外存从上到下容量逐渐增大、速度逐渐变慢、每位成本逐渐降低。Cache 位于寄存器和主存之间，用于利用程序的时间局部性和空间局部性。">
+<style>.b{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.t{fill:var(--ink-strong);font:15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.e{stroke:var(--ink);stroke-width:2;fill:none}</style><defs><marker id="marr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<text x="40" y="30" class="t">离 CPU 越近：更快、更小、更贵</text><text x="440" y="30" class="t">离 CPU 越远：更慢、更大、更便宜</text>
+<path d="M350 45V220" class="e" marker-end="url(#marr)"/><path d="M205 62H495L455 102H245z" class="b"/><text x="318" y="88" class="t">寄存器</text><path d="M175 112H525L480 152H220z" class="b"/><text x="328" y="138" class="t">Cache</text><path d="M135 162H565L515 202H185z" class="b"/><text x="328" y="188" class="t">主存</text><path d="M95 212H605L550 247H150z" class="b"/><text x="328" y="235" class="t">外存</text><text x="34" y="142" class="s">容量 ↑</text><text x="34" y="160" class="s">访问时间 ↑</text><text x="570" y="142" class="s">每位成本 ↓</text>
+</svg>
+<figcaption>分层不是简单排序：Cache 靠局部性把常用主存块留在更快的一层。</figcaption>
+</figure>
+
 ### 4.2 常见存储器
 
 | 类型 | 特点 | 常见用途 |
@@ -113,4 +122,3 @@ CPU 时间 = 5×10^8 × 4 / (2×10^9) = **1 s**。
 **应试动作**：地址范围一定写“末−首+1”；先看“按字节还是按字编址”；芯片题分别算字数倍数和位宽倍数，不能只拿总 bit 相除后就结束——虽然片数可能相同，但连接方式还要分组。
 
 ---
-

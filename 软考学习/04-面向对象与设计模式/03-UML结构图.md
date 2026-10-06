@@ -55,6 +55,20 @@ UML 2.x 共定义 **13 种图**，按"静态/动态"一刀切开（其中最常�
 
 **对象图**：类图是"模板"，对象图是"**某一时刻的快照**"。识别特征就是**名字带下划线、冒号前是对象名、冒号后是类名**，写成 `:图书` 或 `b1 : 图书`。
 
+<figure class="fig">
+<svg viewBox="0 0 760 300" width="100%" style="max-width:760px" role="img" aria-label="图书借阅类图。读者、借阅记录和图书都是三格类。一个读者可对应零到多条借阅记录，但每条借阅记录恰好属于一个读者；一本图书也可对应零到多条借阅记录，但每条借阅记录恰好关联一本图书。">
+<style>.c{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:2}.head{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{stroke:var(--ink);stroke-width:2}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.h{fill:var(--ink-strong);font:bold 15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style>
+<text x="280" y="25" class="h">借阅关系：多重性写在“对面对象的数量”一端</text>
+<rect x="42" y="90" width="180" height="136" class="c"/><rect x="42" y="90" width="180" height="38" class="head"/><line x1="42" y1="175" x2="222" y2="175" stroke="var(--line)"/><text x="111" y="115" class="h">读者</text><text x="55" y="151" class="t">- 读者号 : String</text><text x="55" y="169" class="t">- 姓名 : String</text><text x="55" y="202" class="t">+ 借阅() : boolean</text>
+<rect x="290" y="90" width="180" height="136" class="c"/><rect x="290" y="90" width="180" height="38" class="head"/><line x1="290" y1="175" x2="470" y2="175" stroke="var(--line)"/><text x="345" y="115" class="h">借阅记录</text><text x="303" y="151" class="t">- 借出日 : Date</text><text x="303" y="169" class="t">- 应还日 : Date</text><text x="303" y="202" class="t">+ 归还()</text>
+<rect x="538" y="90" width="180" height="136" class="c"/><rect x="538" y="90" width="180" height="38" class="head"/><line x1="538" y1="175" x2="718" y2="175" stroke="var(--line)"/><text x="609" y="115" class="h">图书</text><text x="551" y="151" class="t">- 书号 : String</text><text x="551" y="169" class="t">- 书名 : String</text><text x="551" y="202" class="t">+ 是否可借() : boolean</text>
+<path d="M222 158H290" class="e"/><text x="230" y="148" class="t">1</text><text x="257" y="148" class="t">0..*</text><text x="238" y="187" class="s">拥有</text>
+<path d="M470 158H538" class="e"/><text x="478" y="148" class="t">0..*</text><text x="519" y="148" class="t">1</text><text x="486" y="187" class="s">对应</text>
+<text x="65" y="267" class="s">读法示例：每条借阅记录关联 1 位读者；1 位读者可以没有记录，也可以有多条记录。</text>
+</svg>
+<figcaption>类图既要看三格，也要逐端读多重性；不能把自然语言里的“多”原样抄到两端。</figcaption>
+</figure>
+
 ### 3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★
 
 **要素**：**参与者**（小人，缩写可以是人、外部系统）、**用例**（椭圆，一件完整的、有业务价值的事）、**关系**（连线）。
@@ -80,3 +94,18 @@ UML 2.x 共定义 **13 种图**，按"静态/动态"一刀切开（其中最常�
 
 **反例演示（易错）**："参与者"里可以有**外部系统**（如"支付网关""短信平台"），不一定是人；反过来，"系统内部的某个模块"**不能**当参与者——参与者必须**在系统边界之外**。这是选择题的常见陷阱：给你"数据库""登录模块"当选项，它们都是系统内部的东西，不是参与者。
 
+<figure class="fig">
+<svg viewBox="0 0 760 315" width="100%" style="max-width:760px" role="img" aria-label="图书馆用例图。系统边界内有借书、登录、查询图书和逾期提示四个用例；读者是边界外参与者。借书和查询图书都通过 include 指向登录，表示登录是必经的共用行为；逾期提示通过 extend 指向借书，表示只有逾期条件满足时才出现的可选分支。">
+<style>.bound{fill:none;stroke:var(--line-strong);stroke-width:2}.uc{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{stroke:var(--ink);stroke-width:2;fill:none}.d{stroke:var(--ink);stroke-width:2;fill:none;stroke-dasharray:7 5}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.h{fill:var(--ink-strong);font:bold 15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style>
+<defs><marker id="uml-open" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="var(--ink)" stroke-width="1.5"/></marker></defs>
+<rect x="206" y="28" width="505" height="250" rx="8" class="bound"/><text x="226" y="54" class="h">图书馆系统</text>
+<circle cx="83" cy="91" r="13" class="e"/><path d="M83 104V154M58 120H108M83 154L58 187M83 154L108 187" class="e"/><text x="62" y="210" class="t">读者</text>
+<ellipse cx="360" cy="112" rx="66" ry="28" class="uc"/><text x="339" y="117" class="t">借书</text><ellipse cx="555" cy="112" rx="66" ry="28" class="uc"/><text x="519" y="117" class="t">登录</text><ellipse cx="360" cy="207" rx="66" ry="28" class="uc"/><text x="318" y="212" class="t">查询图书</text><ellipse cx="555" cy="207" rx="66" ry="28" class="uc"/><text x="520" y="212" class="t">逾期提示</text>
+<path d="M108 128H293" class="e"/><path d="M108 158L293 201" class="e"/>
+<path d="M426 112H488" class="d" marker-end="url(#uml-open)"/><text x="431" y="100" class="s">include（必经）</text>
+<path d="M426 207L507 130" class="d" marker-end="url(#uml-open)"/><text x="427" y="188" class="s">include（必经）</text>
+<path d="M498 186Q458 162 421 132" class="d" marker-end="url(#uml-open)"/><text x="452" y="157" class="s">extend [逾期]</text>
+<text x="223" y="301" class="s">方向口诀：主干指向被包含用例；可选分支指回基用例。</text>
+</svg>
+<figcaption>用例图先划系统边界：读者在边界外；`include` 与 `extend` 的箭头方向相反。</figcaption>
+</figure>

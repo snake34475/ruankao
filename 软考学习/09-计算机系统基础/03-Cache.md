@@ -54,7 +54,17 @@ Tavg = 10 + 0.05×100 = **15 ns**。
 
 口诀：**直接最死板，全相联最自由，组相联折中**。全相联自由度高，但必须同时比较更多标记，硬件复杂。
 
+<figure class="fig">
+<svg viewBox="0 0 700 285" width="100%" style="max-width:700px" role="img" aria-label="Cache 三种映射方式对比：直接映射中一个主存块只能放固定一行；全相联中一个主存块可放任意行；组相联中一个主存块先定位到固定组，再放该组任意行。自由度从左到右增大，冲突率下降而硬件复杂度上升。">
+<style>.box{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:2}.hit{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.t{fill:var(--ink-strong);font:14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.e{stroke:var(--ink);stroke-width:2;fill:none}</style><defs><marker id="carr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<text x="65" y="28" class="t">直接映射</text><text x="295" y="28" class="t">全相联</text><text x="515" y="28" class="t">组相联</text>
+<rect x="40" y="55" width="130" height="145" class="box"/><rect x="64" y="86" width="82" height="25" class="hit"/><text x="75" y="104" class="s">唯一固定行</text><path d="M105 42V83" class="e" marker-end="url(#carr)"/><text x="38" y="226" class="s">冲突高，硬件简单</text>
+<rect x="270" y="55" width="130" height="145" class="box"/><rect x="294" y="76" width="82" height="25" class="hit"/><rect x="294" y="115" width="82" height="25" class="hit"/><rect x="294" y="154" width="82" height="25" class="hit"/><path d="M335 42V73M335 42L335 112M335 42L335 151" class="e" marker-end="url(#carr)"/><text x="267" y="226" class="s">任意行，硬件复杂</text>
+<rect x="500" y="55" width="150" height="145" class="box"/><rect x="520" y="78" width="110" height="42" class="hit"/><rect x="520" y="137" width="110" height="42" class="box"/><text x="532" y="103" class="s">固定组内任意行</text><text x="540" y="163" class="s">其他组</text><path d="M575 42V75" class="e" marker-end="url(#carr)"/><text x="505" y="226" class="s">冲突与复杂度折中</text><text x="160" y="270" class="s">自由度：直接 &lt; 组相联 &lt; 全相联；冲突率与硬件复杂度的变化方向相反。</text>
+</svg>
+<figcaption>先问“一个主存块能放哪儿”：唯一行、任意行、固定组内任意行，分别对应三种映射。</figcaption>
+</figure>
+
 **应试动作**：Cache 题先圈出“命中时间/主存时间/未命中总时间”字样再选模型；答案必须做范围检查。映射题背“冲突率：直接＞组相联＞全相联；复杂度反过来”。
 
 ---
-

@@ -145,6 +145,16 @@
    │ 事件发生（I/O完成）   ↓
    └──────────────────  阻塞
 </code></pre>
+<figure class="fig">
+<svg viewBox="0 0 720 300" width="100%" style="max-width:720px" role="img" aria-label="进程三态转换图。就绪经调度进入运行；运行因时间片到或被抢占回到就绪；运行请求 I/O 或等待事件进入阻塞；阻塞在 I/O 完成或事件发生后回到就绪。图中特别标出就绪不能直接变阻塞，阻塞不能直接变运行。">
+<style>.state{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.e{fill:none;stroke:var(--ink);stroke-width:2}.t{fill:var(--ink-strong);font:15px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.s{fill:var(--muted);font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}.bad{fill:var(--red);font:13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif}</style><defs><marker id="p-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<rect x="65" y="115" width="110" height="52" rx="18" class="state"/><text x="103" y="147" class="t">就绪</text><rect x="305" y="115" width="110" height="52" rx="18" class="state"/><text x="343" y="147" class="t">运行</text><rect x="545" y="115" width="110" height="52" rx="18" class="state"/><text x="583" y="147" class="t">阻塞</text>
+<path d="M175 125H304" class="e" marker-end="url(#p-arrow)"/><text x="211" y="111" class="s">调度（被选中）</text><path d="M305 157H176" class="e" marker-end="url(#p-arrow)"/><text x="202" y="184" class="s">时间片到 / 被抢占</text><path d="M415 125H544" class="e" marker-end="url(#p-arrow)"/><text x="445" y="111" class="s">请求 I/O、等事件</text><path d="M545 157H416" class="e" marker-end="url(#p-arrow)"/><text x="450" y="184" class="s">I/O 完成、事件发生</text>
+<path d="M110 105Q360 28 610 105" stroke="var(--red)" stroke-width="2" stroke-dasharray="6 5" fill="none"/><text x="272" y="37" class="bad">× 就绪不能直接阻塞</text><path d="M610 177Q360 272 110 177" stroke="var(--red)" stroke-width="2" stroke-dasharray="6 5" fill="none"/><text x="272" y="269" class="bad">× 阻塞不能直接运行，必须先回就绪</text>
+</svg>
+<figcaption>所有“回来”的路径先到就绪；只有正在运行的进程才能主动请求等待。</figcaption>
+</figure>
+
 <div class="table-wrap">
 <table>
 <thead>
