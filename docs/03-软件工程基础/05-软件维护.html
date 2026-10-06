@@ -137,8 +137,9 @@
 <h3 id="h-5">5.3 占比（直接考）<button type="button" class="sec-status" data-status-key="5.3 占比（直接考）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.3 占比（直接考）」的学习状态"></button></h3>
 <p><strong>完善性维护占全部维护工作量的 50%–60%，是最大的一块</strong>；<strong>预防性维护占比最小</strong>。所以&quot;软件维护工作量中占比最大的是&quot;→ 完善性维护。</p>
 <h3 id="h-6">5.4 可维护性的度量与评价指标<button type="button" class="sec-status" data-status-key="5.4 可维护性的度量与评价指标" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「5.4 可维护性的度量与评价指标」的学习状态"></button></h3>
-<p><strong>一个公式</strong>：<strong>可维护性 = 1 / (1 + MTTR)</strong>，其中 <strong>MTTR 是平均故障修复时间</strong>。<strong>修复越快（MTTR 越小）→ 指标越大 → 可维护性越好。</strong></p>
-<p>（同族的三个易混公式，别记串：<strong>可靠性 = MTTF/(1+MTTF)</strong>、<strong>可用性 = MTBF/(1+MTBF)</strong>、<strong>可维护性 = 1/(1+MTTR)</strong>。MTTF/MTTR/MTBF 的含义与串联、并联系统可靠性计算详见 <a href="../09-计算机系统基础/index.html">09-计算机系统基础.html</a> 的可靠性一节，这里只需记住&quot;<strong>可维护性盯的是 MTTR</strong>&quot;。）</p>
+<p><strong>先分清两个问题</strong>：本节说的<strong>可维护性</strong>，是“软件出了问题后，是否容易理解、定位、修改和验证”的质量属性；<strong>可维护度</strong>才是“在规定时间内修好的概率”，它依赖修复时间的统计模型。两者相关，但不能把一个固定公式当成所有题目的通用定义。</p>
+<p><strong>稳定判断</strong>：<strong>MTTR 是平均修复时间</strong>，在其他条件相近时，<strong>MTTR 越小，越容易维护</strong>。例如同样的故障，系统 A 平均 1 小时修复、系统 B 平均 5 小时修复；A 的修复效率更好，因而可维护性更高。</p>
+<p>若题面<strong>明确</strong>把时间按某个基准单位归一化，并定义“可维护性指标”为 <code>1 / (1 + MTTR)</code>，才按该定义计算；它只是题设给出的评分指标，不是普遍适用的质量模型。规定时间内修好的概率、MTTR 与可用性的严格口径见<a href="../09-计算机系统基础/06-流水线与可靠性.html">第 09 课「流水线与可靠性」</a>。反例：看到 MTTR 就直接把 <code>1 / (1 + MTTR)</code> 当成可维护度——错；题目问“4 小时内修好的概率”时，应根据修复率模型计算，而不是套归一化评分式。</p>
 <p><strong>三个定性评价指标（记这三个，别多别少）</strong>：<strong>可理解性、可测试性、可修改性</strong>。考题会用&quot;一致性&quot;来当干扰项——它不是可维护性的评价指标。</p>
 <p><strong>维护工具六类</strong>（认名字即可）：版本控制工具、文档分析工具、开发信息库工具、<strong>逆向工程工具</strong>、<strong>再工程工具</strong>、配置管理支持工具。</p>
 <p><strong>逆向工程 vs 再工程</strong>（各一句）：<strong>逆向工程</strong> = 从代码<strong>反推</strong>出设计甚至需求（由底层往上还原）；<strong>再工程</strong> = 在逆向工程的基础上<strong>重构改造</strong>，得到一个新的改进版本（比逆向工程多&quot;改造&quot;这一步）。</p>
