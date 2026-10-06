@@ -108,6 +108,8 @@
 </tbody></table>
 </div>
 <p><strong>记忆抓手</strong>：<strong>运行 5、修正 3、转移 3</strong>（共 11）。分组名字本身就是提示——&quot;运行&quot;是软件跑起来时能看出来的，&quot;修正&quot;是改动它时用到的，&quot;转移&quot;是把软件搬到别的环境/别的项目时用到的。</p>
+<p><strong>同一系统的三种观察角度</strong>：在线购票系统在高峰时仍能及时返回结果，问的是<strong>运行</strong>中的效率；开发者能较快定位并改掉“重复扣款”缺陷，问的是<strong>修正</strong>中的维护性/可测试性；把它迁到另一种操作系统或让它同外部支付平台协作，问的是<strong>转移</strong>中的可移植性/互操作性。不要把“运行时好用”笼统答成维护性。</p>
+<p><strong>反例</strong>：“增加自动化测试，使以后改代码更容易验证”属于<strong>修正</strong>组的可测试性；它不是“产品运行时反应快”，不能归到运行组的效率。</p>
 <h3 id="h-3">6.2 ISO/IEC 9126：六大特性 + 子特性（选择题常问&quot;XX 属于哪个特性&quot;）<button type="button" class="sec-status" data-status-key="6.2 ISO/IEC 9126：六大特性 + 子特性（选择题常问&amp;quot;XX 属于哪个特性&amp;quot;）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.2 ISO/IEC 9126：六大特性 + 子特性（选择题常问&quot;XX 属于哪个特性&quot;）」的学习状态"></button></h3>
 <div class="table-wrap">
 <table>
@@ -144,6 +146,7 @@
 </tbody></table>
 </div>
 <p><strong>只背两个&quot;最常考的子特性归属&quot;</strong>：<strong>易恢复性 → 可靠性</strong>；<strong>互操作性 → 功能性</strong>。其余的子特性见到能认出来就行（题目一般只问这两处，或用&quot;时间特性属于效率&quot;这类显而易见的送分点）。</p>
+<p><strong>用故障场景区分可靠性与维护性</strong>：支付服务偶尔崩溃，说明它的<strong>可靠性</strong>不足；崩溃后能自动恢复服务，问的是可靠性中的<strong>易恢复性</strong>；开发人员能否迅速读懂日志、定位并修改根因，才问<strong>维护性</strong>。前两项盯“运行结果”，最后一项盯“修改过程”。</p>
 <p><strong>McCall 与 ISO 9126 的区别一句话</strong>：<strong>McCall 是&quot;三组十一特性&quot;（问归类）</strong>，<strong>ISO 9126 是&quot;六大特性 + 各自子特性&quot;（问子特性归属）</strong>。题干出现&quot;成熟性、容错性&quot;这种<strong>子特性名</strong>，一定是在问 ISO 9126。</p>
 <h3 id="h-4">6.3 软件文档三类（按&quot;写给谁看&quot;分）<button type="button" class="sec-status" data-status-key="6.3 软件文档三类（按&amp;quot;写给谁看&amp;quot;分）" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.3 软件文档三类（按&quot;写给谁看&quot;分）」的学习状态"></button></h3>
 <div class="table-wrap">
@@ -173,6 +176,7 @@
 </tbody></table>
 </div>
 <p><strong>记法</strong>：<strong>谁看归谁</strong>——开发看开发文档、用户看产品文档、领导看管理文档。</p>
+<p><strong>最小判别例</strong>：<code>接口设计说明</code>给程序员实现和联调，属于<strong>开发文档</strong>；<code>首次安装步骤</code>让购买者自行部署，属于<strong>产品文档</strong>；<code>本周进度与风险清单</code>让项目负责人决策，属于<strong>管理文档</strong>。反例：测试计划虽然项目经理会关注，但它直接指导测试活动，仍按主要读者归为开发文档，不能仅因“管理者也阅读”就选管理文档。</p>
 <h3 id="h-5">6.4 应试动作<button type="button" class="sec-status" data-status-key="6.4 应试动作" title="点击切换学习状态：未开始 → 进行中 → 已理解 → 稍后学习" aria-label="切换「6.4 应试动作」的学习状态"></button></h3>
 <p>① 背 McCall 的 <strong>5 / 3 / 3</strong> 分组；② 背 ISO 9126 六大特性名 + <strong>易恢复性归可靠性、互操作性归功能性</strong>；③ 文档三类按&quot;读者&quot;对号入座；④ 遇到&quot;XX 属于哪个特性&quot;，先在脑子里定位<strong>它属于六大特性中的哪一个</strong>，再看是不是子特性名。</p>
 
