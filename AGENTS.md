@@ -14,10 +14,11 @@
 |---|---|
 | 修改或新增讲义、题目、答案 | [`.agents/course-authoring.md`](.agents/course-authoring.md) |
 | 修改 Markdown，或排查渲染异常 | [`.agents/markdown-rendering.md`](.agents/markdown-rendering.md) |
+| 新增或修改图示（SVG / ASCII 图 / 交互页） | [`.agents/figure-design.md`](.agents/figure-design.md) |
 | 修改 `tools/`、构建、导航、HTML 路由或 `docs/` | [`.agents/html-build.md`](.agents/html-build.md) |
 | 拆分、合并或迁移课程文件 | [`.agents/course-splitting.md`](.agents/course-splitting.md) |
 | 任何内容或代码变更的交付前检查 | [`.agents/verification.md`](.agents/verification.md) |
-| 处理用户“记住/以后都这样”的记忆声明 | [`.agents/memory-management.md`](.agents/memory-management.md) |
+| 处理用户"记住/以后都这样"的记忆声明 | [`.agents/memory-management.md`](.agents/memory-management.md) |
 
 ## 唯一真源
 
