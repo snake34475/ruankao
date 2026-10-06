@@ -672,6 +672,37 @@ tbody tr:last-child td { border-bottom: 0; }
 tbody tr:hover { background: var(--accent-soft); }
 td strong { color: var(--ink-strong); }
 
+/* 图示：内联 SVG 卡片。配色全部由 SVG 内部 var() 主题变量控制，
+   这里只负责容器、留白、窄屏横向滚动与图注排版 */
+figure.fig {
+  margin: 1.6rem 0;
+  padding: 1.1rem 1.15rem .95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+figure.fig > svg {
+  display: block;
+  margin: 0 auto;
+  height: auto;
+  overflow: visible;
+}
+
+figure.fig figcaption {
+  margin-top: .8rem;
+  padding-top: .7rem;
+  border-top: 1px dashed var(--line);
+  font-size: .84rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+figure.fig figcaption strong { color: var(--ink); }
+
 /* 代码 */
 code {
   font-family: var(--font-mono);
