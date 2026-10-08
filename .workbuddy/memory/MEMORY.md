@@ -5,9 +5,11 @@
 ## 仓库与平台
 
 - **两个远端并存**：`origin` → Gitee（`git@gitee.com:wang-tengyao/ruankao-software-designer.git`）、`github` → GitHub（`git@github.com:snake34475/ruankao.git`）。**两边 main 保持同一提交，推送时两个都要推。**
+- **课程文件已按课号拆成子目录（2026-09 下旬重构）**：真源路径是 `软考学习/NN-课名/MM-小节名.md`（每课 7~13 个文件），**不再有「整课单文件」**；`docs/` 对应每课一个子目录 + 一个同名兼容入口页（`docs/NN-课名.html` → `NN-课名/index.html`）。构建产物共 **136 个页面**。→ **本文件下文凡是引用 `软考学习/01-数据结构与算法.md` 这类单文件路径的历史条目都已被这次重构作废**，按新结构去找对应小节文件。
+- **仓库规范已拆分**：`AGENTS.md` 现为**任务路由表**，正文在 `.agents/` —— `course-authoring.md`（讲义/题目/答案）、`markdown-rendering.md`（Markdown 与渲染排查）、`html-build.md`（tools/ 构建、导航、路由、docs/）、`course-splitting.md`（拆合课程文件）、`verification.md`（交付前检查）、`memory-management.md`（记忆声明）、`figure-design.md`（图示规范）。**动手前按路由读对应细则**；本文件里的历史规范条目若与 `.agents/` 冲突，以 `.agents/` 为准。
 - **Gitee Pages 已被官方下线**（Gitee 官方 issue `oschina/git-osc#IC6I0L` 明确答复「该功能已下线」；网上大量 CSDN 问答声称"仍正常"，是过时/AI 生成内容，不要采信）。→ **在线阅读一律走 GitHub Pages**。
 - 仓库已入库范围包含 `.workbuddy/`（会话记忆）与 `design/`（设计样张）——用户 2026-09-14 明确要求入库，**不要把它们加回 `.gitignore`**。
-- **`讲义扩充规划.md`（仓库根）是工作文档，不进 `docs/`**：构建脚本 `tools/build_html.mjs` 的 `pageSources` 只含 `软件设计师考点大纲.md` + `软考学习/*.md`，根目录其他 md 不会被转换。所以「规划 / 设计 / 说明」类文档一律放仓库根，**不要放 `软考学习/`**——放进去会被当成 lesson 页混进索引卡片与梯队导航。
+- **`讲义扩充规划.md`（仓库根）是工作文档，不进 `docs/`**：构建脚本 `tools/build_html.mjs` 的页面来源只有大纲 `软件设计师考点大纲.md` + `软考学习/**/*.md`，根目录其他 md 不会被转换。所以「规划 / 设计 / 说明」类文档一律放仓库根，**不要放 `软考学习/`**——放进去会被当成 lesson 页混进索引卡片与梯队导航。
 - 课件体检的固定判据（2026-09-15 建立，可复用）：① 逐条核对大纲「学习范围」；② 深度自检六条（有结论无演算 / 公式缺三件套 / 缺反例 / 缺应试动作 / 一句话带过学不懂 / 对比表缺列）；③ 在 `pdf/text/` 检索该考点章节找漏点；④ 抽 3~5 道计算题**亲自复算**（用第二种方法）。分组并行派只读子智能体做前三条，主会话复核关键点。
 - 参考资料来源两处：`pdf/text/`（辅导资料 OCR 文本，随仓库提交）＋ `.refs/`（开源项目克隆，如 hello-algo，**只留本地、已 gitignore，绝不提交**）。补写/校准讲义时用 `.refs/` 对照章节划分找"讲得不周全"的漏点，但**考点范围一律以大纲与 `pdf/text/` 为准**（开源项目覆盖面更宽，不考的别搬）。
 
@@ -16,7 +18,7 @@
 - 提交信息用**简体中文**，与历史提交保持一致。
 - 拆提交按「内容层 / 工程层」分开：讲义 md 与产物 HTML 的 UI 改动不要混在一个 commit 里。
 - **作者身份（2026-09-17 已确认）**：`snake34475` 就是用户的 GitHub 账号——SSH 认证返回 `Hi snake34475!`，与 Gitee 用的是**同一把公钥** `~/.ssh/id_ed25519.pub`（注释为 `1098834475@qq.com`）。仓库 `git config` 仍是 `wangtengyao <1098834475@qq.com>`；两处邮箱一致，所以 GitHub 上提交显示为 `wangtengyao` 而非 `snake34475`，**不算问题，不必改 config**。
-- `LF will be replaced by CRLF` 警告在本机是 `core.autocrlf` 的正常行为，仓库内存 LF，无需处理。
+- **构建后 `git status` 误报一批 M 是假象，不是内容改动（2026-10-08 查清）**：`core.autocrlf=true` 且仓库无 `.gitattributes`，index 的 stat 假设工作区是 CRLF、而构建脚本重写成 LF → size 差使 `git status` 报 M；但 `git diff` / `git diff HEAD` **为空**、逐字节比对也完全相同。**消除办法：`git add --renormalize .`**（只作用于已跟踪文件，实测一次清净、暂存区为空）。**不要用 `git checkout -- .` 去"还原"**——那是误解，会白跑一遍。诊断脚本 `.refs/diag-eol.py`（列 M 文件 → 比较工作区字节 vs `git cat-file blob HEAD:<path>`）。附带结论：构建是幂等的，可用它快速核验"产物有没有漏提交"。
 
 ## 部署
 
@@ -29,7 +31,7 @@
 
 ## 界面改动的验收流程
 
-改 `tools/` 下任何文件后：`npm run build` → 用无头 Chrome 按 **1440（三栏）/ 1140（两栏）/ 880（抽屉）** 三档宽度截图核对 → 深色主题另注一次 `data-theme='dark'` 截图。详见 `AGENTS.md`「HTML 阅读版」节的验收动作条目。
+改 `tools/` 下任何文件后：`npm run build` → 用无头 Chrome 按 **1440（三栏）/ 1140（两栏）/ 880（抽屉）** 三档宽度截图核对 → 深色主题另注一次 `data-theme='dark'` 截图。**细则见 `.agents/html-build.md`**（AGENTS.md 已改为路由表，不再承载分节正文）。
 
 ## 讲义扩写的分片-拼接流水线（2026-09-15 建立，可复用）
 
