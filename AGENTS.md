@@ -55,6 +55,7 @@
 ├── 软考学习/                  # Markdown 内容真源
 ├── .vitepress/                # VitePress 配置与主题源码
 ├── tools/                     # 内容映射、构建准备与产物验收
+├── interactive/               # 讲义配套交互演示源码（构建时拷入 docs/）
 ├── docs/                      # HTML 构建产物，勿手改
 ├── design/                    # 设计组件样张
 ├── pdf/                       # 本地参考原件及 OCR 文本
