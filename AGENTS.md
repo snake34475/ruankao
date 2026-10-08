@@ -25,7 +25,7 @@
 - 学习进度只认 `软考学习/00-总览与进度.md` 的 checkbox，不在其他文件复制勾选状态。
 - 考点范围以 `软件设计师考点大纲.md` 为准，非必要不改。
 - `软考学习/**/*.md` 与大纲是内容真源；`docs/` 是构建产物，禁止手工修改。
-- 课程、章节与梯队结构只在 `tools/build_html.mjs` 中维护，不另建会漂移的副本。
+- 课程、章节与梯队结构由 `tools/site-map.mjs` 提供，VitePress 配置与构建准备脚本从这里读取，不另建会漂移的副本。
 - 修改课程 Markdown 或 `tools/` 后必须运行 `npm run build`，并按构建细则检查产物。
 
 ## 项目红线
@@ -41,7 +41,7 @@
 
 ## 提交与推送
 
-- 每次提交前先运行 `npm run build`，确认 136 个页面产物与源码一致，不提交失败或不完整的构建产物。
+- 每次提交前先运行 `npm run build`，确认 136 个正文页面与 13 个旧入口兼容页完整，不提交失败或不完整的构建产物。
 - 本体仓库配置了双远端：`origin`（Gitee，gitee.com:wang-tengyao/ruankao-software-designer）与 `github`（GitHub，git@github.com:snake34475/ruankao.git）。
 - 提交后必须推送到两个远端：`git push`（推 origin）后，再 `git push github main`，两者缺一不可。
 
@@ -53,7 +53,8 @@
 ├── README.md                  # 面向读者的仓库首页
 ├── 软件设计师考点大纲.md       # 全局考点范围
 ├── 软考学习/                  # Markdown 内容真源
-├── tools/                     # 构建、样式和交互源码
+├── .vitepress/                # VitePress 配置与主题源码
+├── tools/                     # 内容映射、构建准备与产物验收
 ├── docs/                      # HTML 构建产物，勿手改
 ├── design/                    # 设计组件样张
 ├── pdf/                       # 本地参考原件及 OCR 文本

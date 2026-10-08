@@ -19,7 +19,7 @@
 1. **配色只用主题变量，禁止写死颜色**。可用 `var(--surface)`、`var(--surface-2)`、`var(--ink)`、`var(--ink-strong)`、`var(--muted)`、`var(--faint)`、`var(--line)`、`var(--line-strong)`、`var(--accent)`、`var(--accent-ink)`、`var(--accent-soft)`、`var(--gold)`、`var(--gold-soft)`、`var(--red)`、`var(--bg)`。写死 `#333` 一类颜色会导致深色模式不可读。
 2. **必须是响应式的**：外层 `<svg>` 带 `viewBox` 与 `width="100%"`，并给 `style="max-width:<原宽>px"`，保证窄屏等比缩小。
 3. **必须带无障碍信息**：`role="img"` + `aria-label="……"`，`aria-label` 要能独立说清这张图讲了什么（读屏用户只听得到这一句）。
-4. **样式写在 SVG 内部的 `<style>` 里**，类名语义化（如 `.node`、`.edge`、`.hit`、`.dim`），不要污染页面全局样式。
+4. **样式写在源码 SVG 内部的 `<style>` 里**，类名语义化（如 `.node`、`.edge`、`.hit`、`.dim`），不要污染页面全局样式。`prepare_vitepress.mjs` 会把它提取为按图作用域隔离的 `figures.css`；不要手改生成的 `site-src/`。
 5. **字体用 `system-ui,"PingFang SC","Microsoft YaHei",sans-serif`**，不要引用 Web 字体（离线可读是仓库红线）。
 6. 用 `<figure class="fig">` 包裹，图下可跟一行短说明；**图注不进 `<figcaption>` 之外的长段落**，正文解释放在图外。
 
@@ -35,6 +35,8 @@
 - **树 / 图**：节点数、深度、路径长度、入度出度按 `markdown-rendering.md` 的要求统一口径并复算。
 - **流程 / 状态**：箭头方向与转换条件一一对应，不能有画了箭头却没有触发条件的边。
 - **数据一致**：同一份数据在多张图、正文、答案里必须完全一致；改一处要全文搜索连带位置。
+- **SVG 几何连接**：属性椭圆的中心要与所属实体／联系对齐（或用明确折线连接），每条连接线端点要落在图形边界上；调整节点坐标后同时重算相连的线段和文字位置，不只移动单个形状。
+- **SVG 画布边界**：长说明文字不能只检查 `x`、`y` 起点，还要检查渲染后的文字右边缘与底边是否落在 `viewBox` 内；必要时拆行或移到图注。浏览器检查时排除 `<defs>` 内的箭头标记，它们使用独立坐标系。
 
 ## 图与正文的分工
 

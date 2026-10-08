@@ -20,7 +20,7 @@
 │   ├── 00-总览与进度.md          ← TODO 进度表 + 学习方法（学习入口）
 │   ├── 学习计划.md               ← 考前排期：双线并行 + 背诵轮转 + 复盘体系
 │   ├── 01-数据结构与算法/        ← 第 1 课（按知识大节拆成 11 个 Markdown 文件）
-│   │   ├── 00-本课导航.md        ← 课程入口；网页端自动生成章节卡片
+│   │   ├── 00-本课导航.md        ← 课程入口；网页端生成课程首页
 │   │   ├── 01-线性表、栈与队列.md
 │   │   ├── 02-树与二叉树.md
 │   │   ├── 03-图.md
@@ -50,20 +50,22 @@
 │   ├── 11-专业英语/              ← 第 11 课（解题法、主题词汇、阅读训练等 10 个学习页）
 │   ├── 12-数学与多媒体/          ← 第 12 课（数学基础、多媒体容量与压缩等 9 个学习页）
 │   └── 99-考前全真模拟卷/        ← 上午卷、下午卷、解析与诊断等 9 个页面
-├── package.json / tools/        ← HTML 构建链（npm run build）+ 阅读版样式与脚本源码
+├── .vitepress/                 ← VitePress 配置、主题与学习状态组件
+├── tools/                      ← 内容映射、VitePress 输入准备和产物验收
+├── package.json                ← npm run dev / build / preview
 ├── interactive/                 ← 讲义配套的交互式演示源码（遍历轮廓等，构建时拷入 docs/）
 │   └── traversal-contour/       ← 二叉树遍历的交互演示（app.js / index.html / style.css）
 ├── design/                      ← 设计组件样张与原型（设计确认用，不参与构建，不进 docs/）
 │   ├── styleguide.html          ← 设计组件样张
 │   └── traversal-contour/       ← 遍历演示的原型预览（preview.html）
-└── docs/                        ← 生成的网页阅读版（构建产物，可直接浏览器打开）
+└── docs/                        ← VitePress 网页阅读版（构建产物）
 ```
 
 ## 网页阅读版
 
-Markdown 源文件是唯一真源；课程既可使用单个 Markdown，也可使用“课程目录 + 子章节 Markdown”。`docs/` 下是由构建脚本生成的网页版，改完 md 后在仓库根目录跑一次 `npm run build` 即可重新生成。本地直接双击 [docs/index.html](docs/index.html) 阅读。
+Markdown 源文件是唯一真源；课程既可使用单个 Markdown，也可使用“课程目录 + 子章节 Markdown”。构建时，`tools/prepare_vitepress.mjs` 从真源生成不提交的 `site-src/`，VitePress 再将网页写入 `docs/`。修改讲义后运行 `npm run build`；开发预览用 `npm run dev`，验收构建产物用 `npm run preview`。
 
-阅读版特性：暖纸阅读主题（可切深色）、★ 高频考点渲染成琥珀徽标、顶部阅读进度与代码复制。单文件课程的「答案与解析」默认折叠；分章课程把答案放在独立页面，避免做题时误瞄。宽屏为三栏——**左栏是总纲梯队目录**，进入分章课程后只展开当前课程的子章节；**右栏是当前页面大纲**（随滚动高亮）。窄屏自动收成单栏与抽屉。零外部依赖、零 Web 字体，离线双击即可读。
+阅读版使用 VitePress 文档主题：左侧按梯队列课程和章节，正文右侧显示本页大纲；窄屏使用目录抽屉。支持深浅色、站内搜索、代码复制、数学公式及本地学习状态标记；分章课程把答案放在独立页面，避免做题时误瞄。站点不依赖 CDN。离线双击 [docs/index.html](docs/index.html) 可读静态正文；搜索、学习状态等交互请通过 `npm run preview` 打开。
 
 ### 课程分章与网址
 
@@ -96,7 +98,7 @@ Markdown 源文件是唯一真源；课程既可使用单个 Markdown，也可�
 
 **本仓库已配置完成**，在线阅读：<https://snake34475.github.io/ruankao/>
 
-`docs/` 本身就是一份现成的静态站点，**不需要 Actions、不需要任何配置**，直接把它设为发布目录即可（以下是从零开始的步骤）：
+`docs/` 是构建好的静态站点，Pages 直接发布该目录即可，不需要在 Pages 端运行构建：
 
 1. 在 GitHub 新建一个仓库（建议 public），把本地仓库推上去；
 2. 打开仓库 **Settings → Pages**；
@@ -106,7 +108,7 @@ Markdown 源文件是唯一真源；课程既可使用单个 Markdown，也可�
 几条要注意的：
 
 - **每次改完 md 要重新构建并提交**：`npm run build` → 提交 `docs/`。GitHub 只发布你提交上去的 `docs/` 内容，它不跑构建。
-- **`docs/.nojekyll` 不要删**：它由构建脚本生成并随仓库提交，用来跳过 GitHub Pages 的 Jekyll 处理。
+- **`docs/.nojekyll` 不要删**：它随 VitePress 静态资源生成并提交，用来跳过 GitHub Pages 的 Jekyll 处理。
 - **本仓库配了两个远端**：`origin` 指向 Gitee、`github` 指向 GitHub。Gitee Pages 服务已下线，**在线可读的只有 GitHub Pages**，所以推送时两个远端都要推：
 
 ```bash

@@ -1,5 +1,7 @@
 .DS_Store
 node_modules/
+site-src/
+.vitepress/cache/
 .zcode/
 
 # 本地参考资料克隆（hello-algo 等），仅本地查阅，不提交
