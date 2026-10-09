@@ -26,7 +26,7 @@
 - 考点范围以 `软件设计师考点大纲.md` 为准，非必要不改。
 - `软考学习/**/*.md` 与大纲是内容真源；`docs/` 是构建产物，禁止手工修改。
 - 课程、章节与梯队结构由 `tools/site-map.mjs` 提供，VitePress 配置与构建准备脚本从这里读取，不另建会漂移的副本。
-- 修改课程 Markdown 或 `tools/` 后必须运行 `npm run build`，并按构建细则检查产物。
+- 修改课程 Markdown 或 `tools/` 后，以真源文件为准；只有用户明确要求构建时才运行 `npm run build` 并按构建细则检查产物。未构建时须说明 `docs/` 尚未同步。
 
 ## 项目红线
 
@@ -39,11 +39,12 @@
 - 不确定的教材结论宁可核实或不写，不得编造。
 - 年份、报名、政策和考试日期等信息注明“以官方通知为准”。
 
-## 提交与推送
+## 构建、提交与推送
 
-- 每次提交前先运行 `npm run build`，确认 136 个正文页面与 13 个旧入口兼容页完整，不提交失败或不完整的构建产物。
+- 默认不自动构建、提交或推送。用户分别明确要求后才执行对应动作；要求提交不等于要求构建或推送。
+- 构建时确认 136 个正文页面与 13 个旧入口兼容页完整；未构建时不把旧 `docs/` 当作本次内容的验收结果，也不将不同步的 `docs/` 纳入提交。
 - 本体仓库配置了双远端：`origin`（Gitee，gitee.com:wang-tengyao/ruankao-software-designer）与 `github`（GitHub，git@github.com:snake34475/ruankao.git）。
-- 提交后必须推送到两个远端：`git push`（推 origin）后，再 `git push github main`，两者缺一不可。
+- 用户明确要求推送时，先 `git push`（推 origin），再 `git push github main`，保持两个远端同步。
 
 ## 仓库结构
 
