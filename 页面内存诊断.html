@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>页面内存诊断 · 软考讲义阅读版</title>
+<title>页面内存诊断（迁移前记录）· 软考讲义阅读版</title>
 <style>
   :root {
     --bg: #faf8f4; --surface: #fff; --ink: #23201c; --ink-soft: #5a544c;
@@ -75,8 +75,9 @@
 <body>
 <main>
 
-<h1>页面内存诊断：Chrome 打开讲义页为何占 215 MB</h1>
-<p class="sub">软考软件设计师资料库 · <code>docs/</code> 阅读版 · 2026-09-17 · 全部数字为实测值</p>
+<h1>页面内存诊断（迁移前记录）：Chrome 打开讲义页为何占 215 MB</h1>
+<p class="sub">软考软件设计师资料库 · 旧版阅读页 · 2026-09-17 · 以下数字仅对应当时的测试环境</p>
+<div class="lede"><p><strong>历史记录，请勿作为当前站点的优化指引。</strong>本站现由 VitePress 构建；下文的 <code>tools/build_html.mjs</code>、<code>docs/style.css</code> 和旧版 <code>tools/app.js</code> / <code>tools/style.css</code> 均非当前生产构建链。当前构建入口见 <code>package.json</code>，主题源码位于 <code>.vitepress/theme/</code>。</p></div>
 
 <div class="lede">
   <p><strong>结论：215 MB 里约七成与页面无关。</strong></p>
