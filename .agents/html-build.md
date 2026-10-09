@@ -8,6 +8,7 @@
 - `.vitepress/` 是阅读版配置和主题源码；`tools/site-map.mjs` 提供课程结构，`tools/prepare_vitepress.mjs` 从内容真源生成临时输入，`tools/postbuild_vitepress.mjs` 验收产物。
 - `docs/` 完全由 `npm run build` 生成，禁止直接修改其中任何文件。
 - `site-src/` 是被忽略的临时输入目录，不能当作内容真源。跨文件 `.md` 链接由准备脚本映射为 VitePress 路由。
+- `npm run dev` 启动时准备 `site-src/`，开发服务器监听现有课程 Markdown 真源；保存讲义后增量同步到 `site-src/`，由 VitePress 热更新。新增、删除或移动课程文件会改变导航结构，需重启开发服务器。
 - `docs/.nojekyll` 必须由构建生成并随产物提交。
 
 ## 导航与布局
@@ -17,6 +18,8 @@
 - 分章课程应具有稳定的课程入口页；子章节既可作为目录子项，也可拥有独立 HTML 路由。
 - 当前页面、当前章节、已学状态和组内进度应从同一份结构数据推导。
 - 构建产物不请求 CDN 或外部字体。离线双击 `docs/index.html` 时静态正文与链接应可阅读；学习状态、搜索等脚本交互以 `npm run preview` 的本地服务验收。
+- **指向 `interactive/` 独立页的链接必须带 `target`（2026-10-09 测定的坑）**：`interactive/**` 是拷进 `public/` 的静态资产、**不是 VitePress 路由**。VitePress 的 client router 会拦截站内无 `target` 的链接并 `router.go` 到一个不存在的路由 → 点开就是 404（既有的绕轮廓链接因此长期失效）。修法写在 `.vitepress/config.mjs` 的 `markdown.config`：先调用原 `link_open`（即 VitePress 的 `linkPlugin`，由它补 base 前缀与登记链接），**再**给 href 含 `/interactive/` 的 token 加 `target="_blank"`。顺序不能反——`linkPlugin` 遇到已带 `target`/`download` 的 token 会跳过整个 href 处理（含 base），先加 target 会导致 base 丢失。nav/sidebar 想在配置里直链这类页面时，同样必须显式写 `target`。
+- `dev`（`npm run prepare-site && vitepress dev`）与 `build` 都会整目录拷贝 `interactive/` 进 `site-src/public/`，所以独立页在 dev 和构建产物里都在；它**不计入**「136 个正文页面」这个数。
 
 ## 本机构建环境注意（2026-10-08 实测定案）
 

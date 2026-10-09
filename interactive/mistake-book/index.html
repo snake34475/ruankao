@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>错题本与知识图谱 · 软考软件设计师</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">软件设计师<span>·</span>错题本</span>
+  <span class="topbar-spacer"></span>
+  <button class="btn" id="themeBtn" type="button">◐ 切换深/浅色</button>
+</header>
+
+<main class="shell">
+  <section class="page-head">
+    <p class="eyebrow"><span class="dot"></span> 复盘系统 · 错题与知识图谱</p>
+    <h1>错题本与知识图谱</h1>
+    <p class="lede">把练习里<b>做错、蒙对、犹豫过</b>的题按知识点归档：上面看总分和哪里最弱，下面逐题看"我的答案 / 正确答案 / 错因"。
+      考前按<b>未过关 → 待巩固</b>的顺序回炉，状态回到"已过关"就把它划掉。本页独立于讲义，直接双击 <code>index.html</code> 即可打开。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">01</span><h2>总览</h2></div>
+    <p class="sec-note">记录条数与各状态分布。数字随卡片自动统计，不用手改。</p>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">02</span><h2>薄弱点图谱</h2></div>
+    <p class="sec-note">按知识点累计出错次数，<b>条越长 = 越弱</b>。每行给出对应状态和回炉动作。</p>
+    <div class="graph" id="graph"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">03</span><h2>错题卡片</h2></div>
+    <p class="sec-note">每张卡保留当时的错误答案，因为复习价值在于"认出自己错在哪"。用下面的按钮按状态筛选。</p>
+    <div class="filters" id="filters" role="group" aria-label="按状态筛选错题"></div>
+    <div class="cards" id="cards"></div>
+    <div class="empty is-hidden" id="empty">当前筛选下没有记录。</div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">04</span><h2>概念补漏</h2></div>
+    <p class="sec-note">错题背后反复用到的两条规则，展开看完整解释。</p>
+    <details class="notes">
+      <summary>笛卡尔积 × 与连接 ⋈ 到底差在哪</summary>
+      <div class="notes-body">
+        <p><b>×：</b>左表每一行和右表每一行<b>无条件</b>配对一遍，所以行数 = 左表行数 × 右表行数。它只负责"把所有可能配对列出来"，不管这对有没有业务意义。</p>
+        <p><b>⋈：</b>在配对基础上<b>只保留同名列相等的组合</b>。行数由"实际能配成多少对"决定，完全配不上就是 0，不能由两表行数相乘得到。</p>
+        <p>例：<code>学生</code> 4 行、<code>选课</code> 5 行。<code>学生 × 选课</code> 固定 20 行；而 <code>学生 ⋈ 选课</code> 只有 4 行——学号 04 配不上、学号 05 在学生表里没有对应行，都在"筛同名列相等"这一步被淘汰。</p>
+      </div>
+    </details>
+    <details class="notes">
+      <summary>两表有多个同名属性时，等值连接与自然连接怎么算</summary>
+      <div class="notes-body">
+        <p><b>等值连接</b>的相等条件完全由你写出的等式决定，没写进条件的同名列不参与匹配。以 <code>R(A,B,C)</code> 与 <code>S(B,C,D)</code> 为例，<code>R ⋈(R.B=S.B) S</code> 只要求 B 相等，C 两边各留一份、互不比较，列数 = 3 + 3 = 6。</p>
+        <p><b>自然连接</b>要求<b>所有</b>同名属性都相等并各合并一份，<code>R ⋈ S</code> 的 B、C 都要相等，列数 = 3 + 3 − 2 = 4。</p>
+        <p>考点：自然连接列数 = <b>总列数 − 同名属性个数</b>；若题目只要求"某两列相等"，应写带条件的连接，因为自然连接没有"只比其中一部分同名列"的写法。</p>
+      </div>
+    </details>
+  </section>
+
+  <p class="page-foot">维护方式：新增一条错题 = 在 <code>app.js</code> 的 <code>MISTAKES</code> 数组里加一个对象；薄弱点图谱读 <code>WEAK</code> 数组。本页不参与站内构建导航，从《00-总览与进度》链接进入。</p>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

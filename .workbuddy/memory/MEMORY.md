@@ -70,3 +70,11 @@
 - **字重已归并（2026-09-17）**：原 750 / 780 / 650 全部改为 700 / 600，全站字重现只有 500 / 600 / 700，**新增样式不要再引入非 100 整数倍字重**。
 - **`content-visibility` 已实测否决（2026-09-17，不要再试）**：曾按 h2 把正文包成 `<section class="sec">` 并加 `content-visibility: auto` + `contain-intrinsic-size: auto 720px`，实测加载 Layout 1735→1854 ms（**没省**）、滚动 Task 无差别，但**首屏文档总高从 73,113 px 掉到 54,117 px（短 26%）**，浏览一遍后才收敛到 73,509 px。原因：本仓库讲义各小节高度差异极大（500 px ~ 2 万 px），固定估算值必失真；且布局成本大头是 CJK 字体就绪后的全文重排，跳过屏幕外小节并不省。改动已全部回退。
 - 诊断与验收脚本都在 `.refs/`（gitignore）：`mem-probe.mjs`（CDP 指标探针）、`measure.mjs`（布局/大纲高亮回归）、`cv-test.mjs`（滚动条失真专项）、`shots.mjs`（多宽度×主题截图）、`verify.mjs`（改动验收）。诊断报告 `页面内存诊断.html` 在仓库根（工作文档，不参与构建、不进 `docs/`）。
+
+## 错题本与薄弱点复盘（2026-10-09 建立）
+
+- **错题本是独立 HTML 看板，不是 Markdown 讲义页**：源码在 `interactive/mistake-book/`（`index.html` + `style.css` + `app.js`），构建时整目录拷进 `docs/interactive/mistake-book/`，与 `traversal-contour` 同一套 L3 交互页机制。用户 2026-10-09 明确要求「不依赖 md、做成独立 html」，**曾短暂做成 `软考学习/错题本与知识图谱.md`（general 页）已作废回退，不要照那条路重做**。
+- **数据全在 `app.js`**：`MISTAKES` 数组（每条一个对象）+ `WEAK` 数组（薄弱点图谱）。加错题 = 加对象，页面数字/进度条/筛选自动统计。状态三态 `danger(未过关)/warn(待巩固)/ok(已过关)`，用「颜色 + 符号 + 文字」三重编码，不只靠颜色。
+- **它是静态资产，不计入 136 个正文页面**。dev 和 build 都由 prepare 整目录拷进 `site-src/public/`，所以两处都能打开；入口三处：`.vitepress/config.mjs` 的 `nav`＋`sidebar` 总览组、`软考学习/00-总览与进度.md` 学习方法说明。增删这类页**不动**正文页面计数，别去改那个 136。
+- **所有指向 `interactive/` 的站内链接必须带 `target`**，否则被 VitePress client router 拦成 404（2026-10-09 发现既有绕轮廓链接已长期失效）。修法在 `.vitepress/config.mjs` 的 `markdown.config`：先跑原 `link_open`（VitePress `linkPlugin` 补 base）再加 `target`，顺序反了会丢 base。细节见 `.agents/html-build.md`。
+- 记录约定：错题条目要写「我的答案 / 正确答案 / 错因（指向具体规则）/ 知识点/下次回炉」；错因只说现象不算过关。
