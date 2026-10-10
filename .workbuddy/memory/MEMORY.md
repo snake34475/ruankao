@@ -36,6 +36,9 @@
 
 改 `tools/` 下任何文件后：`npm run build` → 用无头 Chrome 按 **1440（三栏）/ 1140（两栏）/ 880（抽屉）** 三档宽度截图核对 → 深色主题另注一次 `data-theme='dark'` 截图。**细则见 `.agents/html-build.md`**（AGENTS.md 已改为路由表，不再承载分节正文）。
 
+- **ZCode 内置浏览器（IAB）截图实测（2026-10-10）**：`screenshot({clip})` 的坐标是**整页坐标**（`rect.x + scrollX, rect.y + scrollY`），不是视口坐标——按视口坐标传 clip 会截到页面上方的正文；因此截取某个元素**不需要先滚动**，直接算整页矩形即可。`setViewportSize` 在 IAB 可用（1440/880/480 分档有效）。
+- **VitePress 深浅色切换键**：localStorage `vitepress-theme-appearance`（值 `light`/`dark`）。URL 参数 `?theme=light` 会被已存偏好覆盖；核对浅色时先 `localStorage.setItem('vitepress-theme-appearance','light')` 再 reload。dev 与 build 页都挂在 base `/ruankao/` 下（漏掉会看到 "did you mean /ruankao/..." 提示页而不是报错）。
+
 ## 讲义扩写的分片-拼接流水线（2026-09-15 建立，可复用）
 
 单课扩写量大（动辄 +700 行）时不要用多次 `Edit` 打补丁，走这条流水线：
