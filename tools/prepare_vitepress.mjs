@@ -1,4 +1,5 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { catalog, root, routeOf, tiers } from './site-map.mjs';
 
@@ -103,6 +104,9 @@ const used = new Set([...figureStyles.join('\n').matchAll(/var\((--[\w-]+)/g)].m
 const missing = [...used].filter(name => !light.includes(`${name}:`) || !dark.includes(`${name}:`));
 if (missing.length) throw new Error(`SVG 主题变量未同时定义亮色和暗色值：${missing.join(', ')}`);
 writeGenerated(join(stage, 'public', 'figures.css'), `${figureStyles.join('\n')}\n`);
+// 内容哈希版本号：figures.css 文件名固定，浏览器会长期缓存旧版；新增图后旧样式若不失效，
+// SVG 回退到默认字号直接溢出画布（2026-10-10 档位三验收实测踩坑，检测因此被误导一轮）。
+writeGenerated(join(stage, 'figures-version.txt'), createHash('sha256').update(figureStyles.join('\n')).digest('hex').slice(0, 10));
 writeGenerated(join(stage, 'public', '.nojekyll'), '');
 if (misses.length) throw new Error(`未解析的 Markdown 链接：\n${misses.join('\n')}`);
 console.log(`VitePress 输入已准备：${pages.length + 1} 个正文页面`);

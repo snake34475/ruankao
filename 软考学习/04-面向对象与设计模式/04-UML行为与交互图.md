@@ -1,5 +1,7 @@
 # 04.4 UML 行为图与交互图 ★★★
 
+### 3.3 顺序图与通信图：同一次交互，两种画法 ★★
+
 **顺序图要素**（从图上一眼能指出来）：**对象**（顶部方框）、**生命线**（对象下方的竖直虚线）、**激活/控制焦点**（生命线上叠的窄长条，表示对象正在执行）、**消息**（水平箭头）、**返回消息**（**虚线**箭头，表示把结果交回）。
 
 **消息方向与种类**：
@@ -12,17 +14,55 @@
 
 **一条最重要的判图规律**：**从左边第一个对象开始，箭头指向谁，就是谁在干活**；消息自左向右排序，**上下位置 = 时间先后**——所以案例题让你"按说明填消息"，就是**照典型事件流的步骤顺序往右下方排**。
 
-**通信图（协作图）**：同样的交互内容，但**画法完全不同**——对象是**网络式**散布的，消息写在**对象之间的连线上**并用**序号**标注调用层次：
+**通信图（协作图）**：交互内容可以完全相同，画法却完全不同——对象**网状散布**，消息写在**对象之间的连线**上，用**序号**标调用层次。同一次"读者借书"，两种画法并排放（左图每一根横箭头，在右图都变成连线上的一个序号）：
 
-```
-        :Patron
-           │  2: isFaculty()
-           │
- 1: checkOut(bookID)      :CheckoutSessionController
-           │  3: find(bookID)
-           ▼
-        :Book  ──── 4: recordBookLoan() ───▶ :Catalog
-```
+<figure class="fig">
+<svg viewBox="0 0 720 322" width="100%" style="max-width:720px" role="img" aria-label="顺序图与通信图对照：同一次借阅交互含四条消息。左侧顺序图顶部四个对象各带竖直生命线，消息从上到下依次为 1 借阅请求、1.1 核验资格、1.2 查库存、2 登记目录，借阅处理者生命线上有激活条；右侧通信图四个对象用连线相连，同样的四条消息写成连线上的序号。底部说明两者可互相转换">
+<style>
+.ob{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.6}
+.ab{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.4}
+.ll{stroke:var(--line-strong);stroke-width:1.2;fill:none;stroke-dasharray:4 4}
+.mg{stroke:var(--ink);stroke-width:1.6;fill:none}
+.rt{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+.lk{stroke:var(--line-strong);stroke-width:1.6;fill:none}
+.tx{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong);text-anchor:middle}
+.ms{font:10px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink);text-anchor:middle}
+.tt{font:600 13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong)}
+.mt{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--muted)}
+</style>
+<defs><marker id="im-a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker><marker id="im-r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--muted)"/></marker><marker id="im-l" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--line-strong)"/></marker></defs>
+<text class="tt" x="16" y="24">顺序图：上下 = 时间</text>
+<rect class="ob" x="24" y="36" width="66" height="24" rx="5"/><text class="tx" x="57" y="52">读者</text>
+<rect class="ob" x="108" y="36" width="72" height="24" rx="5"/><text class="tx" x="144" y="52">借阅处理者</text>
+<rect class="ob" x="192" y="36" width="66" height="24" rx="5"/><text class="tx" x="225" y="52">图书</text>
+<rect class="ob" x="276" y="36" width="66" height="24" rx="5"/><text class="tx" x="309" y="52">目录</text>
+<path class="ll" d="M57 60 V268 M144 60 V268 M225 60 V268 M309 60 V268"/>
+<rect class="ab" x="140" y="80" width="9" height="170"/>
+<rect class="ab" x="221" y="170" width="8" height="30"/>
+<rect class="ab" x="305" y="230" width="8" height="22"/>
+<path class="mg" d="M57 92 H136" marker-end="url(#im-a)"/><text class="ms" x="97" y="86">1: 借阅请求()</text>
+<path class="mg" d="M140 120 H61" marker-end="url(#im-a)"/><text class="ms" x="100" y="114">1.1: 核验资格()</text>
+<path class="rt" d="M61 146 H140" marker-end="url(#im-r)"/><text class="ms" x="100" y="140">合格</text>
+<path class="mg" d="M149 176 H221" marker-end="url(#im-a)"/><text class="ms" x="185" y="170">1.2: 查库存()</text>
+<path class="rt" d="M221 200 H149" marker-end="url(#im-r)"/><text class="ms" x="185" y="214">有可借</text>
+<path class="mg" d="M149 236 H305" marker-end="url(#im-a)"/><text class="ms" x="227" y="230">2: 登记目录()</text>
+<text class="mt" x="16" y="286">金色窄条 = 激活：谁在干活看窄条压在谁的生命线上</text>
+<text class="tt" x="400" y="24">通信图：连线 + 序号</text>
+<rect class="ob" x="428" y="64" width="84" height="26" rx="5"/><text class="tx" x="470" y="81">读者</text>
+<rect class="ob" x="576" y="64" width="90" height="26" rx="5"/><text class="tx" x="621" y="81">借阅处理者</text>
+<rect class="ob" x="576" y="186" width="84" height="26" rx="5"/><text class="tx" x="618" y="203">图书</text>
+<rect class="ob" x="428" y="186" width="84" height="26" rx="5"/><text class="tx" x="470" y="203">目录</text>
+<path class="lk" d="M512 72 H572" marker-end="url(#im-l)"/><text class="ms" x="542" y="64">1: 借阅请求</text>
+<path class="lk" d="M576 84 H516" marker-end="url(#im-l)"/><text class="ms" x="546" y="102">1.1: 核验资格</text>
+<path class="lk" d="M618 90 V182" marker-end="url(#im-l)"/><text class="ms" x="660" y="140" style="text-anchor:start">1.2: 查库存</text>
+<path class="lk" d="M596 90 L512 196" marker-end="url(#im-l)"/><text class="ms" x="520" y="150" style="text-anchor:end">2: 登记目录</text>
+<text class="mt" x="400" y="248">没有上下轴：先后与嵌套全看序号——</text>
+<text class="mt" x="400" y="266">1 → 1.1 → 1.2 是"1 号调用内部的两步"，2 才是第二个顶层调用</text>
+<text class="mt" x="16" y="300">互转规律：生命线 ↔ 对象节点；从上到下 ↔ 序号从小到大；嵌套调用点"点号"（1.1.2 比 1.1 更深一层）。</text>
+<text class="mt" x="16" y="318">口诀：顺序看时间，通信看链接；带点的序号就是嵌套层。</text>
+</svg>
+<figcaption>案例题要求"由顺序图画通信图"时，把每条横箭头按出现顺序编号、两端对象连线即可；反之把序号展开成上下排列的箭头。两图语义等价，只换视角。</figcaption>
+</figure>
 
 序号里的点表示**嵌套层级**（`1.1` 是 `1` 内部调用的第一句，`1.1.2` 再深一层）。**顺序图 vs 通信图对照**：两者**语义等价、可以互相转换**；顺序图突出**时间顺序**，通信图突出**对象间的链接结构与调用层次**。
 

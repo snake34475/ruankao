@@ -15,6 +15,9 @@ function writeAfterBuild(file, content) {
 }
 const allRoutes = ['index.html', ...pages.map(page => page.route.replace(/\.md$/, '.html'))];
 if (!existsSync(join(docs, 'figures.css'))) throw new Error('缺少图示样式 figures.css');
+// figures.css 链接必须带 prepare 生成的内容哈希版本号，防止旧样式缓存拖住新图（file:// 下 query 被忽略，离线不受影响）
+const figuresVersion = readFileSync(join(root, 'site-src', 'figures-version.txt'), 'utf8').trim();
+if (!/^[0-9a-f]{10}$/.test(figuresVersion)) throw new Error('figures-version.txt 缺失或格式异常');
 for (const route of allRoutes) {
   const file = join(docs, route);
   if (!existsSync(file)) throw new Error(`缺少页面：${file}`);
@@ -22,7 +25,7 @@ for (const route of allRoutes) {
   const prefix = depth ? '../'.repeat(depth) : './';
   let html = readFileSync(file, 'utf8');
   html = html.replace(/\b(href|src)="\/ruankao\//g, `$1="${prefix}`);
-  if (!html.includes(`href="${prefix}figures.css"`)) throw new Error(`图示样式引用路径错误：${route}`);
+  if (!html.includes(`href="${prefix}figures.css?v=${figuresVersion}"`)) throw new Error(`图示样式引用路径或版本号错误：${route}`);
   // 对 HTML 中的资源和链接使用相对地址，兼容 GitHub Pages 子路径及离线静态阅读。
   // 交互仍由 VitePress 的 /ruankao/ base 在 HTTP 预览和线上站点中加载。
   html = html.replace('</head>', `<script>document.addEventListener('click',function(e){const a=e.target.closest('a[href]');if(!a)return;const raw=a.getAttribute('href');if(!raw||raw.startsWith('#')||/^(?:https?:|mailto:|javascript:)/i.test(raw))return;const url=new URL(raw,location.href);if(url.protocol===location.protocol&&(url.pathname.endsWith('/')||url.pathname.endsWith('.html'))){e.preventDefault();location.assign(url.href)}},true)</script></head>`);

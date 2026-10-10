@@ -64,11 +64,12 @@ function syncSourceMarkdown() {
 export default defineConfig({
   lang: 'zh-CN',
   title: '软考软件设计师自学资料库',
-  description: '软考中级软件设计师自学讲义、练习与模拟卷',
+  description: '软考中级软件设计师讲义、练习与模拟卷',
   srcDir: './site-src',
   outDir: './docs',
   base: '/ruankao/',
-  head: [['link', { rel: 'stylesheet', href: '/ruankao/figures.css' }]],
+  // figures.css 带内容哈希版本号：该文件名固定，不失效会被缓存拖住新图样式（详见 prepare_vitepress 注释）
+  head: [['link', { rel: 'stylesheet', href: `/ruankao/figures.css?v=${(() => { try { return readFileSync(join(root, 'site-src', 'figures-version.txt'), 'utf8').trim(); } catch { return 'dev'; } })()}` }]],
   cleanUrls: false,
   ignoreDeadLinks: false,
   markdown: {

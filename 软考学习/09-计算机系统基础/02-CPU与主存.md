@@ -18,6 +18,56 @@ CPU 主要由**运算器、控制器、寄存器组和内部总线**组成。
 
 **反例**：“PC 保存当前指令”是错的。当前指令在 IR，PC 通常已经指向下一条指令。“地址寄存器保存数据”也错，MAR 保存地址，MDR 保存数据。
 
+把上面这张"部件表"连成电影——指令 `2000H: 取 2100H 处的数到 R1` 的完整旅程，每一步都点名"哪个部件经了手"（表里的寄存器全在这张图上上岗一次）：
+
+<figure class="fig">
+<svg viewBox="0 0 720 268" width="100%" style="max-width:720px" role="img" aria-label="一条指令的旅程接力图，分三个阶段：取指阶段 PC 把地址 2000H 交给 MAR，读主存得指令进 MDR 再送 IR，PC 加一指向下一条；译码阶段 IR 的操作码交指令译码器产生控制信号；执行阶段 IR 的地址字段 2100H 交给 MAR，读主存得数据经 MDR 放入寄存器 R1。同一块主存两次被访问，取的分别是指令和数据">
+<style>
+.cu{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
+.cd{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.5}
+.cc{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.5}
+.e{stroke:var(--ink);stroke-width:1.6;fill:none}
+.tx{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong);text-anchor:middle}
+.st{font:10px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--red);text-anchor:middle}
+.tt{font:600 13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong)}
+.mt{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--muted)}
+</style>
+<defs><marker id="tp-a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--ink)"/></marker></defs>
+<text class="tt" x="14" y="20">一条指令的旅程：取 2000H 处的指令（内容：把 2100H 的数取到 R1）</text>
+<text class="mt" x="14" y="60">取指阶段</text>
+<rect class="cu" x="88" y="44" width="88" height="26" rx="5"/><text class="tx" x="132" y="61">PC＝2000H</text>
+<rect class="cu" x="206" y="44" width="88" height="26" rx="5"/><text class="tx" x="250" y="61">MAR＝2000H</text>
+<rect class="cc" x="324" y="44" width="92" height="26" rx="5"/><text class="tx" x="370" y="61">主存 2000H</text>
+<rect class="cu" x="446" y="44" width="96" height="26" rx="5"/><text class="tx" x="494" y="61">MDR＝指令字</text>
+<rect class="cu" x="572" y="44" width="56" height="26" rx="5"/><text class="tx" x="600" y="61">IR</text>
+<path class="e" d="M176 57 H202" marker-end="url(#tp-a)"/><text class="st" x="189" y="38">①送地址</text>
+<path class="e" d="M294 57 H320" marker-end="url(#tp-a)"/><text class="st" x="307" y="38">②读</text>
+<path class="e" d="M416 57 H442" marker-end="url(#tp-a)"/><text class="st" x="429" y="38">③</text>
+<path class="e" d="M542 57 H568" marker-end="url(#tp-a)"/><text class="st" x="555" y="38">④入IR</text>
+<text class="mt" x="88" y="88">⑤同时 PC←2001H：开始盯着"下一条"，它从不存当前指令</text>
+<text class="mt" x="14" y="126">译码阶段</text>
+<rect class="cd" x="88" y="110" width="56" height="26" rx="5"/><text class="tx" x="116" y="127">IR</text>
+<rect class="cd" x="174" y="110" width="100" height="26" rx="5"/><text class="tx" x="224" y="127">指令译码器</text>
+<rect class="cd" x="304" y="110" width="120" height="26" rx="5"/><text class="tx" x="364" y="127">时序·控制信号</text>
+<path class="e" d="M144 123 H170" marker-end="url(#tp-a)"/><text class="st" x="157" y="104">⑥操作码</text>
+<path class="e" d="M274 123 H300" marker-end="url(#tp-a)"/><text class="st" x="287" y="104">⑦</text>
+<text class="mt" x="436" y="127">"要做什么、按什么次序做"在此定案</text>
+<text class="mt" x="14" y="192">执行阶段</text>
+<rect class="cu" x="88" y="176" width="104" height="26" rx="5"/><text class="tx" x="140" y="193">IR 地址段＝2100H</text>
+<rect class="cu" x="222" y="176" width="88" height="26" rx="5"/><text class="tx" x="266" y="193">MAR＝2100H</text>
+<rect class="cc" x="340" y="176" width="92" height="26" rx="5"/><text class="tx" x="386" y="193">主存 2100H</text>
+<rect class="cu" x="462" y="176" width="96" height="26" rx="5"/><text class="tx" x="510" y="193">MDR＝数据字</text>
+<rect class="cu" x="588" y="176" width="56" height="26" rx="5"/><text class="tx" x="616" y="193">R1</text>
+<path class="e" d="M192 189 H218" marker-end="url(#tp-a)"/><text class="st" x="205" y="170">⑧</text>
+<path class="e" d="M310 189 H336" marker-end="url(#tp-a)"/><text class="st" x="323" y="170">⑨读</text>
+<path class="e" d="M432 189 H458" marker-end="url(#tp-a)"/><text class="st" x="445" y="170">⑩</text>
+<path class="e" d="M558 189 H584" marker-end="url(#tp-a)"/><text class="st" x="571" y="170">⑪</text>
+<text class="mt" x="88" y="228">同一块主存被访两次：取指阶段取出的是<u>指令</u>，执行阶段取出的是<u>数据</u>。</text>
+<text class="mt" x="88" y="246">接力口诀：取指 PC 领路（PC→MAR→MDR→IR），译码 IR 开口，执行按令再走 MAR·MDR。</text>
+</svg>
+<figcaption>部件表里每个寄存器的"关键词"都在这条流水线上兑现：PC 管下一条、MAR 管地址、MDR 管数据中转、IR 管当前指令、译码器管解释、时序管节奏。</figcaption>
+</figure>
+
 ### 3.1 常见性能指标
 
 - 时钟周期 T = 1 / 主频 f；
