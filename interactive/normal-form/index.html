@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>范式拆表手术室 · 软考软件设计师</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">软件设计师<span>·</span>范式拆表手术室</span>
+  <span class="topbar-spacer"></span>
+  <button class="btn" id="themeBtn" type="button">◐ 切换深/浅色</button>
+</header>
+
+<main class="shell">
+  <section class="page-head">
+    <p class="eyebrow"><span class="dot"></span> 交互演示 · 规范化逐级手术</p>
+    <h1>把一张大表拆到 BCNF</h1>
+    <p class="lede">与讲义《02.4 关系规范化》共用同一张选课大表和同一组数据。每一步先点<b>「诊断」</b>看病灶列亮红，再点<b>「动刀」</b>看它拆成哪些表。数据与讲义里的图完全一致，对照复习即可。</p>
+  </section>
+
+  <nav class="stepper" id="stepper" aria-label="手术步骤"></nav>
+
+  <section class="stage" id="stage">
+    <div class="stage-head">
+      <h2 id="stepTitle"></h2>
+      <p id="stepDesc" class="desc"></p>
+    </div>
+
+    <div class="actions" id="actions">
+      <button class="btn primary" id="diagBtn" type="button">🔍 诊断本关</button>
+      <button class="btn" id="cutBtn" type="button" disabled>✂️ 动刀拆表</button>
+    </div>
+
+    <div id="diagnosis" class="diagnosis hidden"></div>
+    <div id="beforeArea" class="tables"></div>
+    <div id="afterArea" class="tables hidden"></div>
+  </section>
+
+  <div class="navrow">
+    <button class="btn" id="prevBtn" type="button">← 上一步</button>
+    <span id="progress" class="progress"></span>
+    <button class="btn" id="nextBtn" type="button">下一步 →</button>
+  </div>
+
+  <section class="jue">
+    <h2>随堂口诀</h2>
+    <ul>
+      <li>认箭头：<b>X 相同则 Y 必须相同；一行同 X 不同 Y，箭头作废。</b></li>
+      <li>三种形态：<b>半个键能定是部分，绕一脚中转是传递。</b></li>
+      <li>爬范式：<b>一格一值是 1NF，整个键靠是 2NF，不借他口中转是 3NF，决定个个是超键才是 BCNF。</b></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">本页是独立静态文件，双击即可打开，不访问网络。返回讲义：02-数据库系统 / 04-关系规范化。</footer>
+<script src="app.js?v=2"></script>
+</body>
+</html>

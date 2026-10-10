@@ -57,6 +57,7 @@
 ├── package.json                ← npm run dev / build / preview
 ├── interactive/                 ← 讲义配套的交互式演示源码（遍历轮廓等，构建时拷入 docs/）
 │   ├── traversal-contour/       ← 二叉树遍历的交互演示（app.js / index.html / style.css）
+│   ├── normal-form/             ← 范式拆表手术室：1NF～BCNF 逐级诊断与拆表分步动画
 │   └── mistake-book/            ← 错题本与知识图谱看板（独立页，app.js 里维护数据）
 ├── design/                      ← 设计组件样张与原型（设计确认用，不参与构建，不进 docs/）
 │   ├── styleguide.html          ← 设计组件样张
