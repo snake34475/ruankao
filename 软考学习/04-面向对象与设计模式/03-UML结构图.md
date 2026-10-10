@@ -69,6 +69,89 @@ UML 2.x 共定义 **13 种图**，按"静态/动态"一刀切开（其中最常�
 <figcaption>类图既要看三格，也要逐端读多重性；不能把自然语言里的“多”原样抄到两端。</figcaption>
 </figure>
 
+**类之间的六种关系（选择题认符号 + 案例图填空必考）**。教材大类其实只有四种：依赖、关联、泛化、实现；**聚合、组合是关联的两个特例**，单列出来共六种。判关系只看业务措辞，六种关系从弱到强、符号各不同，见下图（菱形永远画在**整体端**，三角永远画在**父类/接口端**）：
+
+<figure class="fig">
+<svg viewBox="0 0 760 356" width="100%" style="max-width:760px" role="img" aria-label="类图六种关系速查图，自上而下耦合从弱到强：依赖是虚线箭头临时借用，关联是实线长期挂钩，聚合是空心菱形的整体部分可分离，组合是实心菱形同生共死，泛化是空心三角实线指向父类，实现是空心三角虚线指向接口；每行配图书借阅领域的例子">
+<style>
+.nm{font:600 13px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong)}
+.bx{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.5}
+.bt{font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink);text-anchor:middle}
+.kd{font:12px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong)}
+.ex{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--muted)}
+.ln{stroke:var(--line-strong);stroke-width:2;fill:none}
+.dash{stroke-dasharray:6 4}
+.hf{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.5}
+.ff{fill:var(--ink-strong);stroke:var(--ink-strong);stroke-width:1.5}
+.tt{font:600 14px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--ink-strong)}
+.sub{font:11px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;fill:var(--muted)}
+</style>
+<defs><marker id="uml-open" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/></marker></defs>
+<text class="tt" x="28" y="26">六种关系速查：上弱下强</text>
+<text class="nm" x="28" y="69">依赖</text>
+<rect class="bx" x="150" y="50" width="84" height="28"/><text class="bt" x="192" y="69">读者</text>
+<rect class="bx" x="352" y="50" width="84" height="28"/><text class="bt" x="394" y="69">管理员</text>
+<path class="ln dash" d="M234 64H346" marker-end="url(#uml-open)"/>
+<text class="kd" x="452" y="69">临时借用</text>
+<text class="ex" x="560" y="69">读者的借阅方法用管理员当参数</text>
+<text class="nm" x="28" y="115">关联</text>
+<rect class="bx" x="150" y="96" width="84" height="28"/><text class="bt" x="192" y="115">读者</text>
+<rect class="bx" x="352" y="96" width="84" height="28"/><text class="bt" x="394" y="115">借阅记录</text>
+<path class="ln" d="M234 110H352"/>
+<text class="kd" x="452" y="115">长期挂钩</text>
+<text class="ex" x="560" y="115">谁借了哪本书，一直记着</text>
+<text class="nm" x="28" y="161">聚合</text>
+<rect class="bx" x="150" y="142" width="84" height="28"/><text class="bt" x="192" y="161">馆藏</text>
+<rect class="bx" x="352" y="142" width="84" height="28"/><text class="bt" x="394" y="161">图书</text>
+<polygon class="hf" points="236,156 250,148 264,156 250,164"/>
+<path class="ln" d="M264 156H352"/>
+<text class="kd" x="452" y="161">拥有，可分离</text>
+<text class="ex" x="560" y="161">馆藏由图书组成，散架书仍在</text>
+<text class="nm" x="28" y="207">组合</text>
+<rect class="bx" x="150" y="188" width="84" height="28"/><text class="bt" x="192" y="207">借阅记录</text>
+<rect class="bx" x="352" y="188" width="84" height="28"/><text class="bt" x="394" y="207">费用明细行</text>
+<polygon class="ff" points="236,202 250,194 264,202 250,210"/>
+<path class="ln" d="M264 202H352"/>
+<text class="kd" x="452" y="207">拥有，同生死</text>
+<text class="ex" x="560" y="207">删记录，明细行随之消失</text>
+<text class="nm" x="28" y="253">泛化</text>
+<rect class="bx" x="150" y="234" width="84" height="28"/><text class="bt" x="192" y="253">读者</text>
+<rect class="bx" x="352" y="234" width="84" height="28"/><text class="bt" x="394" y="253">学生读者</text>
+<polygon class="hf" points="236,248 258,239 258,257"/>
+<path class="ln" d="M258 248H352"/>
+<text class="kd" x="452" y="253">是一种（is-a）</text>
+<text class="ex" x="560" y="253">学生读者是一种读者</text>
+<text class="nm" x="28" y="299">实现</text>
+<rect class="bx" x="150" y="280" width="84" height="28"/><text class="bt" x="192" y="299">可打印接口</text>
+<rect class="bx" x="352" y="280" width="84" height="28"/><text class="bt" x="394" y="299">借阅报表</text>
+<polygon class="hf" points="236,294 258,285 258,303"/>
+<path class="ln dash" d="M258 294H352"/>
+<text class="kd" x="452" y="299">会做（接口）</text>
+<text class="ex" x="560" y="299">借阅报表实现可打印接口</text>
+<text class="sub" x="28" y="340">强弱顺序：依赖 &lt; 关联 &lt; 聚合 &lt; 组合；泛化与实现是“家族/契约”关系，另列一档。</text>
+</svg>
+<figcaption>每行的类名对都取自图书借阅场景；上一节的借阅关系图中，读者—借阅记录、借阅记录—图书之间的实线就是这里的“关联”。</figcaption>
+</figure>
+
+判关系时按**措辞→关系**对号入座：
+
+| 题干措辞 | 关系 | 判据一句话 |
+|---|---|---|
+| “作为方法参数、临时调用” | 依赖 | 无长期联系，去掉被用方类的属性/方法都不受影响 |
+| “有…记录、知道…” | 关联 | 长期结构联系，但**不是**“整体—部分” |
+| “由…组成，但…可独立存在” | 聚合 | 整体—部分，分家后部分**还活着** |
+| “…销毁则…不复存在、同生共死” | 组合 | 整体—部分，部分**随整体死亡** |
+| “…是一种…”、继承 | 泛化 | 父子类，空心三角指向**父** |
+| “实现…、会…” | 实现 | 接口契约，空心三角虚线指向**接口** |
+
+**反例演示一（聚合 vs 组合）**：“馆藏—图书”若答组合就错了——馆藏解散，图书仍然存在于世，是聚合；“借阅记录—费用明细行”删了记录明细行就没有归属，才是组合。判据句：**整体死时，部分必然一起死 → 实心组合；部分还能活 → 空心聚合。**
+
+**反例演示二（关联误判成聚合）**：读者—借阅记录虽然“读者拥有记录”，但记录**不是读者的组成部分**（整体—部分关系不成立），所以只是关联。**判序别颠倒：先问“是不是整体与部分”，是才轮得到空/实菱形；不是就回到关联/依赖。** 另注意菱形位置永远在整体端——作图题把菱形画到部分端直接判错。
+
+**记忆口诀：虚线借是依赖，实线知是关联，空心菱拥有是聚合，实心菱同生死是组合，实线三角是“是一种”，虚线三角是“会做”。**
+
+**应试动作**：认符号速判——见**虚线**想“弱”（依赖或实现），见**三角**想“泛化/实现”（实线泛化、虚线实现），见**菱形**想“整体部分”（空心聚合、实心组合），纯实线就是关联；案例类图填空先找“整体—部分”句式和“是一种”句式，再落笔连线。
+
 ### 3.2 用例图：三个要素 + 三种关系 + 建模流程四步 ★★
 
 **要素**：**参与者**（小人，缩写可以是人、外部系统）、**用例**（椭圆，一件完整的、有业务价值的事）、**关系**（连线）。
