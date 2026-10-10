@@ -13,6 +13,7 @@
 | 任务类型 | 必须阅读 |
 |---|---|
 | 修改或新增讲义、题目、答案 | [`.agents/course-authoring.md`](.agents/course-authoring.md) |
+| 把用户觉得"笼统／不直观"的概念扩写、重讲 | [`.agents/concept-expansion.md`](.agents/concept-expansion.md) |
 | 修改 Markdown，或排查渲染异常 | [`.agents/markdown-rendering.md`](.agents/markdown-rendering.md) |
 | 新增或修改图示（SVG / ASCII 图 / 交互页） | [`.agents/figure-design.md`](.agents/figure-design.md) |
 | 修改 `tools/`、构建、导航、HTML 路由或 `docs/` | [`.agents/html-build.md`](.agents/html-build.md) |
