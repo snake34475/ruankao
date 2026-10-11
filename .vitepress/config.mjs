@@ -102,6 +102,7 @@ export default defineConfig({
       { text: '学习进度', link: '/00-总览与进度.html' },
       { text: '学习计划', link: '/学习计划.html' },
       { text: '错题本', link: '/interactive/mistake-book/index.html', target: '_blank', rel: 'noopener' },
+      { text: '冲刺规划', link: '/interactive/sprint-plan/index.html', target: '_blank', rel: 'noopener' },
       { text: '考点大纲', link: '/软件设计师考点大纲.html' },
     ],
     sidebar: [
@@ -109,6 +110,7 @@ export default defineConfig({
         { text: '学习总览与进度', link: '/00-总览与进度.html' },
         { text: '学习计划', link: '/学习计划.html' },
         { text: '错题本与知识图谱', link: '/interactive/mistake-book/index.html', target: '_blank', rel: 'noopener' },
+        { text: '13 天冲刺执行规划', link: '/interactive/sprint-plan/index.html', target: '_blank', rel: 'noopener' },
         { text: '考点大纲', link: '/软件设计师考点大纲.html' },
       ] },
       ...groups,
