@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13 天冲刺执行规划 · 软考软件设计师</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #f0f2f5;
+    --ink: #33383f;
+    --ink-strong: #1a1e24;
+    --muted: #6b7280;
+    --faint: #9aa2ad;
+    --line: #e3e6ea;
+    --line-strong: #c9ced6;
+    --accent: #2f6fed;
+    --accent-soft: #e8effc;
+    --accent-ink: #ffffff;
+    --gold: #b8860b;
+    --gold-soft: #fbf3dc;
+    --red: #c0392b;
+    --red-soft: #fdeceb;
+    --green: #1e7e4d;
+    --green-soft: #e5f4ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c;
+      --surface: #1c2027;
+      --surface-2: #242932;
+      --ink: #d4d8de;
+      --ink-strong: #f0f3f7;
+      --muted: #9aa3af;
+      --faint: #6d7683;
+      --line: #2c333d;
+      --line-strong: #3d4552;
+      --accent: #5b8def;
+      --accent-soft: #223046;
+      --accent-ink: #ffffff;
+      --gold: #d4a94a;
+      --gold-soft: #33290f;
+      --red: #e57865;
+      --red-soft: #3a201d;
+      --green: #4caf7d;
+      --green-soft: #1c3226;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 24px; color: var(--ink-strong); margin: 8px 0 4px; }
+  h2 {
+    font-size: 18px; color: var(--ink-strong);
+    margin: 34px 0 12px; padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .sub { color: var(--muted); font-size: 13px; }
+  .topbar {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 18px; margin-top: 14px;
+  }
+  .countdown {
+    font-size: 15px; color: var(--ink-strong); font-weight: 600;
+  }
+  .countdown b { color: var(--red); font-size: 26px; margin: 0 4px; }
+  .overall { flex: 1; min-width: 220px; }
+  .bar {
+    height: 10px; background: var(--surface-2); border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .bar i {
+    display: block; height: 100%; width: 0;
+    background: var(--accent); transition: width .3s;
+  }
+  .bar-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .btn {
+    background: var(--surface); color: var(--muted);
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 6px 14px; font-size: 13px; cursor: pointer;
+  }
+  .btn:hover { color: var(--red); border-color: var(--red); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 18px; margin: 12px 0;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 720px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  /* 时间块图 */
+  .slot {
+    border-radius: 10px; padding: 12px 14px; border: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+  .slot .t { font-weight: 700; color: var(--ink-strong); font-size: 14px; }
+  .slot .d { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .slot.accent { background: var(--accent-soft); border-color: var(--accent); }
+  .slot.gold { background: var(--gold-soft); border-color: var(--gold); }
+  /* 日卡片 */
+  .day {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; margin: 12px 0; overflow: hidden;
+  }
+  .dayhead {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    padding: 12px 18px; background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .dayhead .num { font-weight: 800; color: var(--accent); font-size: 17px; }
+  .dayhead .title { font-weight: 700; color: var(--ink-strong); font-size: 15px; }
+  .dayhead .date { color: var(--faint); font-size: 13px; }
+  .tag {
+    font-size: 12px; padding: 1px 9px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent);
+  }
+  .tag.gold { background: var(--gold-soft); color: var(--gold); border-color: var(--gold); }
+  .tag.green { background: var(--green-soft); color: var(--green); border-color: var(--green); }
+  .tasks { padding: 8px 18px 14px; }
+  .task {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 7px 0; border-bottom: 1px dashed var(--line);
+  }
+  .task:last-child { border-bottom: none; }
+  .task input[type=checkbox] {
+    width: 17px; height: 17px; margin-top: 4px; flex: none; cursor: pointer;
+    accent-color: var(--accent);
+  }
+  .task label { cursor: pointer; flex: 1; }
+  .task.done label { color: var(--faint); text-decoration: line-through; }
+  .task .kind {
+    flex: none; font-size: 12px; font-weight: 700; margin-top: 2px;
+    width: 60px; text-align: center; border-radius: 6px; padding: 1px 0;
+  }
+  .kind.main { background: var(--accent-soft); color: var(--accent); }
+  .kind.floor { background: var(--red-soft); color: var(--red); }
+  .kind.mem { background: var(--gold-soft); color: var(--gold); }
+  .kind.echo { background: var(--green-soft); color: var(--green); }
+  .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .jumps {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 18px 2px;
+  }
+  .jumps .lab { font-size: 12px; color: var(--faint); align-self: center; }
+  .jump {
+    font-size: 12.5px; text-decoration: none; color: var(--accent);
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 999px; padding: 1px 11px; white-space: nowrap;
+  }
+  .jump:hover { background: var(--accent); color: var(--accent-ink); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; }
+  th { background: var(--surface-2); color: var(--ink-strong); }
+  ol, ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; }
+  .rule { display: flex; gap: 12px; margin: 12px 0; }
+  .rule .n {
+    flex: none; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px;
+  }
+  .rule .b { flex: 1; }
+  .rule .b .h { font-weight: 700; color: var(--ink-strong); }
+  .hint {
+    background: var(--gold-soft); border: 1px solid var(--gold);
+    border-radius: 10px; padding: 12px 16px; font-size: 13.5px; margin: 14px 0;
+  }
+  .footer { text-align: center; color: var(--faint); font-size: 12px; margin-top: 40px; }
+  @media print {
+    body { background: #fff; }
+    .btn, .daybar { display: none; }
+    .day { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>13 天冲刺执行规划</h1>
+  <p class="sub">软考软件设计师 · 2026 年 10 月 24—27 日机考（以官方通知为准）· 目标两科 ≥45 分 · 起点：第 2 课 SQL
+    · <a class="jump" data-route="/00-总览与进度.html" href="#">← 返回学习总览</a></p>
+
+  <div class="topbar">
+    <div class="countdown" id="countdown">距首张考场还有 <b>—</b> 天</div>
+    <div class="overall">
+      <div class="bar"><i id="overallbar"></i></div>
+      <div class="bar-label" id="overallabel">总完成度 0 / 0</div>
+    </div>
+    <button class="btn" id="resetbtn" type="button">清空勾选</button>
+  </div>
+
+  <div class="hint">
+    <b>总策略一句话：</b>程度由题目定义，深度由分诊决定，好奇心由停车场托管，枯燥由 AI 外包。
+    案例题 15 分/题是大头，选择题每题才 1 分——<b>模板与错题优先，新课全讲义次之，原理推导放弃</b>。
+  </div>
+
+  <h2>一、每天的时间块怎么用（按状态分配任务）</h2>
+  <div class="grid2">
+    <div class="slot accent">
+      <div class="t">🌙 通勤 40 分钟（碎片 · 背诵线专属）</div>
+      <div class="d">早通勤 20′：<b>回响旧背诵份</b>——遮纸回忆，想得起打勾跳过，想不起才看。<br>
+      晚通勤 20′：<b>新背 1 份 ≤15 分钟</b>（只背讲义加粗结论和表格）＋闭眼过一遍今天主线模板。</div>
+    </div>
+    <div class="slot">
+      <div class="t">🏢 上班时间 ≈2 小时（状态差 · 只做"轻主动"任务）</div>
+      <div class="d">切 2～4 个 25′ 番茄块，每块只做一件事：<b>重做错题</b>（合上答案）、<b>做课后题小批</b>、
+      <b>默写模板纸</b>。不做"读新讲义"——状态差读不进去，纯浪费。<br>
+      ✅ 状态好的工作日：把当天"底线任务"提前在这做完，晚上就能直接学新内容。</div>
+    </div>
+    <div class="slot gold">
+      <div class="t">🌆 下班后（状态好 · 唯一主线时段，不稳定）</div>
+      <div class="d">60～90′ 完整流程：<b>读当天指定小节 30–40′ → 合上书做题 30–40′ → 3 行日复盘 5′ → 停车场放风 10′</b>（把白天攒的问题一次性丢给 AI）。<br>
+      今晚被占用？没关系——每张日卡都有 <b style="color:var(--red)">底线版</b>，30 分钟内可完成，挪到明天上班番茄块补。</div>
+    </div>
+    <div class="slot">
+      <div class="t">🧠 最低保障：每天哪怕只有 30 分钟</div>
+      <div class="d">顺序固定：<b>① 早通勤回响背诵份</b> → <b>② 重做 3 道错题</b> → 有余力才碰新内容。
+      复习永远优先于学新；漏掉的新内容按日卡顺延，<b>绝不熬夜补、绝不两份并一天背</b>。</div>
+    </div>
+  </div>
+
+  <h2>二、遇到卡壳的三条规则（贴在屏幕边上）</h2>
+  <div class="card">
+    <div class="rule"><div class="n">1</div><div class="b">
+      <div class="h">三问分诊（10 秒决定要不要停）</div>
+      ① 这个关键词带 ★ 或课后题考它吗？不考 → 是兴趣点，进停车场。<br>
+      ② 答相关题需要"理解"还是"记住结论就够"？90% 是后者——背加粗句、做对题即达标。<br>
+      ③ 它是后面主线的地基吗？（如"主码/外码"要懂，"聚簇索引"一句话带过）
+    </div></div>
+    <div class="rule"><div class="n">2</div><div class="b">
+      <div class="h">问题停车场 + 每晚放风</div>
+      冒出的"到底为什么"只许 20 秒记一句话，立刻回主线。晚上用 10 分钟放风时间一次性问 AI。
+      某问题<b>第二次</b>冒出 → 破例深入 5 分钟，让 AI 讲到底并拉回主线。
+    </div></div>
+    <div class="rule"><div class="n">3</div><div class="b">
+      <div class="h">"学到位"的唯一判据</div>
+      合上讲义，本节的考题<b>连对 2 道</b> → 过关走人；错 → 回读对应小节再战。
+      不由"我觉得懂没懂"定义，由题目正确率定义。做对的题不再看，<b>错题是唯一的复习真源</b>。
+    </div></div>
+  </div>
+
+  <h2>三、13 天日卡（点击勾选，自动保存在本机浏览器）</h2>
+  <div id="days"></div>
+
+  <h2>四、背诵日历速查（9 份 · 每份 ≤15 分钟）</h2>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <tr><th>份</th><th>内容（去对应课找加粗结论/表格）</th><th>学新日（晚通勤）</th><th>回响安排（早通勤）</th></tr>
+      <tr><td>P1</td><td>10 著作权：保护期、合理使用 vs 侵权</td><td>10/11</td><td>10/12、10/14、10/20</td></tr>
+      <tr><td>P2</td><td>10 专利与商标期限、标准化代号</td><td>10/12</td><td>10/13、10/15、10/20</td></tr>
+      <tr><td>P3</td><td>08 加密体系：对称/非对称/摘要/数字签名</td><td>10/13</td><td>10/14、10/16、10/23</td></tr>
+      <tr><td>P4</td><td>08 病毒木马、攻击类型、防火墙</td><td>10/14</td><td>10/15、10/17、10/23</td></tr>
+      <tr><td>P5</td><td>11 专业英语高频术语表</td><td>10/15</td><td>10/16、10/18、10/23</td></tr>
+      <tr><td>P6</td><td>11 英语题答题套路（先看选项词性）</td><td>10/16</td><td>10/17、10/19、10/23</td></tr>
+      <tr><td>P7</td><td>12 可靠性公式、校验码（海明/循环）</td><td>10/17</td><td>10/18、10/23</td></tr>
+      <tr><td>P8</td><td>12 多媒体容量计算（图像/声音采样）</td><td>10/18</td><td>10/19、10/23</td></tr>
+      <tr><td>P9</td><td>12 排列组合速算 + 03 反不正当竞争收尾</td><td>10/19</td><td>10/20、10/23</td></tr>
+    </table>
+    <p class="note">回响规则：早通勤只过「昨天的新份 + 最久没见的份」，攒多了就顺延，永远不堆积。10/23 全部 9 份过最后一轮＝终审，此时大多能回忆，很快。</p>
+  </div>
+
+  <h2>五、AI 辅助的正确打开方式（四种，按省时间排序）</h2>
+  <div class="card">
+    <ol>
+      <li><b>卡壳即贴即问</b>："把这段换大白话＋一个生活例子重讲"。一个晦涩概念自己啃 30 分钟，AI 换讲法 3 分钟。讲解请求必须锚定到"这句话/这道题卡住了"，<b>不要说"把 XX 原理从头讲一遍"</b>。</li>
+      <li><b>发题号诊断错题</b>："02 课后考题第 5 题我错了"——AI 指出错在哪个概念，并加出 2 道同型题当场验证。蒙对和犹豫的题也值得发。</li>
+      <li><b>让 AI 出"考场速记纸"</b>：每课一页＝案例模板步骤＋口诀表＋3 个最易错点。最后 13 天你只需要 12 张纸，不是 137 页讲义。想要哪课的当场说。</li>
+      <li><b>费曼检验</b>：背完表格（内聚耦合七种等）向 AI 复述，让 AI 挑错。主动回忆 10 分钟 ＝ 重读 40 分钟。</li>
+    </ol>
+    <p class="note">❌ 禁止项：让 AI 替你做题；让 AI 长篇代读整课；用 AI 回答停车场里与考点无关的好奇心以外的问题（放风时间统一处理）。</p>
+  </div>
+
+  <h2>六、考前 48 小时与考试日</h2>
+  <div class="card">
+    <ul>
+      <li><b>10/23（终审日）</b>：错题本全部第三遍 → 4 张案例模板纸最后一次默写 → 9 份背诵终审。<b>不碰任何新内容。</b></li>
+      <li><b>考试当天早晨</b>：只看 4 张模板纸 + 错题本前 10 个高频项；不做新题、不讨论难题、不进考场前临时啃概念。</li>
+      <li><b>选择题考场策略</b>：三梯队背诵题（10/11/12/08）先秒掉；计算题圈出来留第二遍；<b>不确定的标记后跳过</b>，剩余时间回头。</li>
+      <li><b>案例考场策略</b>：先做最有把握的大题（按练习情况一般是：数据流图 → SQL/E-R → UML）；每道大题<b>前 2～3 小问通常送分</b>，先把送分空填满再攻难题；空白 = 0 分，写步骤分也要蹭模板。</li>
+    </ul>
+  </div>
+
+  <div class="footer">本页面勾选记录仅存于本机浏览器（localStorage），可随时"清空勾选"重开 · 生成于 2026-10-11 · 配套真源：软考学习/00-总览与进度.md</div>
+</div>
+
+<script>
+// 数据区：与学习计划.md 及 00-总览与进度.md 口径一致，日期为 2026/10
+const KIND_LABEL = { main: '主线', floor: '底线', mem: '新背', echo: '回响' };
+const DAYS = [
+  { d: 1, date: '10/11 周日', title: '收掉 02 数据库 · SQL（多给 1 小时的加量日）', tag: '加量日', tagClass: 'gold', links: [['SQL 讲义','/02-数据库系统/05-SQL.html'],['SQL 案例专攻','/02-数据库系统/07-案例题专攻.html'],['02 课后考题','/02-数据库系统/90-课后考题.html'],['著作权背诵','/10-标准化与知识产权/01-著作权与软件保护.html']], tasks: [
+    ['floor', 'SQL 案例六步模板过一遍 + 限时做 1 道案例 SQL（今天最低成就，任何时候都先保它）'],
+    ['main', '精读 05-SQL.md 高频★段（选择/连接/嵌套/分组）→ 合上书做 90 页 SQL 相关选择题'],
+    ['main', '07-案例题专攻.md：SQL 大题 2 道（第一道开卷照模板，第二道合卷）'],
+    ['mem', '晚通勤 P1 新背：著作权保护期、合理使用 vs 侵权（10 课加粗结论）'],
+    ['echo', '睡前 3 行日复盘：今天学到／错因三选一／明天第一件事']
+  ]},
+  { d: 2, date: '10/12 周一', title: '02 数据库收尾 · E-R 与范式', links: [['E-R 模型','/02-数据库系统/02-E-R模型.html'],['关系代数','/02-数据库系统/03-关系代数.html'],['规范化','/02-数据库系统/04-关系规范化.html'],['专利商标背诵','/10-标准化与知识产权/02-专利商标与商业秘密.html']], tasks: [
+    ['floor', '重做昨日 SQL 错题 + 合卷默写模板步骤'],
+    ['main', 'E-R→关系模式转换：07 专攻 2 道 + 02-E-R模型.md 加粗结论'],
+    ['main', '关系代数 & 规范化：只做课后题高频题型（判断范式级别、并差交运算），原理推导不碰'],
+    ['mem', '晚通勤 P2 新背：专利与商标期限、标准化代号'],
+    ['echo', '早通勤回响 P1']
+  ]},
+  { d: 3, date: '10/13 周二', title: '03 软件工程 · 数据流图（案例第一题必考）', links: [['DFD 案例专攻','/03-软件工程基础/09-案例题专攻.html'],['需求分析与设计','/03-软件工程基础/02-需求分析与软件设计.html'],['加密体系背诵','/08-信息安全/01-安全目标与密码技术.html'],['摘要与签名','/08-信息安全/02-摘要签名与证书.html']], tasks: [
+    ['floor', '数据流图四大错误点清单背熟（漏加工/父图子图不平衡/数据存储缺/外部实体重复）'],
+    ['main', '03 案例题专攻：DFD 填空解题步骤 + 2 道真题风格题'],
+    ['main', '做完回 01-04 对应节补错因（只补错的那段，不重读）'],
+    ['mem', '晚通勤 P3 新背：加密体系 对称/非对称/摘要/数字签名'],
+    ['echo', '早通勤回响 P1、P2']
+  ]},
+  { d: 4, date: '10/14 周三', title: '03 收尾 · 表格背诵日', links: [['开发模型','/03-软件工程基础/01-软件开发模型与方法.html'],['软件测试','/03-软件工程基础/04-软件测试.html'],['耦合内聚','/03-软件工程基础/03-模块化设计.html'],['攻击防火墙背诵','/08-信息安全/03-防火墙攻击与恶意代码.html']], tasks: [
+    ['floor', '内聚耦合七级表默写 1 张纸（遮纸回忆，错的字标红）'],
+    ['main', '开发模型 / 测试策略：读加粗结论 → 做 03 课后题对应题号'],
+    ['main', '软件维护、CASE、敏捷等零碎结论快扫'],
+    ['mem', '晚通勤 P4 新背：病毒木马、攻击类型、防火墙'],
+    ['echo', '早通勤回响 P2、P3']
+  ]},
+  { d: 5, date: '10/15 周四', title: '04 面向对象 · UML 案例专攻', links: [['UML 案例专攻','/04-面向对象与设计模式/07-案例题专攻.html'],['UML 结构图','/04-面向对象与设计模式/03-UML结构图.html'],['UML 行为交互图','/04-面向对象与设计模式/04-UML行为与交互图.html'],['英语术语背诵','/11-专业英语/02-软件工程高频词.html']], tasks: [
+    ['floor', 'UML 符号速查表（类图关系五种箭头 + 用例图要素）认全'],
+    ['main', '04 案例题专攻：类图/用例/活动图 2 道 + 多重度计算'],
+    ['main', '04-面向对象基础 高频选择题小批（上班番茄块）'],
+    ['mem', '晚通勤 P5 新背：专业英语高频术语表'],
+    ['echo', '早通勤回响 P3、P4']
+  ]},
+  { d: 6, date: '10/16 周五', title: '04 收尾 · 设计模式识别特征', links: [['设计模式框架','/04-面向对象与设计模式/05-设计模式框架.html'],['高频设计模式','/04-面向对象与设计模式/06-高频设计模式.html'],['英语答题套路','/11-专业英语/01-五步解题法.html']], tasks: [
+    ['floor', '23 模式表只看"识别特征"列，挑 5 个高频（单例/观察者/工厂/策略/适配器）'],
+    ['main', '设计模式选择题 1 批 + 错题回讲义'],
+    ['main', '04 剩余：OO 原则、SOLID 加粗结论'],
+    ['mem', '晚通勤 P6 新背：英语题答题套路（固定 5 题、先看选项词性）'],
+    ['echo', '早通勤回响 P4、P5']
+  ]},
+  { d: 7, date: '10/17 周日', title: '半程复盘 + 05 操作系统计算专攻', tag: '复盘日', tagClass: 'green', links: [['PV 操作','/05-操作系统/02-进程调度与PV操作.html'],['页式存储','/05-操作系统/04-存储管理与页面置换.html'],['磁盘调度','/05-操作系统/06-设备管理与计算专题.html'],['可靠性背诵','/09-计算机系统基础/06-流水线与可靠性.html'],['校验码背诵','/09-计算机系统基础/07-校验码.html']], tasks: [
+    ['floor', '只复盘：重做 D1–D6 全部错题（合上答案重算，≥70% 对才算过关）'],
+    ['main', '05 操作系统：PV 操作、页式地址、磁盘调度 各动手算 2 题（看懂≠会算，必须拿笔）'],
+    ['main', '银行家/进程状态：只背结论'],
+    ['mem', '晚通勤 P7 新背：可靠性公式、海明/循环校验码'],
+    ['echo', '早通勤回响 P5、P6 + P1（7 天档）']
+  ]},
+  { d: 8, date: '10/18 周一', title: '06 计算机网络 · 计算专攻', links: [['子网划分','/06-计算机网络/03-子网划分.html'],['CIDR 聚合','/06-计算机网络/04-CIDR与路由聚合.html'],['分层模型','/06-计算机网络/01-网络分层模型.html'],['图像容量背诵','/12-数学与多媒体/03-多媒体与图像容量.html'],['音视频容量','/12-数学与多媒体/04-音视频容量与颜色空间.html']], tasks: [
+    ['floor', '子网划分 1 题闭卷手算（掩码/可用主机数/广播地址三件套）'],
+    ['main', '子网划分 4 题 + TCP/IP 各层协议结论表快扫'],
+    ['main', '06 课后选择题小批（工作番茄块）'],
+    ['mem', '晚通勤 P8 新背：多媒体容量计算'],
+    ['echo', '早通勤回响 P6、P7 + P2（7 天档）']
+  ]},
+  { d: 9, date: '10/19 周二', title: '07 程序语言 + 09 计算机系统 · 纯结论日', links: [['编译阶段','/07-程序设计语言基础/02-编译阶段.html'],['文法与推导','/07-程序设计语言基础/04-文法与推导.html'],['Cache 计算','/09-计算机系统基础/03-Cache.html'],['排列组合背诵','/12-数学与多媒体/01-计数与概率.html']], tasks: [
+    ['floor', '07 只背：文法识别特征、传值/传址、编译各阶段特征表'],
+    ['main', '09 只背加粗结论 + Cache/流水线 各手算 1 题；浮点规格化推导放弃，记结论即可'],
+    ['main', '07/09 课后题只做"再认级"，计算级挑 3 道'],
+    ['mem', '晚通勤 P9 新背：排列组合速算 + 反不正当竞争'],
+    ['echo', '早通勤回响 P7、P8']
+  ]},
+  { d: 10, date: '10/20 周日', title: '全量错题回炉 + 4 张案例模板默写', tag: '复盘日', tagClass: 'green', links: [['错题本','/interactive/mistake-book/index.html'],['SQL/E-R 模板','/02-数据库系统/07-案例题专攻.html'],['DFD 模板','/03-软件工程基础/09-案例题专攻.html'],['UML 模板','/04-面向对象与设计模式/07-案例题专攻.html']], tasks: [
+    ['floor', '错题本快速翻一遍，标记"还不会"的题（今天重点就是它们）'],
+    ['main', '案例模板纸默写 4 张：DFD / SQL+E-R / UML / 算法套路（合卷默，错处回专攻节重看）'],
+    ['main', '"还不会"错题全部重做'],
+    ['mem', '晚通勤：无新份，开始每天回响 2 份旧份'],
+    ['echo', '早通勤回响 P1、P2']
+  ]},
+  { d: 11, date: '10/21 周一', title: '模拟卷 · 上午题（75 选择限时 90′）', links: [['上午卷·上','/99-考前全真模拟卷/01-上午卷上.html'],['上午卷·下','/99-考前全真模拟卷/02-上午卷下.html'],['上午答案解析','/99-考前全真模拟卷/90-上午卷答案与解析.html']], tasks: [
+    ['floor', '今晚不行就拆两半：上班番茄块做前 45 题（严格每题 70 秒）'],
+    ['main', '99-考前全真模拟卷：75 选择一次完整限时（下班状态好的时段，手机静音）'],
+    ['main', '对答案：每题标 错因三选一；统计三梯队背诵题正确率（那是最该先拿满的分）'],
+    ['echo', '早通勤回响 P3、P4 + 昨旧份'],
+    ['mem', '晚通勤放风：错题里的概念疑问一次性问 AI']
+  ]},
+  { d: 12, date: '10/22 周二', title: '模拟卷 · 下午案例 5 题限时 120′', links: [['案例一至三','/99-考前全真模拟卷/04-下午卷案例一至三.html'],['案例四五','/99-考前全真模拟卷/05-下午卷案例四至五.html'],['下午答案评分点','/99-考前全真模拟卷/91-下午卷答案与评分点.html']], tasks: [
+    ['floor', '案例先做 DFD+SQL 两道保底（这两题模板已练 10 天，必拿 20+）'],
+    ['main', '剩余案例题限时完成 + 对答案'],
+    ['main', '把模拟卷全部错题发 AI："诊断错因 + 各出 2 道同型题"，当场验证'],
+    ['echo', '早通勤回响 P5、P6'],
+    ['mem', '晚通勤回响 P7、P8']
+  ]},
+  { d: 13, date: '10/23 周三', title: '终审日 · 只出不进', tag: '终审', tagClass: 'gold', links: [['错题本','/interactive/mistake-book/index.html'],['成绩诊断','/99-考前全真模拟卷/99-成绩诊断.html']], tasks: [
+    ['floor', '4 张案例模板纸最后一次默写（写不出的空 = 明早考场前列）'],
+    ['main', '9 份背诵全部终审：遮纸回忆，只有回忆不出的才看'],
+    ['main', '错题本第三遍：只做还错的'],
+    ['echo', '早睡。今晚起不碰任何新内容'],
+    ['mem', '考场物品与路线确认（身份证/准考证/到达时间）']
+  ]}
+];
+
+const KEY = 'ruskprint-sprint-plan-v1';
+
+// 讲义路由 → 可点击地址。三种打开方式都能跳对：
+// 1) 构建站点或本地预览（http(s) 下路径含 /interactive/）：定位站点根再拼路由，自动兼容 /ruankao/ base；
+// 2) 离线双击 docs/interactive/ 下的产物：pathname 前缀是 …/docs/，同样直接拼绝对路径；
+// 3) 离线双击源码目录 interactive/：回退到仓库内 ../../docs/ 产物；
+// 4) 指向其他 interactive 页（如错题本）：用 ../ 相对路径，各目录结构下都成立。
+function hrefFor(route) {
+  if (route.startsWith('/interactive/')) return '../' + route.slice('/interactive/'.length);
+  const p = decodeURIComponent(location.pathname);
+  const i = p.indexOf('/interactive/');
+  const http = location.protocol === 'http:' || location.protocol === 'https:';
+  const rooted = i >= 0 && (http || p.slice(0, i + 1).endsWith('/docs/'));
+  return (rooted ? p.slice(0, i + 1) : '../../docs/') + route.slice(1);
+}
+document.querySelectorAll('[data-route]').forEach(a => {
+  a.href = hrefFor(a.getAttribute('data-route'));
+});
+
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { state = {}; }
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* 隐私模式静默 */ }
+}
+
+const daysEl = document.getElementById('days');
+function render() {
+  daysEl.innerHTML = '';
+  DAYS.forEach(day => {
+    const el = document.createElement('div');
+    el.className = 'day';
+    const done = day.tasks.filter((_, i) => state[day.d + '.' + i]).length;
+    const tagHtml = day.tag ? ` <span class="tag ${day.tagClass || ''}">${day.tag}</span>` : '';
+    const jumpsHtml = (day.links || []).length
+      ? `<div class="jumps"><span class="lab">直达讲义：</span>${day.links
+          .map(l => `<a class="jump" href="${hrefFor(l[1])}" target="_blank" rel="noopener">${l[0]}</a>`)
+          .join('')}</div>`
+      : '';
+    el.innerHTML = `
+      <div class="dayhead">
+        <span class="num">D${day.d}</span>
+        <span class="date">${day.date}</span>
+        <span class="title">${day.title}</span>${tagHtml}
+        <span class="sub" style="margin-left:auto">${done}/${day.tasks.length}</span>
+      </div>
+      ${jumpsHtml}
+      <div class="tasks"></div>`;
+    const box = el.querySelector('.tasks');
+    day.tasks.forEach((t, i) => {
+      const id = day.d + '.' + i;
+      const checked = !!state[id];
+      const row = document.createElement('div');
+      row.className = 'task' + (checked ? ' done' : '');
+      row.innerHTML = `
+        <input type="checkbox" id="cb-${id}" ${checked ? 'checked' : ''}>
+        <span class="kind ${t[0]}">${KIND_LABEL[t[0]]}</span>
+        <label for="cb-${id}">${t[1]}</label>`;
+      row.querySelector('input').addEventListener('change', e => {
+        if (e.target.checked) state[id] = 1; else delete state[id];
+        save(); render();
+      });
+      box.appendChild(row);
+    });
+    daysEl.appendChild(el);
+  });
+  updateOverall();
+}
+
+function updateOverall() {
+  const total = DAYS.reduce((s, d) => s + d.tasks.length, 0);
+  const done = DAYS.reduce((s, d) => s + d.tasks.filter((_, i) => state[d.d + '.' + i]).length, 0);
+  document.getElementById('overallbar').style.width = (total ? (done / total * 100) : 0) + '%';
+  document.getElementById('overallabel').textContent = `总完成度 ${done} / ${total}`;
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const exam = new Date(2026, 9, 24, 8, 30, 0); // 10/24 上午场
+  const ms = exam - now;
+  const el = document.getElementById('countdown');
+  if (ms <= 0) {
+    el.innerHTML = '考试进行中 · 稳住模板与背诵，你已经练了 13 天';
+  } else {
+    el.innerHTML = `距首张考场还有 <b>${Math.ceil(ms / 86400000)}</b> 天`;
+  }
+}
+
+document.getElementById('resetbtn').addEventListener('click', () => {
+  if (confirm('确定清空全部勾选记录？')) { state = {}; save(); render(); }
+});
+
+updateCountdown();
+render();
+</script>
+</body>
+</html>
