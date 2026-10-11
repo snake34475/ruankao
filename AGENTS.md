@@ -43,9 +43,9 @@
 ## 构建、提交与推送
 
 - 默认不自动构建、提交或推送。用户分别明确要求后才执行对应动作；要求提交不等于要求构建或推送。
-- 构建时确认 136 个正文页面与 13 个旧入口兼容页完整；未构建时不把旧 `docs/` 当作本次内容的验收结果，也不将不同步的 `docs/` 纳入提交。
-- 本体仓库配置了双远端：`origin`（Gitee，gitee.com:wang-tengyao/ruankao-software-designer）与 `github`（GitHub，git@github.com:snake34475/ruankao.git）。
-- 用户明确要求推送时，先 `git push`（推 origin），再 `git push github main`，保持两个远端同步。
+- 构建时确认 137 个正文页面与 13 个旧入口兼容页完整（页数由 `tools/postbuild_vitepress.mjs` 从 `site-map` 动态汇总，真源增删页面后须同步更新本处与 `.agents/` 相关文件里的数字）；未构建时不把旧 `docs/` 当作本次内容的验收结果，也不将不同步的 `docs/` 纳入提交。
+- 本体仓库配置了双远端：`gitee`（Gitee，gitee.com:wang-tengyao/ruankao-software-designer）与 `github`（GitHub，git@github.com:snake34475/ruankao.git）。
+- 用户明确要求推送时，先 `git push`（推上游 `gitee/main`），再 `git push github main`，保持两个远端同步。
 
 ## 仓库结构
 

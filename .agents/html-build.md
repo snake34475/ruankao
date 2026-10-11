@@ -19,18 +19,18 @@
 - 当前页面、当前章节、已学状态和组内进度应从同一份结构数据推导。
 - 构建产物不请求 CDN 或外部字体。离线双击 `docs/index.html` 时静态正文与链接应可阅读；学习状态、搜索等脚本交互以 `npm run preview` 的本地服务验收。
 - **指向 `interactive/` 独立页的链接必须带 `target`（2026-10-09 测定的坑）**：`interactive/**` 是拷进 `public/` 的静态资产、**不是 VitePress 路由**。VitePress 的 client router 会拦截站内无 `target` 的链接并 `router.go` 到一个不存在的路由 → 点开就是 404（既有的绕轮廓链接因此长期失效）。修法写在 `.vitepress/config.mjs` 的 `markdown.config`：先调用原 `link_open`（即 VitePress 的 `linkPlugin`，由它补 base 前缀与登记链接），**再**给 href 含 `/interactive/` 的 token 加 `target="_blank"`。顺序不能反——`linkPlugin` 遇到已带 `target`/`download` 的 token 会跳过整个 href 处理（含 base），先加 target 会导致 base 丢失。nav/sidebar 想在配置里直链这类页面时，同样必须显式写 `target`。
-- `dev`（`npm run prepare-site && vitepress dev`）与 `build` 都会整目录拷贝 `interactive/` 进 `site-src/public/`，所以独立页在 dev 和构建产物里都在；它**不计入**「136 个正文页面」这个数。
+- `dev`（`npm run prepare-site && vitepress dev`）与 `build` 都会整目录拷贝 `interactive/` 进 `site-src/public/`，所以独立页在 dev 和构建产物里都在；它**不计入**「137 个正文页面」这个数。
 
 ## 本机构建环境注意（2026-10-08 实测定案）
 
 - **Git Bash 里必须用大写盘符进入仓库再构建**：`cd C:/Users/.../ruankao-software-designer` 后再 `npm run build`。若 cwd 是小写 `c:/`，VitePress 渲染阶段会报 `Cannot read properties of undefined (reading 'imports')`（bundle 内 `facadeModuleId` 是大写 `C:/`，与 `config.srcDir` 严格相等比较失败，全部页面找不到 chunk）。清 `.vitepress/cache` 无效，别往缓存方向排查。
 - **WorkBuddy 会话内构建需关闭删除保护壳**：prepare 脚本每次整删重建 `site-src`（约 140 个文件），会被批量删除确认拦截（后台运行直接抛 `SAFE_DELETE_BULK_CONFIRM_REQUIRED`）。用 `CODEBUDDY_SAFE_DELETE_ENABLED=0 npm run build` 跳过；`site-src` 是 gitignore 的生成目录，删除安全。
-- 构建成功标志：末行输出「验收：136 个正文页面，13 个旧入口兼容页」。
+- 构建成功标志：末行输出「验收：137 个正文页面，13 个旧入口兼容页」。
 
 ## 构建后验收
 
 1. 运行 `npm run build`，确认无错误。
-2. 确认 136 个正文页面、13 个兼容页、样式、脚本、数学公式和 `.nojekyll` 已生成。
+2. 确认 137 个正文页面、13 个兼容页、样式、脚本、数学公式和 `.nojekyll` 已生成。
 3. 检查所有站内页面和资源链接，没有断链；验证旧入口跳转。
 4. 至少以 1440、1140、880 三档宽度检查：三栏、两栏和移动抽屉布局。
 5. 额外检查一次深色主题。
