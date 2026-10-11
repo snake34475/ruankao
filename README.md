@@ -59,7 +59,7 @@
 │   ├── traversal-contour/       ← 二叉树遍历的交互演示（app.js / index.html / style.css）
 │   ├── normal-form/             ← 范式拆表手术室：1NF～BCNF 逐级诊断与拆表分步动画
 │   ├── mistake-book/            ← 错题本与知识图谱看板（独立页，app.js 里维护数据）
-│   └── sprint-plan/             ← 13 天冲刺执行规划（可勾选日卡 + 讲义直达索引，进度存本机）
+│   └── sprint-plan/             ← 13 天冲刺执行规划（可勾选日卡 + 讲义直达索引，进度存本机并支持云端同步多设备）
 ├── design/                      ← 设计组件样张与原型（设计确认用，不参与构建，不进 docs/）
 │   ├── styleguide.html          ← 设计组件样张
 │   └── traversal-contour/       ← 遍历演示的原型预览（preview.html）
