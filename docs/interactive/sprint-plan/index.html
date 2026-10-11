@@ -175,9 +175,43 @@
     border-radius: 10px; padding: 12px 16px; font-size: 13.5px; margin: 14px 0;
   }
   .footer { text-align: center; color: var(--faint); font-size: 12px; margin-top: 40px; }
+  /* 云端同步 */
+  .sync-chip {
+    font-size: 12.5px; color: var(--muted); cursor: pointer;
+    background: var(--surface-2); border: 1px solid var(--line-strong);
+    border-radius: 999px; padding: 3px 12px; white-space: nowrap;
+  }
+  .sync-chip.ok { color: var(--green); border-color: var(--green); }
+  .sync-chip.err { color: var(--red); border-color: var(--red); }
+  .sync-chip.busy { color: var(--accent); border-color: var(--accent); }
+  .modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    display: flex; align-items: center; justify-content: center; z-index: 10;
+  }
+  .modal[hidden] { display: none; }
+  .modal-box {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 22px; width: min(520px, calc(100vw - 32px));
+    max-height: 80vh; overflow: auto; box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  }
+  .modal-box h3 { margin: 0 0 10px; color: var(--ink-strong); font-size: 16px; }
+  .modal-box label { display: block; font-size: 12.5px; color: var(--muted); margin: 10px 0 3px; }
+  .modal-box input {
+    width: 100%; padding: 7px 10px; border: 1px solid var(--line-strong);
+    border-radius: 8px; background: var(--bg); color: var(--ink); font-size: 13px;
+  }
+  .modal-box .btn { margin: 4px 8px 0 0; }
+  .modal-box .btn.primary {
+    background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+  }
+  .modal-box .btn.primary:hover { color: var(--accent-ink); opacity: .88; }
+  .sync-msg { font-size: 12.5px; min-height: 18px; margin-top: 10px; color: var(--muted); }
+  .sync-msg.err { color: var(--red); }
+  .sync-msg.ok { color: var(--green); }
+  .sync-help { font-size: 12px; color: var(--faint); margin-top: 12px; line-height: 1.6; }
   @media print {
     body { background: #fff; }
-    .btn, .daybar { display: none; }
+    .btn, .daybar, .sync-chip, .modal { display: none; }
     .day { break-inside: avoid; }
   }
 </style>
@@ -196,6 +230,7 @@
       <div class="bar-label" id="overallabel">总完成度 0 / 0</div>
     </div>
     <button class="btn" id="resetbtn" type="button">清空勾选</button>
+    <span class="sync-chip" id="syncchip" role="button" tabindex="0" title="配置云端同步">☁ 云端同步</span>
   </div>
 
   <div class="hint">
@@ -248,7 +283,7 @@
     </div></div>
   </div>
 
-  <h2>三、13 天日卡（点击勾选，自动保存在本机浏览器）</h2>
+  <h2>三、13 天日卡（点击勾选，保存在本机；配置云端同步后多设备自动同步）</h2>
   <div id="days"></div>
 
   <h2>四、背诵日历速查（9 份 · 每份 ≤15 分钟）</h2>
@@ -289,7 +324,34 @@
     </ul>
   </div>
 
-  <div class="footer">本页面勾选记录仅存于本机浏览器（localStorage），可随时"清空勾选"重开 · 生成于 2026-10-11 · 配套真源：软考学习/00-总览与进度.md</div>
+  <div class="footer">勾选记录保存在本机浏览器（localStorage）；配置云端同步后同时同步到 JSONBin 云端，可随时"清空勾选"或导出/导入 JSON · 生成于 2026-10-11 · 配套真源：软考学习/00-总览与进度.md</div>
+</div>
+
+<div class="modal" id="syncmodal" hidden>
+  <div class="modal-box">
+    <h3>云端同步设置（JSONBin.io）</h3>
+    <label for="sync-key">Access Key（只存本机浏览器，不会上传到任何代码仓库）</label>
+    <input type="password" id="sync-key" placeholder="粘贴 JSONBin 的 read+update Access Key" autocomplete="off">
+    <label for="sync-bin">Bin ID</label>
+    <input type="text" id="sync-bin" placeholder="例如 6acb855c…" autocomplete="off">
+    <div>
+      <button class="btn primary" id="sync-save" type="button">保存并同步</button>
+      <button class="btn" id="sync-off" type="button">解除云端同步</button>
+      <button class="btn" id="sync-close" type="button">关闭</button>
+    </div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+    <div>
+      <button class="btn" id="sync-pull" type="button">拉取云端（覆盖本机）</button>
+      <button class="btn" id="sync-push" type="button">上传本机（覆盖云端）</button>
+    </div>
+    <div>
+      <button class="btn" id="sync-export" type="button">导出 JSON 备份</button>
+      <button class="btn" id="sync-import" type="button">导入 JSON 备份</button>
+      <input type="file" id="sync-file" accept=".json,application/json" hidden>
+    </div>
+    <div class="sync-msg" id="sync-msg"></div>
+    <p class="sync-help">同步策略：以更新时间为准，打开页面自动取较新一方；每次勾选后延迟 1.5 秒自动上传（JSONBin 免费档限流约 10 次/分钟）。云端挂了不影响使用——本机 localStorage 始终有完整副本，导出的 JSON 可随时导入任何设备。</p>
+  </div>
 </div>
 
 <script>
@@ -408,12 +470,19 @@ document.querySelectorAll('[data-route]').forEach(a => {
   a.href = hrefFor(a.getAttribute('data-route'));
 });
 
-let state = {};
-try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { state = {}; }
+// 本机状态带更新时间戳（env:1 信封），与云端做「谁新用谁」仲裁；旧版裸对象自动兼容
+let state = {}, localAt = 0;
+try {
+  const raw = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if (raw && raw.env === 1) { state = raw.state || {}; localAt = raw.updatedAt || 0; }
+  else state = raw;
+} catch (e) { state = {}; }
 
-function save() {
-  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* 隐私模式静默 */ }
+function persist(at) {
+  localAt = at;
+  try { localStorage.setItem(KEY, JSON.stringify({ env: 1, updatedAt: at, state })); } catch (e) { /* 隐私模式静默 */ }
 }
+function save() { persist(Date.now()); schedulePush(); }
 
 const daysEl = document.getElementById('days');
 function render() {
@@ -481,8 +550,162 @@ document.getElementById('resetbtn').addEventListener('click', () => {
   if (confirm('确定清空全部勾选记录？')) { state = {}; save(); render(); }
 });
 
+// ===== 云端同步（JSONBin.io v3） =====
+// CLOUD_EMBEDDED_KEY 非空时，所有设备打开页面即自动云端同步，无需逐台填 key。
+// 注意：写进来的 key 会随页面源码公开（本仓库是公开仓库），只应放 read+update 权限的专用 key，
+// 且该 JSONBin 账号只放这份数据；泄露最坏后果是勾选记录被覆盖，可用版本历史/导出备份恢复。
+const CLOUD_EMBEDDED_KEY = '$2a$10$dz8fzFg3FBxEYRHpTCWgneKysb4EiSUW8qehpe5mORGd8HciaRAgG';
+const CLOUD_CFG_KEY = 'ruskprint-sprint-cloud-v1';
+const CLOUD_DEFAULT_BIN = '6acb855cffd5d160536166d7';
+let cloud = null;
+try { cloud = JSON.parse(localStorage.getItem(CLOUD_CFG_KEY) || 'null'); } catch (e) { cloud = null; }
+if (cloud && cloud.off) cloud = null;                    // 本机手动选择"解除云端同步"
+else if (!cloud && CLOUD_EMBEDDED_KEY) cloud = { key: CLOUD_EMBEDDED_KEY, binId: CLOUD_DEFAULT_BIN };
+if (cloud && !cloud.binId) cloud.binId = CLOUD_DEFAULT_BIN;
+let pushTimer = null;
+
+const chipEl = document.getElementById('syncchip');
+const modalEl = document.getElementById('syncmodal');
+const msgEl = document.getElementById('sync-msg');
+const keyEl = document.getElementById('sync-key');
+const binEl = document.getElementById('sync-bin');
+function chip(text, cls) {
+  chipEl.textContent = text;
+  chipEl.className = 'sync-chip' + (cls ? ' ' + cls : '');
+}
+function say(text, cls) { msgEl.textContent = text; msgEl.className = 'sync-msg' + (cls ? ' ' + cls : ''); }
+function fmtAt(ts) {
+  const d = new Date(ts);
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getMonth() + 1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function cloudReady() { return !!(cloud && cloud.key && cloud.binId); }
+function cloudApi(method, body) {
+  const url = 'https://api.jsonbin.io/v3/b/' + cloud.binId + (method === 'GET' ? '/latest' : '');
+  return fetch(url, {
+    method,
+    headers: { 'X-Access-Key': cloud.key, 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  });
+}
+function schedulePush() {
+  if (!cloudReady()) return;
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(pushNow, 1500);
+}
+function pushNow() {
+  chip('☁ 同步中…', 'busy');
+  cloudApi('PUT', { updatedAt: localAt, state })
+    .then(() => chip('☁ 已同步 ' + fmtAt(localAt), 'ok'))
+    .catch(e => chip('☁ 同步失败（本机副本已保留）', 'err'));
+}
+// 打开页面时仲裁：云端更新则拉取，本机更新则上传，一致则不动
+function cloudInit() {
+  if (!cloudReady()) { chip('☁ 云端同步（未配置）', ''); return Promise.resolve(); }
+  chip('☁ 连接云端…', 'busy');
+  return cloudApi('GET').then(res => {
+    const rec = (res && res.record) || {};
+    const cloudAt = rec.updatedAt || 0;
+    if (cloudAt > localAt) {
+      state = rec.state || {};
+      persist(cloudAt);
+      render();
+      chip('☁ 已拉取云端 ' + fmtAt(cloudAt), 'ok');
+    } else if (cloudAt < localAt) {
+      return cloudApi('PUT', { updatedAt: localAt, state })
+        .then(() => chip('☁ 已同步 ' + fmtAt(localAt), 'ok'));
+    } else {
+      chip(cloudAt ? '☁ 已同步 ' + fmtAt(cloudAt) : '☁ 已连接（暂无记录）', 'ok');
+    }
+  }).catch(e => chip('☁ 云端不可用（' + e.message + '）· 使用本机数据', 'err'));
+}
+
+function openModal() {
+  keyEl.value = cloudReady() ? cloud.key : '';
+  binEl.value = (cloud && cloud.binId) || CLOUD_DEFAULT_BIN;
+  say('');
+  modalEl.hidden = false;
+}
+function closeModal() { modalEl.hidden = true; }
+chipEl.addEventListener('click', openModal);
+chipEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
+modalEl.addEventListener('click', e => { if (e.target === modalEl) closeModal(); });
+document.getElementById('sync-close').addEventListener('click', closeModal);
+
+document.getElementById('sync-save').addEventListener('click', () => {
+  const key = keyEl.value.trim();
+  const bin = binEl.value.trim() || CLOUD_DEFAULT_BIN;
+  if (!key) { say('请先粘贴 Access Key', 'err'); return; }
+  cloud = { key, binId: bin };
+  try { localStorage.setItem(CLOUD_CFG_KEY, JSON.stringify(cloud)); } catch (e) { say('本机存储不可用，无法保存 key', 'err'); return; }
+  say('已保存，开始同步…');
+  cloudInit().then(closeModal);
+});
+document.getElementById('sync-off').addEventListener('click', () => {
+  if (!confirm('解除云端同步？云端与本机的数据都不会删除，之后这台设备的勾选只保存在本机。')) return;
+  cloud = null;
+  try { localStorage.setItem(CLOUD_CFG_KEY, JSON.stringify({ off: 1 })); } catch (e) {}
+  chip('☁ 云端同步（本机已停用）', '');
+  say('已解除云端同步', 'ok');
+});
+document.getElementById('sync-pull').addEventListener('click', () => {
+  if (!cloudReady()) { say('尚未配置云端同步', 'err'); return; }
+  if (!confirm('直接用云端数据覆盖本机勾选记录？')) return;
+  cloudApi('GET').then(res => {
+    const rec = (res && res.record) || {};
+    state = rec.state || {};
+    persist(rec.updatedAt || Date.now());
+    render();
+    chip('☁ 已拉取云端 ' + fmtAt(localAt), 'ok');
+    say('已拉取云端数据', 'ok');
+  }).catch(e => say('拉取失败：' + e.message + '（检查 key 与 bin ID）', 'err'));
+});
+document.getElementById('sync-push').addEventListener('click', () => {
+  if (!cloudReady()) { say('尚未配置云端同步', 'err'); return; }
+  if (!confirm('直接用本机勾选覆盖云端数据？')) return;
+  persist(Date.now());
+  pushNow();
+  say('已上传本机数据', 'ok');
+});
+document.getElementById('sync-export').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({ exportedAt: Date.now(), state }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ruankao-sprint-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  say('已导出备份文件', 'ok');
+});
+document.getElementById('sync-import').addEventListener('click', () => document.getElementById('sync-file').click());
+document.getElementById('sync-file').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const obj = JSON.parse(reader.result);
+      const imported = obj && obj.state ? obj.state : obj;
+      if (!imported || typeof imported !== 'object') throw new Error('bad json');
+      if (!confirm('导入 ' + Object.keys(imported).length + ' 条勾选记录，覆盖当前本机状态？')) { e.target.value = ''; return; }
+      state = imported;
+      persist(Date.now());
+      render();
+      schedulePush();
+      say('导入完成' + (cloudReady() ? '，正在上传云端' : ''), 'ok');
+    } catch (err2) {
+      say('文件不是有效的备份 JSON', 'err');
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(f);
+});
+
 updateCountdown();
 render();
+cloudInit();
 </script>
 </body>
 </html>
