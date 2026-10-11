@@ -81,3 +81,9 @@
 - **它是静态资产，不计入 136 个正文页面**。dev 和 build 都由 prepare 整目录拷进 `site-src/public/`，所以两处都能打开；入口三处：`.vitepress/config.mjs` 的 `nav`＋`sidebar` 总览组、`软考学习/00-总览与进度.md` 学习方法说明。增删这类页**不动**正文页面计数，别去改那个 136。
 - **所有指向 `interactive/` 的站内链接必须带 `target`**，否则被 VitePress client router 拦成 404（2026-10-09 发现既有绕轮廓链接已长期失效）。修法在 `.vitepress/config.mjs` 的 `markdown.config`：先跑原 `link_open`（VitePress `linkPlugin` 补 base）再加 `target`，顺序反了会丢 base。细节见 `.agents/html-build.md`。
 - 记录约定：错题条目要写「我的答案 / 正确答案 / 错因（指向具体规则）/ 知识点/下次回炉」；错因只说现象不算过关。
+
+## 冲刺规划云端进度同步（2026-10-11 建立，代码在 feature/sprint-plan-sync 分支）
+
+- `interactive/sprint-plan/index.html` 支持 JSONBin 云端同步（多设备共享勾选）。**AI 可直接读云端跟踪进度**：bin ID `6acb855cffd5d160536166d7`，Access Key（read+update）内嵌于该文件的 `CLOUD_EMBEDDED_KEY` 常量（以源码现值为准，勿复制）。读取：`curl https://api.jsonbin.io/v3/b/<binId>/latest -H "X-Access-Key: <key>"`。
+- `record.state` 的键为 `日.任务下标`（对应页面 `DAYS` 数组，如 `"1.0"`～`"1.4"` 是 D1 的 5 条）；`record.updatedAt` 是毫秒时间戳。与 `00-总览与进度.md` 的 checkbox 是两套并行口径：云端只管冲刺日卡勾选，不替代进度表真源。
+- 免费档限流：约 10 请求/分钟/账号、10,000 请求/月；JSONBin 保留每 bin 1000 个历史版本，被覆盖可回滚。key 泄露的最坏后果是本 bin 被覆盖，账号内不放其他数据。
