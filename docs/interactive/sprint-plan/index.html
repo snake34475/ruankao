@@ -229,7 +229,6 @@
       <div class="bar"><i id="overallbar"></i></div>
       <div class="bar-label" id="overallabel">总完成度 0 / 0</div>
     </div>
-    <button class="btn" id="resetbtn" type="button">清空勾选</button>
     <span class="sync-chip" id="syncchip" role="button" tabindex="0" title="配置云端同步">☁ 云端同步</span>
   </div>
 
@@ -324,7 +323,7 @@
     </ul>
   </div>
 
-  <div class="footer">勾选记录保存在本机浏览器（localStorage）；配置云端同步后同时同步到 JSONBin 云端，可随时"清空勾选"或导出/导入 JSON · 生成于 2026-10-11 · 配套真源：软考学习/00-总览与进度.md</div>
+  <div class="footer">勾选记录保存在本机浏览器（localStorage）；配置云端同步后同时同步到 JSONBin 云端，可导出/导入 JSON 备份（页面无一键清空入口，防误操作） · 生成于 2026-10-11 · 配套真源：软考学习/00-总览与进度.md</div>
 </div>
 
 <div class="modal" id="syncmodal" hidden>
@@ -350,7 +349,7 @@
       <input type="file" id="sync-file" accept=".json,application/json" hidden>
     </div>
     <div class="sync-msg" id="sync-msg"></div>
-    <p class="sync-help">同步策略：以更新时间为准，打开页面自动取较新一方；每次勾选后延迟 1.5 秒自动上传（JSONBin 免费档限流约 10 次/分钟）。云端挂了不影响使用——本机 localStorage 始终有完整副本，导出的 JSON 可随时导入任何设备。</p>
+    <p class="sync-help">同步策略：以更新时间为准，打开页面自动取较新一方；每次勾选后延迟 1.5 秒自动上传（JSONBin 免费档限流约 10 次/分钟）。保护规则：云端为空而本机有记录时不会静默覆盖，会用本机数据回传恢复云端；手动"拉取/上传"覆盖前都需两次确认。云端挂了不影响使用——本机 localStorage 始终有完整副本，导出的 JSON 可随时导入任何设备。</p>
   </div>
 </div>
 
@@ -470,12 +469,13 @@ document.querySelectorAll('[data-route]').forEach(a => {
   a.href = hrefFor(a.getAttribute('data-route'));
 });
 
-// 本机状态带更新时间戳（env:1 信封），与云端做「谁新用谁」仲裁；旧版裸对象自动兼容
-let state = {}, localAt = 0;
+// 本机状态带更新时间戳（env:1 信封），与云端做「谁新用谁」仲裁；旧版裸对象自动兼容。
+// legacy：升级前旧版（无时间戳）且有记录——这类数据绝不能被云端静默覆盖，仲裁时取并集合并。
+let state = {}, localAt = 0, legacy = false;
 try {
   const raw = JSON.parse(localStorage.getItem(KEY) || '{}');
   if (raw && raw.env === 1) { state = raw.state || {}; localAt = raw.updatedAt || 0; }
-  else state = raw;
+  else { state = (raw && typeof raw === 'object') ? raw : {}; legacy = Object.keys(state).length > 0; }
 } catch (e) { state = {}; }
 
 function persist(at) {
@@ -546,9 +546,9 @@ function updateCountdown() {
   }
 }
 
-document.getElementById('resetbtn').addEventListener('click', () => {
-  if (confirm('确定清空全部勾选记录？')) { state = {}; save(); render(); }
-});
+// 「清空勾选」按钮已于 2026-10-12 移除：一次误点会把空状态自动上传云端，
+// 其他设备打开页面再被"云端较新"规则静默清空，是本次全量勾选丢失的直接路径。
+// 如需重置：逐条取消勾选，或"导出备份 → 导入空 JSON"。
 
 // ===== 云端同步（JSONBin.io v3） =====
 // CLOUD_EMBEDDED_KEY 非空时，所有设备打开页面即自动云端同步，无需逐台填 key。
@@ -602,19 +602,51 @@ function pushNow() {
     .then(() => chip('☁ 已同步 ' + fmtAt(localAt), 'ok'))
     .catch(e => chip('☁ 同步失败（本机副本已保留）', 'err'));
 }
-// 打开页面时仲裁：云端更新则拉取，本机更新则上传，一致则不动
+// 打开页面时仲裁。保护规则（2026-10-12 空云端覆盖事故后加入）：
+// 1) 云端是空记录而本机有记录 → 绝不拉取覆盖本机，反向把本机回传恢复云端；
+// 2) 本机是旧版（无时间戳）且有记录、云端也有记录 → 取并集合并后回传，谁也不静默丢谁；
+// 3) 其余按更新时间谁新用谁。
 function cloudInit() {
   if (!cloudReady()) { chip('☁ 云端同步（未配置）', ''); return Promise.resolve(); }
   chip('☁ 连接云端…', 'busy');
   return cloudApi('GET').then(res => {
     const rec = (res && res.record) || {};
+    const cloudState = (rec.state && typeof rec.state === 'object') ? rec.state : {};
     const cloudAt = rec.updatedAt || 0;
+    const cloudCount = Object.keys(cloudState).length;
+    const localCount = Object.keys(state).length;
+    if (cloudCount === 0 && localCount > 0) {
+      if (legacy) { localAt = Date.now(); persist(localAt); }
+      legacy = false;
+      return cloudApi('PUT', { updatedAt: localAt, state })
+        .then(() => chip('☁ 云端为空，已保留本机 ' + localCount + ' 条并恢复云端', 'ok'))
+        .catch(() => chip('☁ 云端为空，本机 ' + localCount + ' 条已保留（恢复云端失败）', 'err'));
+    }
+    if (legacy && cloudCount > 0) {
+      state = Object.assign({}, cloudState, state);
+      persist(Date.now());
+      legacy = false;
+      render();
+      const merged = Object.keys(state).length;
+      return cloudApi('PUT', { updatedAt: localAt, state })
+        .then(() => chip('☁ 已合并本机旧版记录，共 ' + merged + ' 条', 'ok'))
+        .catch(() => chip('☁ 已在本地合并旧记录（回传云端失败）', 'err'));
+    }
     if (cloudAt > localAt) {
-      state = rec.state || {};
+      state = cloudState;
       persist(cloudAt);
       render();
       chip('☁ 已拉取云端 ' + fmtAt(cloudAt), 'ok');
     } else if (cloudAt < localAt) {
+      // 反向保护：本机为空而云端有数据时（例如云端刚从版本历史恢复旧记录），
+      // "空"没有资格凭时间戳静默覆盖云端，改为拉回云端数据恢复本机。
+      if (localCount === 0 && cloudCount > 0) {
+        state = cloudState;
+        persist(cloudAt);
+        render();
+        chip('☁ 本机为空，已恢复云端 ' + cloudCount + ' 条', 'ok');
+        return;
+      }
       return cloudApi('PUT', { updatedAt: localAt, state })
         .then(() => chip('☁ 已同步 ' + fmtAt(localAt), 'ok'));
     } else {
@@ -653,22 +685,30 @@ document.getElementById('sync-off').addEventListener('click', () => {
 });
 document.getElementById('sync-pull').addEventListener('click', () => {
   if (!cloudReady()) { say('尚未配置云端同步', 'err'); return; }
-  if (!confirm('直接用云端数据覆盖本机勾选记录？')) return;
   cloudApi('GET').then(res => {
     const rec = (res && res.record) || {};
-    state = rec.state || {};
+    const cs = (rec.state && typeof rec.state === 'object') ? rec.state : {};
+    const cloudCount = Object.keys(cs).length;
+    const localCount = Object.keys(state).length;
+    const warn = (cloudCount === 0 && localCount > 0)
+      ? '\n\n⚠ 云端是空记录！拉取会清空本机全部 ' + localCount + ' 条勾选。' : '';
+    if (!confirm('拉取云端（覆盖本机）：云端 ' + cloudCount + ' 条 → 替换本机现有 ' + localCount + ' 条。' + warn)) return;
+    if (!confirm('二次确认：覆盖后本机记录不会自动找回，建议先导出一份 JSON 备份。确定执行拉取？')) return;
+    state = cs;
     persist(rec.updatedAt || Date.now());
     render();
     chip('☁ 已拉取云端 ' + fmtAt(localAt), 'ok');
-    say('已拉取云端数据', 'ok');
+    say('已拉取云端数据（' + cloudCount + ' 条）', 'ok');
   }).catch(e => say('拉取失败：' + e.message + '（检查 key 与 bin ID）', 'err'));
 });
 document.getElementById('sync-push').addEventListener('click', () => {
   if (!cloudReady()) { say('尚未配置云端同步', 'err'); return; }
-  if (!confirm('直接用本机勾选覆盖云端数据？')) return;
+  const localCount = Object.keys(state).length;
+  if (!confirm('上传本机（覆盖云端）：本机 ' + localCount + ' 条将替换云端现有记录。')) return;
+  if (!confirm('二次确认：其他设备下次打开将以这份数据为准。确定上传？')) return;
   persist(Date.now());
   pushNow();
-  say('已上传本机数据', 'ok');
+  say('已上传本机数据（' + localCount + ' 条）', 'ok');
 });
 document.getElementById('sync-export').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify({ exportedAt: Date.now(), state }, null, 1)], { type: 'application/json' });
