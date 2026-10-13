@@ -28,7 +28,10 @@ for (const route of allRoutes) {
   if (!html.includes(`href="${prefix}figures.css?v=${figuresVersion}"`)) throw new Error(`图示样式引用路径或版本号错误：${route}`);
   // 对 HTML 中的资源和链接使用相对地址，兼容 GitHub Pages 子路径及离线静态阅读。
   // 交互仍由 VitePress 的 /ruankao/ base 在 HTTP 预览和线上站点中加载。
-  html = html.replace('</head>', `<script>document.addEventListener('click',function(e){const a=e.target.closest('a[href]');if(!a)return;const raw=a.getAttribute('href');if(!raw||raw.startsWith('#')||/^(?:https?:|mailto:|javascript:)/i.test(raw))return;const url=new URL(raw,location.href);if(url.protocol===location.protocol&&(url.pathname.endsWith('/')||url.pathname.endsWith('.html'))){e.preventDefault();location.assign(url.href)}},true)</script></head>`);
+  // 离线兜底只在 file:// 下启用：此时部分浏览器仍会加载 app 模块，client router 会拿相对 href 去 fetch 不存在
+  // 的 /ruankao/ chunk 而 404，需强制真实跳转。HTTP（GitHub Pages / preview / dev）必须交给 VitePress 的
+  // SPA 路由，否则整页刷新会重置滚动位置并重放 head 的 check-dark-mode → 每次点目录都闪主题（2026-10-13 修正）。
+  html = html.replace('</head>', `<script>if(location.protocol==='file:')document.addEventListener('click',function(e){const a=e.target.closest('a[href]');if(!a||a.hasAttribute('target')||a.hasAttribute('download'))return;const raw=a.getAttribute('href');if(!raw||raw.startsWith('#')||/^(?:https?:|mailto:|javascript:)/i.test(raw))return;const url=new URL(raw,location.href);if(url.protocol===location.protocol&&(url.pathname.endsWith('/')||url.pathname.endsWith('.html'))){e.preventDefault();location.assign(url.href)}},true)</script></head>`);
   html = html.replace(/[ \t]+(?=\r?$)/gm, '');
   writeAfterBuild(file, html);
 }
