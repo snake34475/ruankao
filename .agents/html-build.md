@@ -18,8 +18,8 @@
 - 分章课程应具有稳定的课程入口页；子章节既可作为目录子项，也可拥有独立 HTML 路由。
 - 当前页面、当前章节、已学状态和组内进度应从同一份结构数据推导。
 - 构建产物不请求 CDN 或外部字体。离线双击 `docs/index.html` 时静态正文与链接应可阅读；学习状态、搜索等脚本交互以 `npm run preview` 的本地服务验收。
-- **指向 `interactive/` 独立页的链接必须带 `target`（2026-10-09 测定的坑）**：`interactive/**` 是拷进 `public/` 的静态资产、**不是 VitePress 路由**。VitePress 的 client router 会拦截站内无 `target` 的链接并 `router.go` 到一个不存在的路由 → 点开就是 404（既有的绕轮廓链接因此长期失效）。修法写在 `.vitepress/config.mjs` 的 `markdown.config`：先调用原 `link_open`（即 VitePress 的 `linkPlugin`，由它补 base 前缀与登记链接），**再**给 href 含 `/interactive/` 的 token 加 `target="_blank"`。顺序不能反——`linkPlugin` 遇到已带 `target`/`download` 的 token 会跳过整个 href 处理（含 base），先加 target 会导致 base 丢失。nav/sidebar 想在配置里直链这类页面时，同样必须显式写 `target`。
-- `dev`（`npm run prepare-site && vitepress dev`）与 `build` 都会整目录拷贝 `interactive/` 进 `site-src/public/`，所以独立页在 dev 和构建产物里都在；它**不计入**「137 个正文页面」这个数。
+- **指向 `interactive/`、`复盘/` 独立页的链接必须带 `target`（2026-10-09 测定的坑）**：`interactive/**`、`复盘/**` 是拷进 `public/` 的静态资产、**不是 VitePress 路由**。VitePress 的 client router 会拦截站内无 `target` 的链接并 `router.go` 到一个不存在的路由 → 点开就是 404（既有的绕轮廓链接因此长期失效）。修法写在 `.vitepress/config.mjs` 的 `markdown.config`：先调用原 `link_open`（即 VitePress 的 `linkPlugin`，由它补 base 前缀与登记链接），**再**给 href 含 `/interactive/` 或 `/复盘/` 的 token 加 `target="_blank"`。顺序不能反——`linkPlugin` 遇到已带 `target`/`download` 的 token 会跳过整个 href 处理（含 base），先加 target 会导致 base 丢失。nav/sidebar 想在配置里直链这类页面时，同样必须显式写 `target`。
+- `dev`（`npm run prepare-site && vitepress dev`）与 `build` 都会整目录拷贝 `interactive/`、`复盘/` 进 `site-src/public/`，所以独立页在 dev 和构建产物里都在；它们**不计入**「137 个正文页面」这个数。
 - **离线兜底脚本只在 `file://` 下启用（2026-10-13 测定的坑）**：`tools/postbuild_vitepress.mjs` 会往每页 `<head>` 注入一段点击拦截，用 `location.assign` 强制真实跳转，用来兜住「本地双击 `docs/*.html` 离线阅读」时 client router 拿相对 href 去 fetch 不存在的 `/ruankao/` chunk 而 404。但它以捕获阶段挂在 `document` 上，若不限定协议，线上和 `npm run preview` 的站内点击也会被它截成**整页刷新**：滚动位置清零（VitePress 本会保存/恢复），并重放 head 里的 `check-dark-mode` → 每次点左侧目录都闪一次主题；它还会吞掉带 `target="_blank"` 的链接（错题本、冲刺规划被强制在当前标签页打开）。故该兜底必须写成 `if(location.protocol==='file:')` 才挂监听，并同样跳过 `target`/`download` 链接。**排查要点：`npm run dev` 不走 postbuild，本地 dev 永远正常，问题只在构建产物（线上 / preview）复现。**
 
 ## 本机构建环境注意（2026-10-08 实测定案）

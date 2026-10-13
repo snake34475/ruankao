@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026-10-13 答题复盘 · SQL 与事务并发 · 软考软件设计师</title>
+<style>
+  :root {
+    --bg: #faf8f4; --surface: #fff; --surface-2: #f6f2ea;
+    --ink: #23201c; --ink-soft: #55504a; --ink-faint: #8b857c;
+    --line: #e6e0d6; --line-strong: #d3cab9;
+    --accent: #8a5a24; --gold: #a8801f;
+    --ok: #2f7d4f; --ok-bg: #eaf5ee;
+    --bad: #b3403a; --bad-bg: #fbecea;
+    --warn: #a8641a; --warn-bg: #fdf2e2;
+    --code-bg: #f3efe7; --code-line: #e2dbcc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917; --surface: #232220; --surface-2: #2a2824;
+      --ink: #ece7dd; --ink-soft: #b8b1a5; --ink-faint: #837c72;
+      --line: #38352f; --line-strong: #4a463e;
+      --accent: #d9a441; --gold: #e0b155;
+      --ok: #6ec48c; --ok-bg: #1e2c23;
+      --bad: #e08680; --bad-bg: #2e1f1e;
+      --warn: #d9a441; --warn-bg: #2b2519;
+      --code-bg: #2b2926; --code-line: #3a3630;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.75 "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 54rem; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  h1 { font-size: 1.72rem; line-height: 1.35; margin: 0 0 .5rem; letter-spacing: -.01em; }
+  .sub { color: var(--ink-faint); font-size: .875rem; margin: 0 0 2rem; }
+  .sub b { color: var(--ink-soft); font-weight: 600; }
+  h2 {
+    font-size: 1.22rem; margin: 2.9rem 0 1rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  h2 .no { color: var(--accent); font-size: .95rem; margin-right: .5rem; font-variant-numeric: tabular-nums; }
+  p { margin: .8rem 0; }
+  b, strong { color: var(--ink); }
+  code {
+    font: .88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--code-bg); border: 1px solid var(--code-line);
+    border-radius: 4px; padding: .1em .38em;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--code-line); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: .85rem 1rem; overflow-x: auto; margin: .9rem 0;
+  }
+  pre code { background: none; border: 0; padding: 0; font-size: .84rem; line-height: 1.65; }
+
+  .lede {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 8px; padding: 1rem 1.2rem; margin: 0 0 1rem;
+  }
+  .lede p { margin: .3rem 0; }
+  .note {
+    background: var(--surface-2); border: 1px dashed var(--line-strong);
+    border-radius: 8px; padding: .85rem 1.1rem; margin: 1.2rem 0; color: var(--ink-soft); font-size: .9rem;
+  }
+  .note b { color: var(--ink); }
+
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .9rem; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--surface-2); font-weight: 600; }
+  td.num, th.num { text-align: center; white-space: nowrap; }
+  tr.stats-pass td { background: var(--ok-bg); }
+  tr.stats-fail td { background: var(--bad-bg); }
+  td.verdict { font-weight: 700; white-space: nowrap; }
+  td.verdict.ok { color: var(--ok); }
+  td.verdict.bad { color: var(--bad); }
+  td.verdict.half { color: var(--warn); }
+
+  section.q {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.2rem 1.35rem; margin: 1.3rem 0;
+  }
+  .qhead { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin: 0 0 .5rem; }
+  .qhead h3 { font-size: 1.05rem; margin: 0; }
+  .tag {
+    font-size: .74rem; letter-spacing: .02em; border: 1px solid var(--line-strong);
+    color: var(--ink-faint); border-radius: 999px; padding: .1rem .55rem; white-space: nowrap;
+  }
+  .tag.src { color: var(--accent); border-color: var(--accent); }
+  .verdict-pill {
+    font-size: .8rem; font-weight: 700; border-radius: 999px; padding: .12rem .7rem; white-space: nowrap;
+  }
+  .verdict-pill.ok { color: var(--ok); background: var(--ok-bg); border: 1px solid var(--ok); }
+  .verdict-pill.bad { color: var(--bad); background: var(--bad-bg); border: 1px solid var(--bad); }
+  .verdict-pill.half { color: var(--warn); background: var(--warn-bg); border: 1px solid var(--warn); }
+
+  .row { display: grid; grid-template-columns: 5.5rem 1fr; gap: .6rem; margin: .55rem 0; }
+  .row .k { color: var(--ink-faint); font-size: .85rem; padding-top: .15rem; }
+  .row .v { min-width: 0; }
+  .mine-v { border-left: 3px solid var(--bad); padding-left: .7rem; }
+  .right-v { border-left: 3px solid var(--ok); padding-left: .7rem; }
+  .expl { margin-top: .8rem; padding-top: .7rem; border-top: 1px dashed var(--line); }
+  .expl .k { color: var(--accent); font-weight: 600; font-size: .85rem; }
+  .keypoint {
+    margin: .7rem 0; background: var(--surface-2); border-radius: 6px;
+    padding: .55rem .8rem; font-size: .92rem;
+  }
+  .keypoint b { color: var(--accent); }
+  ul.tight { margin: .5rem 0; padding-left: 1.3rem; }
+  ul.tight li { margin: .35rem 0; }
+  footer.page {
+    margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+    color: var(--ink-faint); font-size: .85rem;
+  }
+  footer.page a { color: var(--accent); }
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; gap: .15rem; }
+    .row .k { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>SQL 与事务并发 · 答题复盘</h1>
+  <p class="sub">
+    日期 <b>2026-10-13</b> · 范围：<b>02.5 SQL</b> 与 <b>02.6 事务、并发控制与故障恢复</b> ·
+    共 <b>13</b> 道题（含 1 道案例综合题，拆 3 小问）· 批改后同步进错题本
+  </p>
+
+  <div class="lede">
+    <p><b>本页是什么：</b>把这次练习的原题、你的作答、我的批改结论与解析，整理成一份可离线阅读的存档，方便在另一台电脑上复习。</p>
+    <p><b>怎么用：</b>先扫「总览」找到没过的题，再按标题跳到对应题看错因；每块都保留了<b>你当时的写法</b>，因为复习价值在于认出自己错在哪一步。</p>
+  </div>
+
+  <h2><span class="no">01</span>总览</h2>
+  <p>「判定」一列只看结论：<b>对</b>、<b>错</b>、<b>半对</b>（结构对但有语法或细节瑕疵）。</p>
+  <table>
+    <thead>
+      <tr><th class="num">题</th><th>来源</th><th>考点</th><th>你的答案</th><th class="num">判定</th></tr>
+    </thead>
+    <tbody>
+      <tr class="stats-pass"><td class="num">1</td><td>课后 12</td><td>GRANT / REVOKE 权限收回</td><td>B</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">2</td><td>课后 11</td><td>聚合条件必须写 HAVING</td><td>B</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-fail"><td class="num">3</td><td>课后 13</td><td>并发错误：读脏数据</td><td>A</td><td class="verdict bad num">错（正解 C）</td></tr>
+      <tr class="stats-pass"><td class="num">4</td><td>课后 14</td><td>两段锁协议</td><td>B</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-fail"><td class="num">5</td><td>课后 15</td><td>故障恢复：REDO / UNDO</td><td>在 A、B 之间摇摆</td><td class="verdict bad num">错（正解 B）</td></tr>
+      <tr class="stats-pass"><td class="num">6</td><td>补充 6</td><td>S / X 锁相容矩阵</td><td>A</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-fail"><td class="num">7</td><td>补充 7</td><td>并发错误：幻读</td><td>C</td><td class="verdict bad num">错（正解 D）</td></tr>
+      <tr class="stats-pass"><td class="num">8</td><td>精华 7</td><td>不可重复读与脏读辨析</td><td>不可重复读 / 脏读</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">9</td><td>补充 5</td><td>相关 EXISTS 子查询</td><td>EXISTS 写法（2 处拼写）</td><td class="verdict half num">半对</td></tr>
+      <tr class="stats-pass"><td class="num">10</td><td>精华 5</td><td>丢失修改的终值演算</td><td>70 / 100；120 / 140</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">11</td><td>补充 8</td><td>系统故障与恢复动作</td><td>系统故障 + REDO T1 / UNDO T2</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-fail"><td class="num">12</td><td>精华 6</td><td>嵌套查询 / 分组统计 / 授权</td><td>(1)(3) 对，(2) 分组列选错</td><td class="verdict bad num">错（见下）</td></tr>
+      <tr class="stats-fail"><td class="num">13</td><td>案例题·问题 3</td><td>建表 / 三表聚合 / 建视图</td><td>三小问均有硬伤</td><td class="verdict bad num">错（见下）</td></tr>
+    </tbody>
+  </table>
+  <p>选择题丢分集中在<b>并发错误辨析</b>（第 3、7 题）；SQL 大题丢在<b>分组粒度、多表连接路径、固定语法格式</b>三个方向。</p>
+
+  <h2><span class="no">02</span>逐题解析</h2>
+
+  <!-- Q1 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 1 题 · 权限收回</h3>
+      <span class="tag src">课后 12</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">下列 SQL 语句中，用于收回用户权限的是（ ）。　A. GRANT　B. REVOKE　C. DENY　D. DROP</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">B</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">B（REVOKE）</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>GRANT 授予、REVOKE 收回。口诀：<b>GRANT 用 TO 给出去，REVOKE 用 FROM 收回来</b>。DROP 是删除对象（DDL），DENY 不是软考教材的标准关键词。</p>
+    </div>
+  </section>
+
+  <!-- Q2 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 2 题 · 聚合条件的位置</h3>
+      <span class="tag src">课后 11</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">实现「查询每门课程的课程号和平均成绩，只保留平均分 80 分以上（含）」的关键子句是（ ）。<br>A. WHERE AVG(成绩) &gt;= 80　B. HAVING AVG(成绩) &gt;= 80　C. ORDER BY AVG(成绩)　D. GROUP BY 成绩</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">B</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">B</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>聚合条件只能进 HAVING：<code>GROUP BY 课程号 HAVING AVG(成绩)&gt;=80</code>。A 里 WHERE 比分组<b>先</b>执行，那时 AVG 还没算出来，语法直接报错。这是本课第一高频扣分点。D 把成绩当分组列，会把每个分数各成一组，不符合「按课程」。</p>
+    </div>
+  </section>
+
+  <!-- Q3 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 3 题 · 这是什么并发错误</h3>
+      <span class="tag src">课后 13</span><span class="verdict-pill bad">✗ 错</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">事务 T1 修改了数据 A 但尚未提交，事务 T2 读取了 A 的修改值，随后 T1 执行回滚。T2 读到的数据称为（ ）。<br>A. 丢失的数据　B. 不可重复读的数据　C. 脏数据　D. 幻影数据</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">A（丢失的数据）</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">C（脏数据）</div></div>
+    <div class="expl">
+      <p><span class="k">错因　</span>你抓到的现象是「读到的值后来没了」，于是归到「丢失」。但两类错误的分界锚点在<b>最后一步动作</b>。</p>
+      <div class="keypoint">
+        <p><b>丢失修改</b>：关键字是「写被写覆盖」——两个事务都写回、都提交了，后写的把先写的盖掉。</p>
+        <p><b>读脏数据</b>：特征字是「读到一个从未生效的值」——读的时候对方还没提交，读完对方 ROLLBACK，这个值被作废。</p>
+        <p><b>判别锚点：改值者 ROLLBACK → 脏读；改值者 COMMIT → 不可重复读。</b></p>
+      </div>
+      <p>本题里 T1 最后是 ROLLBACK，读到的 200 从未生效过，所以是脏读。</p>
+    </div>
+  </section>
+
+  <!-- Q4 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 4 题 · 两段锁协议</h3>
+      <span class="tag src">课后 14</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">关于两段锁协议，下列说法正确的是（ ）。<br>A. 保证并发执行不会死锁　B. 保证调度可串行化，但不能避免死锁　C. 保证不会产生读脏数据　D. 要求事务任何时刻都可先加锁再解锁交替进行</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">B</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">B</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>两段锁把事务切成「先只加锁、后只放锁」两段，保证可串行化；但两个事务可能各持一把对方要的锁（T1 锁 A 等 B、T2 锁 B 等 A），形成循环等待，<b>挡不住死锁</b>。A 是典型错误项。C 错在隔离级别与脏读是另一套机制。</p>
+    </div>
+  </section>
+
+  <!-- Q5 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 5 题 · 未完成事务怎么恢复</h3>
+      <span class="tag src">课后 15</span><span class="verdict-pill bad">✗ 错</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">系统故障恢复时，对尚未完成的事务应执行（ ）。　A. REDO　B. UNDO　C. COMMIT　D. ROLLBACK</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">不确定是 B 还是 A</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">B（UNDO）</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>这题只有一句话的记忆出口：<b>已提交 → REDO，未提交 → UNDO</b>。</p>
+      <p>恢复时扫日志只看两件事：<code>BEGIN</code> 后面有没有 <code>COMMIT</code>。题目说「尚未完成」，就是只有 BEGIN 没有 COMMIT，是半成品，必须撤销抹掉。A（REDO）方向正好反了——它是给已完成、结果该留存的事务用的。D 的 ROLLBACK 是事务运行期间的主动回滚操作，不是恢复策略本身。</p>
+    </div>
+  </section>
+
+  <!-- Q6 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 6 题 · 锁相容矩阵</h3>
+      <span class="tag src">补充 6</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">事务 T1 已对数据 A 加 S 锁。此时 T2 对 A 的哪种申请可以立即获准？<br>A. 只可申请 S 锁　B. 只可申请 X 锁　C. S、X 都可　D. S、X 都不可</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">A</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">A</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>相容矩阵里只有 S-S 这一个格子是「相容」。已有 S 锁，再加 S 锁允许（一起读），加 X 锁必须等（读写互斥）。记住唯一相容格即可。</p>
+    </div>
+  </section>
+
+  <!-- Q7 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 7 题 · 幻读还是不可重复读</h3>
+      <span class="tag src">补充 7</span><span class="verdict-pill bad">✗ 错</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">T1 两次执行相同的范围查询，期间 T2 插入一条满足条件的记录并提交，导致第二次多出一行。这属于（ ）。<br>A. 丢失修改　B. 读脏数据　C. 不可重复读　D. 幻读</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">C（不可重复读）</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">D（幻读）</div></div>
+    <div class="expl">
+      <p><span class="k">错因　</span>不可重复读和幻读都叫「两次结果不同」，区别在<b>对象</b>：</p>
+      <div class="keypoint">
+        <p><b>不可重复读</b>：<u>同一行</u>的字段值被改了（读 A 得 100，再读 A 得 200）。</p>
+        <p><b>幻读</b>：<u>满足条件的行数</u>增减了（范围查得 3 行，再查得 4 行）。</p>
+        <p><b>口诀：同一行变是前者，结果集增减行是后者。</b></p>
+      </div>
+      <p>题干是「插入一条满足条件的记录」导致结果集多一行，属于行数变化，故选 D。</p>
+    </div>
+  </section>
+
+  <!-- Q8 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 8 题 · 两种错误分别是什么</h3>
+      <span class="tag src">精华 7</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">「某个事务对同一数据的两次读取结果不同」与「读到未提交的数据」分别对应哪类并发错误？并说明区分的依据。</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">前者不可重复读，后者脏读。依据：T1 先读到 100，T2 把 A 提交为 200，T1 再读发现变了，所以不能重复读。</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">前者不可重复读，后者读脏数据；依据是干扰事务「提交没有」</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>两个词都对，依据也基本对。补一处精确表述：<b>不可重复读</b>要求干扰事务<u>提交了</u>（你举的 T2 commit 200 正是如此）；<b>脏读</b>是干扰事务<u>未提交、随后回滚</u>。你的区分依据成立。</p>
+    </div>
+  </section>
+
+  <!-- Q9 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 9 题 · 相关 EXISTS 子查询</h3>
+      <span class="tag src">补充 5</span><span class="verdict-pill half">△ 半对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">针对 <code>Student(Sno, Sname, Dept)</code>、<code>SC(Sno, Cno, Grade)</code>，把「查询选修 C02 的学生姓名」写成相关 EXISTS 子查询，并说明关联条件为何不能省略。</div></div>
+    <div class="row">
+      <div class="k">你的答案</div>
+      <div class="v mine-v">
+<pre><code>SELECT S.Sname
+FROM Student AS S
+WHERE exit(                       -- ✗ 关键字拼写错，应为 EXISTS
+    SELECT 1
+    FROM SC
+    WHERE SC.Sno = S.Sno
+      AND SC.Cno = "C02"          -- ✗ 应为单引号 'C02'
+);</code></pre>
+        <p>并说明：省掉关联条件 SC.Sno = S.Sno 后，只要有一个学生选了 C02，就会返回所有学生。但不知道为什么会这样。</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">正确答案</div>
+      <div class="v right-v">
+<pre><code>SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE SC.Sno = S.Sno
+      AND SC.Cno = 'C02'
+);</code></pre>
+      </div>
+    </div>
+    <div class="expl">
+      <p><span class="k">问题一：逻辑骨架全对</span>，<code>SELECT 1</code>、<code>FROM SC</code>、关联条件、EXISTS 结构都对。两处扣分是小硬伤：</p>
+      <ul class="tight">
+        <li><code>exit</code> 应为 <code>EXISTS</code>——SQL 里没有 <code>exit</code>，这样写直接语法报错。</li>
+        <li><code>"C02"</code> 应为 <code>'C02'</code>——标准 SQL 里双引号是<b>标识符</b>名，字符串常量一律用单引号，考试按单引号写才稳。</li>
+      </ul>
+      <p><span class="k">问题二：为什么省掉关联条件会返回全体</span></p>
+      <p><code>EXISTS</code> 是<b>逐行检查</b>的：<code>WHERE EXISTS (...)</code> 是拿外层的<b>每一行</b>去问子查询「这一行在 SC 里配得上吗」。<code>SC.Sno = S.Sno</code> 就是那个「随外层行移动的指针」——它把子查询和「当前这个学生」绑在一起，问的是「<b>你</b>选了吗」。</p>
+      <p>一旦这截断掉，子查询问的对象就<b>不再跟着外层的行走</b>，退化成一句与当前学生无关的固定判断：「SC 里有没有任何一行 Cno='C02'」。只要全校<u>有一个人</u>选了 C02，这句就恒为真，于是外层每个学生都被保留，返回全校。</p>
+      <div class="keypoint">
+        <p><b>一句话记住：</b>关联子查询里的关联条件，就是那根「随外层行移动的指针」，省不得。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q10 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 10 题 · 丢失修改的终值</h3>
+      <span class="tag src">精华 5</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">设 A 初值为 50。T1：读 A，A←A+20，写回；T2：读 A，A←A×2，写回。若两事务并发执行且发生「丢失修改」，最终 A 的值可能错误地变成多少？正确值应为多少？</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">可能变成 70 或 100；正确值看顺序，先 T1 是 140，先 T2 是 120</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">错误终值 70 或 100（一个写被覆盖）；正确终值 140（先 T1 后 T2）或 120（先 T2 后 T1）</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>完全正确。丢失修改 = 一个事务的写被另一个事务的写覆盖，所以哪种正确结果都得不到。</p>
+      <ul class="tight">
+        <li>错误终值举例：T1 读 50 → T2 读 50 → T1 写回 70 → T2 写回 100，T1 的 +20 被覆盖；或 T2 先写 100、T1 再写 70，则 T2 的结果丢失。</li>
+        <li>正确终值：先 T1 后 T2 = (50+20)×2 = <b>140</b>；先 T2 后 T1 = 50×2+20 = <b>120</b>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Q11 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 11 题 · 故障类型与恢复动作</h3>
+      <span class="tag src">补充 8</span><span class="verdict-pill ok">✓ 对</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">系统日志中 T1 已出现 <code>COMMIT</code>，T2 只有 <code>BEGIN</code> 和更新记录；随后主机断电，但磁盘未损坏。问：故障类型及恢复动作。</div></div>
+    <div class="row"><div class="k">你的答案</div><div class="v mine-v">系统故障；T2 做 UNDO，T1 做 REDO</div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">系统故障；REDO T1、UNDO T2</div></div>
+    <div class="expl">
+      <p><span class="k">解析　</span>完全正确。断电但磁盘未损坏属于<b>系统故障</b>（不是介质故障——「磁盘磁头损坏导致数据文件不可读」才是介质故障，那需要先有备份打底）。T1 已提交，结果必须保留 → REDO；T2 未提交，半成品必须消失 → UNDO。反向核对语义：恢复后只应体现已提交事务。</p>
+    </div>
+  </section>
+
+  <!-- Q12 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 12 题 · 三小问：嵌套查询 / 分组统计 / 授权</h3>
+      <span class="tag src">精华 6</span><span class="verdict-pill bad">✗ 错（第 2 小问）</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">
+      (1) 查询选修了「C02」课程的学生姓名（用嵌套查询）；<br>
+      (2) 查询选修课程门数超过 3 门的学生学号；<br>
+      (3) 把查询 SC 表的权限授予用户 U1，并允许其转授。
+    </div></div>
+    <div class="row"><div class="k">你的作答</div><div class="v mine-v">
+      <p>(1) 同第 9 题的 EXISTS 写法（结构对，拼写错）。</p>
+      <pre><code>(2) SELECT Sno FROM SC
+    GROUP BY Cno              -- ✗ 分组列选错
+    HAVING Cno &gt; 3;          -- ✗ 裸列不能与数字比较</code></pre>
+      <pre><code>(3) GRANT SELECT ON SC TO U1 WITH GRANT OPTION;
+    REVOKE SELECT ON SC FROM U1;</code></pre>
+    </div></div>
+    <div class="row"><div class="k">正确答案</div><div class="v right-v">
+<pre><code>-- (1)
+SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1 FROM SC
+    WHERE SC.Sno = S.Sno AND SC.Cno = 'C02'
+);
+-- 等价写法
+SELECT Sname FROM Student
+WHERE Sno IN (SELECT Sno FROM SC WHERE Cno = 'C02');
+
+-- (2)  ← 本小问的关键
+SELECT Sno FROM SC
+GROUP BY Sno HAVING COUNT(Cno) &gt; 3;
+
+-- (3)
+GRANT SELECT ON SC TO U1 WITH GRANT OPTION;</code></pre>
+    </div></div>
+    <div class="expl">
+      <p><span class="k">第 (1) 小问</span>：逻辑对，扣分同第 9 题（<code>exit</code>、双引号）。用 <code>IN</code> 写也行，两种都是标准答案。</p>
+      <p><span class="k">第 (2) 小问：全题最需要记的一处</span>，两处错叠在一起：</p>
+      <ul class="tight">
+        <li><b>分组粒度选错</b>：题干要「每个<u>学生</u>选了几门课」，粒度是学生，分组列必须是 <code>Sno</code>。写 <code>Cno</code> 就变成了「每门课」，整句意思跑偏。</li>
+        <li><b>HAVING 里用了裸列</b>：分组后每组是一捆行，裸的 <code>Cno</code> 代表不了整组的一个值；要数行数，得用聚合函数 <code>COUNT(Cno)</code>。</li>
+      </ul>
+      <div class="keypoint">
+        <p><b>认题方法：</b>题干说「每个 X 的门数／平均分／人数」，<code>GROUP BY</code> 就写 X，组条件用聚合函数包住要统计的列。</p>
+      </div>
+      <p><span class="k">第 (3) 小问</span>：两句都对。<code>WITH GRANT OPTION</code> 是「允许转授」的固定写法，<code>REVOKE ... FROM</code> 收回也对。介词记牢：给出去用 TO、收回来用 FROM。</p>
+    </div>
+  </section>
+
+  <!-- Q13 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>第 13 题 · 案例综合：建表 / 三表聚合 / 建视图</h3>
+      <span class="tag src">案例题·问题 3</span><span class="verdict-pill bad">✗ 错（三小问）</span>
+    </div>
+    <div class="row"><div class="k">题干</div><div class="v">
+      已知表：<code>代表团(团编号, 团名, 团所在地)</code>、<code>运动员(运动员编号, 姓名, 团编号)</code>、
+      <code>比赛项目(项目编号, 项目名称)</code>、<code>参赛(运动员编号, 项目编号, 成绩)</code>。用 SQL 完成：
+      <ol>
+        <li>建立参赛表（含主键与外键约束）；</li>
+        <li>查询每个代表团的团名及该团运动员所获成绩的总和，只保留总分 300 分（含）以上的代表团；</li>
+        <li>建立视图 <code>vHighScore</code>，显示成绩在 95 分（含）以上的运动员编号、姓名和项目名称。</li>
+      </ol>
+    </div></div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(1) 建参赛表　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">你的作答</div><div class="v mine-v">
+<pre><code>CREATE TABLE 参赛 (
+  运动员编号 char(8)              -- ✗ 缺逗号
+  项目编号 char(8)                -- ✗ 缺逗号
+  成绩 SMALLINT
+  PRIMARY KEY (运动员编号，项目编号)   -- ✗ 顿号应为英文逗号
+  FOREIGN KEY (运动员 REFRENCE 运动员(运动员编号))  -- ✗ 三段式写坏、拼写错
+  FOREIGN KEY (项目编号 REFRENCE 比赛项目(项目编号))
+  CHECK (成绩 BETWEEN 0 AND 100)
+)</code></pre>
+      </div></div>
+      <div class="row"><div class="k">正确答案</div><div class="v right-v">
+<pre><code>CREATE TABLE 参赛 (
+    运动员编号 CHAR(8),
+    项目编号   CHAR(6),
+    成绩       SMALLINT,
+    PRIMARY KEY (运动员编号, 项目编号),
+    FOREIGN KEY (运动员编号) REFERENCES 运动员(运动员编号),
+    FOREIGN KEY (项目编号)   REFERENCES 比赛项目(项目编号),
+    CHECK (成绩 BETWEEN 0 AND 100)
+);</code></pre>
+      </div></div>
+      <p><span class="k">批注　</span>主要硬伤：① 列定义之间缺逗号；② 主键里用了中文顿号「，」；③ 外键三段式写坏——漏了列名的「编号」，<code>REFERENCES</code> 拼错成 <code>REFRENCE</code>（少一个 S）。固定格式是 <b><code>FOREIGN KEY (本表列名) REFERENCES 表名(被引列名)</code></b>，列名写完整。CHECK 那行题目没要求，你加了属于加分不影响，保留没问题。</p>
+    </div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(2) 三表聚合　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">你的作答</div><div class="v mine-v">
+<pre><code>SELECT 团名，成绩                    -- ✗ 中文逗号；成绩不在代表团表
+FROM 代表团
+WHERE 团编号 IN （                  -- ✗ 中文括号；三表完全没连接
+   SELECT 团编号，SUM(成绩)          -- ✗ IN 子查询只能出一列
+   FORM 运动员                       -- ✗ FORM 拼写
+   WHERE (
+       SELECT 运动员编号，成绩
+       FROM 参赛
+   )
+   GROUP BY 团编号
+   HAVING SUM(成绩)&gt;300            -- ✗ 「含」应为 &gt;=
+);</code></pre>
+      </div></div>
+      <div class="row"><div class="k">正确答案</div><div class="v right-v">
+<pre><code>SELECT 代表团.团编号, 代表团.团名, SUM(参赛.成绩) AS 总分
+FROM 代表团
+JOIN 运动员 ON 代表团.团编号 = 运动员.团编号
+JOIN 参赛   ON 运动员.运动员编号 = 参赛.运动员编号
+GROUP BY 代表团.团编号, 代表团.团名
+HAVING SUM(参赛.成绩) &gt;= 300;</code></pre>
+      </div></div>
+      <p><span class="k">批注　</span>四个问题叠在一起：</p>
+      <ul class="tight">
+        <li><b>成绩取错表</b>：成绩在「参赛」表里，不在代表团表里，<code>SELECT 团名, 成绩</code> 直接拿不到。</li>
+        <li><b>三张表没连接</b>：数据要沿 <b>代表团 → 运动员 → 参赛</b> 逐段 join 才能凑齐，你这里三张表完全没连起来。</li>
+        <li><b>IN 子查询出了两列</b>：<code>IN</code> 后面的子查询只能出<u>一列</u>（它是拿去做成员判断的集合）。这题本来就不该用子查询，用 JOIN + GROUP BY 直接做。</li>
+        <li><b>区间写错</b>：「300 分（含）以上」是闭区间，要写 <code>&gt;= 300</code>，写 <code>&gt; 300</code> 丢掉了等于，正好丢分。</li>
+      </ul>
+      <p>另外 GROUP BY 带上团编号，是防止两个代表团重名被并成一组。</p>
+      <div class="keypoint">
+        <p><b>看一下这句查出来的结果长什么样</b>（用一组小数据验证，「300 分含」按 <code>&gt;=300</code> 取）：</p>
+        <table>
+          <thead><tr><th>团编号</th><th>团名</th><th>该团成绩明细</th><th class="num">总分</th><th class="num">是否入选</th></tr></thead>
+          <tbody>
+            <tr class="stats-pass"><td>T1</td><td>飞鹰</td><td>96, 88, 90, 92</td><td class="num">366</td><td class="num">✓ ≥300</td></tr>
+            <tr class="stats-pass"><td>T2</td><td>蓝鲸</td><td>85, 78, 100, 95</td><td class="num">358</td><td class="num">✓ ≥300</td></tr>
+            <tr class="stats-fail"><td>T3</td><td>雪豹</td><td>60</td><td class="num">60</td><td class="num">✗ 出局</td></tr>
+          </tbody>
+        </table>
+        <p>最终 SELECT 只出 <b>T1 飞鹰 366</b>、<b>T2 蓝鲸 358</b> 两行——注意这里的「总分」是把该团<b>所有运动员的多条参赛记录全部相加</b>，不是只算一个人的。</p>
+      </div>
+    </div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(3) 建视图　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">你的作答</div><div class="v mine-v">
+<pre><code>CREATE VIEW vHighScore AS （      -- ✗ AS 后不能加括号
+  SELECT 运动员编号, 姓名, 项目名称   -- ✗ 姓名不在比赛项目表
+  FROM 比赛项目                     -- ✗ 起点选错
+  WHEHE exit(                       -- ✗ WHERE 拼写；嵌套 EXISTS 替代不了连接
+     SELECT 1 FROM 运动员 WHERE exit(
+        SELECT 1 FROM 参赛
+        WHERE 比赛项目.项目编号 = 项目编号   -- ✗ 自等，没有桥接
+          AND 运动员.运动编号 = 运动编号
+          AND 成绩&gt;95 )                   -- ✗ 「含」应为 &gt;=
+  )
+)</code></pre>
+      </div></div>
+      <div class="row"><div class="k">正确答案</div><div class="v right-v">
+<pre><code>CREATE VIEW vHighScore AS
+SELECT 运动员.运动员编号, 运动员.姓名, 比赛项目.项目名称
+FROM 运动员
+JOIN 参赛     ON 运动员.运动员编号 = 参赛.运动员编号
+JOIN 比赛项目 ON 参赛.项目编号 = 比赛项目.项目编号
+WHERE 参赛.成绩 &gt;= 95;</code></pre>
+      </div></div>
+      <p><span class="k">批注　</span>三处问题：</p>
+      <ul class="tight">
+        <li><b>格式</b>：<code>CREATE VIEW ... AS</code> 后面<b>直接接 SELECT，不加括号</b>；把整句套进括号是 0 分硬伤。另外 <code>WHEHE</code> 是 <code>WHERE</code> 的拼写错。</li>
+        <li><b>列名归属搞反</b>：视图要显示「运动员编号、姓名、项目名称」，这三个列分属<b>运动员</b>表和<b>比赛项目</b>表，你却把 <code>FROM 比赛项目</code> 打头，姓名根本不在那张表里。</li>
+        <li><b>双嵌套 EXISTS 替代不了连接</b>，里层的关联条件写成了自己等于自己，没有桥接作用。</li>
+      </ul>
+      <p>建视图的固定骨架是 <code>CREATE VIEW 视图名 AS 查询语句;</code>——视图本身不存数据，只是把一条 SELECT 起名存起来。本题要跨三张表，就沿「运动员 → 参赛 → 比赛项目」逐段 JOIN。</p>
+    </div>
+  </section>
+
+  <h2><span class="no">03</span>同批错题已进错题本</h2>
+  <p>本次批改产生 8 条记录，已写入仓库真源 <code>interactive/mistake-book/app.js</code> 的 <code>MISTAKES</code> 数组，薄弱点图谱新增 6 行：</p>
+  <ul class="tight">
+    <li><b>并发四类错误对号入座</b>（第 3、7 题）→ 未过关：先背判别锚点。</li>
+    <li><b>GROUP BY 分组粒度与聚合条件</b>（第 12(2) 题）→ 未过关：先认「每个 X」再定分组列。</li>
+    <li><b>多表连接路径与嵌套子查询写法</b>（第 9、13(2)(3) 题）→ 未过关：连接先画表间路径，IN 子查询只出一列。</li>
+    <li><b>建表外键与建视图的固定格式</b>（第 13(1)(3) 题）→ 待巩固：默写 FOREIGN KEY 三段式与 CREATE VIEW … AS SELECT。</li>
+    <li><b>故障恢复 REDO/UNDO 判据</b>（第 5、11 题）→ 待巩固：背「已提交 REDO、未提交 UNDO」。</li>
+    <li><b>「含／以上」闭区间与单引号常量</b>（第 9、13(2)(3) 题）→ 待巩固：见 ≥ 就写等号，字符串统一单引号。</li>
+  </ul>
+  <div class="note">
+    <b>回炉顺序建议：</b>① 先背并发四类的判别锚点（第 3、7 题）；② 手默 FOREIGN KEY 三段式与 <code>CREATE VIEW … AS SELECT</code>；③ 单独重做 13(2)、13(3) 这两道三表题。回炉日期排在 10-15 ~ 10-16。
+  </div>
+
+  <footer class="page">
+    <p>本页为 2026-10-13 答题复盘存档，内容取自练习原题、本人作答与批改解析；错题本数据源为 <code>interactive/mistake-book/app.js</code>。课程正文见 <code>软考学习/02-数据库系统/05-SQL.md</code> 与 <code>06-事务并发与故障恢复.md</code>。</p>
+  </footer>
+
+</main>
+</body>
+</html>

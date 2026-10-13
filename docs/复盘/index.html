@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>答题复盘档案 · 软考软件设计师</title>
+<style>
+  :root {
+    --bg: #faf8f4; --surface: #fff; --surface-2: #f6f2ea;
+    --ink: #23201c; --ink-soft: #55504a; --ink-faint: #8b857c;
+    --line: #e6e0d6; --line-strong: #d3cab9;
+    --accent: #8a5a24;
+    --ok: #2f7d4f; --ok-bg: #eaf5ee;
+    --bad: #b3403a; --bad-bg: #fbecea;
+    --warn: #a8641a; --warn-bg: #fdf2e2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917; --surface: #232220; --surface-2: #2a2824;
+      --ink: #ece7dd; --ink-soft: #b8b1a5; --ink-faint: #837c72;
+      --line: #38352f; --line-strong: #4a463e;
+      --accent: #d9a441;
+      --ok: #6ec48c; --ok-bg: #1e2c23;
+      --bad: #e08680; --bad-bg: #2e1f1e;
+      --warn: #d9a441; --warn-bg: #2b2519;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.75 "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 52rem; margin: 0 auto; padding: 3rem 1.5rem 4.5rem; }
+  h1 { font-size: 1.7rem; line-height: 1.35; margin: 0 0 .5rem; letter-spacing: -.01em; }
+  .sub { color: var(--ink-faint); font-size: .875rem; margin: 0 0 2rem; }
+  .lede {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 8px; padding: 1rem 1.2rem; margin: 0 0 2rem;
+  }
+  .lede p { margin: .3rem 0; }
+  h2 { font-size: 1.15rem; margin: 2.2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); }
+  a.entry {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.05rem 1.25rem; margin: 0 0 .9rem; transition: border-color .15s, box-shadow .15s;
+  }
+  a.entry:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+  .entry-h { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .35rem; }
+  .entry-h h3 { font-size: 1.05rem; margin: 0; }
+  .entry .date { color: var(--ink-faint); font-size: .82rem; font-variant-numeric: tabular-nums; }
+  .entry .desc { color: var(--ink-soft); font-size: .9rem; margin: .2rem 0 .5rem; }
+  .stats { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .pill {
+    font-size: .78rem; font-weight: 600; border-radius: 999px; padding: .12rem .65rem;
+    border: 1px solid var(--line-strong); color: var(--ink-soft); background: var(--surface-2);
+  }
+  .pill.ok { color: var(--ok); background: var(--ok-bg); border-color: var(--ok); }
+  .pill.bad { color: var(--bad); background: var(--bad-bg); border-color: var(--bad); }
+  .pill.warn { color: var(--warn); background: var(--warn-bg); border-color: var(--warn); }
+  .empty {
+    background: var(--surface-2); border: 1px dashed var(--line-strong);
+    border-radius: 8px; padding: 1rem 1.2rem; color: var(--ink-soft); font-size: .9rem;
+  }
+  footer.page {
+    margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+    color: var(--ink-faint); font-size: .85rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>答题复盘档案</h1>
+  <p class="sub">每次练习的原题、我的作答、批改结论与解析，逐次存档 · 共 <b>1</b> 次</p>
+
+  <div class="lede">
+    <p>这里放每一轮练习的复盘存档，按时间倒序排列。每份存档都保留了做题当时的写法，便于回看「当时错在哪一步」。</p>
+    <p>每份都可<b>直接双击离线阅读</b>（自包含 HTML，不依赖网络），也可从这里点进去。</p>
+  </div>
+
+  <h2>存档列表</h2>
+
+  <a class="entry" href="2026-10-13-SQL与事务并发-答题复盘.html">
+    <div class="entry-h">
+      <h3>SQL 与事务并发 · 答题复盘</h3>
+      <span class="date">2026-10-13</span>
+    </div>
+    <p class="desc">范围：02.5 SQL 与 02.6 事务、并发控制与故障恢复 · 13 道题（含 1 道案例综合题拆 3 小问）</p>
+    <div class="stats">
+      <span class="pill ok">选择题 6 对</span>
+      <span class="pill bad">并发辨析错 2</span>
+      <span class="pill bad">SQL 大题硬伤 3</span>
+      <span class="pill warn">同步错题本 8 条</span>
+    </div>
+  </a>
+
+  <footer class="page">
+    <p>本页是复盘存档的目录页。新增一轮复盘时，把对应的自包含 HTML 放进本目录，并在上面「存档列表」里加一条；错题本看板见站点导航的「错题本」。</p>
+  </footer>
+
+</main>
+</body>
+</html>

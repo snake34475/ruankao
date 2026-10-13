@@ -75,8 +75,9 @@ export default defineConfig({
   markdown: {
     math: true,
     attrs: { disable: true },
-    // 指向 interactive/ 的独立页（如错题本、遍历动画）是 public 静态资产、不是 VitePress 路由，
-    // 会被 client router 拦截而 404；router 对带 target 的链接不拦截，故统一补 target。
+    // 指向 public 静态独立页（错题本、遍历动画、答题复盘）的链接必须带 target：
+    // 这些页是拷进 public/ 的静态资产、不是 VitePress 路由，会被 client router 拦截而 404；
+    // router 对带 target 的链接不拦截，故统一补 target。
     // 注意必须【先】跑 VitePress 的 linkPlugin（它会补 base 前缀），再加 target：
     // linkPlugin 遇到已有 target 的 token 会跳过整个 href 处理（含 base）。
     config(md) {
@@ -85,7 +86,7 @@ export default defineConfig({
       md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
         const rendered = original(tokens, idx, options, env, self);
         const href = tokens[idx].attrGet('href') ?? '';
-        if (href.includes('/interactive/')) {
+        if (href.includes('/interactive/') || href.includes('/复盘/')) {
           tokens[idx].attrSet('target', '_blank');
           tokens[idx].attrSet('rel', 'noopener');
           return self.renderToken(tokens, idx, options);
@@ -103,6 +104,7 @@ export default defineConfig({
       { text: '学习计划', link: '/学习计划.html' },
       { text: '错题本', link: '/interactive/mistake-book/index.html', target: '_blank', rel: 'noopener' },
       { text: '冲刺规划', link: '/interactive/sprint-plan/index.html', target: '_blank', rel: 'noopener' },
+      { text: '复盘档案', link: '/复盘/index.html', target: '_blank', rel: 'noopener' },
       { text: '考点大纲', link: '/软件设计师考点大纲.html' },
     ],
     sidebar: [
@@ -111,6 +113,7 @@ export default defineConfig({
         { text: '学习计划', link: '/学习计划.html' },
         { text: '错题本与知识图谱', link: '/interactive/mistake-book/index.html', target: '_blank', rel: 'noopener' },
         { text: '13 天冲刺执行规划', link: '/interactive/sprint-plan/index.html', target: '_blank', rel: 'noopener' },
+        { text: '答题复盘档案', link: '/复盘/index.html', target: '_blank', rel: 'noopener' },
         { text: '考点大纲', link: '/软件设计师考点大纲.html' },
       ] },
       ...groups,

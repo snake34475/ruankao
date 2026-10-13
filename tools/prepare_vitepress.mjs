@@ -94,9 +94,13 @@ const sections = tiers.map(tier => {
 });
 writeGenerated(join(stage, 'index.md'), `# 软考软件设计师自学资料库\n\n不看视频，以本资料库为唯一学习材料。按梯队顺序逐考点推进。\n\n[学习总览与进度](./00-总览与进度.md) · [学习计划](./学习计划.md) · [考点大纲](./软件设计师考点大纲.md)\n\n${sections.join('\n\n')}\n`);
 
-const interactive = join(root, 'interactive');
-if (!incremental && existsSync(interactive)) cpSync(interactive, join(stage, 'public', 'interactive'), { recursive: true });
 mkdirSync(join(stage, 'public'), { recursive: true });
+// 独立静态页整目录拷进 public：交互演示 interactive/ 与答题复盘存档 复盘/。
+// 二者都是 public 静态资产、不是 VitePress 路由，链接必须带 target（否则 client router 拦截后 404）。
+for (const name of ['interactive', '复盘']) {
+  const src = join(root, name);
+  if (!incremental && existsSync(src)) cpSync(src, join(stage, 'public', name), { recursive: true });
+}
 const theme = readFileSync(join(root, '.vitepress', 'theme', 'style.css'), 'utf8');
 const light = theme.match(/:root\s*\{([^}]*)\}/)?.[1] ?? '';
 const dark = theme.match(/\.dark\s*\{([^}]*)\}/)?.[1] ?? '';
