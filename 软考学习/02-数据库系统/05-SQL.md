@@ -2,12 +2,59 @@
 
 SQL 分四类语句，案例题主要考前两类：
 
-| 类别 | 关键词 | 用途 |
+| 类别 | 英文全称（中文） | 关键词 | 用途 |
+|---|---|---|---|
+| DDL | Data Definition Language（数据定义） | CREATE / ALTER / DROP | 建表、建视图、改结构 |
+| DML | Data Manipulation Language（数据操纵） | SELECT / INSERT / UPDATE / DELETE | 查和改数据 |
+| DCL | Data Control Language（数据控制） | GRANT / REVOKE | 授权、收权（选择题常考） |
+| TCL | Transaction Control Language（事务控制） | COMMIT / ROLLBACK | 提交事务、回滚事务 |
+
+两个记忆抓手：
+
+- **缩写怎么来的**：四个都是「D + 一个单词 + Language（语言）」，区别只在中间那个词的首字母。定义 Definition 取 D、操纵 Manipulation 取 M、控制 Control 取 C、事务 Transaction 取 T，拼起来就是 DDL、DML、DCL、TCL。
+- **为什么讲义全大写**：SQL 本身不区分大小写，`select` 和 `SELECT` 完全等价；讲义按行业惯例把**关键词**写成大写，只为一眼认出，表名、列名才习惯写小写。考试答题时大写小写都算对。
+
+### 英文关键词速查（本页出现过的词）
+
+中文的「增、删、查、改」正好是 DML 的四个动词：INSERT 增、DELETE 删、SELECT 查、UPDATE 改。其余关键词一并列在下面，方便对照含义：
+
+| 关键词 | 中文 | 一句话说明 |
 |---|---|---|
-| DDL 数据定义 | CREATE / ALTER / DROP | 建表、建视图、改结构 |
-| DML 数据操纵 | SELECT / INSERT / UPDATE / DELETE | 查和改数据 |
-| DCL 数据控制 | GRANT / REVOKE | 授权、收权（选择题常考） |
-| TCL 事务控制 | COMMIT / ROLLBACK | 提交事务、回滚事务 |
+| CREATE | 创建 | 造一个新对象，如建表、建视图 |
+| ALTER | 修改 | 改**已有表**的结构（加列、改类型） |
+| DROP | 丢弃 | 连对象带数据一起删，删的是整个对象 |
+| INSERT | 插入（增） | 往表里新增一行记录 |
+| DELETE | 删除（删） | 删除满足条件的行，不动表结构 |
+| SELECT | 选择（查） | 查询、取出数据 |
+| UPDATE | 更新（改） | 修改已有行的值 |
+| GRANT | 授予 | 把权限给别人 |
+| REVOKE | 撤销／收回 | 把已经给出的权限收回来 |
+| COMMIT | 提交 | 让事务的修改正式生效 |
+| ROLLBACK | 回滚 | 撤销事务、恢复到修改前 |
+
+骨架和完整性子句里还会遇到这些英文词：
+
+| 关键词 | 中文 | 作用 |
+|---|---|---|
+| FROM | 来自 | 指定数据从哪张表来 |
+| WHERE | 在哪里 | 分组前筛原始行 |
+| GROUP BY | 按…分组 | 把行按某列归成组 |
+| HAVING | 拥有 | 分组后筛「组」 |
+| ORDER BY | 按…排序 | 对结果排序 |
+| ASC / DESC | 升序 / 降序 | 排序方向，默认 ASC |
+| JOIN … ON | 连接…基于 | 多表按条件连接 |
+| IN | 在…之中 | 判断值是否属于某个集合 |
+| EXISTS | 存在 | 子查询有行即为真 |
+| AS | 作为 | 给表或列起别名 |
+| VALUES | 值 | INSERT 要写入的值列表 |
+| SET | 设置 | UPDATE 赋的新值 |
+| ADD | 添加 | ALTER 给表加一列 |
+| BETWEEN A AND B | 在 A 与 B 之间 | 表达范围条件 |
+| CHECK | 检查 | 用户定义完整性（取值范围约束） |
+| PRIMARY KEY | 主键 | 实体完整性 |
+| FOREIGN KEY | 外键 | 参照完整性 |
+| REFERENCES | 参照、引用 | 外键指向哪张表的哪个键 |
+| WITH GRANT OPTION | 附带转授权 | 被授权人还能把权限再转给别人 |
 
 ### SELECT 完整骨架（背顺序）
 

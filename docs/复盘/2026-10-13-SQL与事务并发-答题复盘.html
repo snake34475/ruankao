@@ -126,7 +126,8 @@
   <h1>SQL 与事务并发 · 答题复盘</h1>
   <p class="sub">
     日期 <b>2026-10-13</b> · 范围：<b>02.5 SQL</b> 与 <b>02.6 事务、并发控制与故障恢复</b> ·
-    共 <b>13</b> 道题（含 1 道案例综合题，拆 3 小问）· 批改后同步进错题本
+    共 <b>13</b> 道题（含 1 道案例综合题，拆 3 小问）· 批改后同步进错题本 ·
+    <b>含 10-14 回炉重做</b>（见第 <b>04</b> 节）
   </p>
 
   <div class="lede">
@@ -551,11 +552,279 @@ WHERE 参赛.成绩 &gt;= 95;</code></pre>
     <li><b>「含／以上」闭区间与单引号常量</b>（第 9、13(2)(3) 题）→ 待巩固：见 ≥ 就写等号，字符串统一单引号。</li>
   </ul>
   <div class="note">
-    <b>回炉顺序建议：</b>① 先背并发四类的判别锚点（第 3、7 题）；② 手默 FOREIGN KEY 三段式与 <code>CREATE VIEW … AS SELECT</code>；③ 单独重做 13(2)、13(3) 这两道三表题。回炉日期排在 10-15 ~ 10-16。
+    <b>回炉顺序建议：</b>① 先背并发四类的判别锚点（第 3、7 题）；② 手默 FOREIGN KEY 三段式与 <code>CREATE VIEW … AS SELECT</code>；③ 单独重做 13(2)、13(3) 这两道三表题。回炉日期原排 10-15 ~ 10-16，实际已于 10-14 重做一轮，结果见第 <b>04</b> 节。
+  </div>
+
+  <h2><span class="no">04</span>回炉重做 · 10-14</h2>
+  <p>原错题在不看答案的前提下逐题重做。下面按<b>每一次提交的原话</b>记录，便于看出「哪一处改对了、哪一处又滑回去了」；「最终判定」只看本轮结束时的状态。</p>
+  <table>
+    <thead>
+      <tr><th class="num">本轮</th><th>对应原题</th><th>考点</th><th>本轮提交</th><th class="num">最终判定</th></tr>
+    </thead>
+    <tbody>
+      <tr class="stats-pass"><td class="num">1</td><td>原第 3 题</td><td>并发错误：读脏数据</td><td>1 次</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">2</td><td>原第 5 题</td><td>故障恢复：REDO / UNDO</td><td>1 次</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">3</td><td>原第 7 题</td><td>并发错误：幻读</td><td>1 次</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-pass"><td class="num">4</td><td>原第 9 题</td><td>相关 EXISTS 子查询</td><td>2 次</td><td class="verdict ok num">对</td></tr>
+      <tr class="stats-fail"><td class="num">5</td><td>原第 12 题</td><td>嵌套查询 / 分组统计 / 授权</td><td>2 次</td><td class="verdict bad num">(2) 未过</td></tr>
+      <tr class="stats-fail"><td class="num">6</td><td>原第 13 题</td><td>建表 / 三表聚合 / 建视图</td><td>(1) 3 次，(2)(3) 各 1 次</td><td class="verdict bad num">三小问均未过</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <b>本轮结论：</b>并发三题、关联子查询的关联条件、授权语句、三表 JOIN 路径全部拿下——这四块正是上一轮的失分重灾区。剩下的两处都属于「会做但写错」：<b>固定语法格式</b>（<code>REFERENCES</code> 拼写、<code>AS</code> 后不许加括号、<code>GROUP BY</code> 不许漏 BY）与 <b>聚合函数的括号位置</b>（比较运算符必须写在聚合函数外面）。
+  </div>
+
+  <!-- R1-3 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>本轮第 1–3 题 · 并发辨析与恢复动作</h3>
+      <span class="tag src">原第 3 / 5 / 7 题</span><span class="verdict-pill ok">✓ 三题全对</span>
+    </div>
+    <table>
+      <thead><tr><th class="num">本轮</th><th>题目要点</th><th>你的答案</th><th class="num">判定</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>T1 改了 A 未提交，T2 读到，随后 T1 回滚——T2 读到的是什么</td><td>C（脏数据）</td><td class="verdict ok num">对</td></tr>
+        <tr><td class="num">2</td><td>系统故障恢复时，对尚未完成的事务应执行什么</td><td>B（UNDO）</td><td class="verdict ok num">对</td></tr>
+        <tr><td class="num">3</td><td>范围查询期间另一事务插入并提交，第二次多出一行</td><td>D（幻读）</td><td class="verdict ok num">对</td></tr>
+      </tbody>
+    </table>
+    <div class="expl">
+      <p><span class="k">批注　</span>三题一次过。原第 3、7 题在此前是「未过关」状态，本轮判别锚点用对了：</p>
+      <ul class="tight">
+        <li><b>脏读</b>看的是「改值者最后<b>回滚</b>」——读到的是一个从未生效过的值。</li>
+        <li><b>幻读</b>看的是「<b>结果集行数</b>增减」——不是同一行字段值被改。</li>
+        <li><b>恢复动作</b>只有一句判据：扫日志看 <code>BEGIN</code> 后面有没有 <code>COMMIT</code>——有则 REDO，无则 UNDO。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- R4 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>本轮第 4 题 · 相关 EXISTS 子查询</h3>
+      <span class="tag src">原第 9 题</span><span class="verdict-pill ok">✓ 第二次提交通过</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">针对 <code>Student(Sno, Sname, Dept)</code>、<code>SC(Sno, Cno, Grade)</code>，把「查询选修 C02 的学生姓名」写成相关 EXISTS 子查询，并说明关联条件为何不能省略。</div></div>
+    <div class="row"><div class="k">第 1 次</div><div class="v mine-v">
+<pre><code>SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE S.Sno = Sno          -- △ 关联条件只写了单侧限定
+      AND Cno = 'C02'
+);</code></pre>
+      <p>说明：省掉关联条件后，只要有一个学生选了 C02，就会返回所有学生。<b>结论对，机理没写出来。</b></p>
+    </div></div>
+    <div class="row"><div class="k">第 2 次</div><div class="v right-v">
+<pre><code>SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE S.Sno = SC.Sno       -- ✓ 两侧都带前缀
+      AND Cno = 'C02'
+);</code></pre>
+      <p>说明：外部每行都去询问子查询；没有关联条件，子查询就与外部无关，成了固定的句子，从而是个常量。</p>
+    </div></div>
+    <div class="expl">
+      <p><span class="k">第 1 次的问题　</span><code>S.Sno = Sno</code> 能跑通，是因为 SQL 解析列名<b>由内向外</b>找：内层 <code>FROM SC</code> 里正好有 <code>Sno</code>，这个裸 <code>Sno</code> 被绑到 <code>SC.Sno</code>，整句等价于 <code>S.Sno = SC.Sno</code>。它靠「内层恰好有同名列」才成立：内层一旦改名，这个裸名就会指向外层，语义翻车；而且阅卷人一眼看不出关联关系，很可能按「没写关联条件」处理。<b>关联条件两侧都要带表名或别名。</b></p>
+      <p><span class="k">第 2 次　</span>SQL 与说明都补到位了，机理说对。只差最后一环收口：这个「常量」若<u>恒为真</u>，外层每一行就都被保留，于是返回全校——把这句补上就是满分表述。</p>
+      <div class="keypoint">
+        <p><b>一句话记住：</b>关联子查询里的关联条件，就是那根「随外层行移动的指针」。</p>
+        <p>有关联条件 → 外层每行得到不同答案；无关联条件 → 所有行共用同一个答案。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- R5 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>本轮第 5 题 · 三小问（嵌套查询 / 分组统计 / 授权）</h3>
+      <span class="tag src">原第 12 题</span><span class="verdict-pill bad">✗ (2) 未过</span>
+    </div>
+    <div class="row"><div class="k">题目</div><div class="v">
+      (1) 查询选修了「C02」课程的学生姓名（用嵌套查询）；<br>
+      (2) 查询选修课程门数<b>超过 3 门</b>的学生学号；<br>
+      (3) 把查询 SC 表的权限授予用户 U1，并允许其转授。
+    </div></div>
+    <div class="row"><div class="k">(1) 作答</div><div class="v right-v">
+<pre><code>SELECT S.Sname
+FROM Student AS S
+WHERE EXISTS (
+    SELECT 1
+    FROM SC
+    WHERE S.Sno = SC.Sno
+      AND Cno = 'C02'
+);</code></pre>
+      <p>✓ 对。关联条件两侧带前缀，<code>EXISTS</code> 与单引号都正确——上一轮的两处硬伤已修正。</p>
+    </div></div>
+    <div class="row"><div class="k">(2) 第 1 次</div><div class="v mine-v">
+<pre><code>SELECT Sno
+FROM SC
+GROUP BY Sno
+HAVING COUNT(Cno&gt;3)        -- ✗ 比较运算符写进了聚合函数的括号里</code></pre>
+      <p><b>分组粒度已经对了</b>（知道「每个学生」要按 Sno 分组），错在把 <code>&gt;3</code> 塞进了 <code>COUNT()</code> 里：这样算出来的其实是「选过课的行数」，等价于把「超过 3 门」这个条件整个丢掉。</p>
+    </div></div>
+    <div class="row"><div class="k">(2) 第 2 次</div><div class="v mine-v">
+<pre><code>SELECT Sno
+FROM SC
+GROUP Sno                  -- ✗ 漏了 BY，语法报错
+HAVING COUNT(Cno) &gt;3       -- ✓ 比较运算符已在括号外</code></pre>
+      <p>核心错误修正了，但 <code>GROUP BY</code> 漏了一个词，整句仍然是语法错误——这种「会做但写错」最亏。</p>
+    </div></div>
+    <div class="row"><div class="k">(3) 第 1 次</div><div class="v mine-v">
+<pre><code>GRANT SELECT ON SC TO U1 GRANT OPTIONS      -- ✗ 少了 WITH，OPTION 还加了 S
+REVOKE SELECT FROM SC TO U1                 -- ✗ 对象与用户的介词全错位</code></pre>
+    </div></div>
+    <div class="row"><div class="k">(3) 第 2 次</div><div class="v right-v">
+<pre><code>GRANT SELECT ON SC TO U1 WITH GRANT OPTION;   -- ✓
+REVOKE SELECT ON SC FROM U1;                  -- ✓（题干未要求，写对不扣分）</code></pre>
+    </div></div>
+    <div class="expl">
+      <p><span class="k">(2) 的正确写法　</span>比较运算符必须在聚合函数的<u>括号外面</u>，模板固定为 <code>HAVING 聚合函数(列) 运算符 数值</code>：</p>
+<pre><code>SELECT Sno
+FROM SC
+GROUP BY Sno
+HAVING COUNT(Cno) &gt; 3;     -- COUNT(*) &gt; 3 也对</code></pre>
+      <p>括号里只放「要统计哪一列」，先数出每组的门数、再拿这个门数去比大小。同一处错误本轮在 (2) 和下面的第 6 题 (2) 各犯一次，是本轮最该掐掉的习惯。</p>
+      <p><span class="k">(3) 的介词对照　</span>对象永远跟 <code>ON</code>，用户是「给出去 <code>TO</code>、收回来 <code>FROM</code>」：</p>
+      <table>
+        <thead><tr><th>动作</th><th>对象介词</th><th>用户介词</th><th>模板</th></tr></thead>
+        <tbody>
+          <tr><td>授予</td><td><code>ON</code></td><td><code>TO</code></td><td><code>GRANT 权限 ON 对象 TO 用户</code></td></tr>
+          <tr><td>收回</td><td><code>ON</code></td><td><code>FROM</code></td><td><code>REVOKE 权限 ON 对象 FROM 用户</code></td></tr>
+        </tbody>
+      </table>
+      <p>「允许转授」是固定短语 <code>WITH GRANT OPTION</code>——有 <code>WITH</code>、<code>OPTION</code> 是单数。</p>
+    </div>
+  </section>
+
+  <!-- R6 -->
+  <section class="q">
+    <div class="qhead">
+      <h3>本轮第 6 题 · 案例综合三小问</h3>
+      <span class="tag src">原第 13 题</span><span class="verdict-pill bad">✗ 三小问均未过</span>
+    </div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(1) 建参赛表 · 三次提交　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">第 1 次</div><div class="v mine-v">
+<pre><code>CREATE TABLE 参赛表(
+运动员编号 CHAR(8),
+项目编号     CHAR(8),
+成绩            SMALLINT,
+PRIMARY KEY (运动员编号,项目编号),
+FOREIGN (运动员编号) REFRENCES 运动员(运动编号),      -- ✗ 缺 KEY；拼写错；被引列名缺「员」
+FOREIGN (项目编号) REFRENCES 比赛项目(项目编号)        -- ✗ 拼写错
+)</code></pre>
+        <p>进步：列定义之间的逗号、主键里的英文逗号都写对了（上一轮的格式硬伤已修）。</p>
+      </div></div>
+      <div class="row"><div class="k">第 2 次</div><div class="v mine-v">
+<pre><code>FOREIGN KEY (运动员编号) REFRENCES 运动员(运动员编号),  -- 补了 KEY 和「员」，拼写仍错
+FOREIGN KEY (项目编号) REFRENCES 比赛项目(项目编号)      -- 拼写仍错</code></pre>
+      </div></div>
+      <div class="row"><div class="k">第 3 次</div><div class="v mine-v">
+<pre><code>FOREIGN KEY (运动员编号) REFERENCES运动员(运动员编号),   -- ✓ 改对了（中间缺空格，不影响判分）
+FOREIGN KEY (项目编号) REFRENCES 比赛项目(项目编号)       -- ✗ 错字从上一行「转移」到这一行</code></pre>
+        <p>表名 <code>参赛表</code> 也一直未改回题干给的 <code>参赛</code>。</p>
+      </div></div>
+      <div class="keypoint">
+        <p><b>REFERENCES 记法：</b>它由动词 <code>refer</code> 派生——<code>refer</code> + <code>ence</code> = <code>reference</code>，复数 <code>references</code>。读作 <b>re-fer-ences</b> 三个音节，<code>REF</code> 后面那个 e 是 <code>refer</code> 自带的。</p>
+        <p><code>REFRENCES</code>（9 个字母，3 个 e）≠ <code>REFERENCES</code>（10 个字母，4 个 e）。</p>
+        <p><b>外键固定三段式：</b><code>FOREIGN KEY (本表列名) REFERENCES 表名(被引表的列名)</code>——三段缺一不可，被引列名要对着题干逐字核对。</p>
+      </div>
+      <p><span class="k">另记一条考试习惯　</span>同一个词在一句里出现两次时，改错只改了一处、另一处照旧（本例中错字还在两个外键行之间来回「转移」）。交卷前的自查要扫<b>同类项是否全部改到</b>，而不是改完一处就收工。</p>
+    </div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(2) 三表聚合　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">作答</div><div class="v mine-v">
+<pre><code>SELECT 代表团.团编号,代表团.团名,SUM(参赛.成绩) AS 总分
+FROM 代表团
+JOIN 运动员 ON 运动员.团编号 = 代表团.团编号
+JOIN 参赛 ON 运动员.运动员编号 = 参赛.运动员编号 
+GROUP BY 代表团.团编号,代表团,团名          -- ✗「代表团」是表名不是列名
+HAVING SUM(参赛.成绩&gt;=300)                 -- ✗ 比较运算符又写进了括号里</code></pre>
+      </div></div>
+      <p><span class="k">批注　</span><b>骨架已经立住了</b>：<code>FROM 代表团 JOIN 运动员 JOIN 参赛</code> 这条<b>代表团 → 运动员 → 参赛</b> 的逐段连接路径完全正确——上一轮这里三张表根本没连起来。剩下的两处：</p>
+      <ul class="tight">
+        <li><b>表名当列名</b>：<code>GROUP BY 代表团.团编号,代表团,团名</code> 里的 <code>代表团</code> 是表名，不是列名，语法报错；应为 <code>代表团.团名</code>。</li>
+        <li><b>比较运算符位置</b>：<code>SUM(参赛.成绩&gt;=300)</code> 与上一题 <code>COUNT(Cno&gt;3)</code> 是同一个错，实际含义变成了「数一数有多少行成绩 ≥300」。应为 <code>HAVING SUM(参赛.成绩) &gt;= 300</code>。</li>
+      </ul>
+      <div class="keypoint">
+        <p><b>你问的「GROUP BY 明明写编号就够了，为什么还要加团名」——判断是对的。</b></p>
+        <p>加团名不是逻辑需要，而是<b>语法规则</b>：SELECT 里出现的<b>每一个非聚合列</b>，都必须出现在 GROUP BY 里。因为 SELECT 里选了 <code>代表团.团名</code>，所以分组依据里也要列上它；否则「团名」在组内不唯一，DBMS 不知道取哪一行的值。</p>
+        <p>而「防止两个同名代表团被并成一组」靠的是<b>编号</b>（它是主键，永远唯一），不是团名。两个都写上最稳妥：<code>GROUP BY 代表团.团编号, 代表团.团名</code>。严格说，因为团名函数依赖于主键团编号，MySQL 等允许只写 <code>GROUP BY 代表团.团编号</code>；但考试按「SELECT 里的非聚合列都写进 GROUP BY」这条最保险的规则来。</p>
+      </div>
+      <div class="keypoint">
+        <p><b>正确写法：</b></p>
+<pre><code>SELECT 代表团.团编号, 代表团.团名, SUM(参赛.成绩) AS 总分
+FROM 代表团
+JOIN 运动员 ON 代表团.团编号 = 运动员.团编号
+JOIN 参赛   ON 运动员.运动员编号 = 参赛.运动员编号
+GROUP BY 代表团.团编号, 代表团.团名
+HAVING SUM(参赛.成绩) &gt;= 300;</code></pre>
+      </div>
+    </div>
+
+    <div class="expl">
+      <h4 style="margin:.6rem 0 .3rem;font-size:1rem;">(3) 建视图　<span class="verdict-pill bad">✗</span></h4>
+      <div class="row"><div class="k">作答</div><div class="v mine-v">
+<pre><code>CREATE VIEW vHighScore AS (                -- ✗ AS 后不能加括号（第二次犯）
+SELECT 参赛.运动员编号,运动员.姓名,比赛项目.项目名称,参赛.成绩   -- ✗ 多出未要求的成绩列
+FROM 参赛
+JOIN 比赛项目 ON 比赛项目.项目编号 = 参赛.项目编号
+JOIN 运动员 ON 运动员.运动员编号 = 参赛.运动员编号
+WHERE 参赛成绩&gt;=95                          -- ✗ 漏了点号
+GROUP BY 运动员.运动员编号,运动员.姓名       -- ✗ 全程没有聚合函数，分组毫无意义
+)</code></pre>
+      </div></div>
+      <p><span class="k">批注　</span>连接路径（参赛 ↔ 比赛项目 ↔ 运动员）与 <code>FROM 参赛</code> 起手都对了，比上一轮进步明显。四处问题：</p>
+      <ul class="tight">
+        <li><code>AS</code> 后面<b>直接接 SELECT，不加括号</b>——上一轮已点过，本轮又犯，属 0 分硬伤。</li>
+        <li><code>参赛成绩</code> 漏了点号，应为 <code>参赛.成绩</code>。</li>
+        <li>题干只要「运动员编号、姓名、项目名称」<b>三列</b>，这里多给了一列成绩——按题作答，不要自行加列。</li>
+        <li>整句<b>没有任何聚合函数</b>，<code>GROUP BY</code> 没有意义；且 SELECT 里的 <code>项目名称</code> 既不在分组依据里、也没被聚合，严格 SQL 直接报错。<b>没有聚合就不写 GROUP BY。</b></li>
+      </ul>
+      <div class="keypoint">
+        <p><b>正确写法：</b></p>
+<pre><code>CREATE VIEW vHighScore AS
+SELECT 运动员.运动员编号, 运动员.姓名, 比赛项目.项目名称
+FROM 参赛
+JOIN 运动员   ON 运动员.运动员编号 = 参赛.运动员编号
+JOIN 比赛项目 ON 比赛项目.项目编号 = 参赛.项目编号
+WHERE 参赛.成绩 &gt;= 95;</code></pre>
+        <p>建视图的固定骨架是 <code>CREATE VIEW 视图名 AS 查询语句;</code>——视图本身不存数据，只是把一条 SELECT 起名存起来。跨三张表就沿最短路径逐段 JOIN。从哪张表起手都可以，关键是每一段 JOIN 都要有 <code>ON</code> 把两张表桥起来。</p>
+      </div>
+    </div>
+  </section>
+
+  <h2><span class="no">05</span>本轮错题本更新与回炉安排</h2>
+  <p>本轮结果已同步进 <code>interactive/mistake-book/app.js</code>：上过一轮「未过关」的并发辨析与 REDO/UNDO 已转已过关，同时把本轮复发与新暴露的错误类型另立条目。</p>
+  <table>
+    <thead><tr><th>薄弱点</th><th>本轮表现</th><th class="num">状态变化</th></tr></thead>
+    <tbody>
+      <tr class="stats-pass"><td>并发四类错误对号入座</td><td>脏读、幻读各答对一次</td><td class="num">未过关 → 已过关</td></tr>
+      <tr class="stats-pass"><td>故障恢复 REDO/UNDO 判据</td><td>「未完成 → UNDO」答对</td><td class="num">待巩固 → 已过关</td></tr>
+      <tr class="stats-pass"><td>多表连接路径</td><td>13(2)、13(3) 的 JOIN 路径均写对</td><td class="num">未过关 → 待巩固</td></tr>
+      <tr class="stats-pass"><td>「含／以上」闭区间与单引号常量</td><td><code>&gt;=</code> 与 <code>'C02'</code> 均写对</td><td class="num">待巩固 → 已过关</td></tr>
+      <tr class="stats-fail"><td>聚合函数与比较运算符的位置</td><td><code>COUNT(Cno&gt;3)</code>、<code>SUM(成绩&gt;=300)</code> 同型两次</td><td class="num">新增 · 未过关</td></tr>
+      <tr class="stats-fail"><td>建表外键与建视图的固定格式</td><td><code>REFERENCES</code> 拼写第三次错、<code>AS</code> 后加括号第二次犯</td><td class="num">待巩固 → 未过关</td></tr>
+      <tr class="stats-fail"><td>GROUP BY 分组粒度与聚合条件</td><td>分组列已改对，但 <code>COUNT(Cno&gt;3)</code> 与 <code>GROUP Sno</code> 又各错一次</td><td class="num">未过关（维持）</td></tr>
+      <tr class="stats-fail"><td>固定短语与同类项誊写复查</td><td><code>REFERENCES</code> 连错三次、<code>AS</code> 后加括号、改错只改一处</td><td class="num">新增 · 未过关</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <b>下一轮回炉（考前再抽一次）：</b>
+    ① 手默 <code>REFERENCES</code> 五遍，并默写 <code>FOREIGN KEY (列) REFERENCES 表(列)</code> 三段式；
+    ② 只默固定短语：<code>GROUP BY</code>、<code>ORDER BY</code>、<code>WITH GRANT OPTION</code>、<code>CREATE VIEW … AS SELECT</code>；
+    ③ 重写 13(2)、13(3) 两道三表题，写完先自查「聚合函数括号里有没有夹带比较运算符」。
+    <br><b>考场上的收尾动作：</b>SQL 大题写完后，回头只扫「固定短语有没有写全、同类项有没有全部改到」，不涉及逻辑，纯靠扫一眼就能捞回分。
   </div>
 
   <footer class="page">
-    <p>本页为 2026-10-13 答题复盘存档，内容取自练习原题、本人作答与批改解析；错题本数据源为 <code>interactive/mistake-book/app.js</code>。课程正文见 <code>软考学习/02-数据库系统/05-SQL.md</code> 与 <code>06-事务并发与故障恢复.md</code>。</p>
+    <p>本页为 2026-10-13 答题复盘存档，内容取自练习原题、本人作答与批改解析；第 04、05 节为 10-14 回炉重做的逐次作答与批改记录。错题本数据源为 <code>interactive/mistake-book/app.js</code>。课程正文见 <code>软考学习/02-数据库系统/05-SQL.md</code> 与 <code>06-事务并发与故障恢复.md</code>。</p>
   </footer>
 
 </main>
