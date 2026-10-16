@@ -82,6 +82,10 @@
 - **所有指向 `interactive/` 的站内链接必须带 `target`**，否则被 VitePress client router 拦成 404（2026-10-09 发现既有绕轮廓链接已长期失效）。修法在 `.vitepress/config.mjs` 的 `markdown.config`：先跑原 `link_open`（VitePress `linkPlugin` 补 base）再加 `target`，顺序反了会丢 base。细节见 `.agents/html-build.md`。
 - 记录约定：错题条目要写「我的答案 / 正确答案 / 错因（指向具体规则）/ 知识点/下次回炉」；错因只说现象不算过关。
 
+## 学习执行偏好（2026-10-16 确认）
+
+- 学习时以 `interactive/sprint-plan/index.html` 的当前冲刺日卡作为任务依据；讲解和练习以高频考点、易混辨析和直接得分题为主，不主动扩展低频背景。
+
 ## 冲刺规划云端进度同步（2026-10-11 建立，代码在 feature/sprint-plan-sync 分支）
 
 - `interactive/sprint-plan/index.html` 支持 JSONBin 云端同步（多设备共享勾选）。**AI 可直接读云端跟踪进度**：bin ID `6acb855cffd5d160536166d7`，Access Key（read+update）内嵌于该文件的 `CLOUD_EMBEDDED_KEY` 常量（以源码现值为准，勿复制）。读取：`curl https://api.jsonbin.io/v3/b/<binId>/latest -H "X-Access-Key: <key>"`。
