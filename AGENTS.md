@@ -20,6 +20,7 @@
 | 拆分、合并或迁移课程文件 | [`.agents/course-splitting.md`](.agents/course-splitting.md) |
 | 任何内容或代码变更的交付前检查 | [`.agents/verification.md`](.agents/verification.md) |
 | 处理用户"记住/以后都这样"的记忆声明 | [`.agents/memory-management.md`](.agents/memory-management.md) |
+| 用户说「某某请出题」，或要求批改、登记错题本 | [`.agents/skills/topic-quiz/SKILL.md`](.agents/skills/topic-quiz/SKILL.md) |
 
 ## 唯一真源
 

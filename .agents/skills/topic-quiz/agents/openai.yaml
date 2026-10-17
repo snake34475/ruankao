@@ -1,0 +1,6 @@
+interface:
+  display_name: "考点出题与错题本"
+  short_description: "按考点出题、批改并登记错题本"
+  default_prompt: "用 $topic-quiz 按指定考点出题，答完后批改并把错题写进错题本。"
+policy:
+  allow_implicit_invocation: true
