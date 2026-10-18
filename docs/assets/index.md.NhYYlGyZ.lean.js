@@ -1,0 +1,1 @@
+import{_ as e,o as l,c as i,ag as r}from"./chunks/framework.KxDd3USm.js";const u=JSON.parse('{"title":"软考软件设计师自学资料库","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),t={name:"index.md"};function h(o,a,n,d,f,s){return l(),i("div",null,[...a[0]||(a[0]=[r("",11)])])}const _=e(t,[["render",h]]);export{u as __pageData,_ as default};
