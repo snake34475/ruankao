@@ -1,93 +1,57 @@
 # 项目长期备忘（软考软件设计师资料库）
 
-> 规范类内容一律以 `AGENTS.md` 为准（它是项目规范真源）；本文件只记「跨会话需要记住、但 AGENTS.md 不适合承载」的状态与结论。
+> 规范真源是 `AGENTS.md`（任务路由表，细则在 `.agents/`）；本文件只记跨会话状态与结论，与 `.agents/` 冲突时以后者为准。
 
-## 仓库与平台
+## 仓库与远端
 
-- **两个远端并存**：`origin` → Gitee（`git@gitee.com:wang-tengyao/ruankao-software-designer.git`）、`github` → GitHub（`git@github.com:snake34475/ruankao.git`）。**两边 main 保持同一提交，推送时两个都要推。**
-- **课程文件已按课号拆成子目录（2026-09 下旬重构）**：真源路径是 `软考学习/NN-课名/MM-小节名.md`（每课 7~13 个文件），**不再有「整课单文件」**；`docs/` 对应每课一个子目录 + 一个同名兼容入口页（`docs/NN-课名.html` → `NN-课名/index.html`）。构建产物共 **136 个页面**。→ **本文件下文凡是引用 `软考学习/01-数据结构与算法.md` 这类单文件路径的历史条目都已被这次重构作废**，按新结构去找对应小节文件。
-- **仓库规范已拆分**：`AGENTS.md` 现为**任务路由表**，正文在 `.agents/` —— `course-authoring.md`（讲义/题目/答案）、`markdown-rendering.md`（Markdown 与渲染排查）、`html-build.md`（tools/ 构建、导航、路由、docs/）、`course-splitting.md`（拆合课程文件）、`verification.md`（交付前检查）、`memory-management.md`（记忆声明）、`figure-design.md`（图示规范）。**动手前按路由读对应细则**；本文件里的历史规范条目若与 `.agents/` 冲突，以 `.agents/` 为准。
-- **Gitee Pages 已被官方下线**（Gitee 官方 issue `oschina/git-osc#IC6I0L` 明确答复「该功能已下线」；网上大量 CSDN 问答声称"仍正常"，是过时/AI 生成内容，不要采信）。→ **在线阅读一律走 GitHub Pages**。
-- 仓库已入库范围包含 `.workbuddy/`（会话记忆）与 `design/`（设计样张）——用户 2026-09-14 明确要求入库，**不要把它们加回 `.gitignore`**。
-- **`讲义扩充规划.md`（仓库根）是工作文档，不进 `docs/`**：构建脚本 `tools/build_html.mjs` 的页面来源只有大纲 `软件设计师考点大纲.md` + `软考学习/**/*.md`，根目录其他 md 不会被转换。所以「规划 / 设计 / 说明」类文档一律放仓库根，**不要放 `软考学习/`**——放进去会被当成 lesson 页混进索引卡片与梯队导航。
-- 课件体检的固定判据（2026-09-15 建立，可复用）：① 逐条核对大纲「学习范围」；② 深度自检六条（有结论无演算 / 公式缺三件套 / 缺反例 / 缺应试动作 / 一句话带过学不懂 / 对比表缺列）；③ 在 `pdf/text/` 检索该考点章节找漏点；④ 抽 3~5 道计算题**亲自复算**（用第二种方法）。分组并行派只读子智能体做前三条，主会话复核关键点。
-- 参考资料来源两处：`pdf/text/`（辅导资料 OCR 文本，随仓库提交）＋ `.refs/`（开源项目克隆，如 hello-algo，**只留本地、已 gitignore，绝不提交**）。补写/校准讲义时用 `.refs/` 对照章节划分找"讲得不周全"的漏点，但**考点范围一律以大纲与 `pdf/text/` 为准**（开源项目覆盖面更宽，不考的别搬）。
+- 双远端：`origin` → Gitee（wang-tengyao/ruankao-software-designer）、`github` → GitHub（snake34475/ruankao）。**推送必须两边都推**：`git push origin main && git push github main`。
+- 推送走 SSH（`~/.ssh/id_ed25519`，两远端同一把钥），**别改回 HTTPS**（凭据弹窗会卡死）。本机无 gh CLI，查 GitHub 状态用 `git ls-remote` / `ssh -T`。
+- GitHub Pages 已启用：<https://snake34475.github.io/ruankao/>，只读 GitHub 仓库的 `/docs`（Deploy from branch，无 Actions）。Gitee Pages 已官方下线，别信网上"仍可用"的说法。
+- **每次改完 md 必须本地 `npm run build` 并把 `docs/` 一起提交**；正文页面数以 `tools/postbuild_vitepress.mjs` 动态汇总为准（现为 137）。`interactive/` 静态页不计入该数。
+- 仓库入库范围含 `.workbuddy/` 与 `design/`（用户明确要求），别加回 `.gitignore`。`.refs/`（本地参考克隆与验收脚本）绝不提交。
+- 根目录「规划/设计/说明」类 md 不进 `软考学习/`（会被当 lesson 页混进索引），也不参与构建。
+- 课程文件已按课号拆子目录：真源 `软考学习/NN-课名/MM-小节名.md`，无整课单文件。
+
+## 构建环境坑（2026-10-08 定案）
+
+1. Git Bash 构建必须**大写盘符 cd**（`cd C:/...`），否则 VitePress 渲染报 `Cannot read properties of undefined (reading 'imports')`。别往缓存方向排查。
+2. prepare 整删 `site-src` 会被删除保护壳拦截：构建时加 `CODEBUDDY_SAFE_DELETE_ENABLED=0 npm run build`。
+3. 构建后 `git status` 报一批假 M（autocrlf + 无 .gitattributes 的 stat 假象，diff 实为空）：`git add --renormalize .` 消除，**不要 `git checkout -- .`**。构建幂等，可用来核验产物是否漏提交。
 
 ## 提交约定
 
-- 提交信息用**简体中文**，与历史提交保持一致。
-- 拆提交按「内容层 / 工程层」分开：讲义 md 与产物 HTML 的 UI 改动不要混在一个 commit 里。
-- **作者身份（2026-09-17 已确认）**：`snake34475` 就是用户的 GitHub 账号——SSH 认证返回 `Hi snake34475!`，与 Gitee 用的是**同一把公钥** `~/.ssh/id_ed25519.pub`（注释为 `1098834475@qq.com`）。仓库 `git config` 仍是 `wangtengyao <1098834475@qq.com>`；两处邮箱一致，所以 GitHub 上提交显示为 `wangtengyao` 而非 `snake34475`，**不算问题，不必改 config**。
-- **构建后 `git status` 误报一批 M 是假象，不是内容改动（2026-10-08 查清）**：`core.autocrlf=true` 且仓库无 `.gitattributes`，index 的 stat 假设工作区是 CRLF、而构建脚本重写成 LF → size 差使 `git status` 报 M；但 `git diff` / `git diff HEAD` **为空**、逐字节比对也完全相同。**消除办法：`git add --renormalize .`**（只作用于已跟踪文件，实测一次清净、暂存区为空）。**不要用 `git checkout -- .` 去"还原"**——那是误解，会白跑一遍。诊断脚本 `.refs/diag-eol.py`（列 M 文件 → 比较工作区字节 vs `git cat-file blob HEAD:<path>`）。附带结论：构建是幂等的，可用它快速核验"产物有没有漏提交"。
+- 提交信息简体中文；内容层（讲义 md）与工程层（HTML UI）分开提交。
+- 仓库 config 是 `wangtengyao <1098834475@qq.com>`，GitHub 显示同名而非 snake34475——邮箱一致，不算问题，不改。
 
-## 部署
+## Markdown 写作铁律（渲染实测教训）
 
-- **构建系统的两个环境坑（2026-10-08 排查定案）**：
-  1. **Git Bash 里构建必须用大写盘符 cd**：`cd C:/...` 后再 `npm run build`。否则 Node 的 cwd 是小写 `c:/`，VitePress 用 `===` 比对 facadeModuleId（bundle 里是大写 `C:/`）→ 渲染阶段全页面找不到 chunk，报 `Cannot read properties of undefined (reading 'imports')`。清缓存没用，别往缓存方向排查。
-  2. **prepare 脚本整删 `site-src` 会被 WorkBuddy 删除保护壳拦截**（>50 文件需确认，后台跑直接抛错）。构建时加 env：`CODEBUDDY_SAFE_DELETE_ENABLED=0 npm run build`。`site-src` 是 gitignore 的生成暂存目录，删除安全。
-- **推送已改走 SSH**：密钥 `~/.ssh/id_ed25519`（ed25519，空密码短语），Gitee 与 GitHub 共用同一把。**不要再改回 HTTPS** —— 本环境的凭据弹窗无法交互，HTTPS 会卡住。本机**未安装 gh CLI**，查 GitHub 侧状态用 `git ls-remote` / `ssh -T git@github.com`。
-- **GitHub Pages 已启用（2026-09-17 实测可访问）**：在线阅读 <https://snake34475.github.io/ruankao/>。推送命令 `git push origin main && git push github main` —— **Pages 只读 GitHub 那个仓库的 `/docs`**，只推 Gitee 线上不会更新。
-- `docs/` 就是发布目录，**GitHub Pages 不需要 Actions**：Settings → Pages → Deploy from a branch → `main` + `/docs`（已配置好）。
-- **每次改完 md 必须本地 `npm run build` 并把 `docs/` 一起提交**——Pages 只发布提交上去的内容，它不跑构建。
-- `docs/.nojekyll` 由 `tools/build_html.mjs` 生成（**不手改 docs/**），用于跳过 Jekyll；若丢失重跑构建即可恢复。
-- 部署步骤的完整说明在 `README.md` 的「在线部署（GitHub Pages）」小节。
+- `**` 紧跟标点后（如 `。**` 后接汉字）不是闭合标记，会字面露出 `**`；括号/引号移到加粗之外。
+- 数字范围一律全角 `～`（`0～255`）；ASCII `~` 同段 ≥2 个会触发删除线。
+- 竖排表格唯一可靠判据：某格单行宽度 > 可用宽度且换行后每行 ≤1.5 字（真竖排全仓库仅 3 张）；优先改措辞而非删表。
+- **「全角 `｜` 拼列的伪表格」已实测否决（比例字体不可能对齐），别再试**；横向对齐的比较信息留在表格里。
+- 站内指向 `interactive/` 的链接必须带 `target`，否则被 VitePress router 拦成 404（修法见 `.agents/html-build.md`）。
 
-## 界面改动的验收流程
+## 阅读版性能事实（实测，勿凭猜想）
 
-改 `tools/` 下任何文件后：`npm run build` → 用无头 Chrome 按 **1440（三栏）/ 1140（两栏）/ 880（抽屉）** 三档宽度截图核对 → 深色主题另注一次 `data-theme='dark'` 截图。**细则见 `.agents/html-build.md`**（AGENTS.md 已改为路由表，不再承载分节正文）。
+- 判断页面轻重看 DOM 节点数与 JS 堆，别拿进程总内存当指标；每开一个标签 = 独立渲染进程（唯一数量级杠杆）。
+- 顶栏毛玻璃（backdrop-filter）已移除，**勿改回**；字重只用 500/600/700（100 整数倍）。
+- `content-visibility` 已实测否决（小节高度差异大导致首屏高度失真），**勿再试**。
+- `file://` 下 localStorage 跨页共享是正常行为，不是 bug。
 
-- **ZCode 内置浏览器（IAB）截图实测（2026-10-10）**：`screenshot({clip})` 的坐标是**整页坐标**（`rect.x + scrollX, rect.y + scrollY`），不是视口坐标——按视口坐标传 clip 会截到页面上方的正文；因此截取某个元素**不需要先滚动**，直接算整页矩形即可。`setViewportSize` 在 IAB 可用（1440/880/480 分档有效）。
-- **VitePress 深浅色切换键**：localStorage `vitepress-theme-appearance`（值 `light`/`dark`）。URL 参数 `?theme=light` 会被已存偏好覆盖；核对浅色时先 `localStorage.setItem('vitepress-theme-appearance','light')` 再 reload。dev 与 build 页都挂在 base `/ruankao/` 下（漏掉会看到 "did you mean /ruankao/..." 提示页而不是报错）。
+## 错题本（2026-10-09）
 
-## 讲义扩写的分片-拼接流水线（2026-09-15 建立，可复用）
+- 独立 HTML 看板：`interactive/mistake-book/`（数据全在 `app.js` 的 MISTAKES/WEAK 数组），构建时拷进 `docs/interactive/`。**不要做成 md 页**。
+- 条目约定：我的答案 / 正确答案 / 错因（指向具体规则）/ 知识点 / 下次回炉；错因只说现象不算过关。
+- 用户做错、蒙对、犹豫的题都要同步记入，不留在对话里。
 
-单课扩写量大（动辄 +700 行）时不要用多次 `Edit` 打补丁，走这条流水线：
+## 冲刺与进度
 
-1. **分片**：把该课按讲义结构拆成 5~10 个片，写进 `.refs/parts/<课号>-<序号>.md`（如 `s03-1.md`）。分片里**自带小节标题**（`## 第N节` / `### N.x`），只写正文，不带导航。
-2. **拼接脚本** `.refs/patch<NN>.mjs`：用**精确标题串**定位锚点 → 记录 `[from,to)` 区间 → 按 `from` **降序** `splice`；答案区改动用 `indexOf(锚点)` 取三段**整段替换**，**不要**去匹配全角引号（形态不定，容易失配）。脚本末尾打印标题结构 + 关键串计数做自检。
-3. 拼接前 `cp` 一份 `.refs/<NN>.bak.md`；补题插在「精华题」之后、「答案与解析」之前，答案追加到答案区末尾，**原题号一律不动**。
+- 学习执行以 `interactive/sprint-plan/index.html` 当前冲刺日卡为准；讲解练习聚焦高频考点、易混辨析、直接得分题，不扩展低频背景。
+- sprint-plan 支持 JSONBin 云端同步：bin `6acb855cffd5d160536166d7`，key 内嵌于源码 `CLOUD_EMBEDDED_KEY`（以源码现值为准）。`record.state` 键为 `日.任务下标`；与 `00-总览与进度.md` checkbox 是两套并行口径。
+- 2026-10-19 实测：云端 bin 只有 legacy 键、updatedAt 10/16；本机 localStorage 搜不到 `ruskprint`。多设备勾选来源未查明，用户叫停——别重复挖 leveldb。
 
-**局部验收工具** `.refs/preview.mjs`（用法：`node .refs/preview.mjs <课号-课名> <起h号> <止h号> <light|dark>`）：
+## 验收工具（都在 `.refs/`，gitignore）
 
-- 必须先把 `docs/style.css`、`docs/app.js` 拷进 `.refs/`，否则预览页无样式；
-- 正文已固定为真实中栏宽度（44rem），否则缺侧栏时表格列宽失真，会把预览假象误判成页面 bug；
-- **区间参数起止必须不同**——写成 `54 54` 会生成空白页（看上去像渲染失败，其实是没取到内容）；
-- `h-N` 是构建脚本按标题顺序生成的 id，改 md 后编号会漂移，**每次先 grep `id="h-"` 取最新编号**。
-
-**窄首列表格的判据已被实测推翻（2026-09-17 修正，旧判据是错的）**：旧说法「表首列 ≤3 字 + 其他列含长句 → 必然竖排」不成立——列宽由**整张表所有列共同博弈**决定，且首列是纯数字或拉丁词时根本不会折行（拉丁词不折行，最小宽度 = 整个词）。唯一可靠判据：**某格"单行所需宽度 > 可用宽度"、且换行后每行 ≤1.5 字**。实测全仓库 13 课 230 张表，**真的竖排的只有 3 张**（04 表1「实体类/边界类/控制类」、05 表7「段页式」、06 表1「应用层/表示层/会话层」）；01 课 41 张表原只有 2 张被挤压。判据与改法已写进 `AGENTS.md` 第 10、11 条。
-
-**「用 `｜` 拼列的伪表格」已试点并整批回退（2026-09-17，务必别再试）**：曾把 01 课 10 张「步骤流水账」表（DFS/BFS、Kruskal/Prim/Dijkstra、拓扑排序、绕树记录、八大排序一览、快排挖坑、线性探测）换成「一行图例 + 每条一行、字段用全角 `｜` 分隔」，用户**第一眼即反馈展示异常**，已 `git checkout HEAD -- 软考学习/01-数据结构与算法.md` 整批回退（**回退会把 `~`→`～` 一起带回旧状态，必须补跑标记缺陷修复**；补跑脚本 `.refs/patch01-defects.mjs`(波浪号+审计) / `.refs/patch01-bold.mjs`(4 处粗体，带命中断言)）。根因：① `｜` 是**行内文本**，比例字体下各行分隔符横坐标各不相同，**列对齐在数学上不可能**；② 原表里靠成列才好用的关键信息（`稳定性` 稳定/不稳定、`判断` ✓选中/✗跳过）被打散到行中段还会折行。**结构指标（表格 41→31、单元格 1004→640、DOM −763、页高 −954px、竖排 2→0）全部向好，一次实渲就被否**——教训：结构指标好 ≠ 读者读起来好；横向对齐的比较信息留在表格里，真正竖排的 3 张优先改措辞/缩格内文字，其次改分组列表。
-**表格体检工具**：`.refs/table-probe.mjs`（单页逐格实测）、`.refs/table-sweep.mjs`（全仓库批量体检）、`.refs/shot-region.mjs <html> <查找文字> <输出名> [宽 高 偏移]`（按正文文字定位截一块，比 `#h-N` 锚点稳）、`.refs/shot-legends.mjs`（批量截所有图例区域）。
-
-**两类"源码看不出、只有渲染才暴露"的 Markdown 缺陷（2026-09-17 一次修净，务必按此写）**：
-- **`**` 紧跟在标点后就不能再当闭合标记**：`**` 前是标点（`"`、`）`、`。`）、后是汉字时，CommonMark 判它**不是右翼分隔符** → 这对粗体失效、页面**字面露出 `**`**。全仓库曾 16 处（02/03/04/05/06/08/12/99 与 01）。写法：把括号/引号移到加粗之外——「屏蔽的是**逻辑结构**（表定义）的变化」而非「**逻辑结构（表定义）**的变化」。
-- **单个 `~` 会被当成删除线分隔符**：同段落出现 2 个以上 ASCII `~`（哪怕隔几十字）时，中间的整段文字被包进 `<del>` 打上删除线（06 课曾有一整句被划掉）。**范围一律写全角 `～`**（`0～255`、`1～1023`）；代码块与行内代码里的 `~` 不受影响。全仓库曾 83 处。
-- 审计工具：`.refs/audit-bold.mjs`（逐段解析、剥掉代码后找残留 `**`；注意 `____` 填空下划线要排除）、`.refs/patch01-lists.mjs`、`.refs/patch-markdown-defects.mjs`（后者用**精确字符串配对 + 命中次数断言**，不匹配即中止不写文件）。
-
-## 阅读版页面的性能事实（2026-09-17 实测，勿再凭猜想下结论）
-
-- **单标签页 210 MB 属正常**：全新无扩展 Chrome 开空白页就 562.7 MB / 10 进程，最大讲义页 668.9 MB；承载页面的渲染进程 84.1 → 114.9 MB，**页面内容只占约 30 MB**。判断页面是否过重看 DOM 节点数（01 课 10,971）与 JS 堆（0.57 MB），别拿总内存当指标。`tools/app.js` 无内存问题（无常驻定时器、滚动 rAF 节流 + passive）。
-- **每开一个标签 = 一个独立渲染进程**：`file://` 与 `http://` 都一样、同源也不复用（实测新开 2 个标签 = 渲染进程 +2）。这是唯一有数量级效果的内存杠杆 → 少开标签 + 开 Chrome「内存节省程序」。
-- `file://` 下 **localStorage 跨页共享**（所有 file:// 页视为同一源 `file://`），学习状态功能正常，勿再当成 bug。
-- **顶栏毛玻璃已移除（2026-09-17 修复）**：`tools/style.css` 的 `.topbar` 原用 `backdrop-filter: blur(12px) saturate(1.3)`，实测滚动样式重算 190→68 次、滚动 CPU 501→352 ms（核显机器尤其明显）。现改为不透明 `background: var(--bg)`，并留了注释说明原因——**不要改回毛玻璃**。
-- **字重已归并（2026-09-17）**：原 750 / 780 / 650 全部改为 700 / 600，全站字重现只有 500 / 600 / 700，**新增样式不要再引入非 100 整数倍字重**。
-- **`content-visibility` 已实测否决（2026-09-17，不要再试）**：曾按 h2 把正文包成 `<section class="sec">` 并加 `content-visibility: auto` + `contain-intrinsic-size: auto 720px`，实测加载 Layout 1735→1854 ms（**没省**）、滚动 Task 无差别，但**首屏文档总高从 73,113 px 掉到 54,117 px（短 26%）**，浏览一遍后才收敛到 73,509 px。原因：本仓库讲义各小节高度差异极大（500 px ~ 2 万 px），固定估算值必失真；且布局成本大头是 CJK 字体就绪后的全文重排，跳过屏幕外小节并不省。改动已全部回退。
-- 诊断与验收脚本都在 `.refs/`（gitignore）：`mem-probe.mjs`（CDP 指标探针）、`measure.mjs`（布局/大纲高亮回归）、`cv-test.mjs`（滚动条失真专项）、`shots.mjs`（多宽度×主题截图）、`verify.mjs`（改动验收）。诊断报告 `页面内存诊断.html` 在仓库根（工作文档，不参与构建、不进 `docs/`）。
-
-## 错题本与薄弱点复盘（2026-10-09 建立）
-
-- **错题本是独立 HTML 看板，不是 Markdown 讲义页**：源码在 `interactive/mistake-book/`（`index.html` + `style.css` + `app.js`），构建时整目录拷进 `docs/interactive/mistake-book/`，与 `traversal-contour` 同一套 L3 交互页机制。用户 2026-10-09 明确要求「不依赖 md、做成独立 html」，**曾短暂做成 `软考学习/错题本与知识图谱.md`（general 页）已作废回退，不要照那条路重做**。
-- **数据全在 `app.js`**：`MISTAKES` 数组（每条一个对象）+ `WEAK` 数组（薄弱点图谱）。加错题 = 加对象，页面数字/进度条/筛选自动统计。状态三态 `danger(未过关)/warn(待巩固)/ok(已过关)`，用「颜色 + 符号 + 文字」三重编码，不只靠颜色。
-- **它是静态资产，不计入 136 个正文页面**。dev 和 build 都由 prepare 整目录拷进 `site-src/public/`，所以两处都能打开；入口三处：`.vitepress/config.mjs` 的 `nav`＋`sidebar` 总览组、`软考学习/00-总览与进度.md` 学习方法说明。增删这类页**不动**正文页面计数，别去改那个 136。
-- **所有指向 `interactive/` 的站内链接必须带 `target`**，否则被 VitePress client router 拦成 404（2026-10-09 发现既有绕轮廓链接已长期失效）。修法在 `.vitepress/config.mjs` 的 `markdown.config`：先跑原 `link_open`（VitePress `linkPlugin` 补 base）再加 `target`，顺序反了会丢 base。细节见 `.agents/html-build.md`。
-- 记录约定：错题条目要写「我的答案 / 正确答案 / 错因（指向具体规则）/ 知识点/下次回炉」；错因只说现象不算过关。
-
-## 学习执行偏好（2026-10-16 确认）
-
-- 学习时以 `interactive/sprint-plan/index.html` 的当前冲刺日卡作为任务依据；讲解和练习以高频考点、易混辨析和直接得分题为主，不主动扩展低频背景。
-
-## 冲刺规划云端进度同步（2026-10-11 建立，代码在 feature/sprint-plan-sync 分支）
-
-- `interactive/sprint-plan/index.html` 支持 JSONBin 云端同步（多设备共享勾选）。**AI 可直接读云端跟踪进度**：bin ID `6acb855cffd5d160536166d7`，Access Key（read+update）内嵌于该文件的 `CLOUD_EMBEDDED_KEY` 常量（以源码现值为准，勿复制）。读取：`curl https://api.jsonbin.io/v3/b/<binId>/latest -H "X-Access-Key: <key>"`。
-- `record.state` 的键为 `日.任务下标`（对应页面 `DAYS` 数组，如 `"1.0"`～`"1.4"` 是 D1 的 5 条）；`record.updatedAt` 是毫秒时间戳。与 `00-总览与进度.md` 的 checkbox 是两套并行口径：云端只管冲刺日卡勾选，不替代进度表真源。
-- 免费档限流：约 10 请求/分钟/账号、10,000 请求/月；JSONBin 保留每 bin 1000 个历史版本，被覆盖可回滚。key 泄露的最坏后果是本 bin 被覆盖，账号内不放其他数据。
+- 截图：`shots.mjs`（多宽度×主题）、`shot-region.mjs`（按正文文字定位截块）；布局回归 `measure.mjs`、`verify.mjs`；表格体检 `table-probe.mjs` / `table-sweep.mjs`；粗体/波浪号审计 `audit-bold.mjs` / `patch-markdown-defects.mjs`。
+- 界面改动验收：1440/1140/880 三档宽度截图 + 深色主题（localStorage `vitepress-theme-appearance`）。
+- 大课扩写走分片-拼接流水线（`.refs/parts/` + `patch<NN>.mjs`），脚本用精确标题锚点 + 命中断言。
