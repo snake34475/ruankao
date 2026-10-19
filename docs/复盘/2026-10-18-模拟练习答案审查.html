@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 月 18 日模拟练习答案审查</title>
+<style>
+:root{color-scheme:light dark;font:15px/1.7 system-ui,"PingFang SC","Microsoft YaHei",sans-serif}
+body{max-width:1100px;margin:auto;padding:20px;color:CanvasText;background:Canvas}
+h1{font-size:1.7rem}h2{margin-top:2rem;border-bottom:1px solid #8885;padding-bottom:.25rem}
+p{max-width:100ch}a{color:LinkText}.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:740px;font-size:.9rem}
+th,td{border:1px solid #8886;padding:.48rem .65rem;text-align:left;vertical-align:top}
+th{background:#8882}td:first-child{white-space:nowrap;font-weight:600}
+code{background:#8882;padding:.08rem .22rem;border-radius:.2rem}
+li{margin:.4rem 0}strong{font-weight:700}
+</style>
+</head>
+<body>
+<main>
+<p><a href="2026-10-18-模拟练习索引.html">← 返回练习索引</a></p>
+<h1>10 月 18 日模拟练习：参考答案审查与冲刺诊断</h1>
+<p>本页按同目录的 <code>2026-10-18-模拟练习索引.html</code> 中的题目 ID 核对本机原始截图。原整理版答案为模型推断，并非官方评分。这里区分“答案能否成立”和“是否有本人的作答证据”；下午 10 小问没有可靠作答记录，不计得分。</p>
+<h2>上午题审查</h2>
+<div class="table-wrap"><table>
+<tr><th>题目 ID</th><th>审查结论</th><th>依据或处理</th></tr>
+<tr><td>AM-002、AM-004、AM-005、AM-U-01、AM-U-02、AM-013、AM-014、AM-U-03、AM-U-04</td><td>参考选项可用</td><td>逐题复算海明码、核对输入输出方式及其他概念；AM-014 依据国家知识产权局同日申请规则。</td></tr>
+<tr><td>AM-023、AM-024、AM-025、AM-U-05～AM-U-10</td><td>参考选项可用</td><td>哈夫曼树的合并权值和为 266；二分查找比较位置为 6、9；流水线周期为最长阶段的 9 ns。</td></tr>
+<tr><td>AM-U-11～AM-U-17</td><td>参考选项可用</td><td>可靠度为两组并联成功率的乘积；保证不死锁资源数为 13；归并最少比较次数为较短序列长度。</td></tr>
+<tr><td>AM-U-18</td><td><strong>题意不足，不据此判错</strong></td><td>原集判 B（hosts），本人选 A（本地 DNS 缓存）。以 Windows DNS 客户端为例，它先查本地缓存，hosts 映射也可能已装入缓存。题目未限定系统或教材流程，不能断言 B 唯一正确。</td></tr>
+<tr><td>AM-U-19</td><td><strong>参考 C 有条件成立，不据此判错</strong></td><td>“相似功能模块”若职责不同，强行合并可能降低内聚；若功能真正重复，抽取公共模块也可能改善设计。题干没有交代职责边界，不能把 B 稳定判错。</td></tr>
+<tr><td>AM-U-20、AM-U-21</td><td>参考选项可用</td><td>漏洞扫描不等同入侵检测；8 kHz 的采样频率与最高约 4 kHz 的目标信号频率对应。</td></tr>
+<tr><td>AM-051、AM-052</td><td><strong>原题符号与解析冲突，均待核</strong></td><td>截图写的是“培训科目→→培训师”（多值依赖），原解析却把它当作“培训科目→培训师”（函数依赖）使用。按截图字面，<code>(时间, 学生)</code> 不能推出“培训师”，所以第 51 题的 D 也不能据此确认；第 52 题的 2NF 结论同样失去前提。若原题本意是单箭头函数依赖，再分别得到 D、B。</td></tr>
+<tr><td>AM-055、AM-056</td><td>概念判断可用，<strong>选项字母待核</strong></td><td>②描述装饰器、④描述外观；截图未拍到 A～D 与序号的对应行，不能确认原整理版的 B、D 字母。</td></tr>
+<tr><td>AM-057～AM-060</td><td>参考选项可用</td><td><code>private</code> 仅本类可访问；DFD 中患者是外部实体，E-R 图中患者是实体。第 58 题无本人作答，不能计为错题。</td></tr>
+<tr><td>AM-061</td><td>D 可用，<strong>原解析须改</strong></td><td><code>C</code> 不出现在任何依赖右侧，候选键必须含 <code>C</code>；<code>CE⁺</code> 可推出全集。原解析称“E 不能由其他属性推出”是错的，因为 <code>CB→E</code>；<code>CB</code> 也是候选键，只是未列入选项。</td></tr>
+<tr><td>AM-062</td><td><strong>选项 D 不保持全部函数依赖</strong></td><td>D 的 <code>ABC、ED、ACE</code> 可无损连接，但各分表的投影依赖无法仅从 <code>B</code> 推出 <code>D</code>，原依赖 <code>B→D</code> 不被保持。其他选项也没有同时通过两项要求，按截图题面暂不能给出单一正确选项。本人选 D 不计“已答对”。</td></tr>
+<tr><td>AM-072</td><td>动态规划的概念判断可用，<strong>字母待核</strong></td><td>题干给出重叠子问题与递推式，但截图没有第 72 题选项。</td></tr>
+<tr><td>AM-073</td><td>B 可用</td><td>每个工位常数次比较，共两条线、每线 <code>n</code> 站，时间复杂度为 <code>Θ(n)</code>。</td></tr>
+<tr><td>AM-074、AM-075</td><td><strong>原整理版漏算，按截图可得 74 选 A、75 选 B</strong></td><td>第二站最短耗时分别是 16、13；第三站上线路径应取 <code>min(16+0+3, 13+2+3)=18</code>，下线路径为 19；两端出口都加 3，最短总时长 21。回溯路线为 <code>S11→S22→S13</code>。原整理版把第三站上线路径算成 19，且把第 75 题 C、D 两个不同选项误抄成相同文字。</td></tr>
+<tr><td>AM-067～AM-071</td><td>参考选项可用</td><td><code>Subject</code> 维护观察者列表；通信图的对象与带序号消息可由图示辨认。第 68～71 题没有可靠选择记录，不计答对或答错。</td></tr>
+</table></div>
+<p>以上“可用”只表示依据现有题干、截图和相应定义复核后未发现答案冲突，不等于该知识点已经掌握。原集上午记录有 28 道选中答案，其中 <strong>16 道可确认答错、7 道可确认答对、5 道因题面或判据问题待核</strong>；另外 18 道未捕获选择、2 道空白。只用“23 道可确认题”分析失分，不将其换算成整卷分数。</p>
+<h2>下午案例审查</h2>
+<div class="table-wrap"><table>
+<tr><th>题目 ID</th><th>审查结论</th></tr>
+<tr><td>PM1-01、PM1-02</td><td>外部实体和数据存储命名基本符合图示，但题号块被裁，按图和说明核对，不作为官方答案。</td></tr>
+<tr><td>PM1-03</td><td><strong>原答案不成立</strong>：题目给 5 个填写行，原答案只列 4 条；其中“E3→P3：单车位置/单车锁状态”和“P1→D1：用户信息”已经画在图 1-2，不能再作为缺失流。应重新逐条比对说明、上下文图和 0 层图后作答。</td></tr>
+<tr><td>PM1-04</td><td>三个子加工方向可用：开锁、骑行、锁车结账；答题时以说明里的具体动词和数据流为准。</td></tr>
+<tr><td>PM2-02</td><td><strong>原答案至少一处确定错误</strong>：员工模式的 <code>(a)</code> 位于“姓名”和“联系方式”之间，对应题干列出的“职位”，不是“部门号”。用户模式的 <code>(b)</code> 要重新对照原图的用户字段，原整理版“姓名”暂不作为确定答案。<code>(c)</code>“预算费用”、<code>(d)</code>“要求完成时间”可用。</td></tr>
+<tr><td>PM2-03</td><td>“用户申请”的主键为申请号、“策划任务”的主键及外键为申请号可用；“用户申请”外键的名称应和题面用户模式的标识属性一致。原整理版一处写“用户号”、一处写“用户名”，需按原题表述核对，不能直接抄用。</td></tr>
+<tr><td>PM2-04</td><td>“执行”并非全码，<code>实际完成时间</code>、<code>用户评价</code> 不属于组合主键；原解析方向可用。</td></tr>
+<tr><td>PM3-01</td><td><strong>原类名映射明显错误</strong>：图中 C6 是 <code>Publication</code>，也是 C7、C8、C9 的父类；C7、C8、C9 分别对应 <code>ConfPaper</code>、<code>JournalArticle</code>、<code>TechReport</code>。<code>Proceedings</code>、<code>Edition</code> 已在图中直接标名，不能再填给 C7、C8。C1～C5 的对称子类具体位置仍需结合清晰原图或标准答案核对。</td></tr>
+<tr><td>PM3-02</td><td>在修正类名后，C6 的共性属性、C7 的会议信息、C8 的期刊信息、C9 的校内唯一 ID 可作为推导方向；不要沿用原答案把 C7/C8 当成会议集/期刊特定期。</td></tr>
+<tr><td>PM3-03</td><td>观察者模式及“引用通知”功能与图和说明相符。</td></tr>
+</table></div>
+<p>下午题没有可靠的本人作答文本，以上问题属于<strong>参考资料错误</strong>，不能记为本人的错题。</p>
+<h2>根据已确认错题安排复习</h2>
+<ol>
+<li><strong>优先补下午可得分的建模能力</strong>：先练数据库字段与主外键“逐字对照题干”，再练 DFD“只找图上没有的流”，最后用类图父子关系辨认 UML。每次先说清目标、输入输出、图例，再独立答 1 小问；答案等作答后再看。</li>
+<li><strong>上午第一组：计算题</strong>：哈夫曼、流水线、串并联可靠度、死锁资源数各做 1 道新题，写出中间量；之前错在把局部量当最终量或漏掉最小性检查。</li>
+<li><strong>上午第二组：概念辨认</strong>：DMA 与中断、语法与语义分析、中间代码、被动攻击与入侵检测、观察者的 Subject；用闭卷短题验证。专利同日申请只需晨读复现规则。</li>
+<li><strong>算法案例补前置</strong>：先读装配线题的任务、入口/出口、每站两个候选来源，再手算两站；能独立说出递推状态后才做完整新题。已看过答案的第 74、75 题只能用于复习，不能用于摸底计分。</li>
+<li><strong>分数仍未知</strong>：这份资料不是完整的 75 题上午卷，下午未判分，且部分答案有缺陷。冲刺日卡继续安排未见过题的限时测分，分别记录实际作答数、正确数和案例评分点。</li>
+</ol>
+<p>参考：<a href="https://www.cnipa.gov.cn/art/2020/6/8/art_1750_107422.html" target="_blank" rel="noopener">国家知识产权局关于同日同样发明申请的说明</a>；<a href="https://learn.microsoft.com/en-us/windows-server/networking/dns/queries-lookups" target="_blank" rel="noopener">Microsoft 关于 DNS 客户端缓存与 hosts 映射的说明</a>。</p>
+</main>
+</body>
+</html>
