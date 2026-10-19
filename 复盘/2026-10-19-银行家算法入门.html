@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 月 19 日复习 · 计算类</title>
+<style>
+:root{color-scheme:light dark;--bg:#f5f7f5;--paper:#fff;--ink:#202b27;--muted:#52635b;--line:#cad8d0;--accent:#17664f;--soft:#e5f3eb;--gold:#fff4db;--gold-line:#a57922}
+@media(prefers-color-scheme:dark){:root{--bg:#151c19;--paper:#202b26;--ink:#edf4ef;--muted:#c1d1c6;--line:#52665b;--accent:#a0dfc0;--soft:#244638;--gold:#4c4027;--gold-line:#e0ba6d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 system-ui,"PingFang SC","Microsoft YaHei",sans-serif}main{max-width:900px;margin:auto;padding:24px 20px 60px}header,section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin-bottom:18px}h1,h2,h3{line-height:1.4}h1{font-size:clamp(1.55rem,4vw,2.2rem);margin:0 0 .4em}h2{font-size:1.38rem;margin:0 0 .7em}h3{font-size:1.06rem;margin:1.4em 0 .4em}p{margin:.65em 0}a{color:var(--accent)}.tag{display:inline-block;color:var(--accent);font-weight:700;margin-bottom:.35rem}.sub{color:var(--muted)}.callout{background:var(--soft);border-left:4px solid var(--accent);padding:12px 16px;border-radius:5px;margin:1.2em 0}.warn{background:var(--gold);border-left-color:var(--gold-line)}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:390px;margin:.7em 0}th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}th{background:var(--soft)}.steps{min-width:620px}ol{padding-left:1.45em}li{margin:.6em 0}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.95em} .question{border:2px solid var(--accent);border-radius:12px;padding:18px;margin:1.2em 0}.answer-space{border-top:1px dashed var(--line);min-height:2.4em;margin-top:.7em;padding-top:.5em;color:var(--muted)}@media(max-width:680px){main{padding:12px 12px 36px}header,section{border-radius:12px}.question{padding:14px}}
+</style>
+</head>
+<body><main>
+<header>
+<span class="tag">10 月 19 日 · 计算类</span>
+<h1>银行家算法与哈夫曼树</h1>
+<p>先复习银行家算法与安全序列，再学习哈夫曼树与 WPL；每个考点配有步骤和示例。</p>
+<p class="sub">资源数公式已有一次独立答对；银行家算法是这次新学的内容。页面可离线阅读，窄屏上表格可左右滑动。</p>
+</header>
+<section>
+<span class="tag">01 / 先理解问题</span><h2>资源不够所有人同时拿满，能不能轮流完成？</h2>
+<p>一间工作室共有 <strong>5 台同类设备</strong>，甲、乙两个任务共用。每个任务完成后，会归还自己占用的全部设备。</p>
+<div class="table-wrap"><table><thead><tr><th>任务</th><th>最多需要</th><th>已经拿到</th><th>还需要</th></tr></thead><tbody><tr><td>甲</td><td>3 台</td><td>2 台</td><td>1 台</td></tr><tr><td>乙</td><td>2 台</td><td>1 台</td><td>1 台</td></tr></tbody></table></div>
+<p>目前已借出 <code>2 + 1 = 3</code> 台，所以空闲 <code>5 − 3 = 2</code> 台。假设先让甲完成，再让乙完成，逐步记账：</p>
+<div class="table-wrap"><table class="steps"><thead><tr><th>时刻与动作</th><th>空闲</th><th>甲持有</th><th>乙持有</th><th>核对总数</th></tr></thead><tbody>
+<tr><td>开始</td><td>2</td><td>2</td><td>1</td><td>2 + 2 + 1 = 5</td></tr>
+<tr><td>借 1 台给甲</td><td>1</td><td>3</td><td>1</td><td>1 + 3 + 1 = 5</td></tr>
+<tr><td>甲完成，归还手里的 3 台</td><td>4</td><td>0</td><td>1</td><td>4 + 0 + 1 = 5</td></tr>
+<tr><td>借 1 台给乙</td><td>3</td><td>0</td><td>2</td><td>3 + 0 + 2 = 5</td></tr>
+<tr><td>乙完成，归还手里的 2 台</td><td>5</td><td>0</td><td>0</td><td>5 + 0 + 0 = 5</td></tr>
+</tbody></table></div>
+<p>甲、乙都能按这个顺序完成，因此 <strong>甲 → 乙</strong> 是一条安全序列。这里说的是“存在这样一种完成顺序”，不是要求系统必须按这个顺序运行。</p>
+<div class="callout warn"><strong>留意借还的完整账：</strong>甲原来有 2 台，再借 1 台后手里有 3 台；完成时归还 3 台。空闲量从 2 变成 <code>2 − 1 + 3 = 4</code>。如果省略中间借出这一步，直接从最初状态算到完成后，也可以写成 <code>2 + 2 = 4</code>，加的是甲原先已持有的 2 台。</div>
+</section>
+<section>
+<span class="tag">02 / 定义与步骤</span><h2>安全序列怎么找</h2>
+<p><strong>银行家算法</strong>是一种避免死锁的方法：资源分配前，先检查分配后的状态中，是否存在一种顺序，让所有进程都能依次获得所需资源、完成并归还资源。这样的顺序叫<strong>安全序列</strong>；存在安全序列的状态叫<strong>安全状态</strong>。</p>
+<h3>四个英文记号先认清</h3>
+<p>前两个通常由题目给出，后两个通常要算。<strong>Max、Allocation 和 Need 分别对应每一个进程；Available 对应整个系统当前空闲的资源。</strong></p>
+<div class="table-wrap"><table><thead><tr><th>英文记号</th><th>中文含义</th><th>如何得到</th></tr></thead><tbody>
+<tr><td><strong>Max</strong></td><td>某进程的最大需求</td><td>题目通常直接给出</td></tr>
+<tr><td><strong>Allocation</strong></td><td>某进程已经分配到的资源</td><td>题目通常直接给出</td></tr>
+<tr><td><strong>Need</strong></td><td>某进程还需要的资源</td><td>Max − Allocation</td></tr>
+<tr><td><strong>Available</strong></td><td>整个系统当前空闲的资源</td><td>资源总量 − 所有进程的 Allocation 之和</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>两个计算公式：</strong><br><code>Need = Max − Allocation</code><br><code>Available = 资源总量 − 所有进程的 Allocation 之和</code></div>
+<h3>代入上面的设备例子</h3>
+<p>这是前面<strong>讲解示例的初始状态</strong>，不是下面的练习题。工作室共有 5 台，甲最多需要 3 台、已拿 2 台；乙最多需要 2 台、已拿 1 台。</p>
+<div class="table-wrap"><table><thead><tr><th>任务</th><th>Max 最大需求</th><th>Allocation 已分配</th><th>Need 还需要</th></tr></thead><tbody>
+<tr><td>甲</td><td>3</td><td>2</td><td>3 − 2 = 1</td></tr>
+<tr><td>乙</td><td>2</td><td>1</td><td>2 − 1 = 1</td></tr>
+</tbody></table></div>
+<p>初始 <code>Available = 5 − (2 + 1) = 2</code> 台。比较甲的 <code>Need = 1</code> 和当前 <code>Available = 2</code>，即可判断现有空闲设备够甲完成。任务完成后，Available 会变化，下一轮要用更新后的数。</p>
+<div class="callout warn"><strong>不要混淆：</strong>Allocation 是某个进程已经拿到的；Available 是系统还空着的。Need 要对每个进程分别算，不能把所有人的 Max 减去另一个人的 Allocation。</div>
+<ol><li>算出每个进程的 <strong>Need</strong> 和初始 <strong>Available</strong>。</li><li>在<strong>未完成</strong>的进程中，找一个 <code>Need ≤ Available</code> 的进程。</li><li>假设这个进程获得剩余所需资源并完成。简算时，让 <code>Available = Available + 该进程完成前的 Allocation</code>，再把它标记为已完成。</li><li>用更新后的 Available 继续找未完成进程。所有进程都能完成，就找到了安全序列；如果还有进程未完成，却没有任何一个满足条件，当前状态不安全。</li></ol>
+<p>为什么第 3 步可以直接加原先的 Allocation？先临时借出 Need，完成时归还的是 <code>Allocation + Need</code>，因此空闲量变为 <code>Available − Need + (Allocation + Need)</code>，化简后就是 <code>Available + Allocation</code>。</p>
+<div class="callout"><strong>考试动作：</strong>算 Need 和 Available；从未完成进程里找 Need 不大于 Available 的；完成后更新 Available；重复直到全部完成或无人可选。找到一条安全序列就能证明安全，不要求序列唯一。</div>
+<div class="callout warn"><strong>区分：</strong>不安全表示找不到保证所有进程完成的安全序列，可能发生死锁；它不等于当前已经发生死锁。</div>
+</section>
+<section>
+<span class="tag">03 / 自己练习</span><h2>算一算安全序列</h2>
+<p>这道练习沿用我们前面已经提出的问题；与上面的讲解示例使用不同数据。请先独立作答，页面不放答案。</p>
+<div class="question"><p><strong>一台实验室有 6 个同类仪器。</strong> 每个进程完成后归还其持有的所有仪器。</p>
+<div class="table-wrap"><table><thead><tr><th>进程</th><th>最大需求</th><th>已分配</th></tr></thead><tbody><tr><td>P1</td><td>4</td><td>2</td></tr><tr><td>P2</td><td>3</td><td>1</td></tr><tr><td>P3</td><td>3</td><td>1</td></tr></tbody></table></div>
+<ol><li>当前 Available 是多少？</li><li>每个进程的 Need 是多少？</li><li>当前状态安全吗？若安全，写出一条安全序列，并列出每一步完成后 Available 的变化。</li></ol>
+<div class="answer-space">在纸上作答后，把过程发给我。</div></div>
+<h2>新一轮：独立检验</h2>
+<div class="question"><p>某系统只有一类资源，总量为 12 个。当前四个进程的最大需求和已分配情况如下。每个进程完成后归还其持有的所有资源。</p>
+<div class="table-wrap"><table><thead><tr><th>进程</th><th>最大需求</th><th>已分配</th></tr></thead><tbody><tr><td>P1</td><td>7</td><td>2</td></tr><tr><td>P2</td><td>4</td><td>2</td></tr><tr><td>P3</td><td>7</td><td>3</td></tr><tr><td>P4</td><td>8</td><td>1</td></tr></tbody></table></div>
+<p>求当前 Available 和各进程的 Need；判断系统当前状态是否安全，若安全写出一条安全序列，并列出每个进程完成后 Available 的变化。</p><div class="answer-space">在纸上作答后，把过程发给我。</div></div>
+<h2>追加申请：先试分，再检查</h2>
+<p>进程再申请资源时，先检查申请量是否超过它的 <strong>Need</strong>；超过了就是超出最大声明需求。再看申请量是否超过当前 <strong>Available</strong>；超过了就先等待。两关都通过后，先假设资源已分给它，再检查是否能找到安全序列。</p>
+<div class="callout"><strong>试分三项：</strong>Available 减去申请量；申请进程的 Allocation 加上申请量；申请进程的 Need 减去申请量。随后重新找安全序列：找到才批准；找不到就撤销试分，不批准这次申请。</div>
+<h3>自拟例子：试分后无人能完成</h3>
+<p>系统共有 8 个资源，初始三个进程各持有 2 个，所以 Available 为 2。甲、乙、丙的最大需求分别为 5、4、5，Need 分别为 3、2、3。甲申请 1 个：申请量不超过甲的 Need，也不超过当前 Available。</p>
+<div class="table-wrap"><table><thead><tr><th>状态</th><th>Available</th><th>甲 Allocation</th><th>甲 Need</th><th>乙、丙 Need</th></tr></thead><tbody><tr><td>试分前</td><td>2</td><td>2</td><td>3</td><td>2、3</td></tr><tr><td>试分后</td><td>1</td><td>3</td><td>2</td><td>2、3</td></tr></tbody></table></div>
+<p>试分后，甲、乙、丙的 Need 都大于 1，没有进程能先完成，因此找不到安全序列。系统撤销试分、暂不批准申请。试分后不安全并不等于实际系统已经死锁。</p>
+<h3>新练习：判断一次申请</h3>
+<div class="question"><p>某系统只有一类资源，总量为 10 个。当前三个进程的最大需求和已分配情况如下。每个进程完成后归还其持有的所有资源。</p><div class="table-wrap"><table><thead><tr><th>进程</th><th>最大需求</th><th>已分配</th></tr></thead><tbody><tr><td>P1</td><td>5</td><td>2</td></tr><tr><td>P2</td><td>5</td><td>3</td></tr><tr><td>P3</td><td>6</td><td>2</td></tr></tbody></table></div><p>此时 P3 申请再获得 1 个资源。系统能否立即批准该申请？请列出试分后的 Available、P3 的 Allocation 和 Need，以及判断过程。</p><div class="answer-space">在纸上作答后，把过程发给我。</div></div>
+<h3>追加申请：新题检验</h3>
+<div class="question"><p>某系统只有一类资源，总量为 11 个。当前三个进程的最大需求和已分配情况如下。每个进程完成后归还其持有的所有资源。</p><div class="table-wrap"><table><thead><tr><th>进程</th><th>最大需求</th><th>已分配</th></tr></thead><tbody><tr><td>P1</td><td>8</td><td>2</td></tr><tr><td>P2</td><td>4</td><td>2</td></tr><tr><td>P3</td><td>6</td><td>3</td></tr></tbody></table></div><p>此时 P1 申请再获得 2 个资源。系统能否立即批准该申请？请写出初始 Available、试分后的 Available 和各进程的 Need，并说明判断过程。</p><div class="answer-space">在纸上作答后，把过程发给我。</div></div>
+<p><a href="../10月19日复习清单.md">返回 10 月 19 日复习清单</a></p>
+</section>
+<section><span class="tag">10 月 19 日 · 计算类</span><h2>哈夫曼树：常用字符用短码</h2><p>先纠正码长的误区，再看最小权值合并和 WPL 的计算；下面是自拟示范。</p></section>
+<section><h2>先想一想：为什么码长可以不同？</h2><p>假设 A 出现 2 次、B 出现 5 次、C 出现 9 次。每次传一个字符，都要传出它的编码。</p><p>如果让出现更多的 C 用较短编码，每次发送 C 都可以少用一些位；出现较少的 A、B 可以用较长编码。这样可以减少所有字符编码后的总位数。</p><div class="callout warn"><strong>本次错因：</strong>不能认为哈夫曼编码的码长必须近似相等。码长由构造出的树决定；常出现的字符可以更短。</div></section>
+<section><h2>从权值构造一棵树</h2><p>权值表示出现次数。规则：<strong>每轮挑当前最小的两个权值合并，把它们的和放回，再重新挑最小的两个。</strong></p><div class="table-wrap"><table><thead><tr><th>轮次</th><th>合并前可选权值</th><th>合并</th><th>合并后可选权值</th></tr></thead><tbody><tr><td>1</td><td>2、5、9</td><td>2 + 5 = 7</td><td>7、9</td></tr><tr><td>2</td><td>7、9</td><td>7 + 9 = 16</td><td>16（只剩一棵树）</td></tr></tbody></table></div><p>最后一次合并产生根节点 16；它的两个孩子是 C（权 9）和节点 7。节点 7 的两个孩子是 A（权 2）和 B（权 5）。</p><p>约定左边为 0、右边为 1，例如把 C 放在根的左边、节点 7 放在右边；节点 7 的左边放 A，右边放 B，就得到：</p><div class="table-wrap"><table><thead><tr><th>字符</th><th>权值</th><th>从根走过的分支</th><th>编码</th><th>码长</th></tr></thead><tbody><tr><td>C</td><td>9</td><td>左</td><td><code>0</code></td><td>1</td></tr><tr><td>A</td><td>2</td><td>右、左</td><td><code>10</code></td><td>2</td></tr><tr><td>B</td><td>5</td><td>右、右</td><td><code>11</code></td><td>2</td></tr></tbody></table></div><p>码长等于从根到字符所在叶子经过的<strong>边数</strong>。左右交换也可以，编码可能改变。</p></section>
+<section><h2>计算 WPL</h2><p>WPL 是带权路径长度：把每个<strong>叶子</strong>的权值乘以它的路径长度，再相加。</p><div class="callout"><code>WPL = 2×2 + 5×2 + 9×1 = 23</code></div><p>第二种算法：把合并时产生的非叶节点权值相加，即 <code>7 + 16 = 23</code>，两种算法一致。</p><div class="callout warn"><strong>注意：</strong>两种算法一致只能检查这棵树的 WPL 计算是否一致，不能单独证明每一轮都选了最小的两个；还要逐轮检查合并选择。</div><p>不同的合法哈夫曼树可能得到不同编码；遇到权值相同时，码长分布也可能不同，但它们的最小 WPL 相同。</p></section>
+<section><h2>先确认理解</h2><p>先说说：每一轮合并后，下一轮应从哪里选出最小的两个权值？确认后再做一道不同数据的新题。</p><p><a href="../10月19日复习清单.md">返回 10 月 19 日复习清单</a></p></section>
+</main></body></html>
