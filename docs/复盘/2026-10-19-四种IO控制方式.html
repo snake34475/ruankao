@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 月 19 日复习 · 概念辨析类</title>
+<style>
+:root{color-scheme:light dark;--bg:#f5f7f5;--paper:#fff;--ink:#202b27;--muted:#52635b;--line:#cad8d0;--accent:#17664f;--soft:#e5f3eb;--gold:#fff4db;--gold-line:#a57922}
+@media(prefers-color-scheme:dark){:root{--bg:#151c19;--paper:#202b26;--ink:#edf4ef;--muted:#c1d1c6;--line:#52665b;--accent:#a0dfc0;--soft:#244638;--gold:#4c4027;--gold-line:#e0ba6d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 system-ui,"PingFang SC","Microsoft YaHei",sans-serif}main{max-width:900px;margin:auto;padding:24px 20px 60px}header,section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin-bottom:18px}h1,h2,h3{line-height:1.4}h1{font-size:clamp(1.55rem,4vw,2.2rem);margin:0 0 .4em}h2{font-size:1.38rem;margin:0 0 .7em}h3{font-size:1.06rem;margin:1.4em 0 .4em}p{margin:.65em 0}a{color:var(--accent)}.tag{display:inline-block;color:var(--accent);font-weight:700;margin-bottom:.35rem}.sub{color:var(--muted)}.callout{background:var(--soft);border-left:4px solid var(--accent);padding:12px 16px;border-radius:5px;margin:1.2em 0}.warn{background:var(--gold);border-left-color:var(--gold-line)}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:560px;margin:.7em 0}th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}th{background:var(--soft)}.steps{min-width:620px}ol{padding-left:1.45em}li{margin:.6em 0}.compare{font-size:.95rem}.compare td:first-child{font-weight:700;white-space:nowrap}.recall{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:16px 18px;margin-top:1em}@media(max-width:680px){main{padding:12px 12px 36px}header,section{border-radius:12px}}
+</style>
+</head>
+<body><main>
+<header>
+<span class="tag">10 月 19 日 · 概念辨析类</span>
+<h1>概念辨析：先分清边界，再记住规则</h1>
+<p>按清单顺序复习 7 组概念：I/O、编译、安全、设计模式、模块设计、配置管理和 DNS。每组都从易错边界出发，用自拟例子、对照和复述提示帮助记忆。</p>
+<p class="sub">建议明早分组阅读，遮住讲解尝试复述；白天再逐项确认理解并做新题。本页不含待检验题目的答案。</p>
+</header>
+<section>
+<span class="tag">6 / 四种 I/O 控制方式 · 先抓判断线</span><h2>只问两件事：怎样知道能传，谁来搬数据？</h2>
+<ol><li><strong>CPU 如何知道可以传送？</strong> CPU 反复检查是程序查询；设备发信号通知是中断；题设保证设备按约定时机就绪、无需检查或通知，是无条件传送。</li><li><strong>数据到底由谁搬？</strong> CPU 执行传送，还是 DMA 控制器直接搬运？这是区分中断与 DMA 的关键。</li></ol>
+<div class="callout warn"><strong>最容易混的地方：</strong>中断和 DMA 都可以让 CPU 在设备工作时处理其他任务；但中断方式仍由 CPU 响应并传送数据，DMA 才由控制器直接搬运一批数据。</div>
+</section>
+<section>
+<span class="tag">02 / 四种方式对照</span><h2>看等待方式和搬运者</h2>
+<div class="table-wrap"><table class="compare"><thead><tr><th>方式</th><th>CPU 是否等待设备</th><th>设备就绪后谁搬数据</th><th>记忆抓手</th></tr></thead><tbody>
+<tr><td>程序查询</td><td>是。CPU 反复查询状态，未就绪时持续等待或轮询。</td><td>CPU</td><td>CPU 一直盯着设备。</td></tr>
+<tr><td>无条件传送</td><td>不查询状态，也不等设备通知；按预先约定的时机执行，前提是设备那时肯定已就绪。</td><td>CPU</td><td>没有通知；时机由程序和设备约定。</td></tr>
+<tr><td>中断方式</td><td>CPU 发出 I/O 请求后可继续执行其他工作；设备就绪后主动发中断通知。</td><td>CPU 响应中断后传送数据。</td><td>有通知；设备叫 CPU 来搬。</td></tr>
+<tr><td>DMA 方式</td><td>发出请求后可继续执行其他工作；传输结束后通常再通知 CPU。</td><td>DMA 控制器直接在设备与内存间搬运一批数据。</td><td>控制器自己搬一批。</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>一句话记忆：</strong>查询是 CPU 等；无条件是 CPU 按时搬；中断是设备叫 CPU 来搬；DMA 是控制器自己搬一批。</div>
+<h3>重点辨析：无条件传送与中断方式</h3>
+<div class="table-wrap"><table><thead><tr><th>比较点</th><th>无条件传送</th><th>中断方式</th></tr></thead><tbody>
+<tr><td>CPU 如何知道时机</td><td>程序预先按固定时序安排；题设假定设备届时已就绪。</td><td>设备就绪后发中断请求，通知 CPU。</td></tr>
+<tr><td>CPU 是否查询状态</td><td>不查询，也没有设备通知；如果设备未按时准备好，传送可能失败。</td><td>不必反复查询；CPU 收到中断后再响应。</td></tr>
+<tr><td>谁搬数据</td><td>CPU</td><td>CPU</td></tr>
+</tbody></table></div>
+<p><strong>自拟例子：</strong>假设一台设备每隔 1 秒必定产生一个数据。程序可以每秒到点直接读取，这是假定时序可靠的无条件传送；如果设备准备好时主动按铃，CPU 收到铃声后再读取，就是中断方式。两种方式都由 CPU 搬数据，区别在于“按约定时间去读”还是“等设备通知后再读”。</p>
+</section>
+<section>
+<span class="tag">03 / 换角度也能辨认</span><h2>题目反过来问时这样判断</h2>
+<ol><li>题干说 CPU 不断检查设备是否就绪：选<strong>程序查询</strong>。</li><li>题干说题设保证设备按约定时刻就绪，CPU 不查状态、不等通知而直接传送：选<strong>无条件传送</strong>。</li><li>题干说设备就绪后发出中断，由 CPU 响应并传送数据：选<strong>中断方式</strong>。</li><li>题干说在内存和设备间直接成批传送，减少 CPU 对每个数据字的干预：选<strong>DMA 方式</strong>。</li></ol>
+<h3>相邻概念：中断响应与 DMA 总线请求</h3>
+<p>中断是设备向 CPU 发信号，请 CPU 处理事件；DMA 传输期间需要使用总线，DMA 控制器会请求总线控制权。题目若问“谁通知 CPU 处理”和“谁请求总线搬数据”，问的是不同动作。</p>
+<h3>再往外一层：通道方式</h3>
+<p>通道可看作专门承担 I/O 控制工作的处理部件，适合管理多台外设、减轻 CPU 的 I/O 管理负担。辨认时抓“专门管理多个外设”这个场景，不要把它与单次 DMA 成块传送混为一谈。</p>
+</section>
+<section>
+<span class="tag">04 / 复述确认</span><h2>先把核心边界说清楚</h2>
+<div class="recall">请用自己的话说明：无条件传送与中断方式都由 CPU 搬数据，它们分别通过什么方式确定传送时机？</div>
+<p class="sub">确认理解后，再做两道换场景短题。</p>
+</section>
+<section>
+<span class="tag">7 / 编译阶段与中间代码</span><h2>词法认记号，语法看结构，语义查含义</h2>
+<p class="sub">学习状态：学过但做错。记录显示曾把“检查语句含义”归给语法分析，也混淆了中间代码的作用。</p>
+<p><strong>自拟例子：</strong>一门假设的语言允许整数相加。程序写下 <code>总数 = 数量 + 价格;</code>。编译器先把字符分成标识符、等号、加号和分号；再检查它们是否组成合法赋值结构；最后检查变量是否声明、类型是否允许相加和赋值。</p>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>看什么</th><th>典型问题</th></tr></thead><tbody>
+<tr><td>词法分析</td><td>字符流拆成记号，如标识符、数字、运算符。</td><td>出现该语言不允许的字符。</td></tr>
+<tr><td>语法分析</td><td>记号按文法组织成结构，通常形成语法树。</td><td>缺少操作数，或括号不配对。</td></tr>
+<tr><td>语义分析</td><td>检查结构的静态含义，如声明和类型是否匹配。</td><td>把字符串与整数相加，而语言不允许这样做。</td></tr>
+</tbody></table></div>
+<div class="callout warn"><strong>易错：</strong>语法合法只说明结构合规，类型仍可能不合法。比如按一门禁止字符串与整数相加的语言，<code>“蓝” + 3</code> 可以是结构完整的表达式，却会在类型检查时出错。</div>
+<h3>中间代码是翻译过程中的表达方式</h3>
+<p>常见编译流程是：词法、语法、语义分析，中间代码生成，代码优化，目标代码生成。中间代码通常尽量与具体机器无关，方便在共同表示上优化并针对不同机器生成目标代码；目标代码面向具体机器或目标平台。实际编译器的中间表示也可能包含平台相关信息。</p>
+<p>以表达式 <code>a + b × c</code> 为自拟例子：</p>
+<ul><li><strong>后缀式：</strong><code>a b c × +</code>，运算符放在对应操作数后面。</li><li><strong>三地址码：</strong>先写 <code>t1 = b × c</code>，再写 <code>t2 = a + t1</code>；每步用临时变量保存结果。</li></ul>
+<div class="callout"><strong>记忆：</strong>词法拆记号，语法查结构，语义查类型；中间表示便于优化与移植，目标代码面向目标平台。</div>
+<div class="recall">合上讲解复述：缺操作数和类型不匹配分别由哪个阶段检查？后缀式里运算符放在哪里？</div>
+</section>
+<section>
+<span class="tag">8 / 安全：攻击分类与检测</span><h2>先看攻击者是否改变数据或服务，再看工具的任务</h2>
+<p class="sub">学习状态：学过但做错。曾把拒绝服务归到被动攻击，也混淆了入侵检测与漏洞扫描。</p>
+<p><strong>自拟例子：</strong>有人偷偷记录店铺与仓库之间的通信，但不修改内容，是被动窃听；如果他修改订单内容，或发大量请求让订单系统无法服务，就改变了数据或服务状态，是主动攻击。</p>
+<div class="table-wrap"><table><thead><tr><th>区分</th><th>关注点</th><th>常见例子</th></tr></thead><tbody>
+<tr><td>被动攻击</td><td>窃听或分析信息，不主动改变数据或服务。</td><td>窃听通信内容、分析通信流量。</td></tr>
+<tr><td>主动攻击</td><td>篡改、伪造、重放信息或干扰服务。</td><td>篡改订单、冒充用户、拒绝服务（DoS）。</td></tr>
+</tbody></table></div>
+<p>“截获”如果指<strong>只窃听会话内容</strong>，按被动攻击处理；如果指劫持会话、冒用身份或篡改通信，就属于主动攻击。看题干实际行为。</p>
+<h3>安全工具：各自解决什么问题</h3>
+<div class="table-wrap"><table><thead><tr><th>工具</th><th>主要职责</th><th>好记的问法</th></tr></thead><tbody>
+<tr><td>防火墙</td><td>按规则控制进出网络的流量。</td><td>这次连接能不能通过？</td></tr>
+<tr><td>入侵检测（IDS）</td><td>分析网络或主机活动，发现可疑行为并告警。</td><td>是否有人正在或曾经攻击？</td></tr>
+<tr><td>漏洞扫描</td><td>检查系统是否存在已知弱点或错误配置。</td><td>哪里可能被利用？</td></tr>
+</tbody></table></div>
+<h3>安全目标与常用技术</h3>
+<div class="table-wrap"><table><thead><tr><th>目标或技术</th><th>核心作用</th></tr></thead><tbody>
+<tr><td>机密性</td><td>防止未授权者读懂信息；加密常用于保护机密性。</td></tr><tr><td>完整性</td><td>发现信息是否被改动；摘要可用于校验，防恶意篡改需结合可信摘要或认证机制。</td></tr><tr><td>身份认证</td><td>确认通信对象的身份；可用口令、证书等机制。</td></tr><tr><td>不可否认性</td><td>为事后证明行为提供依据；数字签名可用于证明签名者与内容的关联。</td></tr>
+<tr><td>对称加密</td><td>加密和解密使用同一密钥，适合大量数据；需要安全地共享密钥。</td></tr><tr><td>非对称加密</td><td>使用公钥和私钥；可用于加密、密钥交换或数字签名。</td></tr><tr><td>数字签名</td><td>发送者用私钥签名，验证者用对应公钥验证；本身不负责隐藏消息内容。</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>记忆：</strong>偷看是被动；改、冒充、挡服务是主动。防火墙管通行，入侵检测找异常活动，漏洞扫描找弱点。</div>
+<div class="recall">合上讲解复述：拒绝服务为什么是主动攻击？入侵检测和漏洞扫描分别在找什么？</div>
+</section>
+<section>
+<span class="tag">9 / 观察者模式</span><h2>谁维护名单，谁收到通知？</h2>
+<p class="sub">学习状态：学过但做错。记录中曾把维护观察者名单的职责放到观察者一侧；策略模式也有过薄弱记录。</p>
+<p><strong>自拟例子：</strong>图书馆的新书通知服务保存订阅者名单。有人订阅或取消订阅，服务就增删名单；新书到馆时，服务通知名单里的读者，每位读者自行决定如何处理通知。</p>
+<div class="table-wrap"><table><thead><tr><th>角色</th><th>例子中的对象</th><th>职责</th></tr></thead><tbody><tr><td>Subject（目标／主题）</td><td>新书通知服务</td><td>维护观察者名单；状态变化时逐个通知。</td></tr><tr><td>Observer（观察者）</td><td>订阅的读者</td><td>接收通知并执行自己的更新操作。</td></tr></tbody></table></div>
+<div class="callout warn"><strong>易错：</strong>观察者负责收到通知后的反应；维护订阅名单和发通知是主题的职责。一个主题可以通知多个观察者。</div>
+<h3>三个相邻模式不要串</h3>
+<div class="table-wrap"><table><thead><tr><th>模式</th><th>解决的问题</th><th>自拟例子</th></tr></thead><tbody><tr><td>观察者</td><td>一个对象变化时通知多个订阅者。</td><td>新书到馆通知读者。</td></tr><tr><td>策略</td><td>把可替换的算法封装起来，按需要选择。</td><td>运费按普通或加急算法计算。</td></tr><tr><td>装饰器</td><td>包裹对象，动态增加职责。</td><td>给通知服务加一层记录发送日志的功能。</td></tr></tbody></table></div>
+<div class="callout"><strong>记忆：</strong>观察者看通知，策略换算法，装饰器加职责。</div>
+<div class="recall">合上讲解复述：谁保存订阅名单？谁被通知？策略与装饰器各解决什么问题？</div>
+</section>
+<section>
+<span class="tag">10 / 模块内聚、耦合与合并</span><h2>先分清模块内部和模块之间</h2>
+<p class="sub">学习状态：内聚、耦合曾复习并有重做答对记录；“相似功能模块是否应合并”是待辨析的疑问，原题信息不足，未记为确认错误。</p>
+<p><strong>自拟例子：</strong>预约系统中，预约模块负责建立与取消预约，通知模块负责发送提醒。如果两处都有完全相同的日期格式化代码，可以抽取公共格式化功能；但把取消预约和发送通知硬塞进一个模块，会让模块承担不同职责。是否合并要看实际职责和依赖。</p>
+<div class="callout warn"><strong>判断方向：</strong>内聚看一个模块内部的任务是否紧密围绕职责；耦合看不同模块之间依赖有多强。目标是高内聚、低耦合，“名字相似”本身不足以决定合并。</div>
+<h3>七种内聚：问“为什么放在一起”</h3>
+<div class="table-wrap"><table><thead><tr><th>从低到高</th><th>放在一起的理由</th><th>自拟例子</th></tr></thead><tbody>
+<tr><td>偶然</td><td>没有实质关系，随意凑在一起。</td><td>把打印日期和计算费用塞进杂项。</td></tr><tr><td>逻辑</td><td>属于同一类操作，按标志选择其中一种。</td><td>一个输入模块分别处理键盘、文件输入。</td></tr><tr><td>时间</td><td>都在同一时段执行。</td><td>启动时读取设置、初始化计时器。</td></tr><tr><td>过程</td><td>按指定步骤先后执行。</td><td>按流程核对身份，再显示使用须知。</td></tr><tr><td>通信</td><td>操作同一份数据。</td><td>读取、修改同一份预约记录。</td></tr><tr><td>顺序</td><td>前一步输出交给下一步作为输入。</td><td>读取原始预约数据，再计算统计结果。</td></tr><tr><td>功能</td><td>各部分共同完成一个明确功能。</td><td>计算一次预约的总费用。</td></tr>
+</tbody></table></div>
+<p><strong>方向：</strong>偶然 → 逻辑 → 时间 → 过程 → 通信 → 顺序 → 功能，内聚逐步增强。时间强调同时段，过程强调先后；顺序强调上一步的输出交给下一步。</p>
+<h3>三种常考耦合：看模块间传了什么</h3>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>传递内容</th><th>自拟例子</th></tr></thead><tbody><tr><td>数据耦合</td><td>必要的简单数据。</td><td>传入预约人数。</td></tr><tr><td>标记耦合</td><td>完整记录或数据结构，接收方使用其中部分字段。</td><td>只需预约人数，却传入整条预约记录。</td></tr><tr><td>控制耦合</td><td>传入控制标志，决定被调用模块的内部处理分支。</td><td>传入操作码，让模块选择创建或取消。</td></tr></tbody></table></div>
+<div class="callout"><strong>记忆：</strong>内聚看内部为何聚，耦合看模块间传什么；重复实现可抽公共功能，不同职责强合并要警惕。</div>
+<div class="recall">合上讲解复述：时间内聚与过程内聚差在哪里？只要一个字段却传整条记录属于哪种耦合？</div>
+</section>
+<section>
+<span class="tag">11 / 配置管理边界</span><h2>配置管理追踪“什么版本、如何变化”</h2>
+<p class="sub">学习状态：学过但做错。记录显示曾把版本控制排除在配置管理之外；风险管理属于项目管理中的另一项活动。</p>
+<p><strong>自拟例子：</strong>预约系统准备发布。团队把需求文档、源代码和测试计划确定为需要管理的对象；确认一版作为基准；之后有人提议修改，需要登记、评估、批准，再记录新的版本和状态。</p>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>要做什么</th><th>在例子中</th></tr></thead><tbody><tr><td>配置项</td><td>被纳入管理的工作成果。</td><td>需求文档、代码、测试计划。</td></tr><tr><td>基线</td><td>经过正式评审或批准，用作后续工作的参照版本；之后通过变更流程修改。</td><td>发布前确认的需求文档版本。</td></tr><tr><td>版本控制</td><td>保存与识别不同版本。</td><td>知道文档从第 1 版变为第 2 版。</td></tr><tr><td>变更控制</td><td>提出、评估、批准或拒绝并实施变更。</td><td>评估新增预约规则后决定是否批准。</td></tr><tr><td>配置状态报告</td><td>记录并报告配置项、版本和变更处理状态。</td><td>查看某项变更待审批还是已完成。</td></tr><tr><td>配置审计</td><td>检查成果是否符合要求，配置项及其记录是否一致、完整。</td><td>核对发布内容与批准的变更是否对应。</td></tr></tbody></table></div>
+<h3>与相邻管理活动区分</h3>
+<p><strong>风险管理</strong>识别、分析并应对不确定事件，如担心关键成员临时离岗；<strong>质量保证</strong>关注开发过程是否按既定标准执行；<strong>项目计划</strong>安排范围、进度和资源。它们可以与配置管理协作，但各自关注点不同。</p>
+<div class="callout"><strong>记忆：</strong>配置管理认对象、定基线、管版本与变更、报状态、做审计；风险管理看不确定性。</div>
+<div class="recall">合上讲解复述：基线是什么？状态报告与配置审计分别回答什么问题？</div>
+</section>
+<section>
+<span class="tag">12 / DNS 解析顺序</span><h2>先区分本机查找和 DNS 服务器查询</h2>
+<p class="sub">学习状态：有疑问，尚不能按原题确定做错。原题没有明确浏览器缓存、系统缓存、hosts 等层次，不能据此断言所有环境的固定先后。</p>
+<p><strong>自拟例子：</strong>浏览器要访问 <code>shop.example.com</code>，需要获得它的 IP 地址。本机可能先用已有缓存或本地名称映射；没有可用结果时，再向配置的 DNS 解析器请求。具体查找顺序可能因浏览器、操作系统和配置而异。</p>
+<div class="callout warn"><strong>考场动作：</strong>题干明确给出查找层次或指定教材口径时，按题设判断；若未限定环境，不能把“hosts 一定在所有缓存之前”或“缓存一定在 hosts 之前”当成普遍规则。</div>
+<h3>没有缓存命中时，DNS 怎样找到答案？</h3>
+<div class="table-wrap"><table><thead><tr><th>参与者</th><th>职责</th></tr></thead><tbody><tr><td>本地递归解析器</td><td>接受客户端请求；没有缓存答案时，代表客户端向其他 DNS 服务器查询。</td></tr><tr><td>根服务器</td><td>指引解析器去查相应顶级域的服务器。</td></tr><tr><td>顶级域服务器</td><td>指引解析器去查目标域名的权威服务器。</td></tr><tr><td>权威服务器</td><td>提供其负责区域中的权威记录，如对应的地址记录。</td></tr></tbody></table></div>
+<p>常见路径是：客户端向递归解析器请求答案；解析器在没有可用缓存时，依次向根、顶级域、权威服务器查询或根据已有信息跳过部分步骤，最后把结果返回客户端。</p>
+<h3>递归与迭代：谁继续跑腿</h3>
+<p><strong>递归查询：</strong>被询问的服务器负责进一步查找，向请求者返回最终结果或错误。<strong>迭代查询：</strong>服务器若不知道最终答案，可以给出下一步该问谁，由查询者继续询问。常见情况下客户端请求递归解析器，解析器再迭代查询其他服务器。</p>
+<p><strong>缓存与 TTL：</strong>DNS 记录的 TTL 通常规定结果可作为新鲜缓存使用的时间；到期后一般需要重新获取。某些系统在特殊故障条件下可按规则返回过期数据，因此实际实现还有例外。</p>
+<div class="callout"><strong>记忆：</strong>递归是被问者帮忙查到底；迭代是查询者按指引继续问。先看题设，缓存可能使查询不必每层重走。</div>
+<div class="recall">合上讲解复述：根、顶级域和权威服务器分别提供什么？递归与迭代中谁继续查？为什么不能给所有系统硬背一个本机查找顺序？</div>
+</section>
+<section>
+<span class="tag">收尾 / 明早复述</span><h2>按顺序遮住讲解，讲出每组的边界</h2>
+<ol><li>I/O：四种方式谁决定传送时机、谁搬数据？</li><li>编译：词法、语法、语义各查什么？中间代码有什么用？</li><li>安全：主动与被动、入侵检测与漏洞扫描怎样分？</li><li>设计模式：主题与观察者各做什么？策略、装饰器如何区分？</li><li>模块设计：内聚看哪里、耦合看哪里？合并前看什么？</li><li>配置管理：基线、版本、变更、状态报告和审计各管什么？</li><li>DNS：递归、迭代和权威服务器的职责是什么？顺序为何要看题设？</li></ol>
+<p>白天按考点逐项确认理解，再做换场景的新题。</p>
+<p><a href="index.html">返回复盘档案</a></p>
+</section>
+</main></body></html>

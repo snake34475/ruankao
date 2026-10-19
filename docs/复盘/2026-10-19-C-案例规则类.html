@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 月 19 日复习 · C. 案例规则类</title>
+<style>
+:root{color-scheme:light dark;--bg:#f5f7f5;--paper:#fff;--ink:#202b27;--muted:#52635b;--line:#cad8d0;--accent:#17664f;--soft:#e5f3eb;--blue:#e9f1fa;--gold:#fff4db;--white:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#151c19;--paper:#202b26;--ink:#edf4ef;--muted:#c1d1c6;--line:#52665b;--accent:#a0dfc0;--soft:#244638;--blue:#293c4e;--gold:#4c4027;--white:#202b26}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 system-ui,"PingFang SC","Microsoft YaHei",sans-serif}main{max-width:900px;margin:auto;padding:24px 20px 60px}header,.section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin-bottom:18px}h1,h2,h3{line-height:1.4}h1{font-size:clamp(1.55rem,4vw,2.2rem);margin:0 0 .4em}h2{font-size:1.38rem;margin:0 0 .7em}h3{font-size:1.06rem;margin:1.4em 0 .4em}p{margin:.65em 0}a{color:var(--accent)}.sub{color:var(--muted)}.tag{display:inline-block;color:var(--accent);font-weight:700;margin-bottom:.35rem}.callout{background:var(--soft);border-left:4px solid var(--accent);padding:12px 16px;border-radius:5px;margin:1.2em 0}.warn{background:var(--gold);border-left-color:#a57922}.figures{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}figure{margin:1em 0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto}figure h3{margin:0 0 8px;font-size:1rem}figcaption{color:var(--muted);font-size:.9rem;margin-top:8px}svg{display:block;width:100%;min-width:500px;max-width:640px;height:auto;margin:auto}svg .node{fill:var(--paper);stroke:var(--accent);stroke-width:2}svg .process{fill:var(--soft);stroke:var(--accent);stroke-width:2}svg .storage{fill:var(--gold);stroke:var(--accent);stroke-width:2}svg .edge{fill:none;stroke:var(--ink);stroke-width:2}svg .arrow{fill:var(--ink)}svg .triangle{fill:var(--paper);stroke:var(--ink);stroke-width:2}svg text{fill:var(--ink);font:16px system-ui,"PingFang SC","Microsoft YaHei",sans-serif;text-anchor:middle}svg .small{font-size:14px}svg .label{font-weight:700}ol{padding-left:1.45em}li{margin:.6em 0}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:360px;margin:.7em 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;white-space:nowrap}th{background:var(--soft)}.tables{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}.tables figure{margin:0}.relation{color:var(--accent);font-weight:700;margin:.9em 0}@media(max-width:680px){main{padding:12px 12px 36px}.figures,.tables{grid-template-columns:1fr}header,.section{border-radius:12px}figure{padding:10px}.figures svg{max-width:540px;margin:auto}}
+</style>
+</head>
+<body><main>
+<header>
+<span class="tag">10 月 19 日 · 案例规则类</span>
+<h1>把案例解题步骤固定下来</h1>
+<p>DFD、UML 类图和数据库案例都练过。本页把图、易错点与解题顺序放在一起；例子均为自拟，用来帮助理解。</p>
+<p class="sub">先看图和讲解，合上页面复述；理解后再做高频练习。窄屏上可在图内左右滑动，查看完整图示。</p>
+</header>
+<section class="section">
+<span class="tag">13 / DFD 数据流图</span><h2>沿用编号，核对边界，再找缺失流</h2>
+<p>以社区维修登记为例：居民提交报修信息，系统登记维修单、安排维修，并分别向居民和维修人员发送信息。</p>
+<div class="figures">
+<figure><h3>父图：把系统看成一个加工</h3>
+<svg viewBox="0 0 540 320" role="img" aria-label="父图：居民向加工1维修登记系统发送报修信息；加工向居民发送受理回执，向维修人员发送派工通知。">
+<defs><marker id="arr1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path class="arrow" d="M0 0 L8 4 L0 8Z"/></marker></defs>
+<rect class="node" x="195" y="12" width="150" height="48" rx="5"/><text x="270" y="42">居民</text>
+<rect class="process" x="170" y="117" width="200" height="64" rx="32"/><text class="label" x="270" y="145">加工 1</text><text x="270" y="166">维修登记系统</text>
+<rect class="node" x="195" y="258" width="150" height="48" rx="5"/><text x="270" y="288">维修人员</text>
+<path class="edge" d="M225 60 V116" marker-end="url(#arr1)"/><text class="small" x="163" y="94">报修信息</text>
+<path class="edge" d="M315 117 V61" marker-end="url(#arr1)"/><text class="small" x="375" y="94">受理回执</text>
+<path class="edge" d="M270 181 V257" marker-end="url(#arr1)"/><text class="small" x="334" y="227">派工通知</text>
+</svg><figcaption>对外一条输入、两条输出。</figcaption></figure>
+<figure><h3>子图：展开加工 1</h3>
+<svg viewBox="0 0 540 520" role="img" aria-label="子图：居民向加工1.1登记报修发送报修信息，加工1.1返回受理回执并将维修单写入维修单库；加工1.2分派维修从维修单库读取待派工维修单，向维修人员发送派工通知。">
+<defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path class="arrow" d="M0 0 L8 4 L0 8Z"/></marker></defs>
+<rect class="node" x="195" y="12" width="150" height="48" rx="5"/><text x="270" y="42">居民</text>
+<rect class="process" x="170" y="112" width="200" height="64" rx="32"/><text class="label" x="270" y="140">加工 1.1</text><text x="270" y="161">登记报修</text>
+<path class="edge" d="M170 242 H370 M170 242 V290 M170 290 H370"/><text x="270" y="272">D1 维修单库</text>
+<rect class="process" x="170" y="355" width="200" height="64" rx="32"/><text class="label" x="270" y="383">加工 1.2</text><text x="270" y="404">分派维修</text>
+<rect class="node" x="195" y="458" width="150" height="48" rx="5"/><text x="270" y="488">维修人员</text>
+<path class="edge" d="M225 60 V111" marker-end="url(#arr2)"/><text class="small" x="163" y="91">报修信息</text>
+<path class="edge" d="M315 112 V61" marker-end="url(#arr2)"/><text class="small" x="375" y="91">受理回执</text>
+<path class="edge" d="M270 176 V241" marker-end="url(#arr2)"/><text class="small" x="320" y="213">维修单</text>
+<path class="edge" d="M270 290 V354" marker-end="url(#arr2)"/><text class="small" x="370" y="327">待派工维修单</text>
+<path class="edge" d="M270 419 V457" marker-end="url(#arr2)"/><text class="small" x="335" y="445">派工通知</text>
+</svg><figcaption>子图保留三条边界流，增加了加工和维修单库。</figcaption></figure>
+</div>
+<p>图中的三个对外数据流在父图、子图中方向和内容对应；维修单库与它的读写数据流是子图内部细节。</p>
+<ol><li><strong>编号跟给定图走。</strong> 例中加工 1 分解为 1.1、1.2；考试题有现成编号时沿用它，业务文字的段落数不能单独决定加工编号。</li><li><strong>核对父子图平衡。</strong> 把子图边界的输入、输出与父图中被分解加工的输入、输出逐条对照，检查方向和数据内容。</li><li><strong>数据流写传递的信息。</strong> 箭头上的“维修单”是数据，加工名“登记报修”是动作。优先用题干原词；名称含动词时，还要结合流向和内容判断。</li></ol>
+<h3>补流时怎么找</h3><p>把题干的处理拆成“起点、终点、数据名”，与图上已有箭头逐条对照，只补题目要求而图上缺少的流。特别检查读写数据存储、对外反馈以及父图已有但子图遗漏的边界流。</p>
+<div class="callout warn"><strong>易错：</strong>不要直接把数据存储连到外部实体；数据必须经过加工。DFD 箭头表示数据流动，条件判断和执行顺序不当作数据流画。</div>
+<div class="callout"><strong>口诀：</strong>编号跟给定图；边界流父子平衡；箭头写数据、加工写动作；只补缺失流。</div>
+</section>
+<section class="section">
+<span class="tag">14 / UML 类图</span><h2>先找共性定父类，再找子类差异</h2>
+<p>园艺系统管理“植物”，并区分室内植物和室外植物。它们共有名称和养护周期；光照要求、耐寒等级分别属于对应子类。</p>
+<figure><h3>类的泛化关系</h3>
+<svg viewBox="0 0 640 370" role="img" aria-label="植物是父类，包含名称和养护周期；室内植物和室外植物分别是子类，分别包含光照要求和耐寒等级。两条泛化实线的空心三角均指向植物。">
+<rect class="node" x="210" y="20" width="220" height="112" rx="4"/><path class="edge" d="M210 58 H430"/><text class="label" x="320" y="46">植物（父类）</text><text x="320" y="84">名称</text><text x="320" y="110">养护周期</text>
+<rect class="node" x="20" y="255" width="240" height="90" rx="4"/><path class="edge" d="M20 293 H260"/><text class="label" x="140" y="281">室内植物（子类）</text><text x="140" y="324">光照要求</text>
+<rect class="node" x="380" y="255" width="240" height="90" rx="4"/><path class="edge" d="M380 293 H620"/><text class="label" x="500" y="281">室外植物（子类）</text><text x="500" y="324">耐寒等级</text>
+<path class="triangle" d="M270 132 L260 152 L280 152 Z"/><path class="edge" d="M270 152 V198 H140 V255"/>
+<path class="triangle" d="M370 132 L360 152 L380 152 Z"/><path class="edge" d="M370 152 V198 H500 V255"/>
+<text class="small" x="320" y="227">空心三角指向父类</text>
+</svg><figcaption>两条实线分别表示两个子类向父类的泛化关系。</figcaption></figure>
+<ol><li><strong>以已标名的类为锚点。</strong> 填空时检查哪个位置已标名，避免把同一个类重复填入空格。</li><li><strong>找共性和差异。</strong> 共性归父类，各类别特有的属性、行为放入对应子类。</li><li><strong>验证“是一种”。</strong> 室内植物是一种植物；泛化关系用实线和空心三角，三角指向父类。</li><li><strong>检查公共关系。</strong> 如果所有植物都归某园艺师管理，共同关系可以连接父类，不必删除父类、分别连到每个子类。</li></ol>
+<div class="callout"><strong>口诀：</strong>已知类作锚点；共性归父类，差异归子类；空心三角指向父类。</div>
+</section>
+<section class="section">
+<span class="tag">15 / 数据库案例</span><h2>主键标识本表记录，外键引用另一张表</h2>
+<p>场地预约系统中，每份申请都有唯一的申请编号；每份预约对应一个场地，一个场地可以被不同预约引用。</p>
+<div class="tables"><figure><h3>预约表</h3><div class="table-wrap"><table><thead><tr><th>申请编号<br>主键</th><th>场地编号<br>外键</th><th>预约日期</th></tr></thead><tbody><tr><td>A701</td><td>R12</td><td>10 月 20 日</td></tr><tr><td>A702</td><td>R12</td><td>10 月 21 日</td></tr></tbody></table></div></figure><figure><h3>场地表</h3><div class="table-wrap"><table><thead><tr><th>场地编号<br>主键</th><th>场地名称</th></tr></thead><tbody><tr><td>R12</td><td>东区活动室</td></tr></tbody></table></div></figure></div>
+<p class="relation">引用方向：预约表的场地编号 → 场地表的场地编号</p>
+<p>“申请编号”唯一标识一份预约，是预约表的主键。“场地编号”记录这份预约使用哪个场地，是预约表的外键。</p>
+<ol><li><strong>先认当前表和业务记录。</strong> 主键用于标识本表的一条记录。</li><li><strong>找题干给出的业务标识。</strong> 题干明确每份申请的“申请编号”唯一，就据此识别申请表的主键。</li><li><strong>沿关系找引用字段。</strong> 预约要指向场地，因此预约表保存引用场地表的外键。</li><li><strong>逐字核对题面。</strong> 检查表名、字段名、主外键位置和空数；题目给出的字段名不要擅自改写。</li></ol>
+<div class="callout"><strong>口诀：</strong>主键认本表记录；外键认引用对象；字段名按题干逐字核对。</div>
+</section>
+<section class="section"><h2>合页复述</h2><ol><li>DFD 如何沿用编号、检查父子图、定位缺失流？</li><li>UML 类图如何依据共性确定父类，泛化三角指向哪里？</li><li>数据库案例怎样区分主键与外键，怎样核对字段名？</li></ol><p>理解后再进行高频题练习。</p><p><a href="index.html">返回复盘档案</a></p></section>
+</main></body></html>

@@ -1,0 +1,1 @@
+import{_ as e,o as l,c as r,a2 as i}from"./chunks/framework.CX6HoPJi.js";const c=JSON.parse('{"title":"软考软件设计师自学资料库","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),t={name:"index.md"};function h(o,a,n,d,f,s){return l(),r("div",null,[...a[0]||(a[0]=[i("",12)])])}const _=e(t,[["render",h]]);export{c as __pageData,_ as default};

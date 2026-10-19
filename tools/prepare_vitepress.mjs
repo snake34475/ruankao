@@ -92,7 +92,7 @@ const sections = tiers.map(tier => {
   });
   return `## ${tier.title}\n\n${rows.join('\n')}`;
 });
-writeGenerated(join(stage, 'index.md'), `# 软考软件设计师自学资料库\n\n不看视频，以本资料库为唯一学习材料。按梯队顺序逐考点推进。\n\n[学习总览与进度](./00-总览与进度.md) · [学习计划](./学习计划.md) · [考点大纲](./软件设计师考点大纲.md)\n\n${sections.join('\n\n')}\n`);
+writeGenerated(join(stage, 'index.md'), `# 软考软件设计师自学资料库\n\n不看视频，以本资料库为唯一学习材料。按梯队顺序逐考点推进。\n\n[学习总览与进度](./00-总览与进度.md) · [学习计划](./学习计划.md) · [考点大纲](./软件设计师考点大纲.md)\n\n复习与复盘：[打开复习与复盘档案](/复盘/index.html)，查看按日期整理的复习讲义、练习索引与答题复盘。\n\n${sections.join('\n\n')}\n`);
 
 mkdirSync(join(stage, 'public'), { recursive: true });
 // 独立静态页整目录拷进 public：交互演示 interactive/ 与答题复盘存档 复盘/。
