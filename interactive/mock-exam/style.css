@@ -1,0 +1,167 @@
+/* ============ 复用讲义设计令牌（与 interactive/mistake-book 同源） ============ */
+:root{
+  --bg:#f4f2ec; --surface:#fffefa; --surface-2:#f7f5ef; --surface-3:#efece3;
+  --ink:#23211d; --ink-strong:#14130f; --muted:#6b6459; --faint:#948c7f;
+  --line:#e4e0d5; --line-strong:#d5cfc0;
+  --accent:#0f6f63; --accent-ink:#0a554c; --accent-soft:#e6f1ee;
+  --gold:#b06a04; --gold-soft:#fbf0dc;
+  --red:#a83327;
+  --shadow-sm:0 1px 2px rgba(41,34,22,.05),0 1px 1px rgba(41,34,22,.04);
+  --shadow-md:0 10px 30px -18px rgba(41,34,22,.35),0 2px 8px -4px rgba(41,34,22,.12);
+  --font-sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei UI","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"Cascadia Code","JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;
+  --radius:12px;
+  --st-danger:#a83327; --st-danger-soft:#f8e4e0; --st-danger-line:#e2b4ac;
+  --st-warn:#a06405;   --st-warn-soft:#fbf0dc;   --st-warn-line:#e6cf9f;
+  --st-ok:#2f7d4f;     --st-ok-soft:#e4f1e7;     --st-ok-line:#b6d8c1;
+}
+:root[data-theme="dark"]{
+  --bg:#131518; --surface:#1a1d21; --surface-2:#21252a; --surface-3:#272c33;
+  --ink:#d9d9d4; --ink-strong:#f4f3ee; --muted:#9aa1a8; --faint:#7b838c;
+  --line:#2b3037; --line-strong:#3b424b;
+  --accent:#5ec8b4; --accent-ink:#8fdecb; --accent-soft:#17302c;
+  --gold:#e0a53c; --gold-soft:#302610; --red:#e88a80;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 12px 34px -20px rgba(0,0,0,.8),0 2px 8px -4px rgba(0,0,0,.5);
+  --st-danger:#e88a80; --st-danger-soft:#331c1a; --st-danger-line:#5c332e;
+  --st-warn:#e0a53c;   --st-warn-soft:#302610;   --st-warn-line:#5c4620;
+  --st-ok:#6cc08a;     --st-ok-soft:#16291d;     --st-ok-line:#2f4d38;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+code{font-family:var(--font-mono);font-size:.88em;background:var(--surface-3);
+  border:1px solid var(--line);border-radius:5px;padding:0 .3em}
+
+/* ============ 顶栏 ============ */
+.topbar{position:sticky;top:0;z-index:40;height:54px;display:flex;align-items:center;
+  gap:.7rem;padding:0 1.1rem;background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{font-weight:700;color:var(--ink-strong)}
+.brand span{color:var(--accent)}
+.topbar-spacer{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:36px;
+  padding:0 .8rem;font:inherit;font-size:.85rem;color:var(--muted);background:transparent;
+  border:1px solid var(--line);border-radius:999px;cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s}
+.btn:hover{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--accent-soft)}
+.btn.primary{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.06);color:var(--bg)}
+
+.shell{max-width:1080px;margin:0 auto;padding:0 1.25rem 3.5rem}
+.page-head{padding:2.25rem 0 .75rem}
+.eyebrow{display:flex;gap:.55rem;align-items:center;margin:0;font-size:.74rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.page-head h1{margin:.4rem 0 0;font-size:clamp(1.7rem,1.15rem+2.2vw,2.3rem);line-height:1.22;
+  letter-spacing:-.022em;font-weight:750;color:var(--ink-strong)}
+.page-head h1::after{content:"";display:block;width:3.25rem;height:4px;margin-top:1rem;border-radius:99px;
+  background:linear-gradient(90deg,var(--accent),var(--gold))}
+.lede{margin:.9rem 0 0;max-width:70ch;color:var(--muted);font-size:.96rem}
+.lede b{color:var(--ink-strong)}
+
+/* ============ 区块 ============ */
+.sec{margin-top:2.6rem}
+.sec-h{display:flex;align-items:baseline;gap:.7rem;margin:0 0 .35rem}
+.sec-h h2{margin:0;font-size:1.22rem;font-weight:720;letter-spacing:-.01em;color:var(--ink-strong)}
+.sec-h .num{font-family:var(--font-mono);font-size:.78rem;color:var(--faint)}
+.sec-note{margin:0 0 1.1rem;color:var(--muted);font-size:.9rem;max-width:72ch}
+
+/* ============ 总览 ============ */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.85rem}
+.tile{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:.95rem 1.05rem;box-shadow:var(--shadow-sm);overflow:hidden}
+.tile::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--line-strong)}
+.tile.t-danger::before{background:var(--st-danger)}
+.tile.t-warn::before{background:var(--st-warn)}
+.tile.t-ok::before{background:var(--st-ok)}
+.tile.t-total::before{background:var(--accent)}
+.tile .n{font-size:1.9rem;font-weight:760;line-height:1.1;color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.tile .l{display:flex;align-items:center;gap:.4rem;margin-top:.15rem;font-size:.83rem;color:var(--muted)}
+.warnbox{margin-top:1rem;background:var(--st-warn-soft);border:1px solid var(--st-warn-line);
+  border-radius:var(--radius);padding:.85rem 1rem;font-size:.88rem;color:var(--ink)}
+.warnbox ol{margin:.4rem 0 0;padding-left:1.3em}
+.warnbox li{margin:.2em 0}
+
+/* ============ 考点分布 ============ */
+.graph{display:flex;flex-direction:column;gap:.55rem}
+.grow{display:grid;grid-template-columns:11em 1fr 8.5em;gap:.8rem;align-items:center;font-size:.86rem}
+.grow .name{color:var(--ink-strong);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grow .track{position:relative;height:14px;background:var(--surface-3);border-radius:99px;overflow:hidden}
+.grow .seg{position:absolute;top:0;bottom:0}
+.grow .seg.ok{background:var(--st-ok)}
+.grow .seg.bad{background:var(--st-danger)}
+.grow .seg.none{background:var(--line-strong);opacity:.65}
+.grow .nums{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.grow .nums b{color:var(--ink-strong)}
+@media (max-width:720px){
+  .grow{grid-template-columns:7.5em 1fr}
+  .grow .nums{grid-column:2;text-align:left}
+}
+
+/* ============ 筛选 ============ */
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;
+  padding:.28rem .8rem;font:inherit;font-size:.82rem;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent-ink)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600}
+
+/* ============ 题卡 ============ */
+.cards{display:flex;flex-direction:column;gap:1rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);overflow:hidden}
+.card-h{display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;background:var(--surface-2);
+  border-bottom:1px solid var(--line)}
+.qno{display:inline-flex;align-items:center;justify-content:center;min-width:2.1rem;height:1.55rem;
+  padding:0 .45rem;border-radius:6px;font-family:var(--font-mono);font-size:.85rem;font-weight:700;
+  background:var(--surface-3);color:var(--muted);border:1px solid var(--line-strong)}
+.qno.ok{background:var(--st-ok);border-color:var(--st-ok);color:#fff}
+.qno.bad{background:var(--st-danger);border-color:var(--st-danger);color:#fff}
+.qno.none{background:var(--st-warn-soft);border-color:var(--st-warn-line);color:var(--st-warn)}
+.qtopic{font-size:.76rem;color:var(--accent-ink);background:var(--accent-soft);
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:999px;padding:.1rem .6rem}
+.qstate{margin-left:auto;font-size:.78rem;color:var(--faint)}
+.card-b{padding:1rem 1.1rem 1.1rem}
+.stem{margin:0;color:var(--ink);white-space:pre-line}
+.stem-extra{margin:.5rem 0 0;padding:.6rem .8rem;background:var(--surface-3);border:1px solid var(--line);
+  border-radius:8px;font-family:var(--font-mono);font-size:.85rem;color:var(--ink);white-space:pre-wrap}
+.figs{display:flex;flex-wrap:wrap;gap:.8rem;margin:.9rem 0 0}
+.figs img{max-width:100%;height:auto;background:#fff;border:1px solid var(--line-strong);border-radius:8px;padding:.35rem;max-height:26rem}
+.opts{display:flex;flex-direction:column;gap:.35rem;margin-top:.85rem}
+.opt{display:flex;gap:.6rem;align-items:flex-start;padding:.42rem .7rem;border:1px solid transparent;
+  border-radius:8px;font-size:.94rem;line-height:1.55}
+.opt .tag{font-family:var(--font-mono);font-weight:700;color:var(--muted);min-width:1.4em}
+.opt .mark{margin-left:auto;font-size:.74rem;white-space:nowrap;padding:.05rem .5rem;border-radius:99px;align-self:center}
+.opt.mine{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.opt.mine .tag{color:var(--accent-ink)}
+.opt.mine .mark{color:var(--accent-ink)}
+.opt.key{background:var(--st-ok-soft);border-color:var(--st-ok-line)}
+.opt.key .tag{color:var(--st-ok)}
+.opt.key .mark{color:var(--st-ok)}
+.opt.wrongpick{background:var(--st-danger-soft);border-color:var(--st-danger-line)}
+.opt.wrongpick .tag{color:var(--st-danger)}
+.opt.wrongpick .mark{color:var(--st-danger)}
+.quiz .opt{cursor:pointer}
+.quiz .opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.exp{margin-top:.9rem;padding:.75rem .9rem;background:var(--surface-2);border-left:3px solid var(--gold);
+  border-radius:0 8px 8px 0;font-size:.88rem;color:var(--ink)}
+.exp b{color:var(--gold)}
+.card.is-hidden{display:none}
+
+/* ============ 下午案例卡 ============ */
+.cases{display:flex;flex-direction:column;gap:1.2rem}
+.case .card-b{padding:1.1rem 1.2rem}
+.case .stem{white-space:pre-line}
+.casefig{margin:.6rem 0 0;text-align:center}
+.casefig img{max-width:100%;height:auto;background:#fff;border:1px solid var(--line-strong);
+  border-radius:8px;padding:.35rem;max-height:38rem}
+.casefig .figcap{margin-top:.4rem;font-size:.82rem;color:var(--muted)}
+.qblock{margin-top:1.1rem;padding-top:1.1rem;border-top:1px dashed var(--line)}
+.qblock .stem{margin:0 0 .4rem}
+.ansline{margin-top:.5rem;font-size:.9rem;color:var(--faint)}
+.stem-extra.code{font-size:.82rem;line-height:1.6;overflow-x:auto;white-space:pre}
+.empty{color:var(--faint);font-size:.9rem;padding:1rem 0}
+
+.foot{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  color:var(--faint);font-size:.82rem;line-height:1.8}

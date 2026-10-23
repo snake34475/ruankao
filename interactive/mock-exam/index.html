@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>摸底考试还原 · 上午卷 · 软考软件设计师</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">软件设计师<span>·</span>摸底考试还原</span>
+  <span class="topbar-spacer"></span>
+  <button class="btn" id="modeBtn" type="button">切到作答模式</button>
+  <button class="btn" id="themeBtn" type="button">◐ 深浅色</button>
+</header>
+
+<main class="shell">
+  <section class="page-head">
+    <p class="eyebrow"><span class="dot"></span> 2026-10-23 · 上午卷 75 题 · 缺题号 15</p>
+    <h1>摸底考试还原与复盘</h1>
+    <p class="lede">由 <code>摸底考试/</code> 下 78 张答题截图识别还原：题干、选项、图示与你当时的作答。
+      <b>复盘模式</b>下可见参考答案与解析（小砚逐题给出，争议题已核对公开资料）；<b>作答模式</b>下可重做，选择自动保存在本机。
+      下午案例题暂未纳入本页。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">01</span><h2>总览</h2></div>
+    <p class="sec-note">按 75 分制估算：每题 1 分，及格线 45 分。作答改动后数字实时重算。</p>
+    <div class="tiles" id="tiles"></div>
+    <div class="warnbox" id="warnbox"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">02</span><h2>考点分布</h2></div>
+    <p class="sec-note">只统计已作答的题：绿 = 参考对，红 = 参考错，灰 = 未作答占比。条越长 = 该考点题量越大。</p>
+    <div class="graph" id="graph"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><span class="num">03</span><h2>逐题还原 · 上午卷</h2></div>
+    <div class="filters" id="filters" role="group" aria-label="按结果筛选题目"></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="sec" id="cases-sec">
+    <div class="sec-h"><span class="num">04</span><h2>下午案例卷（2017 下全套）</h2></div>
+    <p class="sec-note">试题一～四必答，试题五/六为 C++/Java 二选一。你当时未作答；作答模式下隐藏参考答案，先写再切回复盘模式对照。下午题不计入上面的估分。</p>
+    <div class="cases" id="cases"></div>
+  </section>
+
+  <footer class="foot">
+    <p>来源：摸底考试/（上午 53 张、下午 25 张截图）；下午卷经 Windows OCR 转录并按原题公开参考口径核对。</p>
+    <p>参考答案为助手判定，非官方答案；题库原题不标年份，解析中不声称真题出处。</p>
+  </footer>
+</main>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

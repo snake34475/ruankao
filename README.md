@@ -63,6 +63,7 @@
 │   ├── traversal-contour/       ← 二叉树遍历的交互演示（app.js / index.html / style.css）
 │   ├── normal-form/             ← 范式拆表手术室：1NF～BCNF 逐级诊断与拆表分步动画
 │   ├── mistake-book/            ← 错题本与知识图谱看板（独立页，app.js 里维护数据）
+│   ├── mock-exam/               ← 摸底考试还原与复盘（上午卷 74 题截图识别还原：作答/复盘双模式，参考答案与解析、考点分布统计）
 │   └── sprint-plan/             ← 13 天冲刺执行规划（可勾选日卡 + 讲义直达索引，进度存本机并支持云端同步多设备）
 ├── 复盘/                        ← 答题复盘、复习讲义与练习索引（同 interactive/ 拷进 docs/，站点「复盘档案」入口）
 │   ├── index.html               ← 复习与复盘档案入口
